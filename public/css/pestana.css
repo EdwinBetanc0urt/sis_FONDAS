@@ -1,0 +1,69 @@
+
+.tabs { /* es el rectángulo contenedor */
+margin: 0 auto;
+height: 450px;
+position: relative;
+width: 100%;
+}
+.tab { /* cada una de las pestañas */
+float: left;
+}
+.tab label { /* la parte superior con el título de la pestaña */
+background-color: #ccc;
+border-radius: 5px 5px 0 0;
+color: #000;
+cursor: pointer;
+left: 0;
+margin-right: 1px;
+padding: 5px 15px;
+position: relative;
+
+}
+/* el control input sólo lo necesitamos para que las pestañas permanezcan abiertas así que lo ocultamos */
+.tab .radio { display: none; }
+
+/* el contenido de las pestañas */
+
+.content {
+bottom: 0;
+left: 0;
+overflow: auto;
+padding: 20px;
+position: absolute;
+right: 0;
+top: 23px;
+
+}
+/* y un poco de animación */
+.content > * {
+opacity: 0;
+
+
+-moz-transform: translateX(-120%);
+-webkit-transform: translateX(-120%);
+-o-transform: translateX(-120%);
+-ms-transform: translateX(-120%);
+
+-moz-transition: all 0.8s ease;
+-webkit-transition: all 0.8s ease;
+-o-transition: all 0.9s ease;
+-ms-transition: all 0.9s ease;
+
+}
+
+/* controlamos la pestaña activa */
+.radio:checked ~ label {
+background-color: #fff;
+box-shadow: 0 3px 2px #89A inset;
+color: #8b0000;
+z-index: 1;
+}
+.radio:checked ~ label ~ .content { z-index: 1; }
+.radio:checked ~ label ~ .content > * {
+
+opacity: 2;
+-moz-transform: translateX(0);
+-webkit-transform: translateX(0);
+-o-transform: translateX(0);
+-ms-transform: translateX(0);
+}

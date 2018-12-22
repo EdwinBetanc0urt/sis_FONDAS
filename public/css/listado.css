@@ -1,0 +1,64 @@
+table.tablapaginacion, table.tablapaginacion td, table.tablapaginacion tr {
+	padding:0px;
+	border-spacing: 0px;
+    
+}
+
+table.tablapaginacion {
+	border:1px black solid;
+	border-radius:5px;
+	min-width:400px;
+	font-family: Helvetica,Arial;
+}
+
+table.tablapaginacion td {
+	padding:6px;
+}
+
+table.tablapaginacion tr:first-child td:first-child {
+	border-radius:5px 0px 0px 0px;
+}
+
+table.tablapaginacion tr:first-child td:last-child {
+	border-radius:0px 5px 0px 0px;
+}
+
+table.tablapaginacion tr:last-child td:first-child {
+	border-radius:0px 0px 0px 5px;
+}
+
+table.tablapaginacion tr:last-child td:last-child {
+	border-radius:0px 0px 5px 0px;
+}
+
+table.tablapaginacion td:not(:last-child) {
+	border-right:1px #666 solid;
+}
+
+
+table.tablapaginacion tr:nth-child(2n) {
+	background: #ffffff;
+}
+
+table.tablapaginacion tr:nth-child(2n+1){
+	background: #eeeeee;
+}
+
+table.tablapaginacion.header tr:not(:first-child):hover, table.tablapaginacion:not(.header) tr:hover {
+	background:#FEFEF0;
+}
+
+table.tablapaginacion:not(.header) tr {
+	text-align: left;
+}
+
+table.tablapaginacion.header tr:first-child {
+	font-weight: bold;
+	color:#fff;
+	background-color: #444;
+	border-bottom:1px #000 solid;
+}
+
+table.tablapaginacion.header tr:nth-child(n+2) {
+	text-align: left;
+}

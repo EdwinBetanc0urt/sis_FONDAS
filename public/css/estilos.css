@@ -1,0 +1,361 @@
+/*estilos css de la pagina*/
+@import "reset.css";
+
+body{
+	background-color: #FAFAFA;
+}
+
+body.fond_perfil{
+	background-image: url("../img/fondoBody.jpg");
+	background-repeat: repeat-x;
+}
+
+
+/*formulario de sesion*/
+.formulario_logueo{
+	width: 450px;
+	margin-top: 50px;
+
+}
+.formulario_logueo table{
+	background-color: #FFFFFF;
+	padding: 20px;
+	border:1px solid #C3C3C3;
+	box-shadow: 1px 1px 20px #ccc;
+}
+.formulario_logueo table caption{
+	padding: 15px 15px;
+	text-align: left;
+	background-color: #F6F6F6;
+	border:1px solid #CCCCCC;
+	border-bottom: none;
+	font-size: 16px;
+	color: #555555;
+	font-family: verdana;
+	font-weight: bold;
+
+}
+
+.formulario_logueo table tr td{
+padding-top: 10px;	
+}
+.formulario_logueo table tr td label{
+	color: #555555;
+	font-family: verdana;
+	font-weight: bold;
+	font-size: 14px;
+}
+.formulario_logueo table tr td input.text{
+	width: 89%;
+	padding: 10px;
+	height: 40px;
+}
+
+.formulario_logueo table tr td div{
+	background-color: transparent;
+	position: relative;
+}
+.formulario_logueo table tr td div i{
+	padding: 0px 15px;
+	background-color: #F6F6F6;
+	border: 1px solid #CCCCCC;
+	border-right: none;
+	height: 28px;
+	padding-top: 10px;
+}
+
+.formulario_logueo table tr td input.boton{
+	background-image: url("../img/botonverde.png");
+	background-repeat: repeat-x;
+	width: 100px;
+	height: 32px;
+	border:1px solid #4CB300;
+	color:white;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.formulario_logueo table tr td input.boton:hover{
+	background-image: url("../img/botonnaranja.png");
+	background-repeat: repeat-x;
+	cursor: pointer;
+	border:1px solid #D37C00;
+}
+
+/*cierre del formulario de sesion*/
+
+.message_login{
+	border:1px solid #BBDBE0;
+	background-color: #ECF9FF;
+	padding-bottom: 10px;
+	border-radius: 5px;
+	font-weight: bold;
+	font-family: arial;
+	color: #08A4DD;
+	font-size: 14px;
+}
+
+
+
+
+/*estilos css para el cintillo*/
+div.menu_cintillo{
+	background-color: #37474F; 
+	color:#FFFFFF;
+	position: fixed;
+	width: 100%;
+	margin-top: -5px;
+	z-index: 999;
+}
+
+ol.menu_perfil_usuario{
+	background-color: #94BD2E;
+}
+
+/*estilos para "menu_perfil_usuario*/
+ol.menu_perfil_usuario,ol.menu_notificaciones_usuario{
+	height: 70px;
+	overflow: hidden;
+}
+
+ol.menu_perfil_usuario li,ol.menu_notificaciones_usuario li{
+	float: left;
+	padding: 10px 10px;
+	border: none;
+	font-family: verdana;
+	font-size: 12px;
+	height: 100px;
+
+
+
+}
+
+/*notificaciones del usuario*/
+ol.menu_notificaciones_usuario{
+
+}
+ol.menu_notificaciones_usuario li{
+	font-size: 25px;
+	margin-top: 25px;
+}
+ol.menu_notificaciones_usuario li span{
+	font-size: 10px;
+	position: absolute;
+	margin-top: -17px;
+	margin-left: -30px;
+}
+
+ol.menu_notificaciones_usuario li:last-child{
+	border-right: 1px solid #444444;
+}
+
+.colours{
+	background-color: #E06C5F;
+	padding: 2px 5px;
+	border-radius: 2px;
+	position: relative;
+	margin-top: 10px;
+	color: white;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+/*capa del contenido izquiersa*/
+.capa_izquierda{
+	position: fixed;
+	left: 0;
+	width: 17%;
+	height: 100%;
+	background-color: #37474F;
+	z-index: -99;
+	box-shadow: 1px 2px 20px #585D60;
+
+}
+
+/*estilos para el contenido izquirda*/
+.contenido_izquierda{
+	float: left;
+	width: 15%;
+	padding-left: 25px;
+	background-color: #37474F;
+}
+ol.menu_content{
+	margin-left: -25px !important;
+	color: #B0BEC5;
+}
+ol.menu_content li{
+	padding: 0px 0px;
+	font-family: verdana;
+	background-color:#37474F;
+	text-align: center;
+	color: #B0BEC5;
+	padding-bottom: 10px;
+}
+ol.menu_content li:first-child{
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+.list_init{
+	border-bottom: 1px solid #2F3C43;
+	
+}
+div#perfil_izquierdo .seccion_perfil{
+	height:80px;
+	border-bottom: 1px solid #C3BFBA;
+	padding-left: 20px;
+	padding-top: 10px;
+}
+.seccion_perfil img{
+	width: 60px;
+	height: 60px;
+	border-radius: 100%;
+	border:1px solid #C3BFBA;
+	float: left;
+}
+.seccion_perfil h2{
+	float: left;
+	width: 60%;
+	margin-top: 20px;
+	padding-left: 10px;
+	font-family: verdana;
+	font-weight: bold;
+	color: #808080;
+}
+
+.seccion_perfil h3{
+	color:#72AF46;
+	padding-left:10px; 
+	float:left; 
+	font-family:verdana; 
+	font-weight:bold;
+	margin-top: 5px;
+	font-size: 14px;
+}
+ol.menu_content li.list_padre ul{
+	padding-top: 10px;
+	display: none;
+}
+
+ol.menu_content li.list_padre ul li{
+	background-color: #263238;
+	padding: 10px 0px;
+	font-weight: normal;
+	font-size: 14px;
+	font-family: arial;
+}
+ol.menu_content li.list_padre ul li:hover{
+	background-color: #202B30;
+	
+}
+
+ol.menu_content li.list_padre{
+	margin-top: 2px;
+	font-weight: bold;
+	color: #B0BEC5;
+	font-size: 14px;
+	text-indent: 5px;
+}
+ol.menu_content li.list_padre i{
+	padding-right: 10px;
+	display: block;
+	text-align: center;
+	padding: 10px;
+	font-size: 20px;
+}
+ol.menu_content li.list_padre:hover{
+	background-color: #263238;
+	color:white;
+	cursor: pointer;
+}
+
+/*esta es la lista activa*/
+.active-list{
+	background-color: #263238 !important;
+	color:white !important;
+	
+}
+
+.contenido{
+	padding-bottom: 40px;
+	
+}
+
+/*estilos para el contenido de la derecha*/
+.contenido_derecha{
+	width: 75%;
+	float: left;
+	margin-left: 50px;
+	
+}
+
+.contenido_derecha h1.datos_form{
+	padding: 10px;
+	background-color: #37474F;
+	color: #FFF3EE;
+	border:1px solid #363C40;
+	margin-top: 2px;
+	font-family: verdana;
+}
+
+h1.datos_form i{
+	padding-right: 5px;
+}
+h1.datos_form span{
+	color: #94989B;
+	font-family: verdana;
+	font-size: 12px;
+	padding-right: 10px;
+}
+
+/*estilos para la botonera*/
+ol.botonera{
+	float: right;
+	margin-right: 100px;
+}
+ol.botonera li{
+	float: left;
+	padding: 10px;
+}
+
+ol.botonera li input{
+	padding: 10px 10px;
+	background-color: #40484C;
+	color: #F3FFFF;
+	border:1px solid #40484C;
+	cursor: pointer;
+}
+
+
+/*estilos para el pie de pagina*/
+div.pie{
+	background-color: #37474F;
+	width: 100%;
+	padding-top: 50px;
+}
+
+div.redes_sociales{
+	float: right;
+	margin-top: -50px;
+}
+
+ol.list_redes{
+	position: absolute;
+	margin-top: -60px;
+	margin-left: 170px;
+}
+
+ol.list_redes li{
+	float: left;
+	padding-left: 10px;
+}
+
+ol.list_redes li a{
+	font-size: 40px;
+	color:white;
+}
