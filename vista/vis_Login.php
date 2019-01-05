@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <title>Pagina de Inicio FONDAS</title>
+  <title>Pagina de Inicio FONDAS</title>
 
 	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8"/>
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/>
+
 	<link rel="icon" type="image/png" href="public/img/icono.ico" />
 	<link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<script type="text/javascript" src="public/jquery/jquery.js"></script>
@@ -21,31 +21,11 @@
 	<script type="text/javascript" src="public/js/validaciones.js"></script>
 	<script type="text/javascript" src="public/js/ajax.js"></script>
 	<script src="public/js/login.js"></script>
-	
-
-	<?php
-		// si existe la variable get msjAlerta Incluye el archivo JavaScript
-		if ( isset( $_GET['msjAlerta'] ) ) {
-			?>
-			<!--  Mensajes Emergentes -->
-			<script src="public/js/alertas.js" type="application/javascript"></script>
-			<script type="application/x-javascript">
-				$( function () {
-					//cuando el documento este listo llama la funcion fjMensajes que esta en el archivo jsp_Alertas.js
-					fjMensajes("<?= $_GET["msjAlerta"]; ?>");
-					//envia el valor que tiene msjAlerta (sinconsulta, registro, nocambio, etc)
-				});
-			</script>
-			<?php
-		} //cierre del condicional de isset
-	?>
 </head>
 
-<body>	
-
-
+<body>
 	<!--inicio de cintillo-->
-    <div class="header" style="width:100%;align:center;position:relative; background:#37474F;"  >
+  <div class="header" style="width:100%;align:center;position:relative; background:#37474F;"  >
 		<div style="width:100%;position:abosolute;height:90%">
 			<img src="public/img/logofondas.png" id="logo" style="width:100%"/>
 		</div>
@@ -60,15 +40,15 @@
 			<a href="?accion=Galeria">&nbsp;&nbsp;Galería</a>
 			<a href="?accion=Contactanos">&nbsp;&nbsp;¿Donde Estamos?</a>
 			<a href="?accion=Login" class="active" style="float:right; ">
-				<img src="public/img/usuario2.png" width="25" height="25"  font=""/>&nbsp;&nbsp;Intranet
+				<img src="public/img/usuario2.png" width="25" height="25" font=""/>&nbsp;&nbsp;Intranet
 			</a>
 			<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="mymenu()">&#9776;</a>
 		</div>
 		<!--fin menu-->
 
 		<!--centro-->
-	    <div class="row">
-			<div  class="col-3 right  ">    
+	  <div class="row">
+			<div  class="col-3 right  ">
 				<div class="row content">
 					<div class="w3-container" style="background:url('public/img/hhh.jpg');">
 						<div class="w3-card-4" >
@@ -76,142 +56,175 @@
 							  <h4 style="color:#fff">Intranet</h4>
 							</div>
 
-							<form class="w3-container" name="form_intranet" id="form_intranet" onsubmit="return f_Submit()"  method="post" action="controlador/conLogin.php">
+							<form class="w3-container" name="form_intranet" id="form_intranet"
+                onsubmit="return f_Submit()" method="post" action="controlador/conLogin.php">
 								<p align="center">
-									<img src="public/img/loginn.png" width="58" height="58"  font=""/>
+									<img src="public/img/loginn.png" width="58" height="58" font=""/>
 								</p>
 								<p><label>Usuario:</label></p>
-									<input type="text" class="w3-input" name="usuario" id="usuario" title="campo obligatorio" placeholder="ingresé usuario" value="" />
-								
+								<input type="text" class="w3-input" name="usuario" id="usuario"
+                  title="campo obligatorio" placeholder="ingresé usuario" />
+
 								<p><label>Clave:</label></p>
-									<input type="password" title="campo obligatorio" name="clave" id="clave" placeholder="ingresé su clave" value="" class="w3-input"/>
-								
+								<input type="password" title="campo obligatorio" name="clave"
+                  id="clave" placeholder="ingresé su clave" class="w3-input"/>
+
 								<p><label>Código</label></p>
-							
-									<input type="text" style="background:url('public/img/dms.png'); width:160px;"  name="captcha" id="captcha"  readonly />									
-									<a href="javascript: CargarCaptcha();">
+								<input type="text" name="captcha" id="captcha" readonly
+                  style="background:url('public/img/dms.png'); width:160px;" />
+								<a href="javascript: CargarCaptcha();">
 									<span class="glyphicon glyphicon-refresh"></span>
-									</a>
-								
+								</a>
 
 								<p><input type="text" class="w3-input" name="txtcopia" id="txtcopia"/></p>
 								<p>
-									<button style="background:#37474F" class="w3-button w3-block" name='iniciar' value="ingresar" >
+									<button style="background:#37474F" class="w3-button w3-block"
+                    name='iniciar' value="ingresar" >
 										<span style="color:#fff">INGRESAR</span>
 									</button>
 								</p>
 								<p>
-									<a data-toggle="modal" data-target="#VentanaModal" onclick="desplegar();" style="color: #000; font-weight: bold;font-size:12px;list-style-type: none;display: block;text-decoration: none;"><center><h4><br/>¿Olvido su contraseña?</h4></center></a>
+									<a data-toggle="modal" data-target="#VentanaModal" onclick="desplegar();"
+                    style="color: #000; font-weight: bold;font-size:12px;list-style-type: none;display: block;text-decoration: none;">
+                    <center>
+                      <h4><br/>¿Olvido su contraseña?</h4>
+                    </center>
+                  </a>
 								</p>
 							</form>
 						</div>
 					</div>
-	                  
+
 				</div>
 			</div>
-	        <div class="col-9" style="text-align:center;">
-	            <img src="public/img/seg2.jpg" id="sd" style="width:95%; height:400px; border-radius:12px; "/>
-	        </div>
+	    <div class="col-9" style="text-align:center;">
+	      <img src="public/img/seg2.jpg" id="sd" style="width:95%; height:400px; border-radius:12px; "/>
 	    </div>
+    </div>
 		<!--fin centro-->
 
 		<!--pie de pagina-->
 		<div class="pie" style="max-height:65px; background-color:#37474F; width:100%">
-	        <h5>
-	            © Fondo para el Desarrollo Agrario Socialista
-	        </h5>
-	    </div>
+      <h5>
+        © Fondo para el Desarrollo Agrario Socialista
+      </h5>
+	  </div>
 		<!--pie de pagina-->
 
 	</div>
-<!--fin cuerpo-->
+  <!--fin cuerpo-->
 
 
 
+  <div id="VentanaModal" class="modal fade modal-primary">
+  	<form id="formRecuperarClave" name="formRecuperarClave" method="POST" action="controlador/conRecuperarClave.php" role="form" class="form-horizontal" >
+  		<div class="modal-dialog">
+  			<div class="modal-content">
+  				<div class="modal-header">
+  					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> X </button>
+  					<h2 class="modal-title"> RECUPERAR CONTRASEÑA</h2>
+  				</div>
 
-<div id="VentanaModal" class="modal fade modal-primary">
-	<form id="formRecuperarClave" name="formRecuperarClave" method="POST" action="controlador/conRecuperarClave.php" role="form" class="form-horizontal" >
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> X </button>
-					<h2 class="modal-title"> RECUPERAR CONTRASEÑA</h2>
-				</div>
+  				<div class="modal-body">
+  					<div class="form-horizontal">
+  						<div class="form-group ui-front">
 
-				<div class="modal-body">
-					<div class="form-horizontal">
-						<div class="form-group ui-front">
+  							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  								<label for="ctxUsuario">* Usuario</label>
+  								<input id="ctxUsuario" class="valida_numerico form-control" required
+                  maxlength="45" name="ctxUsuario" type="text" placeholder="Ingrese el usuario"
+                  data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+  							</div>
 
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<label for="ctxUsuario">* Usuario</label>
-								<input id="ctxUsuario" class="valida_numerico form-control" maxlength="45" name="ctxUsuario" type="text" size="20" required placeholder="Ingrese el usuario" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
-							</div>
-							
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<label for="cmbPregunta">* Pregunta 1</label>
-								<select id='cmbPregunta' name='cmbPregunta' class="dinamico form-control select2" data-toggle="tooltip" data-placement="right" title="" size="1" style="width: 100%;">
-									<option value="">Selecciona Uno...</option>
-								</select>
-								<input id="hidPregunta" type="hidden" />
-							</div>
-							
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<label for="cmbPregunta2">* Pregunta 2</label>
-								<select id='cmbPregunta2' name='cmbPregunta2' class="dinamico form-control select2" data-toggle="tooltip" data-placement="right" title="" size="1" style="width: 100%;">
-									<option value="">Selecciona Uno...</option>
-								</select>
-								<input id="hidPregunta2" type="hidden"  />
-							</div>
-							
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<label for="ctxRespuesta">* Respuesta 1</label>
-								<input id="ctxRespuesta" class=" form-control" maxlength="45" name="ctxRespuesta1" type="text" size="20" required placeholder="Ingrese la primera respuesta" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
-							</div>
-							
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<label for="ctxRespuesta2">* Respuesta 2</label>
-								<input id="ctxRespuesta2" class=" form-control" maxlength="45" name="ctxRespuesta2" type="text" size="20" required placeholder="Ingrese la segunda respuesta" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
-							</div>
-							
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<label for="pswClave">* Ingresar Clave Nueva</label>
-								<input id="pswClave" class=" form-control" maxlength="45" name="pswClave" type="password" size="20" required placeholder="Ingrese la Clave " data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
-							</div>
-							
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<label for="pswClave2">* Confirmar Clave Nueva</label>
-								<input id="pswClave2" class=" form-control" maxlength="45" name="pswClave2" type="password" size="20" required placeholder="Confirme la clave " data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
-							</div>
-							
-						</div>
-								
-					</div>
-				</div>
-				<div class="modal-footer">
+  							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+  								<label for="cmbPregunta">* Pregunta 1</label>
+  								<select id='cmbPregunta' name='cmbPregunta' data-placement="right"
+                    class="dinamico form-control select2" data-toggle="tooltip"
+                    title="Selecciona una opción" size="1" >
+  									<option value="">Selecciona Uno...</option>
+  								</select>
+  								<input id="hidPregunta" type="hidden" />
+  							</div>
 
-					<div class="row" >
-						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-						</div>
+  							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+  								<label for="cmbPregunta2">* Pregunta 2</label>
+  								<select id='cmbPregunta2' name='cmbPregunta2' data-toggle="tooltip"
+                    class="dinamico form-control select2" data-placement="right"
+                    title="Selecciona una opción" size="1">
+  									<option value="">Selecciona Uno...</option>
+  								</select>
+  								<input id="hidPregunta2" type="hidden"  />
+  							</div>
 
-						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+  							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+  								<label for="ctxRespuesta">* Respuesta 1</label>
+  								<input id="ctxRespuesta" class=" form-control" maxlength="45"
+                    name="ctxRespuesta1" type="text" size="20" required
+                    placeholder="Ingrese la primera respuesta" data-toggle="tooltip"
+                    data-placement="right" title="Campo Obligatorio" />
+  							</div>
 
-							<button style="background:#37474F; color:#fff;" class="form-control" type="button" value="recuperar" onclick="enviar( this.value );" >
-								ENVIAR
-							</button>
-						</div>
+  							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+  								<label for="ctxRespuesta2">* Respuesta 2</label>
+  								<input id="ctxRespuesta2" class=" form-control" maxlength="45"
+                    name="ctxRespuesta2" type="text" size="20" required
+                    placeholder="Ingrese la segunda respuesta" data-toggle="tooltip"
+                    data-placement="right" title="Campo Obligatorio" />
+  							</div>
 
-						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+  							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+  								<label for="pswClave">* Ingresar Clave Nueva</label>
+  								<input id="pswClave" name="pswClave" type="password" maxlength="45"
+                  class="form-control" required placeholder="Ingrese la Clave"
+                  data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+  							</div>
 
-		<input type="hidden" name="operacion" id="operacion" value="recuperar" />
-	</form>
-</div>
+  							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+  								<label for="pswClave2">* Confirmar Clave Nueva</label>
+  								<input id="pswClave2" name="pswClave2" type="password" maxlength="45"
+                  required class="form-control" placeholder="Confirme la clave"
+                  data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+  							</div>
 
+  						</div>
+  					</div>
+  				</div>
 
+  				<div class="modal-footer">
+  					<div class="row" >
+  						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+  						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+  							<button style="background:#37474F; color:#fff;" class="form-control"
+                  type="button" value="recuperar" onclick="enviar(this.value);" >
+  								ENVIAR
+  							</button>
+  						</div>
+  						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+  					</div>
+  				</div>
+
+  			</div>
+  		</div>
+
+  		<input type="hidden" name="operacion" id="operacion" value="recuperar" />
+  	</form>
+  </div>
+
+  <?php
+    // si existe la variable get msjAlerta Incluye el archivo JavaScript
+    if(isset($_GET['msjAlerta'])) {
+      ?>
+      <!--  Mensajes Emergentes -->
+      <script src="public/js/alertas.js" type="application/javascript"></script>
+      <script type="application/x-javascript">
+        $(function() {
+          //cuando el documento este listo llama la funcion fjMensajes que esta en el archivo jsp_Alertas.js
+          fjMensajes("<?= $_GET["msjAlerta"]; ?>");
+          //envia el valor que tiene msjAlerta(sinconsulta, registro, nocambio, etc)
+        });
+      </script>
+      <?php
+    } //cierre del condicional de isset
+  ?>
 </body>
-
 </html>
