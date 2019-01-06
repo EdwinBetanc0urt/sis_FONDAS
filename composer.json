@@ -1,0 +1,15 @@
+{
+    "name": "edwinbetanc0urt/sis_fondas",
+    "description": "sistema fondas",
+    "type": "project",
+    "license": "gpl3",
+    "authors": [
+        {
+            "name": "EdwinBetanc0urt",
+            "email": "EdwinBetanc0urt@hotmail.com"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "^7.1"
+    }
+}
