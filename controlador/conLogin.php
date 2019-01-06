@@ -1,5 +1,10 @@
 <?php
 
+// inicio de sesión
+if (strlen(session_id()) < 1) {
+	session_start();
+}
+
 $ruta = "";
 if(is_file("modelo/clsLogin.php")){
 	require_once("modelo/clsLogin.php");
@@ -10,32 +15,27 @@ else{
 }
 
 
-if (isset($_POST["operacion"]) AND $_POST["operacion"] == "ReCaptcha" ) {
+if (isset($_POST["operacion"]) AND $_POST["operacion"] == "ReCaptcha") {
 	codigo_captcha();
 }
 else {
 	//funcion para loguearme
-	$objUsuario= new Login(); 
-
-	$objUsuario->setUsuario( $_POST['usuario'] );
-
+	$objUsuario= new Login();
+	$objUsuario->setUsuario($_POST['usuario']);
 	$arrUsuario = $objUsuario->ConsultarUsuario();
-	if ( $arrUsuario ) {
 
-		$arrClave = $objUsuario->ConsultarClave( $arrUsuario["id_usuario"] );
+	if ($arrUsuario) {
+		$arrClave = $objUsuario->ConsultarClave($arrUsuario["id_usuario"]);
+		$objCifrado = new clsCifrado(); //instancia la clase de Cifrado
+		$vsClave = $objCifrado->flEncriptar($_POST["clave"]);
 
 		//coincide el usuario y la clave
-		$objCifrado = new clsCifrado(); //instancia la clase de Cifrado
-		$vsClave = $objCifrado->flEncriptar( $_POST["clave"] );
-
-		if ( $arrClave["clave"] == $vsClave ) {
-
-			$arrDatos = $objUsuario->fmConsultarPersona( $arrUsuario['idpersona'] ); //se busca los datos en la tabla persona
+		if ($arrClave["clave"] == $vsClave) {
+			$arrDatos = $objUsuario->fmConsultarPersona($arrUsuario['idpersona']); //se busca los datos en la tabla persona
 
 			//el usuario esta activo
-			if ( $arrUsuario["estatus"] == "activo" )  {
+			if ($arrUsuario["estatus"] == "activo")  {
 				$objUsuario->fmReiniciaIntento(); //cambia los intentos fallidos a 0
-				session_start(); // inicio de sesión 
 
 				$_SESSION = array(
 					'sesion' => 'sistema' ,
@@ -54,21 +54,18 @@ else {
 					'fecha_ingreso' => $arrDatos['fecha_ingreso'] ,
 					'tiempo_sesion' => $arrUsuario['tiempo_sesion']
 				);
-				$objUsuario->Bitacora( $arrUsuario["id_usuario"] );
-				header( "Location: ../?accion=Bienvenida");
-
+				$objUsuario->Bitacora($arrUsuario["id_usuario"]);
+				header("Location: ../?accion=Bienvenida");
 			}
 
-			else if ( $arrUsuario["estatus"] == "vacaciones" ) {
-				//var_dump( $arrUsuario );
-				header( "Location: {$ruta}?accion=Login&msjAlerta=devacaciones");
+			else if ($arrUsuario["estatus"] == "vacaciones") {
+				//var_dump($arrUsuario);
+				header("Location: {$ruta}?accion=Login&msjAlerta=devacaciones");
 			}
 
-			else if ( $arrUsuario["estatus"] == "completar" ) {
+			else if ($arrUsuario["estatus"] == "completar") {
 				$objUsuario->fmReiniciaIntento(); //cambia los intentos fallidos a 0
-
-				$fecha = $objUsuario->faFechaFormato( $arrDatos["fecha_ingreso"] );
-				session_start(); // inicio de sesión 
+				$fecha = $objUsuario->faFechaFormato($arrDatos["fecha_ingreso"]);
 
 				$_SESSION = array(
 					'sesion' => 'completar' ,
@@ -88,13 +85,12 @@ else {
 					'fecha_ingreso' => $fecha ,
 					'estatus' => $arrDatos['estatus']
 				);
-				$objUsuario->Bitacora( $arrUsuario["id_usuario"] );
-				header( "Location: ../?accion=Completar");
+				$objUsuario->Bitacora($arrUsuario["id_usuario"]);
+				header("Location: ../?accion=Completar");
 			}
-
 			else {
-				var_dump( $arrUsuario );
-				header( "Location: {$ruta}?accion=Login&msjAlerta=usuariobloqueado");
+				//var_dump($arrUsuario);
+				header("Location: {$ruta}?accion=Login&msjAlerta=usuariobloqueado");
 			}
 		}
 
@@ -102,16 +98,15 @@ else {
 		else {
 			$objUsuario->fmIntentoErroneo();//cada intento fallido aumenta a 1 mas
 			//consulta los intentos que lleva el usuario y el maximo permitido que especifica la configuracion
-			if ( $objUsuario->fmContadorIntentos() >= 3 ) {
+			if ($objUsuario->fmContadorIntentos() >= 3) {
 				//si los intentos llegan al maximo establecido bloquea al usuario
 				$objUsuario->fmBloqueoUsuario();
-				header( "Location: {$ruta}?accion=Login&msjAlerta=bloqueo_intentos");
+				header("Location: {$ruta}?accion=Login&msjAlerta=bloqueo_intentos");
 			}
 
 			else
 				header("Location: {$ruta}?accion=Login&msjAlerta=claveousaurio");
 		}
-
 	}
 
 	else {
@@ -120,13 +115,16 @@ else {
 }
 
 
+
 function codigo_captcha(){
-	$k="";
-	$paramentros="1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	$maximo=strlen($paramentros)-1;
+	$k = "";
+	$paramentros = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$maximo = strlen($paramentros)-1;
 
 	for($i=0; $i<5; $i++){
-		$k.=$paramentros{mt_rand(0,$maximo)};
+		$k .= $paramentros{
+			mt_rand(0, $maximo)
+		};
 	}
 
 	echo $k;
