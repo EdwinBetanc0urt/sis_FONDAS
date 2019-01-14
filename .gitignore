@@ -92,7 +92,6 @@ nb-configuration.xml
 # Logs and databases #
 ######################
 *.log
-*.sql
 *.sqlite
 .sizecache.json
 npm-debug.log*
@@ -100,7 +99,8 @@ yarn-debug.log*
 yarn-error.log*
 selenium-debug.log
 **/*.log
-
+*.bak
+**/*.bak
 
 
 # -- OS generated files ------------------------------

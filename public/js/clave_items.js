@@ -4,7 +4,7 @@ var claveLongitud = false, claveMinus = false, claveMayus = false,
   claveNumero = false, claveEspecial = false;
 
 $(function() {
-  //desabilita el campo de clave de confirmacion
+  // deshabilita el campo de clave de confirmación
   $("#pswClave2, .confirm-password").attr("disabled", true);
 
   $('#pswClaveN, .new-password')
@@ -19,7 +19,7 @@ $(function() {
       claveLongitud = false, claveMinus = false, claveMayus = false,
         claveNumero = false, claveEspecial = false;
 
-      //valida el tamaño de caracteres sea minimo de 8
+      //valida el tamaño de caracteres sea mínimo de 8
       if (pswd.length >= 8) {
         claveLongitud = true;
         $('#claveLongitud').removeClass('invalido').addClass('valido');
@@ -29,7 +29,7 @@ $(function() {
         claveMinus = true;
         $('#claveMinuscula').removeClass('invalido').addClass('valido');
       }
-      //valida si hay letra Mayuscula
+      //valida si hay letra Mayúscula
       if (pswd.match(/[A-Z]/)) {
         claveMayus = true;
         $('#claveMayuscula').removeClass('invalido').addClass('valido');
@@ -67,6 +67,6 @@ function fjValidarClave() {
     return true;
   }
   clave.focus();
-  clave2.attr("disabled", true); //desabilita el campo de estado
+  clave2.attr("disabled", true); // deshabilita el campo de estado
   return false;
 }

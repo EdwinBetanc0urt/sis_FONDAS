@@ -28,32 +28,6 @@ function fjAlfabetoCombo( pdCombo ) {
 
 
 
-function salir( psRuta = "" ){
-	swal({   
-		html: "¿Está seguro que quiere salir?",  
-		type: "warning",   
-		showCancelButton: true,   
-		confirmButtonColor: "#DD6B55", 
-		confirmButtonText: "Aceptar!",   
-		cancelButtonText: "Cancelar!",   
-		showCloseButton: true
-	}).then( (result ) => {
-		if (result.value ) {
-			location.href= psRuta + "controlador/conCerrar.php";
-		}
-		else if (result.dismiss) {
-			swal({
-				html: "Espere en 5 segundos!",
-				text: "¡Gracias por permanecer en la página!",
-				timer: 5000,
-				showConfirmButton: false
-			});
-		}
-	});
-}
-
-
-
 //funcion javascript Salir, utilizado por el botón de OFF del menú
 function fjSalir( psMotivo = "sesioncerrada" , psForzado = "no" ) {
     if ( psForzado == "no" ) {

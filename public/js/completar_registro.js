@@ -4,28 +4,28 @@ $(function() {
 
 	$("#cmbMunicipio").attr("disabled" , true);
 
-	//cuando se hace un cambio en el combo del estado se cargan las ciudades
+	// cuando se hace un cambio en el combo del estado se cargan las ciudades
 	$("#cmbEstado").change(function() {
-		//habilita el combo hijo
+		// habilita el combo hijo
 		$("#cmbMunicipio").attr("disabled" , false);
-		$("#cmbMunicipio").val(""); //deselecciona el campo del combo
-		$("#hidMunicipio").val(""); //blanquea el campo del hidden
+		$("#cmbMunicipio").val(""); // deselecciona el campo del combo
+		$("#hidMunicipio").val(""); // blanquea el campo del hidden
 		//fjCargarMunicipio();
 		fjComboGeneral("Municipio" , "Estado");
 
-		$("#cmbParroquia").val(""); //deselecciona el campo del combo
-		$("#hidParroquia").val(""); //blanquea el campo del hidden
-		$("#cmbParroquia").attr("disabled" , true); //desabilita el combo de 3er nivel
+		$("#cmbParroquia").val(""); // deselecciona el campo del combo
+		$("#hidParroquia").val(""); // blanquea el campo del hidden
+		$("#cmbParroquia").attr("disabled" , true); // desabilita el combo de 3er nivel
 	});
 
 	$("#cmbParroquia").attr("disabled" , true);
 
-	//cuando se hace un cambio en el combo del estado se cargan las ciudades
+	// cuando se hace un cambio en el combo del estado se cargan las ciudades
 	$("#cmbMunicipio").change(function() {
-		//habilita el combo de 2do nivel
+		// habilita el combo de 2do nivel
 		$("#cmbParroquia").attr("disabled" , false);
-		$("#cmbParroquia").val(""); //deselecciona el campo del combo
-		$("#hidParroquia").val(""); //blanquea el campo del hidden
+		$("#cmbParroquia").val(""); // deselecciona el campo del combo
+		$("#hidParroquia").val(""); // blanquea el campo del hidden
 		//fjCargarMunicipio();
 		fjComboGeneral("Parroquia" , "Municipio");
 	});
@@ -36,7 +36,7 @@ $(function() {
 
 
 
-//Funcion para recuperar la contraseña
+// Función para recuperar la contraseña
 function enviar(pvValor) {
 	let arrFormulario = "#formCompletarRegistro";
 	let vsUsuario = $(arrFormulario + " #ctxUsuario");
@@ -264,35 +264,10 @@ function valida_clave () {
 		}).then((result) => {
 			vsClave.focus();
 		});
-		vsClave2.val(""); //se limpia la clave de confirmacion
+		vsClave2.val(""); //se limpia la clave de confirmación
 		vsClave2.focus(); //enfoca el cursor en el campo que falta del formulario
 		return vbComprobar; // rompe la función para que el usuario verifique antes de continuar
 	}
 
 	return vbComprobar;
-}
-
-
-function salir(psRuta = ""){
-	swal({
-		html: "¿Está seguro que quiere salir?",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#DD6B55",
-		confirmButtonText: "Aceptar!",
-		cancelButtonText: "Cancelar!",
-		showCloseButton: true
-	}).then((result) => {
-		if (result.value) {
-			location.href= psRuta + "controlador/conCerrar.php";
-		}
-		else if (result.dismiss) {
-			swal({
-				html: "Espere en 5 segundos!",
-				text: "¡Gracias por permanecer en la página!",
-				timer: 5000,
-				showConfirmButton: false
-			});
-		}
-	});
 }
