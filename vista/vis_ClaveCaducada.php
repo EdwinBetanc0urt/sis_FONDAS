@@ -5,7 +5,7 @@ if (strlen(session_id()) < 1) {
 	session_start();
 }
 
-if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
+if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 	isset($_SESSION["sistema"]) AND $_SESSION["sistema"] == "fondas") {
 ?>
 
@@ -52,7 +52,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 					<div class="row">
 
 						<div class="form-group ui-front">
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
 								<label for="ctxNombre">* Primer Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45"
 									name="ctxNombre" type="text" size="20" required value="<?php
@@ -62,15 +62,17 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="ctxNombre2">* Segundo Nombre</label>
-								<input id="ctxNombre2" class="valida_alfabetico form-control"
-									maxlength="45" name="ctxNombre2" type="text" size="20"
-									placeholder="Ingrese la Nombre" data-toggle="tooltip"
+							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+								<label for="ctxNombre">* Primer Nombre</label>
+								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45"
+									name="ctxNombre" type="text" size="20" required value="<?php
+									if(isset($_SESSION['nombre']))
+										echo $_SESSION['nombre'];
+									?>" placeholder="Ingrese la Descripción" data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
 								<label for="ctxApellido">* Primer Apellido</label>
 								<input id="ctxApellido" class="valida_alfabetico form-control"
 									maxlength="45" name="ctxApellido" type="text" size="20" required
@@ -79,117 +81,6 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 										echo $_SESSION['apellido'];
 									?>" placeholder="Ingrese la Apellido" data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="ctxApellido2">* Segundo Apellido</label>
-								<input id="ctxApellido2" class="valida_alfabetico form-control"
-									maxlength="45" name="ctxApellido2" type="text" size="20"
-									placeholder="Ingrese la Apellido" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="cmbSexo">* Sexo</label>
-								<select id='cmbSexo' name='cmbSexo' class="dinamico form-control select2"
-									data-toggle="tooltip" data-placement="right"
-									title="Estado al cual pertenece el municipio" size="1">
-											<option value="">Selecciona Uno...</option>
-											<option value="m">Masculino</option>
-											<option value="f">Femenino </option>
-											<option value="i">Indefinido</option>
-								</select>
-								<input id="hidSexo" type="hidden" value="<?php
-									if(isset($_SESSION['sexo']))
-										echo $_SESSION['sexo']; ?>" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="cmbEdoCivil">* Estado Civil</label>
-								<select id='cmbEdoCivil' name='cmbEdoCivil' class="dinamico form-control select2"
-									data-toggle="tooltip" data-placement="right"
-									title="EdoCivil al cual pertenece el municipio" size="1">
-									<option value="">Selecciona Uno...</option>
-									<option value="s">Soltero</option>
-									<option value="c">Casado</option>
-									<option value="d">Divorciado</option>
-									<option value="v">Viudo</option>
-								</select>
-								<input id="hibEdoCivil" type="hidden" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="datFechaNac">* Fecha de Nacimiento</label>
-								<input id="datFechaNac" class="valida_alfabetico form-control"
-									maxlength="45" name="datFechaNac" type="date" size="20" required
-									placeholder="Ingrese la Fecha de Nacimiento" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="ctxCorreo">* Correo</label>
-								<input id="ctxCorreo" class="valida_correo form-control" maxlength="45"
-								name="ctxCorreo" type="text" size="20" required value="<?php
-									if(isset($_SESSION['correo']))
-										echo $_SESSION['correo'];
-									?>" placeholder="Ingrese el Correo" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="numTelefono">* Teléfono Móvil</label>
-								<input id="numTelefono" name="numTelefono" class="valida_numerico form-control"
-									maxlength="45"	type="text" size="20" required value="<?php
-									if(isset($_SESSION['tel_mov']))
-										echo $_SESSION['tel_mov'];
-									?>" placeholder="Ingrese el Telefono Movil" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="numTelefono2">* Teléfono Fijo</label>
-								<input id="numTelefono2" class="valida_numerico form-control"
-									maxlength="45" name="numTelefono2" type="text" size="20"
-									placeholder="Ingrese el Telefono Fijo" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
-							</div>
-
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<label for="ctxDireccion">* Dirección</label>
-								<input id="ctxDireccion" class="valida_alfabetico form-control"
-									maxlength="45" name="ctxDireccion" type="text" size="20" required
-									placeholder="Ingrese la Dirección" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<label for="cmbEstado">* Estado</label>
-								<select id='cmbEstado' data-placement="right"
-									class="dinamico form-control select2" data-toggle="tooltip"
-									title="Estado al cual pertenece el municipio" size="1">
-									<option value="">Selecciona Uno...</option>
-								</select>
-								<input id="hidEstado" type="hidden" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<label for="cmbMunicipio">* Municipio</label>
-								<select id='cmbMunicipio' data-toggle="tooltip" size="1"
-									class="dinamico form-control select2"
-									data-placement="right" title="Estado al cual pertenece el municipio">
-									<option value="">Selecciona Uno...</option>
-								</select>
-								<input id="hidMunicipio" type="hidden" />
-							</div>
-
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<label for="cmbParroquia">* Parroquia</label>
-								<select id='cmbParroquia' name='cmbParroquia' class="dinamico form-control select2"
-									data-toggle="tooltip" data-placement="right" size="1"
-									title="Estado al cual pertenece el municipio">
-									<option value="">Selecciona Uno...</option>
-								</select>
-								<input id="hidParroquia" type="hidden" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

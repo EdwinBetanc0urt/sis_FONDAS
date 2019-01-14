@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pagina de Inicio FONDAS</title>
+	<title>Pagina de Inicio FONDAS</title>
 
 	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" href="public/img/icono.ico" />
 	<link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,11 +49,11 @@
 <!--inicio de cuerpo-->
 
 		<!--inicio de cintillo-->
-        <div class="header" style="width:100%;align:center;position:relative; background:#37474F;"  >
-            <div style="width:100%;position:abosolute;height:90%">
-	        		<img src="public/img/logofondas.png" id="logo" style="width:100%">
-            </div>
-        </div>
+		<div class="header" style="width:100%;align:center;position:relative; background:#37474F;"  >
+			<div style="width:100%;position:abosolute;height:90%">
+					<img src="public/img/logofondas.png" id="logo" style="width:100%">
+			</div>
+		</div>
 		<!--fin de cintillo-->
 
 <!--inicio de menu-->
@@ -69,31 +69,31 @@
 <!--fin menu-->
 
 <!--centro-->
-        <div class="row">
+		<div class="row">
 		
-        <div class="col-9" style="text-align:center;">
-            <img src="public/img/croquis.png" id="sd" style="width:90%; height:300px; border-radius:12px; ">
-        </div>
-		<div  class="col-3 left  ">    
-            
+		<div class="col-9" style="text-align:center;">
+			<img src="public/img/croquis.png" id="sd" style="width:90%; height:300px; border-radius:12px; ">
+		</div>
+		<div  class="col-3 left  ">	
+			
 			<div class="row content">
-                <a href="#" class="fa fa-facebook"></a>
+				<a href="#" class="fa fa-facebook"></a>
 				<a href="#" class="fa fa-instagram"></a>
 				<a href="#" class="fa fa-twitter"></a>
 			</div>
 		</div>
 
 
-        </div>
+		</div>
 <!--fin centro-->
 
 <!--pie de pagina-->
 	<div class="pie" style="max-height:65px; background-color:#37474F; width:100%">
-        <h5>
+		<h5>
 			© Fondo para el Desarrollo Agrario Socialista
 
-        </h5>
-    </div>
+		</h5>
+	</div>
 <!--pie de pagina-->
 
 
@@ -104,12 +104,11 @@
 </html>
 <script>
 function mymenu() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
-    }
+	var x = document.getElementById("myTopnav");
+	if (x.className === "topnav") {
+		x.className += " responsive";
+	} else {
+		x.className = "topnav";
+	}
 }
-
  </script>

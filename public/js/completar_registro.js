@@ -271,28 +271,3 @@ function valida_clave () {
 
 	return vbComprobar;
 }
-
-
-function salir(psRuta = ""){
-	swal({
-		html: "¿Está seguro que quiere salir?",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#DD6B55",
-		confirmButtonText: "Aceptar!",
-		cancelButtonText: "Cancelar!",
-		showCloseButton: true
-	}).then((result) => {
-		if (result.value) {
-			location.href= psRuta + "controlador/conCerrar.php";
-		}
-		else if (result.dismiss) {
-			swal({
-				html: "Espere en 5 segundos!",
-				text: "¡Gracias por permanecer en la página!",
-				timer: 5000,
-				showConfirmButton: false
-			});
-		}
-	});
-}

@@ -79,6 +79,7 @@
 		 */
 	</script>
 
+	<script type="text/javascript" src="public/js/_core.js"></script>
 	<script type="text/javascript" src="public/js/validaciones.js"></script>
 	<script type="text/javascript" src="public/js/intranet.js"></script>
 	<script type="text/javascript" src="<?= "public/js/" . strtolower( $form ) . ".js"; ?>"></script>

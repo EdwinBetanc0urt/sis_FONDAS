@@ -53,7 +53,7 @@
 <div id="title-sect">
 <h1>sis_fondas<br> Data Dictionay</h1>
 <p>
-<em>2018-04-05</em>
+<em>2019-01-13</em>
 </p>
 <p class="proj-desc">
 <em></em>
@@ -67,6 +67,7 @@
 <li><a href='#tbitacora'>tbitacora</a></li>
 <li><a href='#tboton'>tboton</a></li>
 <li><a href='#tcargo'>tcargo</a></li>
+<li><a href='#tconfiguracion'>tconfiguracion</a></li>
 <li><a href='#tdepartamento'>tdepartamento</a></li>
 <li><a href='#tdetalle_asistencia'>tdetalle_asistencia</a></li>
 <li><a href='#tdetalle_jornada'>tdetalle_jornada</a></li>
@@ -81,7 +82,6 @@
 <li><a href='#tmotivo_reposo'>tmotivo_reposo</a></li>
 <li><a href='#tmunicipio'>tmunicipio</a></li>
 <li><a href='#tparroquia'>tparroquia</a></li>
-<li><a href='#tpermiso'>tpermiso</a></li>
 <li><a href='#tpermiso'>tpermiso</a></li>
 <li><a href='#tpersonas'>tpersonas</a></li>
 <li><a href='#tpregunta'>tpregunta</a></li>
@@ -161,6 +161,19 @@
     <td class='attr'>&nbsp;</td>
     <td></td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tasistencia'>
 <caption>tasistencia</caption>
@@ -321,6 +334,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tasistencia'>
 <caption>tasistencia</caption>
 <tr><td colspan='11'></td></tr>
@@ -351,7 +377,7 @@
     <td></td>
 </tr>
 <tr>
-    <td>fecha</td>
+    <td>fecha_elaboracion</td>
     <td>TIMESTAMP</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -386,7 +412,20 @@
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td class='attr'>&nbsp;</td>
-    <td>'estatus'</td>
+    <td>'activo'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>condicion</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'abierto'</td>
     <td></td>
 </tr>
 <tr>
@@ -401,6 +440,19 @@
     <td class='attr'>&nbsp;</td>
     <td></td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tbitacora'>
 <caption>tbitacora</caption>
@@ -496,6 +548,19 @@
     <td></td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tboton'>
 <caption>tboton</caption>
 <tr><td colspan='11'></td></tr>
@@ -590,6 +655,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tcargo'>
 <caption>tcargo</caption>
 <tr><td colspan='11'></td></tr>
@@ -663,6 +741,113 @@
     <td>INT(11)</td>
     <td>&nbsp;</td>
     <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
+<table id='tconfiguracion'>
+<caption>tconfiguracion</caption>
+<tr><td colspan='11'>tabla para la configuración general del sistema</td></tr>
+<tr>
+    <th>Column name</th>
+    <th>DataType</th>
+    <th><abbr title='Primary Key'>PK</abbr></th>
+    <th><abbr title='Not Null'>NN</abbr></th>
+    <th><abbr title='Unique'>UQ</abbr></th>
+    <th><abbr title='Binary'>BIN</abbr></th>
+    <th><abbr title='Unsigned'>UN</abbr></th>
+    <th><abbr title='Zero Fill'>ZF</abbr></th>
+    <th><abbr title='Auto Increment'>AI</abbr></th>
+    <th>Default</th>
+    <th>Comment</th>
+</tr>
+<tr>
+    <td>idconfiguracion</td>
+    <td>INT</td>
+    <td>&#10004;</td>
+    <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&#10004;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>dias_vence_clave</td>
+    <td>INT(2)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>90</td>
+    <td></td>
+</tr>
+<tr>
+    <td>max_intentos_login</td>
+    <td>INT(1)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>3</td>
+    <td></td>
+</tr>
+<tr>
+    <td>max_rango_clave</td>
+    <td>INT(1)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>5</td>
+    <td></td>
+</tr>
+<tr>
+    <td>estatus</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'activo'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -752,6 +937,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
 <table id='tdetalle_asistencia'>
 <caption>tdetalle_asistencia</caption>
 <tr><td colspan='11'></td></tr>
@@ -779,19 +977,6 @@
     <td>&nbsp;</td>
     <td>&#10004;</td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>estatus</td>
-    <td>CHAR(12)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'activo'</td>
     <td></td>
 </tr>
 <tr>
@@ -824,7 +1009,7 @@
     <td>hora_entrada</td>
     <td>TIME</td>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td>&#10004;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -845,6 +1030,71 @@
     <td class='attr'>&nbsp;</td>
     <td></td>
     <td></td>
+</tr>
+<tr>
+    <td>observacion</td>
+    <td>VARCHAR(200)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>hora_entrada1</td>
+    <td>TIME</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>hora_salida2</td>
+    <td>TIME</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>estatus</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'activo'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tdetalle_jornada'>
 <caption>tdetalle_jornada</caption>
@@ -876,19 +1126,6 @@
     <td></td>
 </tr>
 <tr>
-    <td>estatus</td>
-    <td>CHAR(12)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'activo'</td>
-    <td></td>
-</tr>
-<tr>
     <td>idjornada</td>
     <td>INT(11)</td>
     <td>&nbsp;</td>
@@ -913,6 +1150,32 @@
     <td class='attr'>&nbsp;</td>
     <td></td>
     <td></td>
+</tr>
+<tr>
+    <td>estatus</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'activo'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tdetalle_vacacion'>
 <caption>tdetalle_vacacion</caption>
@@ -995,6 +1258,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tdia_feriado'>
 <caption>tdia_feriado</caption>
 <tr><td colspan='11'></td></tr>
@@ -1039,7 +1315,7 @@
 </tr>
 <tr>
     <td>nombre</td>
-    <td>VARCHAR(45)</td>
+    <td>VARCHAR(255)</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -1062,6 +1338,19 @@
     <td class='attr'>&nbsp;</td>
     <td>'activo'</td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tdia_semana'>
 <caption>tdia_semana</caption>
@@ -1131,6 +1420,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='testado'>
 <caption>testado</caption>
 <tr><td colspan='11'></td></tr>
@@ -1184,6 +1486,19 @@
     <td>&nbsp;</td>
     <td class='attr'>&nbsp;</td>
     <td>'activo'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
     <td></td>
 </tr>
 <table id='thistorial_clave'>
@@ -1267,6 +1582,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tjornada'>
 <caption>tjornada</caption>
 <tr><td colspan='11'></td></tr>
@@ -1301,6 +1629,19 @@
     <td>VARCHAR(45)</td>
     <td>&nbsp;</td>
     <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>descripcion</td>
+    <td>VARCHAR(255)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -1400,6 +1741,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tmodulos'>
 <caption>tmodulos</caption>
 <tr><td colspan='11'></td></tr>
@@ -1480,6 +1834,19 @@
     <td class='attr'>&nbsp;</td>
     <td>'activo'</td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tmotivo_permiso'>
 <caption>tmotivo_permiso</caption>
@@ -1562,6 +1929,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tmotivo_reposo'>
 <caption>tmotivo_reposo</caption>
 <tr><td colspan='11'></td></tr>
@@ -1643,6 +2023,19 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tmunicipio'>
 <caption>tmunicipio</caption>
 <tr><td colspan='11'></td></tr>
@@ -1710,6 +2103,19 @@
     <td class='attr'>&nbsp;</td>
     <td>'activo'</td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tparroquia'>
 <caption>tparroquia</caption>
@@ -1779,38 +2185,9 @@
     <td>'activo'</td>
     <td></td>
 </tr>
-<table id='tpermiso'>
-<caption>tpermiso</caption>
-<tr><td colspan='11'></td></tr>
 <tr>
-    <th>Column name</th>
-    <th>DataType</th>
-    <th><abbr title='Primary Key'>PK</abbr></th>
-    <th><abbr title='Not Null'>NN</abbr></th>
-    <th><abbr title='Unique'>UQ</abbr></th>
-    <th><abbr title='Binary'>BIN</abbr></th>
-    <th><abbr title='Unsigned'>UN</abbr></th>
-    <th><abbr title='Zero Fill'>ZF</abbr></th>
-    <th><abbr title='Auto Increment'>AI</abbr></th>
-    <th>Default</th>
-    <th>Comment</th>
-</tr>
-<tr>
-    <td>idpermiso</td>
-    <td>INT(11)</td>
-    <td>&#10004;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>otorgante_id</td>
-    <td>INT(11)</td>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -1818,229 +2195,8 @@
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
     <td></td>
-</tr>
-<tr>
-    <td>idsolicitante</td>
-    <td>INT(11)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>idrenglon</td>
-    <td>INT(11)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>idjefedep</td>
-    <td>INT(11)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>fecha_sol</td>
-    <td>DATE</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>motivo_permiso</td>
-    <td>VARCHAR(100)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>fechainicio_permiso</td>
-    <td>DATE</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>fechafinal_permiso</td>
-    <td>DATE</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>hora_ini</td>
-    <td>TIME</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>hora_fin</td>
-    <td>TIME</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>observacion_permiso</td>
-    <td>VARCHAR(45)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>observacion_final</td>
-    <td>VARCHAR(100)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>fecha_rev_jefe</td>
-    <td>DATE</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>fecha_rev_rh</td>
-    <td>DATE</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>feriados</td>
-    <td>INT(2)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>NULL</td>
-    <td></td>
-</tr>
-<tr>
-    <td>duracion</td>
-    <td>INT(4)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>estado</td>
-    <td>CHAR(1)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'1'</td>
-    <td>1 solicitado por el trabajador, 2 revisado por el jefe de departamento, 3 aprobado por el recurso humano</td>
-</tr>
-<tr>
-    <td>estatus</td>
-    <td>CHAR(12)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'activo'</td>
-    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tpermiso'>
 <caption>tpermiso</caption>
@@ -2134,32 +2290,6 @@
     <td>&nbsp;</td>
     <td class='attr'>&nbsp;</td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>condicion</td>
-    <td>CHAR(12)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'solicitado'</td>
-    <td></td>
-</tr>
-<tr>
-    <td>estatus</td>
-    <td>CHAR(12)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'activo'</td>
     <td></td>
 </tr>
 <tr>
@@ -2292,6 +2422,45 @@
     <td></td>
     <td>trabajador que aprueba el documento para efectos de nomina</td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
+<tr>
+    <td>condicion</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'solicitado'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>estatus</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'activo'</td>
+    <td></td>
+</tr>
 <table id='tpersonas'>
 <caption>tpersonas</caption>
 <tr><td colspan='11'></td></tr>
@@ -2339,6 +2508,19 @@
     <td>CHAR(10)</td>
     <td>&nbsp;</td>
     <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>rif</td>
+    <td>INT(1)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -2504,6 +2686,19 @@
     <td></td>
 </tr>
 <tr>
+    <td>condicion</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
     <td>estatus</td>
     <td>CHAR(12)</td>
     <td>&nbsp;</td>
@@ -2515,6 +2710,19 @@
     <td class='attr'>&nbsp;</td>
     <td>'activo'</td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='tpregunta'>
 <caption>tpregunta</caption>
@@ -2570,6 +2778,19 @@
     <td class='attr'>&nbsp;</td>
     <td>'activo'</td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='treposo'>
 <caption>treposo</caption>
@@ -2663,32 +2884,6 @@
     <td>&nbsp;</td>
     <td class='attr'>&nbsp;</td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>condicion</td>
-    <td>VARCHAR(45)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'solicitado'</td>
-    <td></td>
-</tr>
-<tr>
-    <td>estatus</td>
-    <td>VARCHAR(45)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'activo'</td>
     <td></td>
 </tr>
 <tr>
@@ -2821,6 +3016,45 @@
     <td></td>
     <td>trabajador que aprueba el documento para efectos de nomina</td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
+<tr>
+    <td>condicion</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'solicitado'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>estatus</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'activo'</td>
+    <td></td>
+</tr>
 <table id='trespuesta'>
 <caption>trespuesta</caption>
 <tr><td colspan='11'></td></tr>
@@ -2902,6 +3136,19 @@
     <td></td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='ttipo_ausencia'>
 <caption>ttipo_ausencia</caption>
 <tr><td colspan='11'></td></tr>
@@ -2957,9 +3204,22 @@
     <td>'activo'</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='ttipo_usuario'>
 <caption>ttipo_usuario</caption>
-<tr><td colspan='11'></td></tr>
+<tr><td colspan='11'>roles del usuario</td></tr>
 <tr>
     <th>Column name</th>
     <th>DataType</th>
@@ -3011,6 +3271,19 @@
     <td class='attr'>&nbsp;</td>
     <td>'activo'</td>
     <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
 </tr>
 <table id='ttrabajador'>
 <caption>ttrabajador</caption>
@@ -3145,6 +3418,19 @@
     <td></td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
 <table id='tusuario'>
 <caption>tusuario</caption>
 <tr><td colspan='11'></td></tr>
@@ -3265,6 +3551,19 @@
     <td>CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</td>
     <td></td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
 <table id='tvacacion'>
 <caption>tvacacion</caption>
 <tr><td colspan='11'></td></tr>
@@ -3344,32 +3643,6 @@
     <td>&nbsp;</td>
     <td class='attr'>&nbsp;</td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>condicion</td>
-    <td>CHAR(12)</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'solicitado'</td>
-    <td></td>
-</tr>
-<tr>
-    <td>estatus</td>
-    <td>CHAR(12)</td>
-    <td>&nbsp;</td>
-    <td>&#10004;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class='attr'>&nbsp;</td>
-    <td>'activo'</td>
     <td></td>
 </tr>
 <tr>
@@ -3489,6 +3762,45 @@
     <td></td>
     <td>trabajador que aprueba el documento para efectos de nomina</td>
 </tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td>columna utilizada para la bitacora</td>
+</tr>
+<tr>
+    <td>condicion</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'solicitado'</td>
+    <td></td>
+</tr>
+<tr>
+    <td>estatus</td>
+    <td>CHAR(12)</td>
+    <td>&nbsp;</td>
+    <td>&#10004;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td>'activo'</td>
+    <td></td>
+</tr>
 <table id='tvistas'>
 <caption>tvistas</caption>
 <tr><td colspan='11'></td></tr>
@@ -3573,6 +3885,19 @@
 <tr>
     <td>idmodulo</td>
     <td>INT(11)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class='attr'>&nbsp;</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>idusuario</td>
+    <td>CHAR(11)</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
