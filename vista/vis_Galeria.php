@@ -1,33 +1,29 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Pagina de Inicio FONDAS</title>
-  <link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8"/>
+  <title>Pagina de Inicio FONDAS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="public/img/icono.ico" />
   <link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8"/>
-  <script type="text/javascript" src="public/jquery/jquery.js"></script>
+  <link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
   <link rel="stylesheet" href="public/css/menu.css">
   <link rel="stylesheet" href="public/css/w3.css">
   <link rel="stylesheet" href="public/css/galeria.css">
-  <link rel="stylesheet" href="public/sweetalert2/sweetalert2.min.css">
-  <script src="public/sweetalert2/sweetalert2.min.js"></script>
+  <script type="text/javascript" src="public/jquery/jquery.js"></script>
 </head>
 
+<body
+  <!--inicio de cintillo-->
+  <div class="header" style="width:100%;align:center;position:relative; background:#37474F;"  >
+    <div style="width:100%;position:abosolute;height:90%">
+      <img src="public/img/logofondas.png"  style="width:100%">
+    </div>
+  </div>
+  <!--fin de cintillo-->>
 
-<body>
 <!--inicio de cuerpo-->
-<!--inicio de cintillo-->
-        <div class="header" style="width:100%;align:center;position:relative; background:#37474F;"  >
-            <div style="width:100%;position:abosolute;height:90%">
-	        		<img src="public/img/logofondas.png"  style="width:100%">
-            </div>
-        </div>
-<!--fin de cintillo-->
 <!--inicio de menu-->
 <div style="padding:20px;position:absolute;background:url('public/img/detrasparrafo.jpg');height:500px;width:100%; ">
         <div class="topnav" id="myTopnav">
@@ -39,18 +35,18 @@
 		  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="mymenu()">&#9776;</a>
 		</div>
 <!--fin menu-->
-		<h4 style="color:#4D4D4D; font-weight: bold; text-align:center;" class="texto">Galeria</h4>	
+		<h4 style="color:#4D4D4D; font-weight: bold; text-align:center;" class="texto">Galeria</h4>
 <div class="row">
-	<div  class="col-12"> 
+	<div  class="col-12">
 		<div class="column">
 			<div class="card">
 				<img src="public/img/page4_img1.jpg" style="width:100%;" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
-				<div class="container">				
+				<div class="container">
 					<button class="accordion"><span style="font-weight: bold;">Descripción</span></button>
 					<div class="panel">
 					  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor </p><p>incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
@@ -76,8 +72,8 @@
 				</div>
 			</div>
 		</div>
-		
-	</div> 
+
+	</div>
 
 </div>
 
@@ -136,7 +132,7 @@ function mymenu() {
     }
 }
 
- 
+
 function openModal() {
   document.getElementById('myModal').style.display = "block";
 }
@@ -185,7 +181,7 @@ for (i = 0; i < acc.length; i++) {
       panel.style.maxHeight = null;
     } else {
       panel.style.maxHeight = panel.scrollHeight + "px";
-    } 
+    }
   }
 }
 </script>

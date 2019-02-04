@@ -1,41 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <title>Pagina de Inicio FONDAS</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagina de Inicio FONDAS</title>
+
 	<link rel="icon" type="image/png" href="public/img/icono.ico" />
 	<link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
 	<link rel="stylesheet" href="public/css/menu.css">
-	<link rel="stylesheet" href="public/sweetalert2/sweetalert2.min.css">
 	<link rel="stylesheet" href="public/css/w3.css">
-	<link rel="stylesheet" href="public/css/imagenes_aleatorias.css">
-	<script type="text/javascript" src="public/jquery/jquery.js"></script>
-	<script src="public/sweetalert2/sweetalert2.min.js"></script>
 
-	<?php
-		// si existe la variable get msjAlerta Incluye el archivo JavaScript
-		if ( isset( $_GET['msjAlerta'] ) ) {
-			?>
-			<!--  Mensajes Emergentes -->
-			<script src="public/js/alertas.js" type="application/javascript"></script>
-			<script type="application/x-javascript">
-				$( function () {
-					//cuando el documento este listo llama la funcion fjMensajes que esta en el archivo jsp_Alertas.js
-					fjMensajes("<?= $_GET["msjAlerta"]; ?>");
-					//envia el valor que tiene msjAlerta (sinconsulta, registro, nocambio, etc)
-				});
-			</script>
-			<?php
-		} //cierre del condicional de isset
-	?>
-	
+	<script type="text/javascript" src="public/jquery/jquery.js"></script>
 </head>
 
 <body>
@@ -64,7 +42,7 @@
         <div class="row">
 			<!--contenedor de imagen-->
             <div class="col-8" style="text-align:center;">
-            
+
 				<div class="slideshow-container">
 
 					<div class="mySlides fade">
@@ -82,9 +60,9 @@
 					  <img src="public/img/00.png" style="width:95%; height:400px; border-radius:12px;">
 					</div>
 					<div style="text-align:center">
-					  <span class="dot"></span> 
-					  <span class="dot"></span> 
-					  <span class="dot"></span> 
+					  <span class="dot"></span>
+					  <span class="dot"></span>
+					  <span class="dot"></span>
 					</div>
 
 				</div>
@@ -92,21 +70,21 @@
 			</div>
 			<!--fin contenedor de imagen-->
 
-			<div  class="col-4 left  ">    
+			<div  class="col-4 left  ">
            		<div class="row content" style="background:url('public/img/hhh.jpg');">
                     <div style="background:#37474F; height:100%;" class="w3-center">
 						<h4 style="color:#fff">Noticias Actualidad..</h4>
 					</div>
 					<MARQUEE HEIGHT=340px DIRECTION=up SCROLLAMOUNT=5 behavior=scroll >
 						<div class="w3-content w3-section" style="max-width:400px">
-							
+
 							<p>Fondas se suma al encadenamiento productivo de las casas de alimentación de
 							Carabobo</p>
 							<p style="align:center">
-							<img src="public/img/caraboboalimentacion.jpg" style="width:100%; height:100%; border-radius:5px 5PX 12PX 12PX ; "> 
+							<img src="public/img/caraboboalimentacion.jpg" style="width:100%; height:100%; border-radius:5px 5PX 12PX 12PX ; ">
 							</p>
-						
-							
+
+
 							<p> Presidente de Fondas</p>
 							</p>inspeccionó Núcleo de Formación “Indio Rangel”</p>
 							<p>
@@ -123,8 +101,8 @@
 								<img src="public/img/arrimeapuremaiz.jpg" style="width:100%; height:80%; border-radius:5px 5PX 12PX 12PX ; ">
 							</p>
 						</div>
-					</MARQUEE> 
-                  
+					</MARQUEE>
+
 			</div>
 		</div>
 		</div>
@@ -132,26 +110,16 @@
 
 		<!--pie de pagina-->
 		<div class="pie" style="max-height:65px; background-color:#37474F; width:100%">
-	        <h5>
-	         © Fondo para el Desarrollo Agrario Socialista
-
-	        </h5>
-	    </div>
+	    <h5>
+	      © Fondo para el Desarrollo Agrario Socialista
+	    </h5>
+	  </div>
 		<!--pie de pagina-->
 	</div>
 	<!--fin cuerpo-->
+	<script type="text/javascript" src="public/js/_core.js"></script>
 	<script>
-		function mymenu() {
-			var x = document.getElementById("myTopnav");
-			if (x.className === "topnav") {
-			    x.className += " responsive";
-			}
-			else {
-			    x.className = "topnav";
-			}
-		}
-
-	    /**imagenes*/
+	  /**imagenes*/
 		var slideIndex = 0;
 		showSlides();
 
@@ -160,17 +128,19 @@
 			var slides = document.getElementsByClassName("mySlides");
 			var dots = document.getElementsByClassName("dot");
 			for (i = 0; i < slides.length; i++) {
-			   slides[i].style.display = "none";  
+			   slides[i].style.display = "none";
 			}
 			slideIndex++;
-			if (slideIndex > slides.length) {slideIndex = 1}    
+			if (slideIndex > slides.length) {
+        slideIndex = 1
+      }
 			for (i = 0; i < dots.length; i++) {
 				dots[i].className = dots[i].className.replace(" active", "");
 			}
-			slides[slideIndex-1].style.display = "block";  
+			slides[slideIndex-1].style.display = "block";
 			dots[slideIndex-1].className += " active";
 			setTimeout(showSlides, 5000); // Change image every 2 seconds
-		}    
+		}
 	</script>
 </body>
 </html>

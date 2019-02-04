@@ -388,6 +388,16 @@ $( function() {
     }*/
   });
 
+  //Coloca todas las letras en mayúscula
+  $('.valor_mayuscula').keyup(function() {
+    this.value = this.value.toUpperCase();
+  });
+
+  //Coloca todas las letras en mayúscula
+  $('.valor_minuscula').keyup(function() {
+    this.value = this.value.toLowerCase();
+  });
+
   //validaciones para valores de FECHAS
   $('.valida_desc_fecha, valida_fecha').keyup(function() {
     this.value = this.value.replace(/[^0-9\-\/]/g, '');

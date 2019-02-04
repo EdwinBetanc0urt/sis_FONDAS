@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<title>Pagina de Inicio FONDAS</title>
-
-	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8"/>
 
+	<title>Pagina de Inicio FONDAS</title>
+
+	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
 	<link rel="icon" type="image/png" href="public/img/icono.ico" />
 	<link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<script type="text/javascript" src="public/jquery/jquery.js"></script>
 	<link rel="stylesheet" type="text/css" href="public/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="public/sweetalert2/sweetalert2.min.css">
-
 	<link rel="stylesheet" href="public/css/menu.css">
 	<link rel="stylesheet" href="public/css/w3.css">
+
+	<script type="text/javascript" src="public/jquery/jquery.js"></script>
 	<script type="text/javascript" src="public/bootstrap/js/bootstrap.js"></script>
 </head>
 
@@ -71,7 +71,7 @@
 									<span class="glyphicon glyphicon-refresh"></span>
 								</a>
 
-								<p><input type="text" class="w3-input" name="txtcopia" id="txtcopia"/></p>
+								<p><input type="text" class="w3-input valor_mayuscula" name="txtcopia" id="txtcopia"/></p>
 								<p>
 									<button style="background:#37474F" class="w3-button w3-block"
 										name='iniciar' value="ingresar" >

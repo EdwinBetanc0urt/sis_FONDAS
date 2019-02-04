@@ -1,19 +1,85 @@
-<?php 
+<?php
 
 $gsClase = "Cambiar_Clave";
 
 $ruta = "";
-if(is_file("modelo/cls{$gsClase}.php")){
+if (is_file("modelo/cls{$gsClase}.php")) {
 	require_once("modelo/cls{$gsClase}.php");
 }
-else{
+else {
 	$ruta = "../";
 	require_once("{$ruta}modelo/cls{$gsClase}.php");
 }
 
+switch($_POST['operacion']) {
+	case "ConsultaPreguntas":
+		obtenerPreguntas();
+		break;
+	case "CambiarClave":
+		cambiarClave();
+		break;
+}
 
 
+function registrar() {
+	global $gsClase;
+	$objClaveCaducada = new CambiarClave();
+	$objClaveCaducada->setFormulario($_POST);
 
+	$arreglo = $objClaveCaducada->consultar(); //realiza una consulta
+	//si existe un registro
+	if ($arreglo) {
+		//envía a la vista, con mensaje de la consulta
+		header("Location: ../?form={$gsClase}" .
+			"&msjAlerta=duplicado&getOpcion=" . $_POST["operacion"] .
+			"&getId=" . $arreglo[ $objClaveCaducada->atrId ] .
+			"&getNombre=" . $arreglo[ $objClaveCaducada->atrNombre ] .
+			"&getEstatus=" . $arreglo[ $objClaveCaducada->atrEstatus ]);
+	} //cierre del condicional si el RecordSet es verdadero
+	else {
+		if ($objClaveCaducada->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias
+			header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con mensaje de la consulta
+		else
+			header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con mensaje de la consulta*/
+	}
+}
+
+
+function obtenerPreguntas() {
+	$objeto = new CambiarClave();
+	$objeto->setFormulario($_POST);
+	$arrConsulta = $objeto->getPreguntas();
+	if ($arrConsulta) {
+		$arrRetorno = array(
+			"mensaje" => "consulto",
+			"ver" => "no",
+			"datos" => array(
+				"pregunta" => $arrConsulta["pregunta"],
+				"idpregunta" => $arrConsulta["idpregunta"]
+			)
+		);
+	} //cierre del condicional si el RecordSet es falso
+	else {
+		$arrRetorno = array(
+			"mensaje" => "noconsulto",
+			"ver" => "no",
+			"datos" => array(
+				"pregunta" => "",
+				"id_pregunta" => ""
+			)
+		);
+	}
+
+	header('Cache-Control: no-cache, must-revalidate');
+	header('Expires: Mon, 26 Jul 2000 05:00:00 GMT');
+	header('Content-type: application/json');
+	echo json_encode($arrRetorno);
+
+	$objeto->faDesconectar(); //cierra la conexión
+	unset($objeto); //destruye el objeto
+} //cierre de la función
+
+/*
 echo "<pre>";
 $objCifrado = new clsCifrado();
 
@@ -70,9 +136,6 @@ else {
 unset( $objCifrado ); //destruye el objeto
 $objeto->faDesconectar(); //cierra la conexión
 unset( $objeto ); //destruye el objeto*/
-
-
-
 
 
 

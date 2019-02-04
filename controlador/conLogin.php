@@ -41,10 +41,9 @@ else {
 				$objFechaInicio = new DateTime($arrClave["fecha_creacion"]);
 				$objFechaActual = new DateTime("now");
 				$vsDiferencia = $objFechaInicio->diff($objFechaActual);
-					var_dump($objUsuario->getDiasCaducidad());
 
 				// Clave Caducada
-				if ($vsDiferencia->d >= $objUsuario->getDiasCaducidad()) {
+				if ($vsDiferencia->days >= $objUsuario->getDiasCaducidad()) {
 					$_SESSION = array(
 						'sesion' => 'caducado' ,
 						'sistema' => 'fondas' ,
