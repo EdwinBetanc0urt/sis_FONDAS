@@ -215,7 +215,6 @@ class clsCifrado /*extends clsConexion */
 	}
 
 
-
 	/**
 	 * Asigna el parametro al atributo TextoE
 	 * @return string, convierte el texto encriptado a uno desencriptado
@@ -224,7 +223,6 @@ class clsCifrado /*extends clsConexion */
 	{
 		return $this->flDesencriptar($this->atrTexto); //devuelve el valor desencriptado
 	}
-
 
 
 	/**

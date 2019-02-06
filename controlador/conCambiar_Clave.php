@@ -20,6 +20,7 @@ switch($_POST['operacion']) {
 	case "ConsultaPreguntas":
 		obtenerPreguntas();
 		break;
+	case "RecuperarClave":
 	case "CambiarClave":
 		changeClave();
 		break;
@@ -47,6 +48,7 @@ function obtenerPreguntas() {
 			"mensaje" => "consulto",
 			"ver" => "no",
 			"datos" => array(
+				"idusuario" => $arrConsulta["id_usuario"],
 				"pregunta" => $arrConsulta["pregunta"],
 				"idpregunta" => $arrConsulta["idpregunta"]
 			)
@@ -57,6 +59,7 @@ function obtenerPreguntas() {
 			"mensaje" => "noconsulto",
 			"ver" => "no",
 			"datos" => array(
+				"idusuario" => "",
 				"pregunta" => "",
 				"id_pregunta" => ""
 			)

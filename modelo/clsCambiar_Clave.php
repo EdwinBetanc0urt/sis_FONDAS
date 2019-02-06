@@ -62,7 +62,7 @@ class CambiarClave extends clsConexion {
 			INSERT INTO thistorial_clave
 				(clave, estatus, id_usuario)
 			VALUES
-				('{$crypClave}', 1 , '{$idUsuario}') ; ";
+				('{$crypClave}', 'activo' , '{$idUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) { //verifica si se ejecuto bien
 			parent::faTransaccionFin();
@@ -150,8 +150,11 @@ class CambiarClave extends clsConexion {
 		if (isset($_SESSION["id_usuario"])) {
 			$usuario = $_SESSION["id_usuario"];
 		}
-		if (isset($this->atrFormulario["idu"])) {
+		elseif (isset($this->atrFormulario["idu"])) {
 			$usuario = $this->atrFormulario["idu"];
+		}
+		else (isset($this->atrFormulario["ctxUsuario"])) {
+			$usuario = $this->getIdUsuario($this->atrFormulario["ctxUsuario"]);
 		}
 		if (! $this->verificarRespuestas($usuario)) {
 			return "respuestaincorrecta";
@@ -169,6 +172,25 @@ class CambiarClave extends clsConexion {
 			return "clavecambio";
 		}
 		return "clavenocambio";
+	}
+
+
+	function getIdUsuario($aliasUsuario) {
+		$sql = "
+			SELECT U.id_usuario
+
+			WHERE
+				U.id_usuario = '{$aliasUsuario}'
+
+			LIMIT 1 ";
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		//verifica si se ejecuto exitosamente la sentencia
+		if (parent::faVerificar($tupla)) {
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
+			return $arreglo["id_usuario"]; //retorna los datos obtenidos de la bd en un arreglo
+		}
+		return false;
 	}
 
 
@@ -204,8 +226,7 @@ class CambiarClave extends clsConexion {
 			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
 

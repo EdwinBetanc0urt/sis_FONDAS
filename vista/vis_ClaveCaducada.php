@@ -102,9 +102,10 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 									data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 								<div class="divItemsClave">
 									<p id="claveMinuscula" class="invalido">
+										Al menos <strong>1 letra en minúscula (a-z)</strong>
 									</p>
 									<p id="claveMayuscula" class="invalido">
-										Al menos <strong>1 letra en MAYUSCULA(A-Z)</strong>
+										Al menos <strong>1 letra en MAYUSCULA (A-Z)</strong>
 									</p>
 									<p id="claveNumero" class="invalido">
 										Al menos <strong>1 numero (0-9)</strong>
@@ -161,7 +162,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 	<script type="text/javascript" src="public/js/_core.js"></script>
 	<script type="text/javascript" src="public/js/ajax.js"></script>
 	<script type="text/javascript" src="public/js/clave_items.js"></script>
-	<script type="text/javascript" src="public/js/clave_caducada.js"></script>
+	<script type="text/javascript" src="public/js/cambiar_clave.js"></script>
 <!--fin cuerpo-->
 </body>
 </html>
