@@ -19,27 +19,27 @@ $(function() {
       claveLongitud = false, claveMinus = false, claveMayus = false,
         claveNumero = false, claveEspecial = false;
 
-      //valida el tamaño de caracteres sea mínimo de 8
+      // valida el tamaño de caracteres sea mínimo de 8
       if (pswd.length >= 8) {
         claveLongitud = true;
         $('#claveLongitud').removeClass('invalido').addClass('valido');
       }
-      //valida si hay letra claveMinuscula
+      // valida si hay letra claveMinuscula
       if (pswd.match(/[a-z]/)) {
         claveMinus = true;
         $('#claveMinuscula').removeClass('invalido').addClass('valido');
       }
-      //valida si hay letra Mayúscula
+      // valida si hay letra Mayúscula
       if (pswd.match(/[A-Z]/)) {
         claveMayus = true;
         $('#claveMayuscula').removeClass('invalido').addClass('valido');
       }
-      //valida que contenga claveNumeros
+      // valida que contenga claveNumeros
       if (pswd.match(/\d/)) {
         claveNumero = true;
         $('#claveNumero').removeClass('invalido').addClass('valido');
       }
-      //valida que contenga caracteres claveEspeciales
+      // valida que contenga caracteres claveEspeciales
       //if (pswd.match(/\W/)) {
       if (pswd.match(/[.+*\-_$]/)) {
         claveEspecial = true;
@@ -87,13 +87,15 @@ function ObtenerPreguntas(nRequest = "") {
     }
   })
   .done(function(arrRespuesta) {
-    if (nRequest != "") {
-      $("#textPregunta1").html(arrRespuesta.datos.pregunta);
-      $("#hidPregunta1").val(arrRespuesta.datos.idpregunta);
-    }
-    else {
-      $("#textPregunta2").html(arrRespuesta.datos.pregunta);
-      $("#hidPregunta2").val(arrRespuesta.datos.idpregunta);
+    if (typeof arrRespuesta != 'undefined') {
+      if (nRequest != "") {
+        $("#textPregunta1").html(arrRespuesta.datos.pregunta);
+        $("#hidPregunta1").val(arrRespuesta.datos.idpregunta);
+      }
+      else {
+        $("#textPregunta2").html(arrRespuesta.datos.pregunta);
+        $("#hidPregunta2").val(arrRespuesta.datos.idpregunta);
+      }
     }
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
@@ -106,4 +108,4 @@ function ObtenerPreguntas(nRequest = "") {
       footer: '<b>Error http:</b> ' + errorThrown + " / " + jqXHR.status
     });
   });
-} //cierre de la función
+} // cierre de la función

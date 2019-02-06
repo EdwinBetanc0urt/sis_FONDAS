@@ -1,5 +1,10 @@
 <?php
 
+// inicio de sesión
+if (strlen(session_id()) < 1) {
+	session_start();
+}
+
 $gsClase = "Cambiar_Clave";
 
 $ruta = "";
@@ -16,32 +21,20 @@ switch($_POST['operacion']) {
 		obtenerPreguntas();
 		break;
 	case "CambiarClave":
-		cambiarClave();
+		changeClave();
 		break;
 }
 
 
-function registrar() {
+function changeClave() {
 	global $gsClase;
-	$objClaveCaducada = new CambiarClave();
-	$objClaveCaducada->setFormulario($_POST);
+	$objeto = new CambiarClave();
+	$objeto->setFormulario($_POST);
+	$mensaje = $objeto->cambiarClave();
 
-	$arreglo = $objClaveCaducada->consultar(); //realiza una consulta
-	//si existe un registro
-	if ($arreglo) {
-		//envía a la vista, con mensaje de la consulta
-		header("Location: ../?form={$gsClase}" .
-			"&msjAlerta=duplicado&getOpcion=" . $_POST["operacion"] .
-			"&getId=" . $arreglo[ $objClaveCaducada->atrId ] .
-			"&getNombre=" . $arreglo[ $objClaveCaducada->atrNombre ] .
-			"&getEstatus=" . $arreglo[ $objClaveCaducada->atrEstatus ]);
-	} //cierre del condicional si el RecordSet es verdadero
-	else {
-		if ($objClaveCaducada->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias
-			header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con mensaje de la consulta
-		else
-			header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con mensaje de la consulta*/
-	}
+	$objeto->faDesconectar(); //cierra la conexión
+	unset($objeto); //destruye el objeto
+	header( "Location: conCerrar.php?getMotivoLogOut=$mensaje");
 }
 
 
@@ -79,65 +72,6 @@ function obtenerPreguntas() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-/*
-echo "<pre>";
-$objCifrado = new clsCifrado();
-
-$objeto = new CambiarClave();
-$objeto->setFormulario( $_POST );
-
-$arrConsulta_P1 = $objeto->Consultar();
-$arrConsulta_P2 = $objeto->Consultar2();
-//var_dump( $arrConsulta_P1 );
-//var_dump( $arrConsulta_P2 );
-if ( $arrConsulta_P1 AND  $arrConsulta_P2) {
-
-	if ( $arrConsulta_P1['respuesta'] == $_POST["ctxRespuesta1"] AND $arrConsulta_P2['respuesta'] == $_POST["ctxRespuesta2"] ) {
-		echo "respuestas iguales";
-		
-		$rstClave = $objeto->fmConsultarClave();
-
-		$rango = $objeto->getMaximoRangoClave();
-
-		$crypClave = $objCifrado->flEncriptar( $_POST["pswClave"] );
-
-		while ( $arrClave = $objeto->getConsultaAsociativo( $rstClave ) ) {
-			if ( $crypClave == $arrClave["clave"] ) {
-				header( "Location: {$ruta}?form=Cambiar_Clave&msjAlerta=claverepetida{$rango}");
-				echo "repetido";
-				return;
-			}
-			else {
-				echo "sin repetir";
-				continue;
-			}
-		}
-		$objeto->faLiberarConsulta( $rstClave ); //libera de la memoria el resultado asociado a la consulta
-
-		//var_dump( $objeto->CambiarClave() );
-		
-		if ( $objeto->CambiarClave() )
-			header( "Location: {$ruta}?form=Cambiar_Clave&msjAlerta=claverecuperada");
-		else
-			header( "Location: {$ruta}?form=Cambiar_Clave&msjAlerta=clavenocambio");
-		
-		
-	}
-	else {
-		header( "Location: {$ruta}?form=Cambiar_Clave&msjAlerta=respuestaincorrecta");
-		echo "respuestaincorrecta";
-	}
-}
-else {
-	header( "Location: {$ruta}?form=Cambiar_Clave&msjAlerta=nousuario");
-	echo "nousuario";
-}
-
-unset( $objCifrado ); //destruye el objeto
-$objeto->faDesconectar(); //cierra la conexión
-unset( $objeto ); //destruye el objeto*/
-
 
 
 ?>
-

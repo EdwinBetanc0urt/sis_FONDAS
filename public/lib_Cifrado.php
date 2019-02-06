@@ -42,6 +42,7 @@ class clsCifrado /*extends clsConexion */
 
 	private $atrKey; //atributo.Key privada
 	protected $atrTexto; //atributo.Texto.Encriptado
+	const csKEY = "informatica";
 
 
 	/**
@@ -101,10 +102,103 @@ class clsCifrado /*extends clsConexion */
 	public function flEncriptar($psTexto)
 	{
 		$this->atrTexto = trim($psTexto); //elimina espacios al comienzo y final
-		$texto_encriptado = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($this->atrKey), $this->atrTexto, MCRYPT_MODE_CBC, md5(md5($this->atrKey))));
+		$texto_encriptado = base64_encode(
+			mcrypt_encrypt(
+				MCRYPT_RIJNDAEL_256,
+				md5(
+					$this->atrKey
+				),
+				$this->atrTexto,
+				MCRYPT_MODE_CBC,
+				md5(
+					md5(
+						$this->atrKey
+					)
+				)
+			)
+		);
 		return $texto_encriptado; //Devuelve el $texto encriptado
 	}
+
+
+	/**
+	 * función estática Cifrar Asigna el parámetro al atributo TextoE convierte
+	 * el texto enviado y lo encripta, utilizando la llave privada
+	 *
+	 * @param string, $psTexto
+	 * @return string $vsTextoCifrado
+	 */
+	static function getCifrar($psTexto)
+	{
+		$Texto = trim($psTexto); //elimina espacios al comienzo y final
+		$vsTextCifrado = base64_encode(
+			mcrypt_encrypt(
+				MCRYPT_RIJNDAEL_256,
+				md5(
+					self::csKEY
+				),
+				$Texto,
+				MCRYPT_MODE_CBC,
+				md5(
+					md5(
+						self::csKEY
+					)
+				)
+			)
+		);
+		return $vsTextCifrado; //Devuelve el $texto encriptado
+	} //cierre de la función
  
+
+	/**
+	 * función estática Cifrar Asigna el parámetro al atributo TextoE convierte
+	 * el texto enviado y lo encripta, utilizando la llave privada
+	 *
+	 * @param string, $psTexto
+	 * @return string $vsTextoCifrado
+	 */
+	static function getDescifrar($psTexto)
+	{
+		$Texto = trim($psTexto); //elimina espacios al comienzo y final
+		$vsTextDescifrado = rtrim(
+			mcrypt_decrypt(
+				MCRYPT_RIJNDAEL_256,
+				md5(
+					self::csKEY
+				),
+				base64_decode(
+					$Texto
+				),
+				MCRYPT_MODE_CBC,
+				md5(
+					md5(
+						self::csKEY
+					)
+				)
+			),
+			"\0"
+		);
+		return $vsTextDescifrado;  //Devuelve el $texto desencriptado
+
+		//var_dump(self::flKeyPrivada());
+		$Texto = trim($psTexto); //elimina espacios al comienzo y final
+		$vsTextCifrado = base64_encode(
+			mcrypt_encrypt(
+				MCRYPT_RIJNDAEL_256,
+				md5(
+					self::csKEY
+				),
+				$Texto,
+				MCRYPT_MODE_CBC,
+				md5(
+					md5(
+						self::csKEY
+					)
+				)
+			)
+		);
+		return $vsTextCifrado; //Devuelve el $texto encriptado
+	} //cierre de la función
 
 
 	/**

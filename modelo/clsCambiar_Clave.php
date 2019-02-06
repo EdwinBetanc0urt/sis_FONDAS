@@ -32,53 +32,46 @@ class CambiarClave extends clsConexion {
 	}
 
 
-
 	function getClaveMax($idUsuario) {
 		$sql = "
 			SELECT MAX(idhistorial) AS clave_max
 			FROM thistorial_clave
 			Where
 				id_usuario = '{$idUsuario}'; ";
-		$claveMax = parent::getConsultaArreglo(parent::faEjecutar($sql));
+		$claveMax = parent::getConsultaArreglo(
+			parent::faEjecutar($sql)
+		);
 		return $claveMax["clave_max"];
 	}
 
 
-
-	function fmCambiarClave() {
+	function setNuevaClave($idUsuario) {
 		parent::faTransaccionInicio();
-		$objCifrado = new clsCifrado();
-		$crypClave = $objCifrado->flEncriptar($this->atrFormulario["pswClave"]);
-		unset($objCifrado);
+		$crypClave = clsCifrado::getCifrar($this->atrFormulario["pswClave"]);
 
-		$sql = "UPDATE thistorial_clave
-				SET
-					estatus = '0'
-				WHERE
-					id_usuario = '{$_SESSION["id_usuario"]}' AND
-					idhistorial = '{$this->getClaveMax()}' ; ";
+		$sql = "
+			UPDATE thistorial_clave
+			SET
+				estatus = 'vencida'
+			WHERE
+				id_usuario = '{$idUsuario}' AND
+				idhistorial = '{$this->getClaveMax($idUsuario)}' ; ";
+		parent::faEjecutar($sql); //Ejecuta la sentencia sql
+
+		$sql = "
+			INSERT INTO thistorial_clave
+				(clave, estatus, id_usuario)
+			VALUES
+				('{$crypClave}', 1 , '{$idUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) { //verifica si se ejecuto bien
-			$sql = "INSERT INTO thistorial_clave
-						(clave, estatus, id_usuario)
-					VALUES
-						('{$crypClave}', 1 , '{$_SESSION["id_usuario"]}') ; ";
-			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-			if (parent::faVerificar($tupla)) { //verifica si se ejecuto bien
-				parent::faTransaccionFin();
-				return $tupla;
-			}
-			else {
-				parent::faTransaccionDeshace();
-				return false;
-			}
+			parent::faTransaccionFin();
+			return $tupla;
 		}
-		else {
-			parent::faTransaccionDeshace();
-			return false;
-		}
-	}
 
+		parent::faTransaccionDeshace();
+		return false;
+	}
 
 
 	function ConsultarRespuestas($idUsuario, $idPregunta) {
@@ -108,15 +101,16 @@ class CambiarClave extends clsConexion {
 	}
 
 
-
-	function verificarRespuestas($idUsuario, $idPregunta1, $idPregunta2) {
-		if ($this->ConsultarRespuestas($idUsuario, $idPregunta1) == $this->atrFormulario["ctxRespuesta1"]) {
+	function verificarRespuestas($idUsuario) {
+		if ($this->atrFormulario["ctxRespuesta1"] == 
+			$this->ConsultarRespuestas($idUsuario, $this->atrFormulario["hidPregunta1"])) {
 			return true;
 		}
 		else {
 			return false;
 		}
-		if ($this->ConsultarRespuestas($idUsuario, $idPregunta2) == $this->atrFormulario["ctxRespuesta2"]) {
+		if ($this->atrFormulario["ctxRespuesta2"] ==
+			$this->ConsultarRespuestas($idUsuario, $this->atrFormulario["hidPregunta2"])) {
 			return true;
 		}
 		else {
@@ -125,10 +119,9 @@ class CambiarClave extends clsConexion {
 	}
 
 
-
 	//función utilizada para cambiar clave, consulta una matriz con
 	//el historial de las ultimas claves según el rango establecido
-	function fmConsultarClave($idUsuario) {
+	function getUltimasClaves($idUsuario) {
 		$viRango = $this->getMaximoRangoClave();
 		$sql = "
 			SELECT *
@@ -150,37 +143,33 @@ class CambiarClave extends clsConexion {
 	}
 
 
-
 	function cambiarClave(){
 		$usuario = "";
-		$mensaje = false;
+		$crypClave = clsCifrado::getCifrar($this->atrFormulario["pswClave"]);
+
 		if (isset($_SESSION["id_usuario"])) {
 			$usuario = $_SESSION["id_usuario"];
 		}
 		if (isset($this->atrFormulario["idu"])) {
 			$usuario = $this->atrFormulario["idu"];
 		}
-		$rstClave = $this->fmConsultarClave($usuario);
-		$rango = $this->getMaximoRangoClave();
-		$crypClave = clsCifrado::getCifrar($_POST["pswClave"]);
+		if (! $this->verificarRespuestas($usuario)) {
+			return "respuestaincorrecta";
+		}
 
+		$rstClave = $this->getUltimasClaves($usuario);
 		while ($arrClave = parent::getConsultaAsociativo($rstClave)) {
 			if ($crypClave == $arrClave["clave"]) {
-				$mensaje = "claverepetida" . $rango;
-				return $mensaje;
+				return "claverepetida" . $this->getMaximoRangoClave();
 			}
-			else
-				continue;
 		}
-		if ($this->fmCambiarClave())
-			$mensaje = "clavecambio";
-		else
-			$mensaje = "clavenocambio";
-
 		$this->faLiberarConsulta($rstClave); // libera de la memoria la consulta
-		unset($rango, $crypClave);
-	}
 
+		if ($this->setNuevaClave($usuario)) {
+			return "clavecambio";
+		}
+		return "clavenocambio";
+	}
 
 
 	function getPreguntas() {
@@ -195,7 +184,6 @@ class CambiarClave extends clsConexion {
 
 			LEFT JOIN tpregunta AS P
 				ON P.idpregunta = R.idpregunta
-
 
 			WHERE
 				U.id_usuario = '{$this->atrFormulario["idu"]}'
@@ -224,9 +212,8 @@ class CambiarClave extends clsConexion {
 	//función que selecciona el rango de claves para comparar y que no sean repetidas de forma seguida
 	//se debe crear un objeto ya que el usuario de conexiona de esta clase no tiene acceso a la tabla de configuración
 	function getMaximoRangoClave()  {
-		return 5; //envia el valor guardado en la bd o uno por defecto que tiene la función
+		return 5; //envía el valor guardado en la bd o uno por defecto que tiene la función
 	}
-
 
 
 } //cierre de la clase

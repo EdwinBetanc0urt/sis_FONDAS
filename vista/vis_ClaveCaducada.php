@@ -46,7 +46,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 
 			<div class="panel-body">
 				<form id="formCambiarClave" name="formCambiarClave" method="POST"
-					action="controlador/conClaveCaducada.php" role="form" class="form-horizontal">
+					action="controlador/conCambiar_Clave.php" role="form" class="form-horizontal">
 					<div class="row">
 
 						<div class="form-group ui-front">
@@ -66,7 +66,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="textPregunta1">Pregunta 1</label>
 								<br><p id="textPregunta1"></p>
-								<input id="hidPregunta1" type="hidden" />
+								<input id="hidPregunta1" name="hidPregunta1" type="hidden" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -82,7 +82,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="cmbPregunta2">Pregunta 2</label>
 								<br><p id="textPregunta2"></p>
-								<input id="hidPregunta2" type="hidden" />
+								<input id="hidPregunta2" name="hidPregunta2" type="hidden" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -132,7 +132,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 										style="background:#37474F; color:#fff; width:200px; height:40px;">
 										Guardar
 									</button>
-									<button id="btnSalir" onclick="salir();"
+									<button type="button" id="btnSalir" onclick="salir();"
 										style="background:#37474F; color:#fff; width:200px; height:40px;"	>
 										Cancelar
 									</button>
