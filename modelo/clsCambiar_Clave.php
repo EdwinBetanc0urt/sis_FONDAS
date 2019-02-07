@@ -153,7 +153,7 @@ class CambiarClave extends clsConexion {
 		elseif (isset($this->atrFormulario["idu"])) {
 			$usuario = $this->atrFormulario["idu"];
 		}
-		else (isset($this->atrFormulario["ctxUsuario"])) {
+		elseif (isset($this->atrFormulario["ctxUsuario"])) {
 			$usuario = $this->getIdUsuario($this->atrFormulario["ctxUsuario"]);
 		}
 		if (! $this->verificarRespuestas($usuario)) {
