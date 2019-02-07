@@ -155,7 +155,7 @@ function enviar(pvValor) {
 	let vsRespuesta2 = $(arrFormulario + " #ctxRespuesta2");
 	let vbComprobar = true; // verifica que todo este true o un solo false no envía
 
-	if (pvValor === "recuperar") {
+	if (pvValor === "RecuperarClave") {
 		if (vsUsuario.val().trim() == "") {
 			vbComprobar = false;
 			swal({

@@ -26,25 +26,22 @@ else {
 
 	if ($arrUsuario) {
 		$arrClave = $objUsuario->ConsultarClave($arrUsuario["id_usuario"]);
-		$objCifrado = new clsCifrado(); //instancia la clase de Cifrado
-		$vsClave = $objCifrado->flEncriptar($_POST["clave"]);
 
 		// coincide el usuario y la clave
-		if ($arrClave["clave"] == $vsClave) {
+		if ($arrClave["clave"] == clsCifrado::getCifrar($_POST["clave"])) {
 			// se busca los datos en la tabla persona
 			$arrDatos = $objUsuario->fmConsultarPersona($arrUsuario['idpersona']);
 
 			// el usuario esta activo
-			if ($arrUsuario["estatus"] == "activo")  {
+			if ($arrUsuario["estatus"] == "activo" || $arrUsuario["estatus"] == 1)  {
 				$objUsuario->Bitacora($arrUsuario["id_usuario"]);
 				$objUsuario->fmReiniciaIntento(); //cambia los intentos fallidos a 0
 				$objFechaInicio = new DateTime($arrClave["fecha_creacion"]);
 				$objFechaActual = new DateTime("now");
 				$vsDiferencia = $objFechaInicio->diff($objFechaActual);
-					var_dump($objUsuario->getDiasCaducidad());
 
 				// Clave Caducada
-				if ($vsDiferencia->d >= $objUsuario->getDiasCaducidad()) {
+				if ($vsDiferencia->days >= $objUsuario->getDiasCaducidad()) {
 					$_SESSION = array(
 						'sesion' => 'caducado' ,
 						'sistema' => 'fondas' ,

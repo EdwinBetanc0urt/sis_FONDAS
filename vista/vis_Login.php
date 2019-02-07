@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<title>Pagina de Inicio FONDAS</title>
-
-	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8"/>
 
+	<title>Pagina de Inicio FONDAS</title>
+
+	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
 	<link rel="icon" type="image/png" href="public/img/icono.ico" />
 	<link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<script type="text/javascript" src="public/jquery/jquery.js"></script>
 	<link rel="stylesheet" type="text/css" href="public/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="public/sweetalert2/sweetalert2.min.css">
-
 	<link rel="stylesheet" href="public/css/menu.css">
 	<link rel="stylesheet" href="public/css/w3.css">
+	<link rel="stylesheet" type="text/css" href="public/css/clave_items.css">
+
+	<script type="text/javascript" src="public/jquery/jquery.js"></script>
 	<script type="text/javascript" src="public/bootstrap/js/bootstrap.js"></script>
 </head>
 
@@ -71,7 +72,7 @@
 									<span class="glyphicon glyphicon-refresh"></span>
 								</a>
 
-								<p><input type="text" class="w3-input" name="txtcopia" id="txtcopia"/></p>
+								<p><input type="text" class="w3-input valor_mayuscula" name="txtcopia" id="txtcopia"/></p>
 								<p>
 									<button style="background:#37474F" class="w3-button w3-block"
 										name='iniciar' value="ingresar" >
@@ -109,7 +110,7 @@
 	<!--fin cuerpo-->
 
 	<div id="VentanaModal" class="modal fade modal-primary">
-		<form id="formRecuperarClave" name="formRecuperarClave" method="POST"
+		<form id="formRecuperarClave" name="formRecuperarClave" method="POST" autocomplete="off" 
 			action="controlador/conRecuperarClave.php" role="form" class="form-horizontal" >
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -144,6 +145,15 @@
 								</div>
 
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<label for="ctxRespuesta">* Respuesta 1</label>
+									<input id="ctxRespuesta" class=" form-control" maxlength="45"
+										name="ctxRespuesta1" type="text" required
+										placeholder="Ingrese la primera respuesta"
+										data-toggle="tooltip"	data-placement="right"
+										title="Campo Obligatorio" />
+								</div>
+
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="cmbPregunta2">* Pregunta 2</label>
 									<select id='cmbPregunta2' name='cmbPregunta2' size="1"
 									data-toggle="tooltip"	class="dinamico form-control select2"
@@ -151,15 +161,6 @@
 										<option value="">Selecciona Uno...</option>
 									</select>
 									<input id="hidPregunta2" type="hidden"	/>
-								</div>
-
-								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-									<label for="ctxRespuesta">* Respuesta 1</label>
-									<input id="ctxRespuesta" class=" form-control" maxlength="45"
-										name="ctxRespuesta1" type="text" required
-										placeholder="Ingrese la primera respuesta"
-										data-toggle="tooltip"	data-placement="right"
-										title="Campo Obligatorio" />
 								</div>
 
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -172,18 +173,35 @@
 
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="pswClave">* Ingresar Clave Nueva</label>
-									<input id="pswClave" name="pswClave" type="password"
-										maxlength="45" class="form-control valida_clave" required
+									<input id="pswClave" name="pswClave" type="password" required
+										maxlength="45" class="form-control valida_clave new-password"
 										placeholder="Ingrese la Clave" data-toggle="tooltip"
 										data-placement="right" title="Campo Obligatorio" />
+									<div class="divItemsClave">
+										<p id="claveMinuscula" class="invalido">
+											Al menos <strong>1 letra en minúscula (a-z)</strong>
+										</p>
+										<p id="claveMayuscula" class="invalido">
+											Al menos <strong>1 letra en MAYUSCULA(A-Z)</strong>
+										</p>
+										<p id="claveNumero" class="invalido">
+											Al menos <strong>1 numero (0-9)</strong>
+										</p>
+										<p id="claveEspecial" class="invalido">
+											Al menos <strong>1 carácter especial (_.-+*$)</strong>
+										</p>
+										<p id="claveLongitud" class="invalido">
+											Longitud min. de <strong>8 caracteres</strong>
+										</p>
+									</div>
 								</div>
 
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="pswClave2">* Confirmar Clave Nueva</label>
-									<input id="pswClave2" name="pswClave2" type="password"
-										maxlength="45" required class="form-control" data-toggle="tooltip"
+									<input id="pswClave2" type="password" required
+										maxlength="45"  class="form-control confirm-password"
 										placeholder="Confirme la clave" data-placement="right"
-										title="Campo Obligatorio" />
+										data-toggle="tooltip" title="Campo Obligatorio" />
 								</div>
 
 							</div>
@@ -194,9 +212,9 @@
 						<div class="row" >
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-								<button style="background:#37474F; color:#fff;" type="button"
-									class="form-control" value="recuperar"
-									onclick="enviar(this.value);">
+								<button type="button" value="RecuperarClave"
+									style="background:#37474F; color:#fff;" 
+									class="form-control" onclick="enviar(this.value);">
 									ENVIAR
 								</button>
 							</div>
@@ -207,7 +225,7 @@
 				</div>
 			</div>
 
-			<input type="hidden" name="operacion" id="operacion" value="recuperar" />
+			<input type="hidden" name="operacion" id="operacion" value="RecuperarClave" />
 		</form>
 	</div>
 
@@ -215,6 +233,7 @@
 	<script type="text/javascript" src="public/js/_core.js"></script>
 	<script type="text/javascript" src="public/js/validaciones.js"></script>
 	<script type="text/javascript" src="public/js/ajax.js"></script>
+	<script type="text/javascript" src="public/js/clave_items.js"></script>
 	<script src="public/js/login.js"></script>
 	<?php
 	// si existe la variable get msjAlerta Incluye el archivo JavaScript

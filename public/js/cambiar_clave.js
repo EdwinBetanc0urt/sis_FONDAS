@@ -1,48 +1,70 @@
 
-
-var lsVista = "Cambiar_Clave";
-
-
-//funcion.javascript.Enviar (parametro.vista.Valor)
-function enviar( pvValor ) {
-	let arrFormulario = $( "#form" + lsVista );
-	var viCodigo = document.getElementById("numId");
-	var vsNombre = document.getElementById("ctxNombre");
-	var vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
-
-	//si el cod está vació y el botón pulsado es igual a Registar o Modificar no enviara el formulario
-	if (vsNombre.value.trim() === "" && pvValor === "Guardar" ) {
-		vbComprobar = false;
-		swal({
-			title: '¡Atención!',
-			html: "LA DESCRIPCION ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>" ,
-			type: 'error',
-			confirmButtonText: 'Ok',
-			showCloseButton: true
-		}).then( ( result ) => {
-			vsNombre.focus(); //enfoca el cursor en el campo que falta del formulario
-		});
-		return; // rompe la función para que el usuario verifique antes de continuar
-	}
-
-
-	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
-	if ( vbComprobar ) {
-		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
-		arrFormulario.submit(); //Envía el formulario
-	}
-}
-
-
-
-$(function () {
-
-	fjComboGeneral( "Pregunta" , "" , "Pregunta1" );
-
-	fjComboGeneral( "Pregunta" , "" , "Pregunta2");
-
+$(function() {
+	ObtenerPreguntas();
+	ObtenerPreguntas(2);
 });
 
 
+// Función para recuperar la contraseña
+function enviar(pvValor) {
+	let arrFormulario = "#formCambiarClave";
+	let vsRespuesta = $(arrFormulario + " #ctxRespuesta1");
+	let vsRespuesta2 = $(arrFormulario + " #ctxRespuesta2");
+	let clave = $("#pswClaveN, .new-password"),
+		clave2 = $("#pswClaveNConfirma, .confirm-password");
+	let vbComprobar = true; // verifica que todo este true o un solo false no envía
 
+	if (pvValor === "Guardar") {
+		//si la respuesta está vacía
+		if (vsRespuesta.val() == "") {
+			vbComprobar = false;
+			swal({
+				title: '¡Atención!',
+				html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
+					'la respuesta correcta ',
+				type: 'info',
+				showCloseButton: true,
+				confirmButtonText: 'Ok'
+			}).then((result) => {
+				vsRespuesta.focus();
+			});
+			return vbComprobar;
+		}
+		//si la respuesta está vacía
+		if (vsRespuesta2.val() == "") {
+			vbComprobar = false;
+			swal({
+				title: '¡Atención!',
+				html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
+					'la respuesta correcta ',
+				type: 'info',
+				showCloseButton: true,
+				confirmButtonText: 'Ok'
+			}).then((result) => {
+				vsRespuesta2.focus();
+			});
+			return vbComprobar;
+		}
 
+		vbComprobar = validarClave();
+	}
+	if (clave.val() !== clave2.val()) {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			html: "Las claves no coinciden, debe ser corregido antes de <b>"
+				+ pvValor.toUpperCase() + "</b>",
+			type: 'error',
+			confirmButtonText: 'Ok',
+			showCloseButton: true
+		});
+		return false;
+	}
+
+	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
+	if (vbComprobar) {
+		$("#formCambiarClave #operacion").val("CambiarClave"); //valor.vista.Opcion del hidden
+		//Envía el formulario
+		$(arrFormulario).submit(); //Envía el formulario
+	}
+}

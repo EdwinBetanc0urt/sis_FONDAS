@@ -11,16 +11,14 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<title>Pagina de Inicio FONDAS</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link rel="icon" type="image/png" href="public/img/icono.ico" />
+	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
 	<link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="public/sweetalert2/sweetalert2.min.css">
 	<link rel="stylesheet" href="public/css/menu.css">
@@ -29,6 +27,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 	<link rel="stylesheet" type="text/css" href="public/select2/dist/css/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="public/select2/dist/css/select2-bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="public/css/clave_items.css">
+
 	<script type="text/javascript" src="public/jquery/jquery.js"></script>
 	<script type="text/javascript" src="public/bootstrap/js/bootstrap.js"></script>
 </head>

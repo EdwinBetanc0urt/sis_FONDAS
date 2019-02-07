@@ -40,7 +40,6 @@ $(function() {
 });
 
 
-
 function mymenu() {
 	var x = document.getElementById("myTopnav");
 	if (x.className === "topnav") {
@@ -61,7 +60,8 @@ function salir(psRuta = ""){
 		confirmButtonText: "Aceptar!",
 		cancelButtonText: "Cancelar!",
 		showCloseButton: true
-	}).then((result) => {
+	})
+	.then((result) => {
 		if (result.value) {
 			location.href= psRuta + "controlador/conCerrar.php";
 		}
