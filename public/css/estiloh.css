@@ -1,69 +1,86 @@
-*{
+
+* {
     margin:1px auto;
     padding:0px;
-}    
-body {margin:0;}
+    box-sizing: border-box;
+}
+
+body {
+    margin:0;
+}
+
 ul.menu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #37474F;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #37474F;
 }
 
 
-    div.menu_cintillo{
-			background-color: #fff; 
-			color:#FFFFFF;
-			position:fixed;
-			width: 100%;
-			margin-top: 1px;
-			z-index: 999;
-		    } 
-    #detras{
-            max-width:auto; 
-            height:auto; 
-            width:auto;
-            border-radius:12px;        	
-            } 
-    #logo
-        {
-            max-width:100%; 
-            height:auto; 
-            width:auto;
-            border-radius:10px;  
-        }   
-    #tcintillo{
-        max-width:100%; 
-        width: auto;
-        height: auto;    
-        } 
-    #justicadotexto{
-        text-align:justify;
-        }
-    p.primeralinea {
-      text-indent: 40px;
-    } 
-    p.margende {border-style: outset;}
+div.menu_cintillo{
+	background-color: #fff;
+	color:#FFFFFF;
+	position:fixed;
+	width: 100%;
+	margin-top: 1px;
+	z-index: 999;
+}
 
-    .titulo {background-color:rgba(192,192,192,0.3);}
-    #titulo
-        {
-            max-width:72%; 
-            height:auto; 
-            width:auto;
-            max-width: auto;
-            box-shadow: 10px 10px 5px #888888;
-            border-radius:6px 6px 0px 0px;  
-        }
+#detras{
+    max-width:auto;
+    height:auto;
+    width:auto;
+    border-radius:12px;
+}
+
+#logo {
+    max-width:100%;
+    height:auto;
+    width:auto;
+    border-radius:10px;
+}
+
+#tcintillo {
+    max-width:100%;
+    width: auto;
+    height: auto;
+}
+
+#justicadotexto{
+    text-align:justify;
+}
+
+p.primeralinea {
+    text-indent: 40px;
+}
+
+p.margende {
+    border-style: outset;
+}
+
+.titulo {
+    background-color:rgba(192,192,192,0.3);
+}
+
+#titulo {
+    max-width:72%;
+    height:auto;
+    width:auto;
+    max-width: auto;
+    box-shadow: 10px 10px 5px #888888;
+    border-radius:6px 6px 0px 0px;
+}
+
 .ctexto{
-            max-width:100%; 
-            height:auto; 
-            width:auto;
-            min-height:25px;
-            box-shadow: 10px 10px 5px #888888;
-            border-radius:3px 3px 3px 3px;  
-        }
+    max-width:100%;
+    height:auto;
+    width:auto;
+    min-height:25px;
+    box-shadow: 10px 10px 5px #888888;
+    border-radius:3px 3px 3px 3px;
+}
+
 h1 {
     color: white;
     text-shadow: 2px 2px 4px #000000;
@@ -72,40 +89,41 @@ h1 {
 /*h1 {
     color: white;
     text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-    }*/
-    h2 {
+}*/
+
+h2 {
     color: white;
     text-shadow: 1px 1px 2px black, 0 0 20px white, 0 0 5px #000;
-    }
+}
+
 h3 {
     color: white;
     text-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px #000;
-    }
-    
-    #fondoparrafo {
+}
+
+#fondoparrafo {
     border-radius: 0px;
     background:url(../img/detrasparrafo.jpg);
     background-position: left top;
     background-repeat: repeat;
     padding: 20px;
-    max-width:73%;    
+    max-width:73%;
     width:auto;
-    height: auto;    
-    }
-    #miImagen{
-        max-width:27%;  
-        max-height:100%;
-        height:auto;
-        width:auto;
-        border-radius:10px;
-        background: url(../img/rhistoria.png);
-        position:;
-        float:center;
-    }
+    height: auto;
+}
+
+#miImagen{
+    max-width:27%;
+    max-height:100%;
+    height:auto;
+    width:auto;
+    border-radius:10px;
+    background: url(../img/rhistoria.png);
+    position:;
+    float:center;
+}
 
 /* inicio de objetos iconos*/
-
-body {margin:0}
 
 .icon-bar {
     width: 90px;
@@ -127,9 +145,8 @@ body {margin:0}
 
 .active {
     background-color: #4CAF50 !important;
-}    
-    
- 
+}
+
 /* incio de  imagenes */
 div.img {
     border: 1px solid #ccc;
@@ -149,9 +166,6 @@ div.descripcion {
     text-align: center;
 }
 
-* {
-    box-sizing: border-box;
-}
 
 .responsive {
     padding: 0 6px;
@@ -159,7 +173,7 @@ div.descripcion {
     width: 24.99999%;
 }
 
-@media only screen and (max-width: 700px){
+@media only screen and (max-width: 700px) {
     .responsive {
         width: 49.99999%;
         margin: 6px 0;
@@ -177,14 +191,13 @@ div.descripcion {
     display: table;
     clear: both;
 }
+
 /* fin estilo de imagenes */
 /*contactanos imagen*/
-    #dirimagen
-        {
-            max-width:100%; 
-            height:auto; 
-            width:auto;
-            border-radius:5px;  
-        }
+#dirimagen {
+    max-width:100%; 
+    height:auto; 
+    width:auto;
+    border-radius:5px;
+}
 /* fin de imagen contactanos */
-

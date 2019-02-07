@@ -10,7 +10,7 @@ class Acceso extends clsConexion {
 
 	/**
 	 * constructor de la clase
-	 * @param ineger $piPrivilegio que dependiendo el privilegio usa el usuario para la conexión
+	 * @param integer $piPrivilegio que dependiendo el privilegio usa el usuario para la conexión
 	 */
 	function __construct( $piPrivilegio = 2 ) {
 		parent::__construct( $piPrivilegio ); //instancia al constructor padre
