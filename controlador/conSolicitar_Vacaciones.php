@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 
 $gsClase = "Solicitar_Vacaciones";
 
@@ -19,20 +18,17 @@ else{
 	require_once("{$ruta}public/lib_Vacaciones.php");
 }
 
-session_start();
 
-$objCalcula = new vacacion( $_SESSION["fecha_ingreso"] );
+$objCalcula = new vacacion($_SESSION["fecha_ingreso"]);
 
-switch( $_POST['operacion'] ) {
+switch($_POST['operacion']) {
 
 	case "Registrar":
 		registrar();
 		break;
-
 	case "Modificar":
 		cambiar();
 		break;
-		
 	case "Borrar":
 		borrar();
 		break;
@@ -40,20 +36,21 @@ switch( $_POST['operacion'] ) {
 	case "ListaView":
 		ListaSolicitar_Vacaciones();
 		break;
-
 	case "ListaCombo":
 		Combo();
 		break;
-
 	case "ListaPeriodo":
 		listarPeriodos();
 		break;
 
 	case 'Antiguedad':
-		Antiguedad();
+		echo vacacion::getAntiguedad($_SESSION["fecha_ingreso"]);
 		break;
 	case 'CalculaDias':
-		$resultado = $objCalcula->getDetalleDiasVacacionesPeriodo( $_SESSION["fecha_ingreso"], $_POST["radPeriodo"] );
+		$resultado = $objCalcula->getDetalleDiasVacacionesPeriodo(
+			$_SESSION["fecha_ingreso"],
+			$_POST["radPeriodo"]
+		);
 		echo $resultado["dias_vacaciones"];
 		break;
 	case 'FechaFin':
@@ -66,30 +63,21 @@ switch( $_POST['operacion'] ) {
 }
 
 function FechaFin() {
-	//print_r( $_POST );
-	$objCalcula2 = new vacacion( $_SESSION["fecha_ingreso"] );
-	$fecha_inicio = vacacion::getFechaFormato( $_POST["ctxFechaInicio"], "dma", "amd");
-	$fechafin = $objCalcula2->getFechaFinal( $fecha_inicio , trim( $_POST["numDiasHabiles"]) );
-	$resultado = vacacion::getFechaFormato( $fechafin, "amd", "dma");
+	//print_r($_POST);
+	$objCalcula2 = new vacacion($_SESSION["fecha_ingreso"]);
+	$fecha_inicio = vacacion::getFechaFormato($_POST["ctxFechaInicio"], "dma", "amd");
+	$fechafin = $objCalcula2->getFechaFinal($fecha_inicio , trim($_POST["numDiasHabiles"]));
+	$resultado = vacacion::getFechaFormato($fechafin, "amd", "dma");
 	echo $resultado;
 }
-
 
 
 function FechaIngreso() {
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
-	$lsFechaIngreso = $objSolicitar_Vacaciones->getFechaIngreso( $_SESSION["idtrabajador"]);
-	$resultado = vacacion::getFechaFormato( $lsFechaIngreso, "amd", "dma");
+	$lsFechaIngreso = $objSolicitar_Vacaciones->getFechaIngreso($_SESSION["idtrabajador"]);
+	$resultado = vacacion::getFechaFormato($lsFechaIngreso, "amd", "dma");
 	echo $resultado;
 }
-
-function Antiguedad() {
-	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
-	$lsFechaIngreso = $objSolicitar_Vacaciones->getFechaIngreso( $_SESSION["idtrabajador"]);
-	$resultado = vacacion::getAntiguedad($lsFechaIngreso);
-	echo $resultado;
-}
-
 
 
 function registrar() {
@@ -97,53 +85,52 @@ function registrar() {
 	//session_start();
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 
-	$fecha_inicio = $objSolicitar_Vacaciones->faFechaFormato( $_POST["ctxFechaInicio"] , "dma" , "amd" );
+	$fecha_inicio = $objSolicitar_Vacaciones->faFechaFormato($_POST["ctxFechaInicio"] , "dma" , "amd");
 	$arrPeriodos = explode("-" , $_POST["radPeriodo"]); //separa la palabra en cada espacio y convierte la búsqueda en arreglo
 
-	$arrVacaciones = getDiasDeVacaciones( $_SESSION["fecha_ingreso"] , $arrPeriodos);
+	$arrVacaciones = getDiasDeVacaciones($_SESSION["fecha_ingreso"] , $arrPeriodos);
 
-	$diasp2 = getDiasDeVacaciones( $_SESSION["fecha_ingreso"] , $arrPeriodos);
+	$diasp2 = getDiasDeVacaciones($_SESSION["fecha_ingreso"] , $arrPeriodos);
 
-	$fecha_culmina = getFechaFinal( $fecha_inicio , $arrVacaciones["dias_vacaciones"] );
+	$fecha_culmina = getFechaFinal($fecha_inicio , $arrVacaciones["dias_vacaciones"]);
 
 	$envio= array(
 		"numIdTrabajador" => $_SESSION["idtrabajador"],
 		"datFechaIngreso" => $_SESSION["fecha_ingreso"],
 		"datFechaInicio" => $fecha_inicio ,
 		"datFechaFin" => $fecha_culmina,
-		"cantidad_periodos" => count( $arrPeriodos ) ,
+		"cantidad_periodos" => count($arrPeriodos) ,
 		"vacaciones" => $arrVacaciones
 	);
-	$objSolicitar_Vacaciones->setFormulario( $envio );
-	var_dump( $envio );
+	$objSolicitar_Vacaciones->setFormulario($envio);
+	var_dump($envio);
 
-	if ( $objSolicitar_Vacaciones->Incluir() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}&msjAlerta=registro" ); //envía a la vista, con mensaje de la consulta
+	if ($objSolicitar_Vacaciones->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form={$gsClase}&msjAlerta=registro" ); //envía a la vista, con */
+		header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con */
 }
 
 
+function getDiasDeVacaciones($psFechaIngreso, $paPeriodos = array()) {
 
-function getDiasDeVacaciones( $psFechaIngreso, $paPeriodos = array() ) {
+	$lsDia = substr($psFechaIngreso , 8 , 2);
+	$lsMes = substr($psFechaIngreso , 5 , 2);
+	$lsAno = substr($psFechaIngreso , 0 , 4);
 
-	$lsDia = substr( $psFechaIngreso , 8 , 2 );
-	$lsMes = substr( $psFechaIngreso , 5 , 2 );
-	$lsAno = substr( $psFechaIngreso , 0 , 4 );
-
-	$objFecha_Ingreso = new DateTime( $psFechaIngreso );
+	$objFecha_Ingreso = new DateTime($psFechaIngreso);
 	$liCont = 1;
 	$lsVacaciones = 0;
-	if ( count( $paPeriodos ) <= 0 ) {
+	if (count($paPeriodos) <= 0) {
 		$liCont = -1;
 	}
 	$arrRetorno = array();
 	foreach ($paPeriodos as $key => $value) {
 
-		$objFecha_Periodo = new DateTime( $value . "-" . $lsMes . "-" . $lsDia );
+		$objFecha_Periodo = new DateTime($value . "-" . $lsMes . "-" . $lsDia);
 		$annos = $objFecha_Periodo->diff($objFecha_Ingreso);
 		$antiguedad =  $annos->y + 1 ;
-		$diasvacaciones = getDiasPorAntiguedad( $antiguedad );
+		$diasvacaciones = getDiasPorAntiguedad($antiguedad);
 		$lsVacaciones = $lsVacaciones + $diasvacaciones ;
 
 		$arrRetorno["periodo"][$liCont]["anno"] = $value;
@@ -162,17 +149,17 @@ function listarPeriodos() {
 
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 	
-	$arrPeriodos = getPeriodosAntiguedad( $objSolicitar_Vacaciones->getFechaIngreso( $_SESSION["idtrabajador"]) );
-	$arrConsulta = $objSolicitar_Vacaciones->listarPeriodos( $_SESSION["idtrabajador"] );
+	$arrPeriodos = getPeriodosAntiguedad($objSolicitar_Vacaciones->getFechaIngreso($_SESSION["idtrabajador"]));
+	$arrConsulta = $objSolicitar_Vacaciones->listarPeriodos($_SESSION["idtrabajador"]);
 	
-	$arrComparado = array_diff( $arrPeriodos , $arrConsulta );
+	$arrComparado = array_diff($arrPeriodos , $arrConsulta);
 
-	if ( $arrComparado) {
-		$arrComparado = array_slice( array_diff( $arrPeriodos , $arrConsulta ), 0, 2);
+	if ($arrComparado) {
+		$arrComparado = array_slice(array_diff($arrPeriodos , $arrConsulta), 0, 2);
 		$liCont = 0;
 
-		foreach ( $arrComparado AS $key => $value ): 
-			if ( $liCont > 0 ) 
+		foreach ($arrComparado AS $key => $value): 
+			if ($liCont > 0) 
 				$value = $arrComparado[ ($liCont-1) ] . "-" . $value;
 			?>
 
@@ -182,7 +169,7 @@ function listarPeriodos() {
 			
 					<span class="input-group-addon">
 						<input type="radio" aria-label="..." name="radPeriodo" value="<?= $value; ?>" onclick="fjCalculaDias(this.value);
-			    	fjFechaFinal( $('#ctxFechaInicio').val().toString() );" class="periodos" />
+			    	fjFechaFinal($('#ctxFechaInicio').val().toString());" class="periodos" />
 					</span>
 					<input type="text" class="form-control" aria-label="..." value="<?= $value; ?>" readonly />
 				</div><!-- /input-group -->
@@ -197,21 +184,17 @@ function listarPeriodos() {
 		<label for="sinPeriodos">* NO PUEDE SOLICITAR VACAIONES YA QUE NO TIENE PERIODOS DE ANTIGUEDAD VENCIDOS</label>
 		<?php
 	}
-
-	
 }
 
 
+function getPeriodosAntiguedad($psFechaIngreso) {
 
-
-function getPeriodosAntiguedad( $psFechaIngreso) {
-
-	$lsAno = substr( $psFechaIngreso , 0 , 4 );
-	$objFecha_Ingreso = new DateTime( $psFechaIngreso );
+	$lsAno = substr($psFechaIngreso , 0 , 4);
+	$objFecha_Ingreso = new DateTime($psFechaIngreso);
 
 	$arrRetorno = array();
 
-	$objFecha_Periodo = new DateTime( date("Y-m-d") );
+	$objFecha_Periodo = new DateTime(date("Y-m-d"));
 
 	$annos = $objFecha_Periodo->diff($objFecha_Ingreso);
 	$antiguedad =  $annos->y ;
@@ -224,7 +207,6 @@ function getPeriodosAntiguedad( $psFechaIngreso) {
 
 	return $arrRetorno;
 }
-
 
 
 /**
@@ -241,15 +223,15 @@ function getPeriodosAntiguedad( $psFechaIngreso) {
  * @param array $paDiasNoHabiles Arreglo de dias que no son tomados como habiles, Representación numérica ISO-8601 del día de la semana 1 (para lunes) hasta 7 (para domingo)
  * @return array $diashabiles Arreglo definitivo de dias habiles
  */
-function getFechaFinal( $psFechainicio, $piDiasHabiles, $paDiasferiados = array(), $paDiasNoHabiles = array(6,7) ) {
+function getFechaFinal($psFechainicio, $piDiasHabiles, $paDiasferiados = array(), $paDiasNoHabiles = array(6,7)) {
 	//Esta pequeña funcion me crea una fecha de entrega sin sabados ni domingos  
-	$fechaInicial = date("Y-m-d" , strtotime($psFechainicio) ); //obtenemos la fecha de hoy, solo para usar como referencia al usuario  
+	$fechaInicial = date("Y-m-d" , strtotime($psFechainicio)); //obtenemos la fecha de hoy, solo para usar como referencia al usuario  
 	$FechaFinal = 0;
 	//$Segundos = 24*60*60;
 	$Segundos = 0;
 
 	//Creamos un for desde 0 hasta 3  
-	for ($i = 0; $i < $piDiasHabiles; $i++ ) {
+	for ($i = 0; $i < $piDiasHabiles; $i++) {
 		//Acumulamos la cantidad de segundos que tiene un dia en cada vuelta del for  
 		$Segundos = $Segundos + 86400;  
 
@@ -257,10 +239,10 @@ function getFechaFinal( $psFechainicio, $piDiasHabiles, $paDiasferiados = array(
 		$diatranscurrido = date("N",time() + $Segundos);  
 
 		//Comparamos si estamos en sabado o domingo, si es asi restamos una vuelta al for, para brincarnos el o los dias...  
-		if (in_array( $diatranscurrido, $paDiasNoHabiles )) { // DOC: http://www.php.net/manual/es/function.date.php
+		if (in_array($diatranscurrido, $paDiasNoHabiles)) { // DOC: http://www.php.net/manual/es/function.date.php
 			$i--; 
 		}
-		elseif ( in_array(date('Y-m-d', time() + $Segundos ), $paDiasferiados ) ) { // DOC: http://www.php.net/manual/es/function.date.php
+		elseif (in_array(date('Y-m-d', time() + $Segundos), $paDiasferiados)) { // DOC: http://www.php.net/manual/es/function.date.php
 			$i--; 
 		}
 		else {
@@ -270,7 +252,6 @@ function getFechaFinal( $psFechainicio, $piDiasHabiles, $paDiasferiados = array(
 	}  
 	return $FechaFinal;
 }
-
 
 
 /**
@@ -313,10 +294,9 @@ function getDiasHabiles($psFechainicio, $psFechafin, $paDiasferiados = array(), 
 }
 
 
-
-function getDiasPorAntiguedad( $antiguedad = 0 ) {
+function getDiasPorAntiguedad($antiguedad = 0) {
 	$diasVacaciones = "nada";
-	switch ( $antiguedad ) {
+	switch ($antiguedad) {
 		
 		case ($antiguedad == 1):
 			$diasVacaciones = 15;
@@ -364,35 +344,22 @@ function getDiasPorAntiguedad( $antiguedad = 0 ) {
 }
 
 
-
 function cambiar() {
 	global $gsClase;
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 	$objSolicitar_Vacaciones->setFormulario($_POST);
-	//var_dump( $objSolicitar_Vacaciones->Modificar() );/*
-	if ( $objSolicitar_Vacaciones->Modificar() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}&msjAlerta=cambio" ); //envía a la vista, con mensaje de la consulta
+	//var_dump($objSolicitar_Vacaciones->Modificar());/*
+	if ($objSolicitar_Vacaciones->Modificar()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}&msjAlerta=cambio"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form={$gsClase}&msjAlerta=nocambio" ); //envía a la vista, con */
-}
-
-
-
-function borrar() {
-	global $gsClase;
-	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
-	$objSolicitar_Vacaciones->setFormulario($_POST);
-	if ( $objSolicitar_Vacaciones->Eliminar() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}&msjAlerta=elimino" ); //envía a la vista, con mensaje de la consulta
-	else
-		header( "Location: ../?form={$gsClase}&msjAlerta=noelimino" ); //envía a la vista, con 
+		header("Location: ../?form={$gsClase}&msjAlerta=nocambio"); //envía a la vista, con */
 }
 
 
 
 function Combo() {
-    if ( isset( $_POST["hidCodigo"] ) )
-        $pvCodigo =  htmlentities( trim ( addslashes( strtolower( $_POST["hidCodigo"] ) ) ) );
+    if (isset($_POST["hidCodigo"]))
+        $pvCodigo =  htmlentities(trim (addslashes(strtolower($_POST["hidCodigo"]))));
     else
         $pvCodigo = "";
     $lsSeleccionado = "";
@@ -400,20 +367,20 @@ function Combo() {
     $rstRecordSet = $objeto->Listar();
     //si hay un arreglo devuelto en la consulta
     header("Content-Type: text/html; charset=utf-8");
-    if ( $rstRecordSet ) {
-        $arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet );
+    if ($rstRecordSet) {
+        $arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
         do {
-            if( intval( $pvCodigo ) == intval( $arrRegistro[$objeto->atrId] ) ) 
+            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId])) 
                 $lsSeleccionado = "selected='selected'";
             else
                 $lsSeleccionado = "";
             ?>
             <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> > 
-                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords( $arrRegistro["nombre"] ); ?> 
+                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?> 
             </option>
             <?php
         } 
-        while ( $arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) );
+        while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet));
     }
     //si no existe una consulta
     else {
@@ -423,9 +390,8 @@ function Combo() {
         <option value='0' > Sin Registros </option>
         <?php
     }
-    unset( $objeto ); //destruye el objeto creado
+    unset($objeto); //destruye el objeto creado
 }
-
 
 
 function ListaSolicitar_Vacaciones() {
@@ -434,9 +400,9 @@ function ListaSolicitar_Vacaciones() {
 
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$vpItems = 10;
-	if ( isset( $_POST["setItems"] ) )  {
-		$vpItems = htmlentities( trim( addslashes( intval( $_POST['setItems'] ) ) ) ) ;
-		if ( $vpItems < 1 ) {
+	if (isset($_POST["setItems"]))  {
+		$vpItems = htmlentities(trim(addslashes(intval($_POST['setItems'])))) ;
+		if ($vpItems < 1) {
 		 	$vpItems = 10 ; //muestra los items predeterminados
 		}
 	}
@@ -444,66 +410,66 @@ function ListaSolicitar_Vacaciones() {
 
 	//por defecto muesta la primera pagina del resultado
 	
-	if ( isset( $_POST['subPagina'] ) AND $_POST['subPagina'] > 1 ) {
-		$vpPaginaActual = htmlentities( trim( intval( $_POST['subPagina'] ) ) ) ;
+	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
+		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
 	else
 		$vpPaginaActual = 1 ;
 
 	//si existe el elemento oculto hidOrden le indica al modelo por cual atributo listara
-	if ( isset( $_POST["setOrden"] ) ) {
-		$objeto->atrOrden =  htmlentities( trim ( strtolower( $_POST["setOrden"] ) ) );
+	if (isset($_POST["setOrden"])) {
+		$objeto->atrOrden =  htmlentities(trim (strtolower($_POST["setOrden"])));
 		//tambien idica de la forma en que listara ASC o DESC
-		$objeto->atrTipoOrden = isset( $_POST['setTipoOrden'] ) ? $_POST['setTipoOrden'] : "ASC";
+		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
 
-	$objeto->atrPaginaInicio = ( $vpPaginaActual -1 ) * $objeto->atrItems;
+	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 
-	$rstRecordSet = $objeto->fmListarIndex( htmlentities( addslashes( trim( strtolower( $_POST['setBusqueda'] ) ) ) ) );
+	$rstRecordSet = $objeto->fmListarIndex(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
-	header( "Content-Type: text/html; charset=utf-8" );
-	if ( $rstRecordSet ) {
-		//$arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ); //convierte el RecordSet en un arreglo
+	header("Content-Type: text/html; charset=utf-8");
+	if ($rstRecordSet) {
+		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
 				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
 					<thead>
 						<tr class='info'>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>")' >
 								Periodo <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
 								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
 								Condicion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 		<?php 
-		while ($arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) ) {
+		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 			?>
-						<tr onclick='fjSeleccionarRegistro( this );' data-toggle='tooltip' data-placement='top' title='Doble clic para detallar los datos y realizar alguna operación'
+						<tr onclick='fjSeleccionarRegistro(this);' data-toggle='tooltip' data-placement='top' title='Doble clic para detallar los datos y realizar alguna operación'
 							datos_registro='Seleccion
 							|<?= $arrRegistro[ "condicion" ]; ?>
 							|<?= $arrRegistro[ $objeto->atrId ]; ?>
 							|<?= $arrRegistro[ "periodo_usado" ]; ?>
-							|<?= $objeto->faFechaFormato( $arrRegistro[ "fecha_inicio" ], "amd" , "dma" ); ?>
-							|<?= $objeto->faFechaFormato( $arrRegistro[ "fecha_fin" ], "amd" , "dma" ); ?>
+							|<?= $objeto->faFechaFormato($arrRegistro[ "fecha_inicio" ], "amd" , "dma"); ?>
+							|<?= $objeto->faFechaFormato($arrRegistro[ "fecha_fin" ], "amd" , "dma"); ?>
 							|<?= $arrRegistro[ "cant_dias_periodo" ]; ?>' >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 							<td> <?= $arrRegistro[ "periodo_usado" ] ; ?> </td>
 							<td> <?= $arrRegistro[ "cant_dias_periodo" ]; ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_inicio" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_fin" ], "amd" , "dma" ); ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro[ "fecha_inicio" ], "amd" , "dma"); ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro[ "fecha_fin" ], "amd" , "dma"); ?> </td>
 							<td> <?= $arrRegistro[ "condicion" ]; ?> </td>
 						</tr>
 			<?php
@@ -515,19 +481,19 @@ function ListaSolicitar_Vacaciones() {
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
 					<li>
-						<a aria-label="Previous" rel="1" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>" , this.rel);' >
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<?php
-					for ( $i = 1; $i <= $objeto->atrPaginaFinal; $i++ )  {
-						if ( $i == $vpPaginaActual )
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
 							$Activo = "active";
 						else
 							$Activo = "";
 						?>
 						<li class="<?= $Activo; ?> ">
-							<a rel="<?= $i; ?>" onclick='console.log( this.rel ); fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>" , this.rel);' >
 								<?= $i; ?>
 							</a>
 						</li>
@@ -536,14 +502,14 @@ function ListaSolicitar_Vacaciones() {
 					?>
 
 					<li>
-						<a aria-label="Next" rel="<?= ( $objeto->atrPaginaFinal ); ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>" , this.rel);' >
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 		<?php
-		$objeto->faLiberarConsulta( $rstRecordSet ); //libera de la memoria el resultado asociado a la consulta
+		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
 
 	else {
@@ -554,10 +520,8 @@ function ListaSolicitar_Vacaciones() {
 		<?php
 	}
 	$objeto->faDesconectar(); //cierra la conexión
-	unset( $objeto ); //destruye el objeto
+	unset($objeto); //destruye el objeto
 } //cierre de la función
 
 
-
 ?>
-

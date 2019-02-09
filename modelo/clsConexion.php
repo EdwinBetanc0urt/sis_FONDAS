@@ -1,31 +1,45 @@
 <?php
 
-date_default_timezone_set("America/Caracas");
-ini_set('default_charset', 'utf-8');
-ini_set("expose_php", "off"); //Expone al mundo que PHP está instalado en el servidor
+/**
+ * Clase para la conexión hacia el servidor de base de datos y métodos para la
+ * consulta de los datos, y métodos globales para uso de las clases extendidas.
+ * @author: Edwin Betancourt <EdwinBetanc0urt@outlook.com>
+ * @license: CC BY-SA, Creative Commons Atribución - CompartirIgual (CC BY-SA) 4.0 Internacional.
+ * @link https://creativecommons.org/licenses/by-sa/4.0/
+ */
 
-//OCULTA todos los errores, para entorno de PRODUCCION
-error_reporting(0);
-ini_set("display_errors", "off");
+//define el separador de rutas en Windows \ y basados en Unix /
+defined("DS") OR define("DS", DIRECTORY_SEPARATOR);
 
-require_once("conf.php");
 require_once("dato_system.php");
 
+if (is_file("_core" . DS . "db_conexion.php")) {
+	require_once("_core" . DS . "db_conexion.php");
+}
+else {
+	require_once(".." . DS . "_core" . DS . "db_conexion.php");
+}
 
-if(is_file("public/lib_Agente.php")){
-	require_once("public/lib_Agente.php");
+if (is_file("_core" . DS . "config.php")) {
+	require_once("_core" . DS . "config.php");
+}
+else {
+	require_once(".." . DS . "_core" . DS . "config.php");
+}
+
+if(is_file("public" . DS . "lib_Agente.php")){
+	require_once("public" . DS . "lib_Agente.php");
 }
 else{
 	$ruta = "../";
-	require_once("{$ruta}public/lib_Agente.php");
+	require_once(".." . DS . "public" . DS . "lib_Agente.php");
 }
 
-if(is_file("public/lib_Cifrado.php")){
-	require_once("public/lib_Cifrado.php");
+if(is_file("public" . DS . "lib_Cifrado.php")){
+	require_once("public" . DS . "lib_Cifrado.php");
 }
 else{
-	$ruta = "../";
-	require_once("{$ruta}public/lib_Cifrado.php");
+	require_once(".." . DS . "public" . DS . "lib_Cifrado.php");
 }
 
 
@@ -46,7 +60,7 @@ class clsConexion {
 		$this->atrClave = PASSWORD; //atributo Clave
 		$this->atrBaseDatos = BD;  //atributo Base de Datos
 		$this->atrConexion = $this->faConectar(); //atributo de Conexión o link
-	} //cierre de la función constructor
+	} // cierre de la función constructor
 
 
 	/**
@@ -72,7 +86,7 @@ class clsConexion {
 				<hr /><li><b>" . mysqli_connect_error(). "</b></li>");
 			return false;
 		}
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -91,7 +105,7 @@ class clsConexion {
 			echo "<br /><br /><hr> <b>¡Error al intentar cerrar la Base de Datos!</b> <br><br> ";
 			return false;
 		}
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -102,22 +116,22 @@ class clsConexion {
 	 */
 	public function faLiberarConsulta($pmConsulta) {
 		mysqli_free_result($pmConsulta);
-	} //cierre de la función
+	} // cierre de la función
 
 
-	//funcion abstracta Ejecutar, ejecuta cualquier operación en la base de datos
-	//parámetro del modelo SQL
+	// función abstracta Ejecutar, ejecuta cualquier operación en la base de datos
+	// parámetro del modelo SQL
 	protected function faEjecutar($pmSQL) {
 		//$this->faConectar();
 		return mysqli_query($this->atrConexion, $pmSQL); // se ejecuta el query
-	} //cierre de la función
+	} // cierre de la función
 	protected function faEjecutar2($pmSQL, $pmConsulta=false) {
 		if (! $pmConsulta) {
 			faEjecutar3($pmSQL);
 		}
 		//$this->faConectar();
 		return mysqli_query($this->atrConexion, $pmSQL); // se ejecuta el query
-	} //cierre de la función
+	} // cierre de la función
 	protected function faEjecutar3($pmSQL){
 		$Usuario = $_SESSION['id'];
 		$sql2="INSERT INTO tAuditoria(
@@ -136,7 +150,7 @@ class clsConexion {
 			return true; //retorna verdadero
 		else
 			return false; //retorna falso si no se afecto ninguna columna
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -178,7 +192,7 @@ class clsConexion {
 				}
 			}
 		}
-	} //cierre de la función
+	} // cierre de la función
 	public function sanearSubFormulario($pcForm) {
 		$arrFormulario = array();
 		foreach ($pcForm as $clave => $valor) {
@@ -195,7 +209,7 @@ class clsConexion {
 			}
 		}
 		return $arrFormulario;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -224,7 +238,7 @@ class clsConexion {
 	 */
 	public function getConsultaArreglo($pmRecordSet) {
 		return mysqli_fetch_array($pmRecordSet);
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -234,7 +248,7 @@ class clsConexion {
 	 */
 	public function getConsultaNumerico($pmRecordSet) {
 		return mysqli_fetch_row($pmRecordSet);
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -245,18 +259,18 @@ class clsConexion {
 	 */
 	public function getConsultaAsociativo($pmRecordSet) {
 		return mysqli_fetch_assoc($pmRecordSet);
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
 	 * función que devuelve los datos de una consulta en objeto
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
-	 * @return objetc, el parámetro convertido en un objeto (accede solamente al nombre del campo)
+	 * @return object, el parámetro convertido en un objeto (accede solamente al nombre del campo)
 	 */
 	public function faCambiarObjeto($pmRecordSet) {
 		return mysqli_fetch_object($pmRecordSet);
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -267,7 +281,7 @@ class clsConexion {
 	 */
 	public function getCuentaColumnas($pmRecordSet) {
 		return mysqli_fetch_lengths($pmRecordSet);
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -275,11 +289,11 @@ class clsConexion {
 	 * utilizada al hacer la paginacion de los listados
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
-	 * @return object el numero total de filas en esa consulta del parametro enviado
+	 * @return object el numero total de filas en esa consulta del parámetro enviado
 	 */
 	public function getNumeroFilas($pmRecordSet) {
 		return mysqli_num_rows($pmRecordSet);
-	} //cierre de la función
+	} // cierre de la función
 
 
 
@@ -289,8 +303,8 @@ class clsConexion {
 
 
 	/**
-	 * funcion abstracta Ultimo ID, funciona solo para las clave primaria INT y
-	 * autoincrementables
+	 * función abstracta Ultimo ID, funciona solo para las clave primaria INT y
+	 * auto incrementable
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 * @param string $pmSQL, Consulta del insert a extraer el numero de insersion
 	 * @return integer del numero de insersion, si es 0 no se inserto nada
@@ -299,7 +313,7 @@ class clsConexion {
 	public function faUltimoId($pmSql) {
 		$this->faEjecutar($pmSql); // se ejecuta el query
 		return mysqli_insert_id($this->atrConexion);  //obtiene el ultimo id, e inserta 1+
-	} //cierre de la función
+	} // cierre de la función
 
 
 	//funcion abstracta Ultimo ID, funciona solo para las clave primaria INT y autoincrementables
@@ -309,42 +323,42 @@ class clsConexion {
 		$RecordSet = $this->faEjecutar($pmSql);
 		//return mysqli_fetch_array($RecordSet); // se ejecuta el query
 		return $pmSql; // se ejecuta el query
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
-	 * funcion abstracta Transaccion Inicio, indica el comienzo de la transacción
+	 * funcion abstracta Transacción Inicio, indica el comienzo de la transacción
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 */
 	public function faTransaccionInicio() {
 		$this->faEjecutar("START TRANSACTION;");
 		//$this->fmEjecutar("BEGIN");
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
-	 * funcion abstracta Transaccion Fin, indica que la transacción culmino
+	 * funcion abstracta Transacción Fin, indica que la transacción culmino
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 */
 	public function faTransaccionFin() {
 		$this->faEjecutar("COMMIT;");
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
-	 * funcion abstracta Transaccion Deshace. devuelve al estado anterior del
+	 * función abstracta Transacción Deshace. devuelve al estado anterior del
 	 * inicio de la transacción cada cambio hecho
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 */
 	public function faTransaccionDeshace() {
 		$this->faEjecutar("ROLLBACK;");
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 * @param string $pmFecha, cadena de la fecha a convertir
-	 * @param string $pmFormatoE, formato en el que se envio la fecha
+	 * @param string $pmFormatoE, formato en el que se envió la fecha
 	 * @param string $pmFormatoR, formato en el que se retornara la fecha
 	 * @return string $lsFecha, fecha a convertida en el formato indicado
 	 */
@@ -353,20 +367,20 @@ class clsConexion {
 			$lsActual = date("Y-m-d"); //fecha actual php para servidor
 			//$lsActual="NOW()"; //fecha actual SQL para servidor
 
-			$lsDiaSemanaN = date("N"); // dia de la semana en numeros, 1 (lunes) a 7 (domingo)
-			$lsDiaSemanaC = date("D"); // dia de la semana en letras cortas, Mon a Sun
-			$lsDiaSemanaL = date("l"); // dia de la semana en letras largas, Sunday a Saturday
+			$lsDiaSemanaN = date("N"); // día de la semana en números, 1 (lunes) a 7 (domingo)
+			$lsDiaSemanaC = date("D"); // día de la semana en letras cortas, Mon a Sun
+			$lsDiaSemanaL = date("l"); // día de la semana en letras largas, Sunday a Saturday
 
-			$lsDia = date("d"); //dia del mes, 01 a 31
-			$lsDiaS = date("j"); //dia del mes sin ceros delate, 1 a 31
+			$lsDia = date("d"); // día del mes, 01 a 31
+			$lsDiaS = date("j"); // día del mes sin ceros delate, 1 a 31
 
-			$lsMes = date("m"); //mes del año en numeros, 01 a 12
-			$lsMesS = date("n"); //mes del año en numeros sin ceros, 1 a 12
-			$lsMesC = date("M"); //mes del año en letras, Jan a Dec
-			$lsMesL = date("F"); //mes del año en letras, January a December
+			$lsMes = date("m"); // mes del año en números, 01 a 12
+			$lsMesS = date("n"); // mes del año en números sin ceros, 1 a 12
+			$lsMesC = date("M"); // mes del año en letras, Jan a Dec
+			$lsMesL = date("F"); // mes del año en letras, January a December
 
-			$lsAnoC = date("y"); //dos ultimos digitos del año, 16
-			$lsAno = date("Y"); //año en cuatro digitos, 2016
+			$lsAnoC = date("y"); // dos últimos dígitos del año, 16
+			$lsAno = date("Y"); // año en cuatro dígitos, 2016
 		}
 
 		else {
@@ -451,24 +465,24 @@ class clsConexion {
 
 		}
 		return $lsFecha;
-	} //cierre de la función
+	} // cierre de la función
 
-} //cierre de la clase
+} // cierre de la clase
 
 
 
 // Clase para imprimir en la consola del navegador
 class console {
 
-	//función estática se accede de la forma console::log($mensaje);
+	// función estática se accede de la forma console::log($mensaje);
 	public static function log($psMensaje = "PHP consola" , $psTipo = "log") {
 		echo '
 			<script type="text/javascript">
 				console.' . $psTipo . '("' . json_encode($psMensaje) . '");
 			</script>';
-	} //cierre de la función
+	} // cierre de la función
 
-} //cierre de la clase
+} // cierre de la clase
 
 
 ?>

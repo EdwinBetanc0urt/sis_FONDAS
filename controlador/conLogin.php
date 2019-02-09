@@ -43,34 +43,37 @@ else {
 				// Clave Caducada
 				if ($vsDiferencia->days >= $objUsuario->getDiasCaducidad()) {
 					$_SESSION = array(
-						'sesion' => 'caducado' ,
-						'sistema' => 'fondas' ,
-						'usuario' => $arrDatos['usuario'] ,
-						'idpersona' => $arrUsuario['idpersona'] ,
-						'nacionalidad' => $arrDatos['nacionalidad'] ,
-						'cedula' => $arrDatos['cedula'] ,
-						'nombre' => $arrDatos['nombre'] ,
-						'apellido' => $arrDatos['apellido'] ,
-						'id_usuario' => $arrDatos['id_usuario'] ,
+						'sesion' => 'caducado',
+						'sistema' => 'fondas',
+						'usuario' => $arrDatos['usuario'],
+						'idpersona' => $arrUsuario['idpersona'],
+						'nacionalidad' => $arrDatos['nacionalidad'],
+						'cedula' => $arrDatos['cedula'],
+						'nombre' => $arrDatos['nombre'],
+						'apellido' => $arrDatos['apellido'],
+						'id_usuario' => $arrDatos['id_usuario'],
 					);
 					header("Location: ../?accion=ClaveCaducada");
 				}
 				else {
 					$_SESSION = array(
-						'sesion' => 'sistema' ,
-						'sistema' => 'fondas' ,
-						'usuario' => $arrDatos['usuario'] ,
-						'tipo_usuario' => $arrDatos['tipo_usuario'] ,
-						'idtipo_usuario' => $arrDatos['idtipo_usuario'] ,
-						'idpersona' => $arrUsuario['idpersona'] ,
-						'idtrabajador' => $arrDatos['idtrabajador'] ,
-						'nacionalidad' => $arrDatos['nacionalidad'] ,
-						'cedula' => $arrDatos['cedula'] ,
-						'nombre' => $arrDatos['nombre'] ,
-						'apellido' => $arrDatos['apellido'] ,
-						'id_usuario' => $arrDatos['id_usuario'] ,
-						'estatus' => $arrDatos['estatus'] ,
-						'fecha_ingreso' => $arrDatos['fecha_ingreso'] ,
+						'sesion' => 'sistema',
+						'sistema' => 'fondas',
+						'usuario' => $arrDatos['usuario'],
+						'tipo_usuario' => $arrDatos['tipo_usuario'],
+						'idtipo_usuario' => $arrDatos['idtipo_usuario'],
+						'idpersona' => $arrUsuario['idpersona'],
+						'idtrabajador' => $arrDatos['idtrabajador'],
+						'nacionalidad' => $arrDatos['nacionalidad'],
+						'cedula' => $arrDatos['cedula'],
+						'nombre' => $arrDatos['nombre'],
+						'apellido' => $arrDatos['apellido'],
+						'id_usuario' => $arrDatos['id_usuario'],
+						'estatus' => $arrDatos['estatus'],
+						'fecha_ingreso' => $arrDatos['fecha_ingreso'],
+						'fecha_ingreso2' => $objUsuario->faFechaFormato(
+							faFechaFormato$arrDatos['fecha_ingreso']
+						),
 						'tiempo_sesion' => $arrUsuario['tiempo_sesion']
 					);
 					header("Location: ../?accion=Bienvenida");
@@ -86,21 +89,21 @@ else {
 				$fecha = $objUsuario->faFechaFormato($arrDatos["fecha_ingreso"]);
 
 				$_SESSION = array(
-					'sesion' => 'completar' ,
-					'sistema' => 'fondas' ,
-					'usuario' => $arrDatos['usuario'] ,
-					'nombre' => $arrDatos['nombre'] ,
-					'apellido' => $arrDatos['apellido'] ,
-					'cargo' => $arrDatos['cargo'] ,
-					'idcargo' => $arrDatos['idcargo'] ,
-					'tipo_usuario' => $arrDatos['tipo_usuario'] ,
-					'idtipo_usuario' => $arrDatos['idtipo_usuario'] ,
-					'idpersona' => $arrUsuario['idpersona'] ,
-					'idtrabajador' => $arrDatos['idtrabajador'] ,
-					'id_usuario' => $arrDatos['id_usuario'] ,
-					'correo' => $arrDatos['correo'] ,
-					'tel_mov' => $arrDatos['tel_mov'] ,
-					'fecha_ingreso' => $fecha ,
+					'sesion' => 'completar',
+					'sistema' => 'fondas',
+					'usuario' => $arrDatos['usuario'],
+					'nombre' => $arrDatos['nombre'],
+					'apellido' => $arrDatos['apellido'],
+					'cargo' => $arrDatos['cargo'],
+					'idcargo' => $arrDatos['idcargo'],
+					'tipo_usuario' => $arrDatos['tipo_usuario'],
+					'idtipo_usuario' => $arrDatos['idtipo_usuario'],
+					'idpersona' => $arrUsuario['idpersona'],
+					'idtrabajador' => $arrDatos['idtrabajador'],
+					'id_usuario' => $arrDatos['id_usuario'],
+					'correo' => $arrDatos['correo'],
+					'tel_mov' => $arrDatos['tel_mov'],
+					'fecha_ingreso' => $fecha,
 					'estatus' => $arrDatos['estatus']
 				);
 				$objUsuario->Bitacora($arrUsuario["id_usuario"]);

@@ -1,9 +1,10 @@
 <?php
+
 include_once('clsConexion.php');
 
 class Solicitar_Vacaciones extends clsConexion {
 
-	//atributos de paginacion
+	//atributos de paginación
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
 	function __construct() {
@@ -13,17 +14,6 @@ class Solicitar_Vacaciones extends clsConexion {
 		$this->atrId = "idvacacion";
 
 		$this->atrFormulario = array();
-	}
-
-
-
-	function UltimoCodigo() {
-		$sql= "SELECT MAX( {$this->atrId} ) AS id
-				FROM {$this->atrTabla}  ; ";
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		$arreglo = parent::getConsultaNumerico( $tupla );
-		parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
-		return $arreglo; //sino encuentra nada devuelve un cero
 	}
 
 
@@ -84,8 +74,6 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-
-
 	function Modificar() {
 		$sql = "
 			update {$this->atrTabla}
@@ -100,7 +88,6 @@ class Solicitar_Vacaciones extends clsConexion {
 		else
 			return false;
 	}
-
 
 
 	function consultar() {
@@ -119,7 +106,6 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-
 	function getFechaIngreso( $psIdTrabajador ) {
 		$sql = "
 			select fecha_ingreso from ttrabajador
@@ -136,7 +122,6 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-
 	function eliminar()	{
 		$sql = "
 			delete from {$this->atrTabla}
@@ -148,7 +133,6 @@ class Solicitar_Vacaciones extends clsConexion {
 		else
 			return false;
 	}
-
 
 
 	//funcion.nivel.Listar
@@ -168,7 +152,6 @@ class Solicitar_Vacaciones extends clsConexion {
 		else
 			return false;
 	}
-
 
 
   	/** 
@@ -207,14 +190,12 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
 	function fmListarIndex( $psBuscar ) {
-		session_start();
 		$sql = "
 			SELECT 
 				V.* , D.iddetalle_vacacion, D.periodo_usado, D.cant_dias_periodo 
@@ -244,4 +225,5 @@ class Solicitar_Vacaciones extends clsConexion {
 
 
  }
+
 ?>
