@@ -21,7 +21,7 @@ class Perfil extends clsConexion {
 		$insert_hijo = $this->ejecutar("INSERT INTO tservicios_usuarios_opciones(tipo_usuario,idservicio,idopciones) VALUES('$id','1','2')");
 	
 		//Validaciones
-		if($insert_padre >  0 and $insert_hijo > 0 ){
+		if($insert_padre >  0 and $insert_hijo > 0){
 			$this->terminar_transaccion();
 			$exito = true;
 		}
@@ -34,7 +34,7 @@ class Perfil extends clsConexion {
  
  
 	public function buscar(){
-		return parent::ejecutar("select *,( CASE 
+		return parent::ejecutar("select *,(CASE 
 	        WHEN estatus=1 THEN  'Activo'
 	        ELSE 'Desactivado' END) AS estatus from ttipo_usuario where 
 	        nombre='$this->nombre' and estatus=1");
@@ -88,7 +88,7 @@ class Perfil extends clsConexion {
 		$delete_detalle4 = $this->ejecutar("delete from tservicios_usuarios_opciones where tipo_usuario='$this->tipo_usuario'");
 		
 		//Validaciones
-		if($update_padre >  0 OR $delete_detalle4 > 0 ){
+		if($update_padre >  0 OR $delete_detalle4 > 0){
 			$this->terminar_transaccion();
 			$exito = true;
 		}
@@ -100,26 +100,26 @@ class Perfil extends clsConexion {
  
  
  public function IMPRIMIR_MODULOS(){
-return parent::ejecutar("SELECT tmod.idmodulo, tmod.nombre ,tmod.icono FROM tmodulos tmod WHERE tmod.idmodulo 
-    IN ( SELECT tser.idmodulo FROM tservicios tser WHERE tser.idmodulo = tmod.idmodulo 
-    AND tser.idservicio IN ( SELECT tsuo.idservicio FROM tservicios_usuarios_opciones tsuo
-    WHERE tsuo.tipo_usuario =  '$this->tipo_usuario') ) AND tmod.estatus=1 ");
+return parent::ejecutar("SELECT tmod.idmodulo, tmod.nombre,tmod.icono FROM tmodulos tmod WHERE tmod.idmodulo 
+    IN (SELECT tser.idmodulo FROM tservicios tser WHERE tser.idmodulo = tmod.idmodulo 
+    AND tser.idservicio IN (SELECT tsuo.idservicio FROM tservicios_usuarios_opciones tsuo
+    WHERE tsuo.tipo_usuario =  '$this->tipo_usuario')) AND tmod.estatus=1 ");
  }
  
  public function IMPRIMIR_SERVICIOS(){
 return parent::ejecutar("SELECT * FROM tservicios tser WHERE tser.idmodulo = '$this->idmodulo' 
-    AND tser.idservicio IN ( SELECT tsuo.idservicio FROM tservicios_usuarios_opciones tsuo
-    WHERE tsuo.tipo_usuario =  '$this->tipo_usuario' ) ORDER BY nombre ");
+    AND tser.idservicio IN (SELECT tsuo.idservicio FROM tservicios_usuarios_opciones tsuo
+    WHERE tsuo.tipo_usuario =  '$this->tipo_usuario') ORDER BY nombre ");
  }
  
  public function IMPRIMIR_OPCIONES(){
-return parent::ejecutar("SELECT nombre,orden,nombre_boton,( CASE 
+return parent::ejecutar("SELECT nombre,orden,nombre_boton,(CASE 
         WHEN estatus=1  THEN  'Activo'
         ELSE 'Desactivado' END) AS estatus FROM topciones topc WHERE topc.idopcion IN 
-           ( SELECT tsuo.idopciones FROM tservicios_usuarios_opciones tsuo
+           (SELECT tsuo.idopciones FROM tservicios_usuarios_opciones tsuo
     WHERE tsuo.tipo_usuario =  '$this->tipo_usuario' and idservicio in (SELECT idservicio from tservicios where 
     url='$this->url_perfil')
-    ) ");
+   ) ");
  }
  
  public function Consultar_SERVICIOS(){

@@ -4,7 +4,7 @@
 if (isset($_SESSION) && $_SESSION["sesion"] = "sistema") {
 
 	$form="Bienvenida";
-	if( isset( $_GET["form"] ) ){
+	if(isset($_GET["form"])){
 		$form = $_GET["form"];
 	}
 
@@ -69,11 +69,11 @@ else {
 
 	$ruta = "";
 	if(is_file("controlador/conCerrar.php")){
-		header( "Location: controlador/conCerrar.php?getMotivoLogOut=AccesoIndevido");
+		header("Location: controlador/conCerrar.php?getMotivoLogOut=AccesoIndevido");
 	}
 	else{
 		$ruta = "../";
-		header( "Location: {$ruta}controlador/conCerrar.php?getMotivoLogOut=AccesoIndevido");
+		header("Location: {$ruta}controlador/conCerrar.php?getMotivoLogOut=AccesoIndevido");
 	}
 }
 

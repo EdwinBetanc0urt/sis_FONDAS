@@ -42,7 +42,7 @@ class Mi_Perfil extends Persona {
 			WHERE
 				idpersona = '{$_SESSION["idpersona"]}'; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -50,14 +50,14 @@ class Mi_Perfil extends Persona {
 
 
 
-	function consultar( ) {		
+	function consultar() {		
 		$sql = "
 			SELECT * FROM vpersona
 			WHERE 
 				idpersona = '{$_SESSION["idpersona"]}'
 			LIMIT 1 "; //selecciona todo de la tabla
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;

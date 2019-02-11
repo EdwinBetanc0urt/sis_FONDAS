@@ -86,15 +86,15 @@ function imprimir(){
 	fecha=document.getElementById('fecha_asis').value;
 	fecha_final=document.getElementById('fecha_final').value;
 	tipo=document.getElementById('tipo_ausencia').value;
-				if( fecha==""){
+				if(fecha==""){
                   swal("Seleccion la fecha inicio!");
 				  
                    return false;
-			}else if( fecha_final==""){
+			}else if(fecha_final==""){
                   swal("Seleccion la fecha fin!");
 				  
                    return false;
-			}else if( tipo==""){
+			}else if(tipo==""){
                   swal("Seleccion el tipo de Ausecia!");
 				  
                    return false;

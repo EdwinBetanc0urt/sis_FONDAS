@@ -4,10 +4,10 @@ include("modelo/clsAcceso.php");
 
 $objMenu = new Acceso();
 $objMenu->atrIdTipoUsuario = $_SESSION['idtipo_usuario'];
-$rstModulo = $objMenu->ListarModulo( );
+$rstModulo = $objMenu->ListarModulo();
 
-if ( $rstModulo ) {
-	$arrModulo = $objMenu->getConsultaArreglo( $rstModulo );
+if ($rstModulo) {
+	$arrModulo = $objMenu->getConsultaArreglo($rstModulo);
 
 	$liCont = 1;
 	do {
@@ -25,31 +25,31 @@ if ( $rstModulo ) {
 				</li>
 				<li class="go-back">Atras</li>
 				<?php
-				$rstVista = $objMenu->ListarVista( $arrModulo["idmodulo"] );
-				if ( $rstVista ) {
-					$arrVista = $objMenu->getConsultaArreglo( $rstVista );
+				$rstVista = $objMenu->ListarVista($arrModulo["idmodulo"]);
+				if ($rstVista) {
+					$arrVista = $objMenu->getConsultaArreglo($rstVista);
 					do {
 						?>
 						<li >
 							<a href='?form=<?= $arrVista["url"]; ?>' > 
-								<?= ucwords( $arrVista["vista"] ); ?> 
+								<?= ucwords($arrVista["vista"]); ?> 
 							</a>
 						</li>
 						<?php
 					}
-					while ( $arrVista = $objMenu->getConsultaArreglo( $rstVista ) );
-					$objMenu->faLiberarConsulta( $rstVista );
+					while ($arrVista = $objMenu->getConsultaArreglo($rstVista));
+					$objMenu->faLiberarConsulta($rstVista);
 				}
 				?>
 			</ul>
 		</li>
 		<?php
 	}
-	while ( $arrModulo = $objMenu->getConsultaArreglo( $rstModulo ) );
+	while ($arrModulo = $objMenu->getConsultaArreglo($rstModulo));
 
-	$objMenu->faLiberarConsulta( $rstModulo );
+	$objMenu->faLiberarConsulta($rstModulo);
 }
 
-unset( $objMenu );
+unset($objMenu);
 ?>
 

@@ -7,11 +7,11 @@ permitido=true;
 var obj_name="";
      nombre=document.getElementById("usuario");	
 	
-			if(nombre.value=="" ||nombre.length==0 ){
+			if(nombre.value=="" ||nombre.length==0){
 			swal("El nombre de usuario está vacío");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}
-			 if(nombre.length<5 ){
+			 if(nombre.length<5){
 			swal("5 carácter mínimo");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}
@@ -34,21 +34,21 @@ var obj_name="";
      resp2=document.getElementById("resp2");	
 	var a= $('#resp1').val();
 	var b= $('#resp2').val();
-			if(resp1.value=="" ||resp1.length==0 ){
+			if(resp1.value=="" ||resp1.length==0){
 			swal("Ingrese la respuesta 1");resp1.focus();permitido=false;
 			 obj_name=resp1.id; 
 			 return false;}
-			else if(a.length<6 ){
+			else if(a.length<6){
 			swal("6 carácter mínimo");
 			
 			 return false;}
 			 
             
-if(resp2.value=="" ||resp2.length==0 ){
+if(resp2.value=="" ||resp2.length==0){
 			swal("Ingrese la respuesta 2");resp2.focus();permitido=false;
 			 obj_name=resp2.id; 
 			 return false;}
-			 else if(b.length<6 ){
+			 else if(b.length<6){
 			swal("6 carácter mínimo");
 			
 			 return false;}
@@ -77,23 +77,23 @@ var obj_name="";
      contra1=document.getElementById("password2");	
 	var a= $('#password1').val();
 	var b= $('#password2').val();	   	    
-			if(contra.value=="" ||contra.length==0 ){
+			if(contra.value=="" ||contra.length==0){
 			swal("Ingrese la contraseña");contra.focus();permitido=false;
 			 obj_name=contra.id; 
 			 return false;}
-			  else if(a.length<6 ){
+			  else if(a.length<6){
 			swal("La contraseña debe tener al menos 6 caracteres!");
 			
 			 return false;}
-			 if(contra1.value=="" ||contra1.length==0 ){
+			 if(contra1.value=="" ||contra1.length==0){
 			swal("Confirmar la contraseña");contra1.focus();permitido=false;
 			 obj_name=contra1.id; 
 			 return false;}
-			 else if(b.length<6 ){
+			 else if(b.length<6){
 			swal("La contraseña debe tener al menos 6 caracteres!");
 			
 			 return false;}
-			 else if(contra.value!=contra1.value ){
+			 else if(contra.value!=contra1.value){
 			swal("Ambas contraseñas ingresadas deben ser idénticas!");
 			
 			 return false;}
@@ -115,11 +115,11 @@ var obj_name="";
 	 hora_inicio=document.getElementById("set_up");	
 	 hora_fin=document.getElementById("close_up");	
 		   	  
-			if(nombre.value=="" ||nombre.length==0 ){
+			if(nombre.value=="" ||nombre.length==0){
 			swal("El nombre del cargo está vacío");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}
-			 if(nombre.length<5 ){
+			 if(nombre.length<5){
 			swal("5 carácter mínimo");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}

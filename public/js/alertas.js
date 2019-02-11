@@ -1,44 +1,44 @@
 
 //función javascript Mensajes, utilizado por las operaciones Incluir, Consultar, Modificar,
 // Eliminar y Restaurar de las maestras, ademas de acciones del login
-function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que contiene los valores
+function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que contiene los valores
 
     var colorFondo = "#e1e1e1";
 
     //si la búsqueda de la palabra noeliminousados en la cadena pvValorUrl no da error
-    if ( pvValorUrl.search( "noeliminousados" ) !== - 1 ) {
-        //if ( pvValorUrl.lastIndexOf("noeliminousados") != -1 )
+    if(pvValorUrl.search("noeliminousados") !== - 1) {
+        //if(pvValorUrl.lastIndexOf("noeliminousados") != -1)
         //toma los caracteres a partir de la posición 15 (los números del URL a la derecha de msjAlerta=noeliminousados2342)
-        var vjRegistros = pvValorUrl.substring( 15 );
+        var vjRegistros = pvValorUrl.substring(15);
         //alert("No puede ser eliminado, es usado en: <br />   " + vjRegistros + " Registro(s)");
         swal({
             title: '¡Atención!',
             html: "No puede ser eliminado, es usado en: <br />   " + vjRegistros + " Registro(s)",
             type: 'error',
             confirmButtonText: 'Ok',
-            background: '#b1b1b1' ,
+            background: '#b1b1b1',
             showCloseButton: true
         });
     }
 
     //si la búsqueda de la palabra noeliminousados en la cadena pvValorUrl no da error
-    if ( pvValorUrl.search( "claverepetida" ) !== - 1 ) {
-        //if ( pvValorUrl.lastIndexOf("noeliminousados") != -1 )
+    if(pvValorUrl.search("claverepetida") !== - 1) {
+        //if(pvValorUrl.lastIndexOf("noeliminousados") != -1)
         //toma los caracteres a partir de la posición 13 (los números del URL a la derecha de msjAlerta=claverepetida5)
-        var vjRango = pvValorUrl.substring( 13 );
+        var vjRango = pvValorUrl.substring(13);
         //alert("La clave debe ser diferente a las ultimas: <br />   " + vjRango + " claves que ha utilizado");
         swal({
             title: '¡Clave Repetida!',
             html: "La clave debe ser diferente a las ultimas: <br />   " + vjRango + " claves que ha utilizado",
             type: 'error',
             showCloseButton: true,
-            background: colorFondo ,
+            background: colorFondo,
             confirmButtonText: 'Ok'
         });
     }
 
 
-    switch ( pvValorUrl ) {
+    switch(pvValorUrl) {
 
         /*
         default:
@@ -111,7 +111,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Registro guardado exitosamente',
                 type: 'success',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -121,7 +121,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'El registro no fue guardado.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -133,7 +133,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Registro guardado exitosamente',
                 type: 'success',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -143,7 +143,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'El registro no fue guardado.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -153,7 +153,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Registro duplicado, no sera registrado.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -325,7 +325,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'No se realizaron cambios.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -335,7 +335,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Cambios realizados con éxito.',
                 type: 'success',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -345,7 +345,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'No se realizaron cambios porque ya existe un registro igual.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -359,7 +359,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'El registro se elimino con éxito.',
                 type: 'success',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -369,11 +369,11 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Ningún registro se elimino.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
-            /*case  ( pvValorUrl.search("noeliminousados") != -1 ):
+            /*case (pvValorUrl.search("noeliminousados") != -1):
                 vjRegistros=pvValorUrl.substring(15); //toma los caracteres a partir de la posición 15 (los números del URL)
                 alert("No puede ser eliminado, ya ha sido usado en: <br />   "+vjRegistros+" Registro(s)");
                 break;*/
@@ -387,7 +387,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Registro restaurado con éxito.',
                 type: 'success',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -397,7 +397,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'El registro no se restauro.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -409,7 +409,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Usuario desbloqueado con éxito.',
                 type: 'success',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -419,7 +419,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'El Usuario no se desbloqueo.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -431,7 +431,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Sin cambios,<br /> debes tener un rol igual o mayor para cambiar el rol de este usuario..',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -444,7 +444,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Alguna o todas de las respuestas de secretas son incorrectas.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -457,7 +457,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Clave cambiada con éxito.',
                 type: 'success',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -467,7 +467,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'La clave no ha sido cambiada.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -479,7 +479,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Usuario inhabilitado... <br /> Contacte con usuario con privilegios para habilitar su Usuario.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -492,14 +492,14 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 type: 'error',
                 html: 'USUARIO O CONTRASEÑA INCORRECTA...<br /> Por favor verifique e intente nuevamente.',
                 showCloseButton: true,
-                //background: colorFondo ,
+                //background: colorFondo,
                 confirmButtonText: 'Ok'
-            }).then( ( result ) => {
-                if ( result.value ) {
-                   $( "#ctxUsuario").focus();
+            }).then((result) => {
+                if(result.value) {
+                   $("#ctxUsuario").focus();
                 }
                 else {
-                    $( "#ctxUsuario").focus();
+                    $("#ctxUsuario").focus();
                 }
             });
             /*document.getElementById("ctxUsuario").value = ""; //blanquea el usuario
@@ -514,7 +514,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'USUARIO BLOQUEADO... <br /> Ha superado el máximo de intentos permitidos.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             /*document.getElementById("ctxUsuario").value = ""; //blanquea el usuario
@@ -529,7 +529,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'USUARIO BLOQUEADO... <br />por favor contacte soporte tecnico.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             /*document.getElementById("ctxUsuario").value = ""; //blanquea el usuario
@@ -544,7 +544,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'No se encontró el Usuario buscado.',
                 type: 'error',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -557,7 +557,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'USUARIO EN LINEA (ONLINE). <br /> No puede tener abierta mas de 1 vez las misma sesión del mismo usuario.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -568,7 +568,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'TIEMPO DE SESION EXPIRADO. <br /> el usuario supero su máximo de tiempo inactivo.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -579,7 +579,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Es requerido que complete sus datos antes de iniciar sesión.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;
@@ -592,7 +592,7 @@ function fjMensajes( pvValorUrl ) { //parámetro de la vista (msjMensaje) que co
                 html: 'Se quitaron todos los accesos a la vista seleccionada.',
                 type: 'info',
                 showCloseButton: true,
-                background: colorFondo ,
+                background: colorFondo,
                 confirmButtonText: 'Ok'
             });
             break;

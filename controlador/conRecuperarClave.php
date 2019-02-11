@@ -16,17 +16,17 @@ else{
 
 echo "<pre>";
 $objCifrado = new clsCifrado();
-//$_POST["pswClaveN"] = $objCifrado->flEncriptar( $_POST["pswClaveN"]  );
+//$_POST["pswClaveN"] = $objCifrado->flEncriptar($_POST["pswClaveN"]);
 $objeto = new RecuperarClave();
-$objeto->setFormulario( $_POST );
+$objeto->setFormulario($_POST);
 
 $arrConsulta_P1 = $objeto->Consultar();
 $arrConsulta_P2 = $objeto->Consultar2();
-//var_dump( $arrConsulta_P1 );
-//var_dump( $arrConsulta_P2 );
-if ( $arrConsulta_P1 AND  $arrConsulta_P2) {
+//var_dump($arrConsulta_P1);
+//var_dump($arrConsulta_P2);
+if ($arrConsulta_P1 AND  $arrConsulta_P2) {
 
-	if ( $arrConsulta_P1['respuesta'] == $_POST["ctxRespuesta1"] AND $arrConsulta_P2['respuesta'] == $_POST["ctxRespuesta2"] ) {
+	if ($arrConsulta_P1['respuesta'] == $_POST["ctxRespuesta1"] AND $arrConsulta_P2['respuesta'] == $_POST["ctxRespuesta2"]) {
 		//echo "respuestas iguales";
 		
 		$objeto->atrId = $arrConsulta_P1["id_usuario"];
@@ -34,11 +34,11 @@ if ( $arrConsulta_P1 AND  $arrConsulta_P2) {
 
 		$rango = $objeto->getMaximoRangoClave();
 
-		$crypClave = $objCifrado->flEncriptar( $_POST["pswClave"] );
+		$crypClave = $objCifrado->flEncriptar($_POST["pswClave"]);
 
-		while ( $arrClave = $objeto->getConsultaAsociativo( $rstClave ) ) {
-			if ( $crypClave == $arrClave["clave"] ) {
-				header( "Location: {$ruta}?accion=Login&msjAlerta=claverepetida{$rango}");
+		while ($arrClave = $objeto->getConsultaAsociativo($rstClave)) {
+			if ($crypClave == $arrClave["clave"]) {
+				header("Location: {$ruta}?accion=Login&msjAlerta=claverepetida{$rango}");
 				echo "repetido";
 				return;
 			}
@@ -47,30 +47,30 @@ if ( $arrConsulta_P1 AND  $arrConsulta_P2) {
 				continue;
 			}
 		}
-		$objeto->faLiberarConsulta( $rstClave ); //libera de la memoria el resultado asociado a la consulta
+		$objeto->faLiberarConsulta($rstClave); //libera de la memoria el resultado asociado a la consulta
 
-		//var_dump( $objeto->fmRecuperarClave() );
+		//var_dump($objeto->fmRecuperarClave());
 		
-		if ( $objeto->fmRecuperarClave() )
-			header( "Location: {$ruta}?accion=Login&msjAlerta=claverecuperada");
+		if ($objeto->fmRecuperarClave())
+			header("Location: {$ruta}?accion=Login&msjAlerta=claverecuperada");
 		else
-			header( "Location: {$ruta}?accion=Login&msjAlerta=clavenocambio");
+			header("Location: {$ruta}?accion=Login&msjAlerta=clavenocambio");
 		
 		
 	}
 	else {
-		header( "Location: {$ruta}?accion=Login&msjAlerta=respuestaincorrecta");
+		header("Location: {$ruta}?accion=Login&msjAlerta=respuestaincorrecta");
 		echo "respuestaincorrecta";
 	}
 }
 else {
-	header( "Location: {$ruta}?accion=Login&msjAlerta=nousuario");
+	header("Location: {$ruta}?accion=Login&msjAlerta=nousuario");
 	echo "nousuario";
 }
 
-unset( $objCifrado ); //destruye el objeto
+unset($objCifrado); //destruye el objeto
 $objeto->faDesconectar(); //cierra la conexión
-unset( $objeto ); //destruye el objeto*/
+unset($objeto); //destruye el objeto*/
 
 
 

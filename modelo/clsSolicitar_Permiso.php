@@ -24,19 +24,19 @@ class Solicitar_Permiso extends clsConexion {
 
 	function Incluir() {
 		echo $this->atrFormulario["ctxFechaInicio"];
-		$vsHoraI = date("H:i:s", strtotime($this->atrFormulario["ctxFechaInicio"]) );
+		$vsHoraI = date("H:i:s", strtotime($this->atrFormulario["ctxFechaInicio"]));
 		$vsFechaI = parent::faFechaFormato($this->atrFormulario["ctxFechaInicio"], "dma", "amd");
 		$vsTiempoI = $vsFechaI . " " . $vsHoraI;
 
-		$vsHoraF = date("H:i:s", strtotime($this->atrFormulario["ctxFechaFin"]) );
+		$vsHoraF = date("H:i:s", strtotime($this->atrFormulario["ctxFechaFin"]));
 		$vsFechaF = parent::faFechaFormato($this->atrFormulario["ctxFechaFin"], "dma", "amd");
 		$vsTiempoF = $vsFechaF . " " . $vsHoraF;
 
 		$sql = "
 			INSERT INTO {$this->atrTabla}
-				( {$this->atrNombre}, idtrabajador, idmotivo_permiso, 
+				({$this->atrNombre}, idtrabajador, idmotivo_permiso, 
 				fecha_inicio, fecha_fin) 
-			VALUES ( 
+			VALUES (
 				'{$this->atrFormulario["ctxObservacion"]}',
 				'{$this->atrFormulario["numIdTrabajador"]}',
 				'{$this->atrFormulario["cmbMotivo_Permiso"]}',
@@ -45,7 +45,7 @@ class Solicitar_Permiso extends clsConexion {
 			); ";
 
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -56,13 +56,13 @@ class Solicitar_Permiso extends clsConexion {
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
-				{$this->atrNombre} = '{$this->atrFormulario["ctxObservacion"]}' ,
-				idtrabajador = '{$this->atrFormulario["ctxDescripcion"]}' ,
+				{$this->atrNombre} = '{$this->atrFormulario["ctxObservacion"]}',
+				idtrabajador = '{$this->atrFormulario["ctxDescripcion"]}',
 				 
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -78,9 +78,9 @@ class Solicitar_Permiso extends clsConexion {
 				{$this->atrNombre} = '{$this->atrFormulario["ctxObservacion"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar() ) {
-			$arreglo = parent::getConsultaArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		if (parent::faVerificar()) {
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else
@@ -95,7 +95,7 @@ class Solicitar_Permiso extends clsConexion {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -105,16 +105,16 @@ class Solicitar_Permiso extends clsConexion {
 
 
 	//funcion.nivel.Listar
-	function getTiempoMotivo( $piMotivo = "" ) {
+	function getTiempoMotivo($piMotivo = "") {
 		$sql = "
 			SELECT cantidad_tiempo, cantidad_dias
 			FROM  tmotivo_permiso
 			WHERE
 				idmotivo_permiso = '{$piMotivo}'
 			LIMIT 1;";
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar( $tupla ) ) {
+		if (parent::faVerificar($tupla)) {
 			$arrConsulta = parent::getConsultaArreglo($tupla);
 			parent::faLiberarConsulta($tupla);
 			return $arrConsulta; //envia el arreglo
@@ -125,19 +125,19 @@ class Solicitar_Permiso extends clsConexion {
 
 
 	//funcion.nivel.Listar
-	function Listar( $psBuscar = "" ) {
+	function Listar($psBuscar = "") {
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
 
-		if ( $psBuscar != "" ) {
+		if ($psBuscar != "") {
 			$sql .= "
 				WHERE
 					nombre LIKE '%{$psBuscar}%' OR
 					{$this->atrId} LIKE '%{$psBuscar}%' ;";
 		}
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ) //verifica si se ejecuto bien
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
 			return false;
@@ -150,7 +150,7 @@ class Solicitar_Permiso extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex( $psBuscar ) {		
+	function fmListarIndex($psBuscar) {		
 		session_start();
 		$sql = "
 			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
@@ -164,20 +164,20 @@ class Solicitar_Permiso extends clsConexion {
 
 			WHERE
 				Perm.estatus = 'activo' AND
-				( Perm.{$this->atrId} LIKE '%{$psBuscar}%' ) 
+				(Perm.{$this->atrId} LIKE '%{$psBuscar}%') 
 				AND Perm.idtrabajador = '{$_SESSION["idtrabajador"]}' "; //selecciona todo de la tabla
 		
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;

@@ -21,13 +21,13 @@ class Municipio extends clsConexion {
 
 	function Incluir() {
 		$sql = "
-			INSERT INTO {$this->atrTabla} ( {$this->atrNombre} , idestado) 
-			VALUES ( 
+			INSERT INTO {$this->atrTabla} ({$this->atrNombre}, idestado) 
+			VALUES (
 				'{$this->atrFormulario["ctxNombre"]}',
 				'{$this->atrFormulario["cmbEstado"]}'
 			); ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -38,12 +38,12 @@ class Municipio extends clsConexion {
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
-				{$this->atrNombre} = '{$this->atrFormulario["ctxNombre"]}' ,
+				{$this->atrNombre} = '{$this->atrFormulario["ctxNombre"]}',
 				idestado = '{$this->atrFormulario["cmbEstado"]}'
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -59,9 +59,9 @@ class Municipio extends clsConexion {
 				{$this->atrNombre} = '{$this->atrFormulario["ctxNombre"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar() ) {
-			$arreglo = parent::getConsultaArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		if (parent::faVerificar()) {
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else
@@ -76,7 +76,7 @@ class Municipio extends clsConexion {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -84,18 +84,18 @@ class Municipio extends clsConexion {
 
 
 	//funcion.nivel.Listar
-	function Listar( $psBuscar = "" ) {
+	function Listar($psBuscar = "") {
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
 
-		if ( $psBuscar != "" ) {
+		if ($psBuscar != "") {
 			$sql .= "
 				WHERE
 					idestado = '{$psBuscar}' ";
 		}
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ) //verifica si se ejecuto bien
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
 			return false;
@@ -107,30 +107,30 @@ class Municipio extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex( $psBuscar ) {		
+	function fmListarIndex($psBuscar) {		
 		$sql = "
-			SELECT M.* , E.nombre AS estado
+			SELECT M.*, E.nombre AS estado
 			FROM $this->atrTabla AS M
 
 			INNER JOIN testado AS E
 				ON E.idestado = M.idestado
 			WHERE
 				M.estatus = 'activo' AND
-				( M.{$this->atrId} LIKE '%{$psBuscar}%' OR
+				(M.{$this->atrId} LIKE '%{$psBuscar}%' OR
 				E.nombre LIKE '%{$psBuscar}%' OR
-				M.nombre LIKE '%{$psBuscar}%' ) "; //selecciona todo de la tabla
+				M.nombre LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
 
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;

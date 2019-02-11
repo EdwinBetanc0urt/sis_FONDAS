@@ -13,7 +13,7 @@ else{
 
 
 
-switch( $_POST["operacion"] ) {
+switch($_POST["operacion"]) {
 
 	case "Guardar":
 		Cambiar();
@@ -26,12 +26,12 @@ function Cambiar() {
 	echo "<pre>";
 	global $gsClase;
 	$objCompletar = new Completar();
-	$objCompletar->setFormulario( $_POST);
+	$objCompletar->setFormulario($_POST);
 	//$objCompletar->actualizar();
-	if ( $objCompletar->actualizar() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}&msjAlerta=datoscompletos" ); //envía a la vista, con mensaje de la consulta
+	if ($objCompletar->actualizar()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}&msjAlerta=datoscompletos"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form={$gsClase}&msjAlerta=noregistro" ); //envía a la vista, con mensaje de la consulta*/
+		header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con mensaje de la consulta*/
 
 }
 

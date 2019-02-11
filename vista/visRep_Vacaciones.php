@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Rep_Vacaciones";
 	$liVista = "33";
 ?>
@@ -10,10 +10,10 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
     $(function () {
 
 	    $(".calendario").datepicker({
-			//viewMode: 'months' ,
-			//format: 'DD/MM' , 
-			format: 'dd-mm-yyyy' , 
-			//disabledHours: false ,
+			//viewMode: 'months',
+			//format: 'DD/MM', 
+			format: 'dd-mm-yyyy', 
+			//disabledHours: false,
 			language: "es"
 	    });
     });
@@ -203,7 +203,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 
 				<center>		
 					<?php
-						include_once( "_botones.php" );
+						include_once("_botones.php");
 					?>
 				</center>
 			</form>

@@ -4,8 +4,7 @@
  * Encritar y Desencriptar Valores
  *
  * @descripcion: Encriptador - clase PHP para cifrar y desifrar datos 
- * @author: Edwin Betancourt <EdwinBetanc0urt@hotmail.com> 
- * @author: Diego Chavez <DJChvz18@gmail.com> 
+ * @author: Edwin Betancourt <EdwinBetanc0urt@outlook.com> 
  * @license: GNU GPL v3,  Licencia Pública General de GNU 3.
  * @license: CC BY-SA, Creative  Commons  Atribución  - CompartirIgual (CC BY-SA) 4.0 Internacional.
  * @category Librería 
@@ -24,7 +23,6 @@
 	NOTIFICADA Y ENVIADA A LA FUENTE, COMUNIDAD O REPOSITORIO DE LA CUAL FUE OBTENIDA
 	Y/O A SUS CREADORES:
 		* Edwin Betancourt 	EdwinBetanc0urt@hotmail.com
- 		* Diego Chavez 		DJChvz18@gmail.com
 
 		Características:
 			* Encripta un texto utilizando un algoritmo en combinación con una key privada.

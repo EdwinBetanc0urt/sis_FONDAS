@@ -181,7 +181,7 @@ $_pagi_sql = "SELECT
                       p.apellido,
                       p.sexo,
 					  p.tel_mob,
-                      ( CASE 
+                     (CASE 
         WHEN d.estatus=1 THEN  'Activo'
         ELSE 'Desactivado' END) AS estatus
                       FROM tpersonas p 

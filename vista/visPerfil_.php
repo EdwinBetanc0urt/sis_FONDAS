@@ -137,8 +137,8 @@ if(empty($_GET["form"])){
 			closeOnConfirm: false,  
         	showCloseButton: true,
 			closeOnCancel: false
-		}).then( (result ) => {
-			if (result.value ) {
+		}).then((result) => {
+			if (result.value) {
 				var id="<?php echo ($_SESSION['idhistorial']);?>";
 				location.href="controlador/corCerrar.php?id=" + id;
 			}

@@ -1,4 +1,4 @@
-/*
+/* *
  * Validaciones
  * Open source under the BSD License.
  * Copyright © 2018 EdwinBetanc0urt <EdwinBetanc0urt@outlook.com>
@@ -6,12 +6,9 @@
 */
 
 
-if ( typeof jQuery === "undefined" ) {
+if(typeof jQuery === "undefined") {
     throw new Error("Las validaciones requieren jQuery, By EdwinBetanc0urt");
 }
-
-
-
 
 
 //funcion javascript Salir, utilizado por el botón de Cancelar en vis_CompletarRegistro
@@ -26,20 +23,19 @@ function fjSalir_Publico() {
         showCloseButton: true,
         confirmButtonText: 'Si, Salir',
         cancelButtonText: 'No, Continuar'
-    }).then( ( result ) => {
-        if ( result.value ) {
+    }).then((result) => {
+        if(result.value) {
             window.location.href = "controlador/conCerrar.php?getMotivoLogOut=datosincompletos";
         }
-        if ( result.dismiss == 'cancel' ) {
+        if(result.dismiss == 'cancel') {
             swal(
                 'Cancelado',
                 '¡Gracias por permanecer en la página!',
                 'error'
-            );
+          );
         }
     });
 }
-
 
 
 //función javascript Excluir Caracteres, valida que sea cualquier caracter excepto los excluidos
@@ -56,7 +52,6 @@ function fjExcluirCaracter(pvValor) {
 }
 
 
-
 //Detecta si las teclas están escritas con el CapsLock activo
 //parámetro vita Valor, contiene la tecla
 function fjMayus(pvValor) {
@@ -66,14 +61,13 @@ function fjMayus(pvValor) {
     divM.style.display = "none";
 
     //rango de teclas, mayúsculas 65=A ... 90=Z y minúsculas 97=a ... 122=z
-    //if(  ( (CodigoTecla>=65 && CodigoTecla<=90 ) &&! TeclaShift) || ( (CodigoTecla>=97 && CodigoTecla<=122) && TeclaShift )  )
+    //if(((CodigoTecla>=65 && CodigoTecla<=90) &&! TeclaShift) ||((CodigoTecla>=97 && CodigoTecla<=122) && TeclaShift))
     if (((CodigoTecla >= 65 && CodigoTecla <= 90) && !TeclaShift) || ((CodigoTecla >= 97 && CodigoTecla <= 122) && TeclaShift)) {
         divM.style.display = 'block';
     } else {
         divM.style.display = 'none';
     }
 }
-
 
 
 //No permite la opción de copiar, pegar y cortar en el porta papeles, usado en las contraseñas
@@ -86,7 +80,7 @@ function fjNocopiar() {
         showCloseButton: true,
         confirmButtonText: 'Ok',
         footer: " "
-    }).then( (result) => {
+    }).then((result) => {
         return false;
     });
     return false;
@@ -101,7 +95,7 @@ function fjNoCortar() {
         showCloseButton: true,
         confirmButtonText: 'Ok',
         footer: " "
-    }).then( (result) => {
+    }).then((result) => {
         return false;
     });
     return false;
@@ -116,7 +110,7 @@ function fjNoPegar() {
         showCloseButton: true,
         confirmButtonText: 'Ok',
         footer: " "
-    }).then( (result) => {
+    }).then((result) => {
         return false;
     });
     return false;}
@@ -129,16 +123,15 @@ function fjMenuContextual() {
         showCloseButton: true,
         confirmButtonText: 'Ok',
         footer: " "
-    }).then( (result) => {
+    }).then((result) => {
         return false;
     });
     return false;
 }
 
 
-
 //valida la edad minima con formato de fecha (yyyy/mm/dd)
-function fjEdadMinima( psFechaNacimiento , piMinimo = 18 ) {
+function fjEdadMinima(psFechaNacimiento, piMinimo = 18) {
 
     //se obtiene la fecha actual del PC CLIENTE
     var objHoy = new Date(); //instancia un objeto
@@ -190,9 +183,8 @@ function fjEdadMinima( psFechaNacimiento , piMinimo = 18 ) {
 }
 
 
-
 //valida la edad minima con formato de fecha (yyyy/mm/dd)
-function fjFechaMaxima( psFecha ) {
+function fjFechaMaxima(psFecha) {
 
     //se obtiene la fecha actual del PC CLIENTE
     var objHoy = new Date(); //instancia un objeto
@@ -202,10 +194,10 @@ function fjFechaMaxima( psFecha ) {
     console.log("fecha actual " + viAnoActual + "/" + viMesActual + "/" + viDiaActual);
 
     //separa la fecha de nacimiento del USUARIO en año, mes y dia
-    var arrFecha = psFecha.split( "/" );
-    var viAno = parseInt( arrFecha[0] ); //convierte la cadena en entero para hacer calculos
-    var viMes = parseInt( arrFecha[1] ); //convierte la cadena en entero para hacer calculos
-    var viDia = parseInt( arrFecha[2] ); //convierte la cadena en entero para hacer calculos
+    var arrFecha = psFecha.split("/");
+    var viAno = parseInt(arrFecha[0]); //convierte la cadena en entero para hacer calculos
+    var viMes = parseInt(arrFecha[1]); //convierte la cadena en entero para hacer calculos
+    var viDia = parseInt(arrFecha[2]); //convierte la cadena en entero para hacer calculos
     console.log("fecha es " + psFecha);
 
     //la edad se obtiene con el año actual menos el año de nacimiento 1995-2016 = 21
@@ -244,56 +236,54 @@ function fjFechaMaxima( psFecha ) {
 }
 
 
-
 //funcion para quitar acentos de las vocales, necesita jQuery
 function fjQuitarTildes(psPalabra) {
-    //console.log( "palabra actual: " + psPalabra );
+    //console.log("palabra actual: " + psPalabra);
     /*
-    psPalabra = psPalabra.replace( /[ñ]/n , 'n');
-    psPalabra = psPalabrapsPalabra.replace( /[ç]/ , 'c' );
+    psPalabra = psPalabra.replace(/[ñ]/n, 'n');
+    psPalabra = psPalabrapsPalabra.replace(/[ç]/, 'c');
 	*/
 
-    if ( psPalabra.search( /[áàäâãå]/ ) != -1 )
-        psPalabra = psPalabra.replace( /[áäàâãå]/gi , 'a' );
-    if ( psPalabra.search( /[ÁÄÂÃÀ]/ ) != -1 )
-        psPalabra = psPalabra.replace( /[ÁÄÂÃÀ]/gi , 'A' );
+    if(psPalabra.search(/[áàäâãå]/) != -1)
+        psPalabra = psPalabra.replace(/[áäàâãå]/gi, 'a');
+    if(psPalabra.search(/[ÁÄÂÃÀ]/) != -1)
+        psPalabra = psPalabra.replace(/[ÁÄÂÃÀ]/gi, 'A');
 
-    if ( psPalabra.search( /[éêëè]/ ) != -1 )
-        psPalabra = psPalabra.replace( /[éëè]/gi , 'e' );
-    if ( psPalabra.search( /[ÉËÊÈ]/ ) != -1)
-        psPalabra = psPalabra.replace( /[ÉËÊÈ]/gi , 'E' );
+    if(psPalabra.search(/[éêëè]/) != -1)
+        psPalabra = psPalabra.replace(/[éëè]/gi, 'e');
+    if(psPalabra.search(/[ÉËÊÈ]/) != -1)
+        psPalabra = psPalabra.replace(/[ÉËÊÈ]/gi, 'E');
 
-    if ( psPalabra.search( /[íïîì]/ ) != -1 )
-        psPalabra = psPalabra.replace( /[íïîì]/gi , 'i' );
-    if ( psPalabra.search( /[ÍÏÎÌ]/ ) != -1 )
-        psPalabra = psPalabra.replace( /[ÍÏÎÌ]/gi , 'I' );
+    if(psPalabra.search(/[íïîì]/) != -1)
+        psPalabra = psPalabra.replace(/[íïîì]/gi, 'i');
+    if(psPalabra.search(/[ÍÏÎÌ]/) != -1)
+        psPalabra = psPalabra.replace(/[ÍÏÎÌ]/gi, 'I');
 
-    if ( psPalabra.search( /[óöôò]/ ) != -1 )
-        psPalabra = psPalabra.replace( /[óöôò]/gi , 'o' );
-    if ( psPalabra.search( /[ÓÖÔÒ]/ ) != -1)
-        psPalabra = psPalabra.replace( /[ÓÖÔÒ]/gi , 'O' );
+    if(psPalabra.search(/[óöôò]/) != -1)
+        psPalabra = psPalabra.replace(/[óöôò]/gi, 'o');
+    if(psPalabra.search(/[ÓÖÔÒ]/) != -1)
+        psPalabra = psPalabra.replace(/[ÓÖÔÒ]/gi, 'O');
 
-    if ( psPalabra.search( /[úüûù]/ ) != -1)
-        psPalabra = psPalabra.replace( /[úüûù]/gi , 'u' );
-    if ( psPalabra.search( /[ÚÜÛÙ]/ ) != -1 )
-        psPalabra = psPalabra.replace( /[ÚÜÛÙ]/gi , 'U' );
+    if(psPalabra.search(/[úüûù]/) != -1)
+        psPalabra = psPalabra.replace(/[úüûù]/gi, 'u');
+    if(psPalabra.search(/[ÚÜÛÙ]/) != -1)
+        psPalabra = psPalabra.replace(/[ÚÜÛÙ]/gi, 'U');
 
-    if ( psPalabra.search( /[ýÿ]/ ) != -1 )
-        psPalabra = psPalabra.replace(/[ýÿ]/gi , 'y' );
-    if ( psPalabra.search( /[Ý]/ ) != -1 )
-        psPalabra = psPalabra.replace(/[Ý]/gi , 'Y' );
-    //console.log( "palabra nueva: " + psPalabra );
+    if(psPalabra.search(/[ýÿ]/) != -1)
+        psPalabra = psPalabra.replace(/[ýÿ]/gi, 'y');
+    if(psPalabra.search(/[Ý]/) != -1)
+        psPalabra = psPalabra.replace(/[Ý]/gi, 'Y');
+    //console.log("palabra nueva: " + psPalabra);
 
     return psPalabra;
 }
-
 
 
 function fjValidarInner() {
   $('.valida_num_entero').keyup(function() {
     this.value = this.value.replace(/[^0-9]/g, '');
     //valida la primera posición que no sea cero
-    if ( this.value.charAt(0) == "0" ) {
+    if(this.value.charAt(0) == "0") {
       this.value = this.value.substring(1);
       this.value = this.value.replace(/[^0-9]/g, '');
     }
@@ -321,7 +311,7 @@ function fjValidarInner() {
         }
     });
 
-    if( typeof priceFormat === 'function' ) {
+    if(typeof priceFormat === 'function') {
         $('.valida_moneda_bolivares').priceFormat({
             prefix: '', //simbolo de moneda que va al principio (predeterminado toma USD$)
             suffix: '', //simbolo de moneda que va al final
@@ -333,10 +323,10 @@ function fjValidarInner() {
     }
 
     /*
-    $("body").on("keyup" , "valida_num_entero" , function(event){
+    $("body").on("keyup", "valida_num_entero", function(event){
         event.preventDefault();
                  //valida la primera posición que no sea cero
-        if ( this.value.charAt(0) == "0" ) {
+        if(this.value.charAt(0) == "0") {
             this.value = this.value.substring(1);
             this.value = this.value.replace(/[^0-9]/g, '');
         }
@@ -349,14 +339,14 @@ function fjValidarInner() {
     $('.valida_numerico').keyup(function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
-    console.log( "reasinada la validacion a los innerHTML ");
+    console.log("reasinada la validacion a los innerHTML ");
 }
 
 
 /*  VALIDACIONES USADAS EN FORMULARIOS */
 //Validaciones con JQuey
-$( function() {
-  if( typeof priceFormat === 'function' ) {
+$(function() {
+  if(typeof priceFormat === 'function') {
     $('.valida_moneda_bolivares').priceFormat({
       prefix: '', //simbolo de moneda que va al principio (predeterminado toma USD$)
       suffix: '', //simbolo de moneda que va al final
@@ -366,25 +356,25 @@ $( function() {
       //allowNegative: true //permite negativos
     });
   }
-  //alert( $('#ctxIdentificacion').unmask() );
+  //alert($('#ctxIdentificacion').unmask());
 
   //validacion para que no permita empezar a escribir con espacios o tenga 2 espacios seguidos al final
-  $('input , textarea').keyup( function() {
-    this.value = this.value.replace( /  /gim, '' );
-    this.value = this.value.replace( /^\s+/, '' ); //quita los espacios al inicio
+  $('input, textarea').keyup(function() {
+    this.value = this.value.replace(/  /gim, '');
+    this.value = this.value.replace(/^\s+/, ''); //quita los espacios al inicio
     //valida la primera posición que no sea un espacio
-    /*if ( this.value.charAt(0) == " " ) {
+    /*if(this.value.charAt(0) == " ") {
     	this.value = this.value.substring(1);
-    	//this.value = this.value.replace(/[^0-9]/g , '');
+    	//this.value = this.value.replace(/[^0-9]/g, '');
     }*/
     //*/
     /*
     //valida la posición final para que no se repitan dos comas o puntos
     tam = this.value.length; //toma el tamaño de la cadena
     //si el carácter en la posición final y la antepenúltima son iguales y a su vez igual a un punto
-    if( this.value.charAt( tam - 1 ) == this.value.charAt(tam - 2) && this.value.charAt( tam - 1 ) == " " ) {
+    if(this.value.charAt(tam - 1) == this.value.charAt(tam - 2) && this.value.charAt(tam - 1) == " ") {
     	//toma el valor desde la posición cero hasta una posición menos, borrando 2 puntos consecutivos
-    	this.value = this.value.substr( 0 , tam - 1 ) ;
+    	this.value = this.value.substr(0, tam - 1) ;
     }*/
   });
 
@@ -494,7 +484,7 @@ $( function() {
   $('.valida_num_entero').keyup(function() {
     this.value = this.value.replace(/[^0-9]/g, '');
     //valida la primera posición que no sea cero
-    if ( this.value.charAt(0) == "0" ) {
+    if(this.value.charAt(0) == "0") {
       this.value = this.value.substring(1);
       this.value = this.value.replace(/[^0-9]/g, '');
     }

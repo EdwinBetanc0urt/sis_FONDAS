@@ -133,7 +133,7 @@ class Revisar_Reposos extends clsConexion {
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
@@ -173,7 +173,7 @@ class Revisar_Reposos extends clsConexion {
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
@@ -211,7 +211,7 @@ class Revisar_Reposos extends clsConexion {
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))

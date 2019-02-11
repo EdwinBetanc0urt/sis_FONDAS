@@ -24,38 +24,38 @@ class Usuario extends Persona {
 
 		parent::faTransaccionInicio();
 		$vsId = NULL ;
-		$arrPersona = parent::ConsultarPersona( $this->atrFormulario["cmbNacionalidad"] , $this->atrFormulario["numCi"] );
-		if ( $arrPersona ) {
+		$arrPersona = parent::ConsultarPersona($this->atrFormulario["cmbNacionalidad"], $this->atrFormulario["numCi"]);
+		if ($arrPersona) {
 			$vsId = $arrPersona["idpersona"];
 		}
 		else {
 			$sql = "
 				INSERT INTO tpersonas
-					( nacionalidad , cedula , nombre , apellido , tel_mov , correo ) 
-				VALUES ( 
-					'{$this->atrFormulario["cmbNacionalidad"]}' ,
-					'{$this->atrFormulario["numCi"]}' ,
-					'{$this->atrFormulario["ctxNombre"]}' ,
-					'{$this->atrFormulario["ctxApellido"]}' ,
-					'{$this->atrFormulario["numTelefono"]}' ,
+					(nacionalidad, cedula, nombre, apellido, tel_mov, correo) 
+				VALUES (
+					'{$this->atrFormulario["cmbNacionalidad"]}',
+					'{$this->atrFormulario["numCi"]}',
+					'{$this->atrFormulario["ctxNombre"]}',
+					'{$this->atrFormulario["ctxApellido"]}',
+					'{$this->atrFormulario["numTelefono"]}',
 					'{$this->atrFormulario["ctxCorreo"]}' 
 				); ";
-			$vsId = parent::faUltimoId( $sql ); //ejecuta la sentencia y obtiene el ID 
+			$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 
 		}
 
 		//verifica si se ejecuto bien
-		if ( $vsId > 0 ) {
+		if ($vsId > 0) {
 			//verifica si se ejecuto bien
-			if ( $this->atrFormulario["chxTrabaja"] == "si" )
-				$estatus2 = $this->InsertarTrabajador( $vsId );
+			if ($this->atrFormulario["chxTrabaja"] == "si")
+				$estatus2 = $this->InsertarTrabajador($vsId);
 
-			$estatus = $this->InsertarUsuario( $vsId );
+			$estatus = $this->InsertarUsuario($vsId);
 
-			if ( $estatus == true ){
+			if ($estatus == true){
 				parent::faTransaccionFin();
 				return true; //envia el id para insertar el usuario
 			}
-			elseif ( is_string( $estatus ) ) {
+			elseif (is_string($estatus)) {
 				parent::faTransaccionDeshace();
 				return $estatus; //envia el id para insertar el usuario
 			}
@@ -72,70 +72,70 @@ class Usuario extends Persona {
 
 
 	//funcion.modelo.Insertar
-	function InsertarTrabajador( $piIdPersona ) {
+	function InsertarTrabajador($piIdPersona) {
 		$vsId = NULL ;
 
-		$arrUsuario = $this->BuscarTrabajador( $this->atrFormulario["numCi"] );
-		if ( $arrUsuario ) {
+		$arrUsuario = $this->BuscarTrabajador($this->atrFormulario["numCi"]);
+		if ($arrUsuario) {
 			return "ya existe un tranajador";
 		}
 		else {
 			$sql = "
 				INSERT INTO {$this->atrTabla} 
-					( fecha_ingreso , idcargo , idpersona ) 
-				VALUES ( 
-					'{$this->atrFormulario["datFechaIngreso"]}' ,
-					'{$this->atrFormulario["cmbCargo"]}' ,
+					(fecha_ingreso, idcargo, idpersona) 
+				VALUES (
+					'{$this->atrFormulario["datFechaIngreso"]}',
+					'{$this->atrFormulario["cmbCargo"]}',
 					'{$piIdPersona}'  
 				); ";
 			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-			if ( parent::faVerificar() ) //verifica si se ejecuto bien
+			if (parent::faVerificar()) //verifica si se ejecuto bien
 				return $tupla;
 			else
 				return false;
 		}
 	}
 	//funcion.modelo.Insertar
-	function InsertarUsuario( $piIdPersona ) {
+	function InsertarUsuario($piIdPersona) {
 		$vsId = NULL ;
 
-		$arrUsuario = $this->BuscarUsuario( $this->atrFormulario["numCi"] );
-		if ( $arrUsuario ) {
+		$arrUsuario = $this->BuscarUsuario($this->atrFormulario["numCi"]);
+		if ($arrUsuario) {
 			return "ya existe un usuario";
 		}
 		else {
 			$sql = "
 				INSERT INTO tusuario 
-					( usuario , idpersona , idtipo_usuario, estatus )
+					(usuario, idpersona, idtipo_usuario, estatus)
 				VALUES
-					( '{$this->atrFormulario["numCi"]}' , 
-					'{$piIdPersona}' ,
-					'{$this->atrFormulario["cmbTipo_Usuario"]}' ,
-					'completar' ) ; ";
-			$vsId = parent::faUltimoId( $sql ); //ejecuta la sentencia y obtiene el ID 
+					('{$this->atrFormulario["numCi"]}', 
+					'{$piIdPersona}',
+					'{$this->atrFormulario["cmbTipo_Usuario"]}',
+					'completar') ; ";
+			$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 
 		}
-		if ( $vsId > 0 ) //verifica si se ejecuto bien
-			return $this->fmInsertarClave( $vsId ); //envia el id para insertar la clave
+		if ($vsId > 0) //verifica si se ejecuto bien
+			return $this->fmInsertarClave($vsId); //envia el id para insertar la clave
 		else
 			return false;
 	}
 
 
 	//funcion.modelo.Insertar
-	function fmInsertarClave( $piIdUsuario ) {
+	function fmInsertarClave($piIdUsuario) {
 
 		$objCifrado = new clsCifrado(); //instancia el objeto de cifrado
 		//nacionalidad, guion, documento. Ejemplo. V-12345678
-		$clave_encriptada = $objCifrado->flEncriptar( $this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"] );
-		unset( $objCifrado );
+		$clave_encriptada = $objCifrado->flEncriptar($this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"]);
+		unset($objCifrado);
 
 		$sql = "INSERT INTO thistorial_clave
-					( clave , fecha_creacion , estatus , id_usuario )
+					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
-					( '{$clave_encriptada}' ,  CURRENT_DATE , '3' , '{$piIdUsuario}' ) ; ";
+					('{$clave_encriptada}',  CURRENT_DATE, '3', '{$piIdUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 
-		if ( parent::faVerificar( $tupla ) ) //verifica si se ejecuto bien
+		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
 			return false;
@@ -150,7 +150,7 @@ class Usuario extends Persona {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -165,7 +165,7 @@ class Usuario extends Persona {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numUsuario"]}' ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -180,7 +180,7 @@ class Usuario extends Persona {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numUsuario"]}' ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -194,9 +194,9 @@ class Usuario extends Persona {
 			WHERE {$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar() ) {
-			$arreglo = parent::getConsultaArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		if (parent::faVerificar()) {
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else
@@ -206,16 +206,16 @@ class Usuario extends Persona {
 
 
 
-	function BuscarUsuario( $piCi ) {
+	function BuscarUsuario($piCi) {
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
 				usuario = {$piCi} ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar() ) {
-			$arreglo = parent::getConsultaArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		if (parent::faVerificar()) {
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else
@@ -229,7 +229,7 @@ class Usuario extends Persona {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -238,19 +238,19 @@ class Usuario extends Persona {
 
 
 	//funcion.nivel.Listar
-	function Listar( $psBuscar = "" ) {
+	function Listar($psBuscar = "") {
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
 
-		if ( $psBuscar != "" ) {
+		if ($psBuscar != "") {
 			$sql .= "
 				WHERE
 					{$this->atrNombre} LIKE '%{$psBuscar}%' OR
 					{$this->atrId} LIKE '%{$psBuscar}%' ;";
 		}
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ) //verifica si se ejecuto bien
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
 			return false;
@@ -263,26 +263,26 @@ class Usuario extends Persona {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex( $psBuscar ) {		
+	function fmListarIndex($psBuscar) {		
 		$sql = "
 			SELECT *
 			FROM vpersona
 
 			WHERE
-				( {$this->atrId} LIKE '%{$psBuscar}%' OR
-				{$this->atrNombre} LIKE '%{$psBuscar}%' ) "; //selecciona todo de la tabla
+				({$this->atrId} LIKE '%{$psBuscar}%' OR
+				{$this->atrNombre} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
 		
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;

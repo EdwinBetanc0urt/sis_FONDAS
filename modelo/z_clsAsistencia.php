@@ -14,11 +14,11 @@ class Asistencia extends clsConexion {
 
 
 	function UltimoCodigo() {
-		$sql= "SELECT MAX( {$this->atrId} ) AS id
+		$sql= "SELECT MAX({$this->atrId}) AS id
 				FROM {$this->atrTabla}  ; ";
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		$arreglo = parent::getConsultaNumerico( $tupla );
-		parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$arreglo = parent::getConsultaNumerico($tupla);
+		parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 		return $arreglo; //sino encuentra nada devuelve un cero
 	}
 
@@ -27,9 +27,9 @@ class Asistencia extends clsConexion {
 		$sql = "
 			INSERT INTO {$this->atrTabla} (nombre) 
 			values 
-				( '{$this->atrFormulario["ctxNombre"]}' ); ";
+				('{$this->atrFormulario["ctxNombre"]}'); ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -45,7 +45,7 @@ class Asistencia extends clsConexion {
 			where 
 				codnivel='{$this->codigo}'";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -59,9 +59,9 @@ class Asistencia extends clsConexion {
 			where codnivel = '{$this->codigo}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar() ) {
-			$arreglo = parent::faCambiarArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		if (parent::faVerificar()) {
+			$arreglo = parent::faCambiarArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else
@@ -76,7 +76,7 @@ class Asistencia extends clsConexion {
 			where 
 				codnivel = '{$this->codigo}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -85,18 +85,18 @@ class Asistencia extends clsConexion {
 
 
 	//funcion.nivel.Listar
-	function Listar( $psBuscar = "" ) {
+	function Listar($psBuscar = "") {
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
 
-		if ( $psBuscar != "" ) {
+		if ($psBuscar != "") {
 			$sql .= "
 				WHERE
 					nombre LIKE '%{$psBuscar}%' ";
 		}
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ) //verifica si se ejecuto bien
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
 			return false;

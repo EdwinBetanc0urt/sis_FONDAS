@@ -1,9 +1,9 @@
-/*
+/**
  * Llamadas Ajax
  * Open source under the BSD License.
  * Copyright © 2018 EdwinBetanc0urt <EdwinBetanc0urt@outlook.com>
  * All rights reserved.
-*/
+ */
 
 
 if (typeof jQuery === "undefined") {
@@ -12,13 +12,13 @@ if (typeof jQuery === "undefined") {
 
 
 
-//Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
+//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjComboGeneral(psClase, psDependiente = "", psDestino = "", psSwitch = "ListaCombo") {
     let viDependiente = "";
-    //abre el archivo controlador y envia por POST
+    // abre el archivo controlador y envía por POST
     vsRuta = "controlador/con" + psClase + ".php";
-    //si no tiene un codigo dependiente, padre o foraneo lo envia vacio
+    // si no tiene un código dependiente, padre o foráneo lo envía vació
     if (psDependiente != "") {
         if ($("#hid" + psDependiente).length > 0)
             viDependiente = parseInt($("#hid" + psDependiente).val());
@@ -38,27 +38,29 @@ function fjComboGeneral(psClase, psDependiente = "", psDestino = "", psSwitch = 
             hidCodigo: $("#hid" + psClase).val()
         },
         function(resultado) {
-            if (resultado == false)
+            //console.log(resultado);
+            if (resultado == false) {
                 console.log("sin consultas de " + psClase);
+            }
             else {
                 cmbCombo = document.getElementById("cmb" + psClase);
-                $("#cmb" + psClase).attr("disabled", false); //habilita el campo de estado
+                cmbCombo.options.length = 1; // limpia los option del select
 
-                cmbCombo.options.length = 1; //limpia los option del select
-                //cmbCombo.options.length = 1; //limpia los option del select
-                $("#cmb" + psClase).append(resultado); //agrega los nuevos option al select
-
-                //console.log(resultado);
+                $("#cmb" + psClase)
+                    .append(resultado) // agrega los nuevos option al select
+                    .attr("disabled", false); // habilita el campo de estado
             }
         }
-   );
+ );
 }
+
+
 $(function() {
-    //funcion anonima que al cambiar un select asigna el valor al hidden que esta abajo de el
+    // función anónima que al cambiar un select asigna el valor al hidden que esta abajo de el
     //$('select > .dinamico').on('change', function() {
     $('select.dinamico').on('change', function() {
         let vsId = $(this).attr("id"); //toma el id del select
-        //toma la cadena desde la posicion 3 hacia la derecha cmbEJEMPLO = EJEMPLO
+        //toma la cadena desde la posición 3 hacia la derecha cmbEJEMPLO = EJEMPLO
         let vsClase = vsId.substr(3); //le quita las primeras 3 letras "cmb"
 
         //asigna el valor del select al hidden
@@ -71,7 +73,7 @@ $(function() {
             //let txt = $("#cmb" + vsClase + " option:selected").text();
             let txt = $("#cmb" + vsClase + " option:selected").html();
             $("#hid " + vsClase + "Texto").val(txt);
-            //console.log( txt);
+            //console.log(txt);
         }
     });
 });

@@ -6,8 +6,8 @@ var lsVista = "Jornada";
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
-	let viCodigo = $( "#form" + lsVista + " #numId");
-	let vsNombre = $( "#form" + lsVista + " #ctxNombre");
+	let viCodigo = $("#form" + lsVista + " #numId");
+	let vsNombre = $("#form" + lsVista + " #ctxNombre");
 	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
 
 
@@ -18,7 +18,7 @@ function enviar(pvValor) {
 		vbComprobar = false;
 		swal({
 			title: '¡Atención!',
-			html: "LA DESCRIPCION ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>" ,
+			html: "LA DESCRIPCION ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>",
 			type: 'error',
 			confirmButtonText: 'Ok',
 			showCloseButton: true
@@ -31,7 +31,7 @@ function enviar(pvValor) {
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if (vbComprobar) {				
-		$( "#form" + lsVista + " #operacion").val(pvValor);
+		$("#form" + lsVista + " #operacion").val(pvValor);
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
@@ -41,7 +41,7 @@ function enviar(pvValor) {
 $(function () {
 	fjMostrarLista(lsVista);
 	$("#numTurnos").on("change, input", function(){
-		if (this.value > 2 ) {
+		if (this.value > 2) {
 			this.value = 2;
 		}
 		else {
@@ -65,41 +65,41 @@ function fjNuevoRegistro() {
 	$("#ctxHoraEntrada2, #ctxHoraSalida2").attr("disabled", true);
 
 	//$("#form" + lsVista)[0].reset();
-	//if ($(".chkDias").length > 0 ) {
+	//if ($(".chkDias").length > 0) {
 		$(".chkDias").attr("checked", false);
 	//}
     fjCargarDias();
 	if ($("#Registar")) {
-		$("#Registar").css("display" , "");
+		$("#Registar").css("display", "");
 	}
 
 	if ($("#Modificar")) {
-		$("#Modificar").css("display" , "none");
+		$("#Modificar").css("display", "none");
 	}
 
 	if ($("#Borrar")) {
-		$("#Borrar").css("display" , "none");
+		$("#Borrar").css("display", "none");
 	}
 
 	if ($("#Restaurar")) {
-		$("#Restaurar").css("display" , "none");
+		$("#Restaurar").css("display", "none");
 	}
 }
 function fjEditarRegistro() {
 	if ($("#Registar")) {
-		$("#Registar").css("display" , "none");
+		$("#Registar").css("display", "none");
 	}
 
 	if ($("#Modificar")) {
-		$("#Modificar").css("display" , "");
+		$("#Modificar").css("display", "");
 	}
 
 	if ($("#Borrar")) {
-		$("#Borrar").css("display" , "");
+		$("#Borrar").css("display", "");
 	}
 
 	if ($("#Restaurar")) {
-		$("#Restaurar").css("display" , "none");
+		$("#Restaurar").css("display", "none");
 	}
 }
 
@@ -119,7 +119,7 @@ function fjSeleccionarRegistro(pvDOM) {
     $("#btnHabilitar").attr('disabled', false);
 
     $("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
-    $("#form" + lsVista + " #numId").val( parseInt(arrFilas[2].trim()));
+    $("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
     $("#form" + lsVista + " #ctxNombre").val(arrFilas[3].trim());
 	$("#form" + lsVista + " #numTurnos").val(arrFilas[4].trim());
 	$("#form" + lsVista + " #ctxHoraEntrada1").val(arrFilas[5].trim());
@@ -172,17 +172,17 @@ function fjCargarDias(piJornada = ""){
 	if (piJornada != "")
 		$("#numId").val(piJornada);
 
-    $.post("controlador/conJornada.php" , {
-            operacion: "ListaDias" ,
+    $.post("controlador/conJornada.php", {
+            operacion: "ListaDias",
             numId: $("#numId").val() 
         },
         function(resultado) {
             if (resultado == false)
                 console.log("sin consultas de " + lsVista);
             else {
-                $( "#form" + lsVista + " #divListaDias" ).html( resultado ) ;
+                $("#form" + lsVista + " #divListaDias").html(resultado) ;
                 console.log(resultado);
             }
         }
-   );
+ );
 }
