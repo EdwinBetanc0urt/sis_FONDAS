@@ -15,7 +15,7 @@ $(function() {
 // Genera el alfabeto en options dentro del select que se le pase como parametro
 // en el parametro va como cadena el id del select a insertar options
 function fjAlfabetoCombo(pdCombo) {
-    var arrAlfabeto = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's ', 't', 'u', 'v', 'w', 'x', 'y', 'z' ];
+    var arrAlfabeto = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's ', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     
     for(i = 0 ; i < arrAlfabeto.length ; i++) {
         //creo el option de la letra
@@ -97,7 +97,7 @@ function fjComboGeneral(psClase, psDependiente = "", psDestino = "") {
                 // console.log(resultado);
             }
         }
-   );
+ );
 }
 
 
@@ -120,7 +120,7 @@ $(function() {
             //let txt = $("#cmb" + vsClase + " option:selected").text();
             let txt = $("#cmb" + vsClase + " option:selected").html();
             $("#hid " + vsClase + "Texto").val(txt);
-            //console.log( txt);
+            //console.log(txt);
         }
     });
 });
@@ -148,7 +148,7 @@ function fjUltimoID(pvObjeto, psDestino = "") {
                 $("#form" + pvObjeto + " #numId").val(parseInt(resultado)); //habilita el campo de estado 
             }
         }
-   );
+ );
 }
 
 
@@ -213,7 +213,7 @@ function fjIniciarCronometro(piTiempoUsuario = 600) {
             contador_s--;
             segundos--;
         }, 1000 //velocidad de conteo 1000 = segundos
-   );
+ );
 }
 
 
@@ -280,7 +280,7 @@ function fjCambiarTiempo(piTiempo = 600) {
                 console.log(resultado);
             }
         }
-   );
+ );
 }
 
 
@@ -298,7 +298,7 @@ function fjMostrarLista(psClase, piPagina = "", psOrden = "", psDestino = "", ps
     let vsRuta = "controlador/con" + psClase + ".php";
     let liItem = $.trim($("#formLista" + psClase + " #numItems").val());
     //si el parametro contiene algo, reasigna el valor enviado
-    if (piPagina != "" ) {
+    if (piPagina != "") {
         $("#formLista" + psClase + " #subPagina").val(piPagina);
     }
 
@@ -307,7 +307,7 @@ function fjMostrarLista(psClase, piPagina = "", psOrden = "", psDestino = "", ps
         console.log("nuevo formulario destino " + psClase);
     }
 
-    if (psOrden != "" ) {
+    if (psOrden != "") {
         $("#formLista" + psClase + " #hidOrden").val(psOrden);
         //$("#formLista" + psClase + " #tabLista" + psClase  + " thead tr span").removeClass(" glyphicon-sort-by-attributes");
         //$("#formLista" + psClase + " #tabLista" + psClase  + " thead tr span").addClass(" glyphicon-sort");
@@ -328,7 +328,7 @@ function fjMostrarLista(psClase, piPagina = "", psOrden = "", psDestino = "", ps
     }*/
 
     //renglones a mostrar
-    if( liItem == ""  || parseInt(liItem) < 1 || liItem == NaN) {
+    if(liItem == ""  || parseInt(liItem) < 1 || liItem == NaN) {
         liItem = 10;
     }
 
@@ -349,7 +349,7 @@ function fjMostrarLista(psClase, piPagina = "", psOrden = "", psDestino = "", ps
                 $("#formLista" + psClase + " #divListado").html(resultado) ;
                 //console.log(resultado); 
                 
-                if (psOrden != "" ) {
+                if (psOrden != "") {
                     $("#formLista" + psClase + " #tabLista" + psClase  + " thead tr span").removeClass(" glyphicon-sort-by-attributes");
                     $("#formLista" + psClase + " #tabLista" + psClase  + " thead tr span").addClass(" glyphicon-sort");
                     //console.log($("#formLista" + psClase + " #tabLista" + psClase  + " thead tr span"));
@@ -364,7 +364,7 @@ function fjMostrarLista(psClase, piPagina = "", psOrden = "", psDestino = "", ps
                 }
             }
         }
-   );
+ );
 }
 
 
@@ -380,8 +380,8 @@ function startTime2() {
     document.getElementById("txt").innerHTML = h + ":" + m + ":" + s;
     var t = setTimeout(
         startTime()
-       , 500
-   );
+     , 500
+ );
 }
 function checkTime2(i) {
     if (i < 10) {

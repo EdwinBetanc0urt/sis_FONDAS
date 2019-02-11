@@ -14,13 +14,13 @@ else{
 
 //$Opcion = isset($_POST['vvOpcion']) ? $_POST['vvOpcion'] : NULL;
 
-if ( isset($_POST['vvOpcion']) )
+if (isset($_POST['vvOpcion']))
 	$Opcion = $_POST['vvOpcion'] ;
 else
 	$Opcion = NULL;
 
 
-switch( $Opcion ) {
+switch($Opcion) {
 	case NULL: //en caso de ser nulo se esta abriendo por URL y se debe sacar del sistema
 		header("Location: ../../controlador/seguridad/ctr_LogOut.php?getMotivoLogOut=indevido"); //cierra la sesion
 		break;
@@ -34,10 +34,10 @@ switch( $Opcion ) {
 function fcModificarTiempoAjax() {
 	$objeto = new clsTiempoSesion();
 
-	$objeto->atrTiempo = ( intval( $_POST["ctxTiempo"] ) * 60) ; // lleva los minutos a segundos 
-	if ( $objeto->fmActualizarTiempo() ) {
+	$objeto->atrTiempo = (intval($_POST["ctxTiempo"]) * 60) ; // lleva los minutos a segundos 
+	if ($objeto->fmActualizarTiempo()) {
 
-		$_SESSION['tiempo_sesion'] = ( $objeto->atrTiempo ); //actualiza la variable de sesion con el nuevo valor
+		$_SESSION['tiempo_sesion'] = ($objeto->atrTiempo); //actualiza la variable de sesion con el nuevo valor
 		echo $_SESSION['tiempo_sesion'];
 		//$valor = $_SESSION['InactivoMaximo'];
 	}
@@ -45,7 +45,7 @@ function fcModificarTiempoAjax() {
 		echo "no";
 	}
 	$objeto->faDesconectar(); //cierra la conexion
-	unset( $objeto ); //destruye el objeto
+	unset($objeto); //destruye el objeto
 	//return $valor;
 }
 

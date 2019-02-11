@@ -111,7 +111,7 @@ function fjSeleccionarRegistro(pvDOM) {
     $("#btnHabilitar").attr('disabled', false);
 
     $("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
-    $("#form" + lsVista + " #numId").val( parseInt(arrFilas[2].trim()));
+    $("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
     $("#form" + lsVista + " #numCI").val(arrFilas[3].trim());
 
     $("#operacion").val(arrFilas[0].trim());
@@ -205,7 +205,7 @@ function enviousuario(piId, psEstatus = "Desbloqueo") {
 				fjMostrarLista(lsVista);
             }
         }
-   );
+ );
 }
 
 function veraccesos(piUsuario, piAncho = 700, piAlto = 800) {

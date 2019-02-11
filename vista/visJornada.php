@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Jornada";
 	$liVista = "15";
 ?>
@@ -90,11 +90,11 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 
 							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
-									if( isset( $_GET["getId"] ) ) 
+									if(isset($_GET["getId"])) 
 										echo $_GET["getId"]; ?>" />
 								<label for="ctxNombre">* Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
-									if( isset( $_GET['getNombre'] ) )
+									if(isset($_GET['getNombre']))
 										echo $_GET['getNombre'];
 								?>" placeholder="Ej: Regular o normal " data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 								<br/>
@@ -103,7 +103,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 								<label for="numTurnos">* Nro Turnos</label>
 								<input id="numTurnos" class="valida_num_entero form-control" maxlength="1" max="2" min="1" name="numTurnos" type="number" size="20" required value="<?php
-									if( isset( $_GET['getTurnos'] ) )
+									if(isset($_GET['getTurnos']))
 										echo $_GET['getTurnos'];
 								?>" placeholder="Ej: 2" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 								<br/>
@@ -114,14 +114,14 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="ctxHoraEntrada1">* 1ra. Hora de Entrada</label>
 									<input id="ctxHoraEntrada1" class="hora_pickatime valida_tiempo form-control col-xs-6 col-sm-6 col-md-6 col-lg-6" maxlength="100" name="ctxHoraEntrada1" type="text" required placeholder="Ej: 08:00pm" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" value="<?php
-										if( isset( $_GET['getHoraEntrada1'] ) )
+										if(isset($_GET['getHoraEntrada1']))
 											echo $_GET['getHoraEntrada1'];
 									?>" />
 								</div>
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="ctxHoraSalida1">* 1ra. Hora de Salida</label>
 									<input id="ctxHoraSalida1" class="hora_pickatime valida_tiempo form-control" maxlength="100" name="ctxHoraSalida1" type="text" required placeholder="Ej: 12:00pm" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" value="<?php
-									if( isset( $_GET['getHoraSalida1'] ) )
+									if(isset($_GET['getHoraSalida1']))
 										echo $_GET['getHoraSalida1']; ?>" />
 			
 								</div>
@@ -134,14 +134,14 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="ctxHoraEntrada2">* 2da. Hora de Entrada</label>
 									<input id="ctxHoraEntrada2" class="hora_pickatime valida_tiempo form-control col-xs-6 col-sm-6 col-md-6 col-lg-6" maxlength="100" name="ctxHoraEntrada2" type="text" placeholder="Ej: 01:00pm" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" value="<?php
-										if( isset( $_GET['getHoraEntrada2'] ) )
+										if(isset($_GET['getHoraEntrada2']))
 											echo $_GET['getHoraEntrada2'];
 									?>" />
 								</div>
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="ctxHoraSalida2">* 2da. Hora de Salida</label>
 									<input id="ctxHoraSalida2" class="hora_pickatime valida_tiempo form-control" maxlength="100" name="ctxHoraSalida2" type="text" placeholder="Ej: 04:00pm" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" value="<?php
-									if( isset( $_GET['getHoraSalida2'] ) )
+									if(isset($_GET['getHoraSalida2']))
 										echo $_GET['getHoraSalida2']; ?>" />
 			
 								</div>
@@ -158,7 +158,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 								<br />
 								<label for="ctxObservacion">* Observacion</label>
 								<textarea cols="5" id="ctxObservacion" class="valida_alfabetico form-control" maxlength="100" name="ctxObservacion" type="text" placeholder="Ingrese la Observacion" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" ><?php
-									if( isset( $_GET['getObservacion'] ) )
+									if(isset($_GET['getObservacion']))
 										echo $_GET['getObservacion'];
 								?></textarea>
 							</div>
@@ -168,13 +168,13 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 				</div>
 				<div class="modal-footer">
 					<?php
-						include_once( "_botones.php" );
+						include_once("_botones.php");
 					?>
 
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if( isset( $_GET['getEstatus'] ) ) echo $_GET['getEstatus']; ?>" />
+		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if(isset($_GET['getEstatus'])) echo $_GET['getEstatus']; ?>" />
 		<input type="hidden" name="operacion" id="operacion" />
 	</form>
 </div>

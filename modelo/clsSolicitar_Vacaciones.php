@@ -21,7 +21,7 @@ class Solicitar_Vacaciones extends clsConexion {
 		parent::faTransaccionInicio();
 		$sql = "
 			INSERT INTO {$this->atrTabla} 
-				(idtrabajador, cantidad_dias, fecha_inicio, fecha_fin , condicion)
+				(idtrabajador, cantidad_dias, fecha_inicio, fecha_fin, condicion)
 			VALUES (
 				'{$this->atrFormulario["numIdTrabajador"]}',
 				'{$this->atrFormulario["vacaciones"]["dias_vacaciones"]}',
@@ -181,7 +181,7 @@ class Solicitar_Vacaciones extends clsConexion {
 		if (parent::faVerificar($tupla)) {
 			$arrRetorno = array();
 			while ($arrRegistro = parent::getConsultaNumerico($tupla)) {
-				array_push($arrRetorno , $arrRegistro[0]);
+				array_push($arrRetorno, $arrRegistro[0]);
 			};
 			parent::faLiberarConsulta($tupla	); // libera de la memoria el resultado asociado a la consulta
 			return $arrRetorno; // retorna los datos obtenidos de la bd en un arreglo
@@ -199,7 +199,7 @@ class Solicitar_Vacaciones extends clsConexion {
 	function fmListarIndex($psBuscar) {
 		$sql = "
 			SELECT 
-				V.* , D.iddetalle_vacacion, D.periodo_usado, D.cant_dias_periodo 
+				V.*, D.iddetalle_vacacion, D.periodo_usado, D.cant_dias_periodo 
 			FROM tvacacion AS V 
 
 			INNER JOIN tdetalle_vacacion AS D 
@@ -215,7 +215,7 @@ class Solicitar_Vacaciones extends clsConexion {
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		// concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); // Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))

@@ -4,11 +4,11 @@ var lsVista = "Solicitar_Vacaciones";
 $(function () {
 	fjMostrarLista(lsVista);
 
-    //$("#numVacaciones").on("change" , function() {
+    //$("#numVacaciones").on("change", function() {
 
     //});
     $("#ctxFechaInicio").on("change", function() {
-		if ($("#numDiasHabiles").val() != "" && parseInt($("#numDiasHabiles").val()) != 0 ) {
+		if ($("#numDiasHabiles").val() != "" && parseInt($("#numDiasHabiles").val()) != 0) {
 			fjFechaFinal();
 		}
 	});
@@ -44,8 +44,8 @@ $(function () {
 				confirmButtonText: 'Ok',
 				footer: ' '
 			});
-			$("#numDiasHabiles" ).val('');
-			$("#ctxFechaFin" ).val('');
+			$("#numDiasHabiles").val('');
+			$("#ctxFechaFin").val('');
 			return;
 		}
 		else {
@@ -77,7 +77,7 @@ function enviar(pvValor) {
 	var vbComprobar = true; // verifica que todo este true o un solo false no envía
 
 	// verificar el formulario al Registrar o Modificar
-	if (pvValor === "Registrar" || pvValor === "Modificar" ) {
+	if (pvValor === "Registrar" || pvValor === "Modificar") {
 		
 		if (vsFechaIngreso.value.trim() === "") {
 			vbComprobar = false;
@@ -188,7 +188,7 @@ function fjSeleccionarRegistro(pvDOM) {
     $("#btnHabilitar").attr('disabled', false);
 
     $("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
-	$("#form" + lsVista + " #numId").val( parseInt(arrFilas[2].trim()));
+	$("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
 	
 	$("#form" + lsVista + " #divPeriodos").html(arrFilas[3].trim());
 	
@@ -298,7 +298,7 @@ function fjFechaFinal() {
 			confirmButtonText: 'Ok',
 			footer: ' '
 		});
-		$("#ctxFechaFin" ).val('');
+		$("#ctxFechaFin").val('');
 		return;
 	}
 	if ($("#numDiasHabiles").val() == '' || parseInt($("#numDiasHabiles").val()) == 0) {
@@ -311,7 +311,7 @@ function fjFechaFinal() {
 			confirmButtonText: 'Ok',
 			footer: ' '
 		});
-		$("#ctxFechaFin" ).val('');
+		$("#ctxFechaFin").val('');
 		return;
 	}
 	if ($("#ctxFechaInicio").val() == '' || parseInt($("#ctxFechaInicio").val()) == 0) {
@@ -323,7 +323,7 @@ function fjFechaFinal() {
 			confirmButtonText: 'Ok',
 			footer: ' '
 		});
-		$("#ctxFechaFin" ).val('');
+		$("#ctxFechaFin").val('');
 		return;
 	}
 	//abre el archivo controlador y envía por POST

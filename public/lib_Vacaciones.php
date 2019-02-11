@@ -3,15 +3,16 @@
 /**
  * Vacaciones Venezuela
  *
- * @descripción: Vacaciones Venezuela - clase PHP para obtener los diferentes cálculos relacionados a vacaciones
+ * @descripción: Vacaciones Venezuela - clase PHP para obtener los diferentes 
+ * cálculos relacionados a vacaciones
  * @author: Edwin Betancourt <EdwinBetanc0urt@hotmail.com> 
  * @license: GNU GPL v3,  Licencia Pública General de GNU 3.
- * @license: CC BY-SA, Creative  Commons  Atribución  - CompartirIgual (CC BY-SA) 4.0 Internacional.
+ * @license: CC BY-SA, Creative Commons Atribución - CompartirIgual (CC BY-SA) 4.0 Internacional.
  * @category Librería.
  * @package: lib_Vacaciones.php.
  * @since: v0.3.
- * @version: 0.6.
- * @Fecha de Modificación: 04/Abril/2018
+ * @version: 0.7.
+ * @Fecha de Modificación: 11/Febrero/2019
  * @Fecha de Creación: 05/Marzo/2018
 
 		Este programa es software libre, su uso, redistribución, y/o modificación
@@ -52,36 +53,38 @@
 		* LCA, Ley de Carrera Administrativa:
 			Titulo II, Capitulo I.
 */
+
 class vacacion
 {
-	public $atrDiasVacaciones = 15; //días correspondientes de vacaciones según la LOTTT
-	public $atrTipoPersona = "R"; //tipo de persona Regular o Funcionario
+	public $atrDiasVacaciones = 15; // días correspondientes de vacaciones según la LOTTT
+	public $atrTipoPersona = "R"; // tipo de persona Regular o Funcionario
 
 	/**
 	 * @param string $psFechaIngreso Fecha de inicio en formato Y-m-d
-	 * @param string $piMaxPeriodos máximo acumulado 2 periodos art 199 LOTTT y 1 o no acumulativo art 19 LCA
+	 * @param string $piMaxPeriodos máximo acumulado 2 periodos art 199 LOTTT y
+	 *  1 o no acumulativo art 19 LCA
 	 */
 	function __construct($psFechaIngreso = "", $psTipoPersona = "R")
 	{
 		$this->atrFechaIngreso = trim($psFechaIngreso);
 		$this->atrTipoPersona = trim($psTipoPersona);
 		$this->setAsignarValores(); 
-	} //cierre del constructor
+	} // cierre del constructor
 
 
 	private function setAsignarValores()
 	{
 		if (strtoupper($this->atrTipoPersona) == "F") {
 			$this->atrMaxPeriodo = 1;
-			$this->atrPeriodo = 5; //cada 5 años
-			$this->atrTipoPeriodo = "Quinquenio"; //cada 5 años
+			$this->atrPeriodo = 5; // cada 5 años
+			$this->atrTipoPeriodo = "Quinquenio"; // cada 5 años
 		}
 		else {
 			$this->atrMaxPeriodo = 2;
-			$this->atrPeriodo = 1; //cada año
-			$this->atrTipoPeriodo = "Año(s)"; //cada año
+			$this->atrPeriodo = 1; // cada año
+			$this->atrTipoPeriodo = "Año(s)"; // cada año
 		}
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -127,7 +130,7 @@ class vacacion
 		$liAntiguedad = intval($objAnos->y);
 
 		return $liAntiguedad;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	static public function getPeriodosAntiguedad($psFechaIngreso)
@@ -142,12 +145,13 @@ class vacacion
 				$arrRetorno[$liControl] = $lsAno + $liControl;
 			}
 		}
-		//var_dump($arrRetorno);
 		return $arrRetorno;
-	} //cierre de la función
+	} // cierre de la función
 
 
-	static public function getDetalleDiasVacacionesPeriodo($psFechaIngreso, $paPeriodos = array())
+	static public function getDetalleDiasVacacionesPeriodo(
+		$psFechaIngreso, $paPeriodos = array()
+	)
 	{
 		$lsDia = self::getFechaFormato($psFechaIngreso, "amd", "d");
 		$lsMes = self::getFechaFormato($psFechaIngreso, "amd", "m");
@@ -181,10 +185,10 @@ class vacacion
 
 		$arrRetorno["dias_vacaciones"] = $lsVacaciones;
 		return $arrRetorno;
-	} //cierre de la función
+	} // cierre de la función
 
 
-	/*
+	/**
 	 * La formula es 15 + (años de servicio -1)
 	 * hasta llegar a 15 días hábiles (30 días de vacaciones en total)
 	 */
@@ -196,14 +200,14 @@ class vacacion
 		}
 		else
 		*/
-			$piAntiguedad = intval(trim($piAntiguedad));
+		$piAntiguedad = intval(trim($piAntiguedad));
 		//$liDiasAntiguedad = $this->atrDiasVacaciones + ($piAntiguedad - 1);
 		$liDiasAntiguedad = 15 + ($piAntiguedad - 1);
 		if ($liDiasAntiguedad > 30) {
 			$liDiasAntiguedad = 30;
 		}
 		return $liDiasAntiguedad;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	static function getDiasPorAntiguedad($antiguedad = 0 ) 
@@ -227,37 +231,37 @@ class vacacion
 				$diasVacaciones = 18;
 				break;
 
-		 	//primer quinquenio de 5 años a 9 años
+			// primer quinquenio de 5 años a 9 años
 			case (($antiguedad >= 5) &&($antiguedad <= 9)):
 				$diasVacaciones = 19;
 				break;
 
-			//segundo quinquenio de 10 años a 14 años
+			// segundo quinquenio de 10 años a 14 años
 			case (($antiguedad >= 5) &&($antiguedad <= 9)):
 				$diasVacaciones = 20;
 				break;
 
-			//tercer quinquenio 15 años
+			// tercer quinquenio 15 años
 			case (($antiguedad >= 10) &&($antiguedad <= 15)):
 				$diasVacaciones = 21;
 				break;
 
-			//mas de 16 años o mas
+			// mas de 16 años o mas
 			case ($antiguedad >= 16):
 				$diasVacaciones = 25;
 				break;
 		 	
 			case ($antiguedad <= 0):
-		 	//default:
-		 		$diasVacaciones = 0;
-		 		break;
-		} //cierre del switch
+			//default:
+				$diasVacaciones = 0;
+				break;
+		} // cierre del switch
 
 		return $diasVacaciones;
-	} //cierre de la función
+	} // cierre de la función
 
 
-	/*
+	/**
 	 * Calcula los días que corresponden según el tipo de persona
 	 */
 	public function getDiasVacaciones($psTipo = "")
@@ -275,7 +279,7 @@ class vacacion
 	} //cierre de la función
 
 
-	/*
+	/**
 	 * La formula es 15 + años de servicio 
 	 */
 	public function getDiasVacacionesBono($piAntiguedad = 0)
@@ -290,7 +294,7 @@ class vacacion
 			$liDiasBono = 30;
 		}
 		return $liDiasBono;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	public function getDiasVacacionesAntiguedadFuncionario($piAntiguedad = "")
@@ -301,50 +305,57 @@ class vacacion
 		}
 		else
 		*/
-			$piAntiguedad = intval(trim($piAntiguedad));
+		$piAntiguedad = intval(trim($piAntiguedad));
 		$liDiasVacaciones = 0;
 		switch ($piAntiguedad) {
-		 	//primer quinquenio de 5 años a 9 años
+			// primer quinquenio de 5 años a 9 años
 			case ($piAntiguedad ==  5):
 				$liDiasVacaciones = 19;
 				break;
-			//segundo quinquenio de 10 años a 14 años
+			// segundo quinquenio de 10 años a 14 años
 			case ($piAntiguedad == 10):
 				$liDiasVacaciones = 20;
 				break;
-			//tercer quinquenio 15 años
+			// tercer quinquenio 15 años
 			case ($piAntiguedad == 15):
 				$liDiasVacaciones = 21;
 				break;
-			//mas de 16 años o mas
+			// mas de 16 años o mas
 			case ($piAntiguedad >= 16):
 				$liDiasVacaciones = 25;
 				break;
 			case ($piAntiguedad <= 0):
-		 	//default:
-		 		$liDiasVacaciones = 0;
-		 		break;
-		} //cierre del switch
+			//default:
+				$liDiasVacaciones = 0;
+				break;
+		} // cierre del switch
 
 		return $liDiasVacaciones;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	public function getListarPeriodos($paPeriodosUsados = array())
 	{
 		if (! is_array($paPeriodosUsados)) {
-			//separa la palabra en cada quien y convierte el string en arreglo
+			// separa la palabra en cada quien y convierte el string en arreglo
 			if (strpos($paPeriodosUsados, "/"))
-				$paPeriodosUsados = explode("/", $paPeriodosUsados); 
+				$paPeriodosUsados = explode("/", $paPeriodosUsados);
 			else
-				$paPeriodosUsados = explode("-", $paPeriodosUsados); 
+				$paPeriodosUsados = explode("-", $paPeriodosUsados);
 		}
 
 		$arrPeriodos = $this->getPeriodosAntiguedad($this->atrFechaIngreso);
 		$arrComparado = array_diff($arrPeriodos, $paPeriodosUsados);
 		$arrRetorno = array();
 		if ($arrComparado) {
-			$arrComparado = array_slice(array_diff($arrPeriodos, $paPeriodosUsados), 0, $this->atrMaxPeriodo);
+			$arrComparado = array_slice(
+				array_diff(
+					$arrPeriodos,
+					$paPeriodosUsados
+				),
+				0,
+				$this->atrMaxPeriodo
+			);
 			$liCont = 0;
 
 			foreach ($arrComparado AS $key => $value) {
@@ -355,11 +366,11 @@ class vacacion
 			}
 		}
 		return $arrRetorno;
-	} //cierre de la función
+	} // cierre de la función
 
 
-	//Esta pequeña función me crea una fecha de entrega sin sábados ni domingos ni días feriados
-	//el formato de fecha inicio es Y-m-d
+	// Esta pequeña función me crea una fecha de entrega sin sábados ni domingos
+	// ni días feriados el formato de fecha inicio es Y-m-d
 	static public function getFechaFinal(
 		$psFechainicio = "",
 		$piDiasHabiles = 0,
@@ -375,9 +386,8 @@ class vacacion
 			$piDiasHabiles = $this->getDiasVacacionesAntiguedad();
 		}
 		*/
-
-		$fechaInicial =  strtotime($psFechainicio); //obtenemos la fecha de hoy, solo para usar como referencia al usuario  
-		//echo "$fechaInicial<hr>";
+		//obtenemos la fecha de hoy, solo para usar como referencia al usuario  
+		$fechaInicial =  strtotime($psFechainicio); 
 		$piDiasHabiles = intval($piDiasHabiles);
 		$FechaFinal = 0;
 		//$Segundos = 24*60*60;
@@ -385,11 +395,11 @@ class vacacion
 
 		//Creamos un for desde 0 hasta los días enviados 
 
-		//enviar el día de que culminan las vacaciones 
+		// enviar el día de que culminan las vacaciones 
 		//for ($liDiaRecorrido = 0; $liDiaRecorrido < $piDiasHabiles; $liDiaRecorrido++) {
-		//envía el día de que culminan las vacaciones un día hábil adicional para el reingreso
+		// envía el día de que culminan las vacaciones un día hábil adicional para el reingreso
 		for ($liDiaRecorrido = 0; $liDiaRecorrido <= $piDiasHabiles; $liDiaRecorrido++) {
-			//Acumulamos la cantidad de segundos que tiene un día en cada vuelta del for  
+			// Acumulamos la cantidad de segundos que tiene un día en cada vuelta del for
 			$liSegundos = $liSegundos + 86400;  
 
 			// Obtenemos el día de la fecha, aumentando el tiempo en N cantidad
@@ -400,22 +410,21 @@ class vacacion
 			// Comparamos si estamos en sábado o domingo, si es así restamos una
 			// vuelta al for, para brincarnos el o los días...
 			// DOC: http://www.php.net/manual/es/function.date.php
-			if (in_array(date("N", $fechaInicial + $liSegundos), $paDiasNoHabiles)) { 
+			if (in_array(date("N", $fechaInicial + $liSegundos), $paDiasNoHabiles)) {
 				$liDiaRecorrido--; 
 			}
 			// DOC: http://www.php.net/manual/es/function.date.php
-			elseif (in_array(date('Y/m/d', $fechaInicial + $liSegundos), $paDiasferiados)) { 
+			elseif (in_array(date('Y/m/d', $fechaInicial + $liSegundos), $paDiasferiados)) {
 				$liDiaRecorrido--; 
 			}
 			else {
-				//Si no es sábado o domingo, y el for termina y nos muestra la nueva fecha  
-				$FechaFinal = date("Y/m/d", $fechaInicial + $liSegundos);  
-			}  
-			//echo "<br /> $liDiaRecorrido ";
-		}  
-		//echo "la  fecha inicial es $psFechainicio y la final es $FechaFinal <br />";
+				// Si no es sábado o domingo, y el for termina y nos muestra la nueva fecha
+				$FechaFinal = date("Y/m/d", $fechaInicial + $liSegundos);
+			}
+		}
+
 		return $FechaFinal;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
@@ -429,7 +438,7 @@ class vacacion
 	 * @param string $psFechainicio Fecha de inicio en formato Y-m-d
 	 * @param string $psFechafin Fecha de fin en formato Y-m-d
 	 * @param array $paDiasferiados Arreglo de días feriados en formato Y-m-d
-	 * @param array $paDiasNoLaboral Arreglo de días no laborables o  tomados como no hábiles, 
+	 * @param array $paDiasNoLaboral Arreglo de días no laborables o  tomados como no hábiles,
 	 * Representación numérica ISO-8601 del día de la semana 1 (para lunes) hasta 7 (para domingo)
 	 * @return array $arrDiasHabiles Arreglo definitivo de días hábiles
 	 */
@@ -439,14 +448,14 @@ class vacacion
 			$psFechainicio = date("Y-m-d");
 		}
 
-	    $inicio = strtotime($psFechainicio);
-	    $fin = strtotime($psFechafin);
-	    $liDiferencia = $fin - $inicio;
-	    $diasFalt = ((($liDiferencia / 60) / 60) / 24);
-	    return ceil($diasFalt);
-	    //$liDias = date('Y-m-d', $liDiferencia);
-	   // return $liDias;
-	} //cierre de la función
+		$inicio = strtotime($psFechainicio);
+		$fin = strtotime($psFechafin);
+		$liDiferencia = $fin - $inicio;
+		$diasFalt = ((($liDiferencia / 60) / 60) / 24);
+		return ceil($diasFalt);
+		//$liDias = date('Y-m-d', $liDiferencia);
+		// return $liDias;
+	} // cierre de la función
 
 
 	/**
@@ -460,13 +469,14 @@ class vacacion
 	 * @param string $psFechainicio Fecha de inicio en formato Y-m-d
 	 * @param string $psFechafin Fecha de fin en formato Y-m-d
 	 * @param array $paDiasferiados Arreglo de días feriados en formato Y-m-d
-	 * @param array $paDiasNoLaboral Arreglo de días no laborables o  tomados como no hábiles, 
+	 * @param array $paDiasNoLaboral Arreglo de días no laborables o  tomados como no hábiles,
 	 * Representación numérica ISO-8601 del día de la semana 1 (para lunes) hasta 7 (para domingo)
 	 * @return array $arrDiasHabiles Arreglo definitivo de días hábiles
 	 */
 	public function getDiasHabiles(
-		$psFechainicio = "", $psFechafin, $paDiasferiados = array(), 
-		$paDiasNoLaboral = array(6,7))
+		$psFechainicio = "", $psFechafin, $paDiasferiados = array(),
+		$paDiasNoLaboral = array(6,7)
+	)
 	{
 		if (trim($psFechainicio) == "") {
 			$psFechainicio = date("Y-m-d");
@@ -479,7 +489,7 @@ class vacacion
 		//$liDia = 24*60*60; //86400 segundos
 		$liDia = 86400; 
 
-		// Arreglo de días hábiles, inicianlizacion
+		// Arreglo de días hábiles, inicializacion
 		$arrDiasHabiles = array();
 		// Se recorre desde la fecha de inicio a la fecha fin, incrementando en 1 día
 		for ($liDiaRecorrido = $psFechainicio; $liDiaRecorrido <= $psFechafin; $liDiaRecorrido += $liDia) {
@@ -493,7 +503,7 @@ class vacacion
 			}
 		}
 		return $arrDiasHabiles;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	public function getSemanaSanta($psAno = "")
@@ -502,13 +512,16 @@ class vacacion
 			$psAno = intval(date("Y"));
 		}
 		return easter_days($psAno);
-		//falta sumar esos días al 21 de marzo del año dado para obtener el día en que cae domingo de pascua
-		//para carnavala ese domingo se le restan 47 días
-	} //cierre de la función
+		// falta sumar esos días al 21 de marzo del año dado para obtener el día
+		// en que cae domingo de pascua para carnaval a ese domingo se le restan
+		// 47 días
+	} // cierre de la función
 
 
 	// parámetro del modelo FechaBD
-	static public function getFechaFormato($pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma")
+	static public function getFechaFormato(
+		$pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma"
+	)
 	{
 		if ($pmFecha == "") {
 			$pmFecha = date("d-m-Y");
@@ -561,7 +574,6 @@ class vacacion
 				$lsFecha = $lsMes . "-" . $lsAno . "-" . $lsDia;
 				break;
 
-
 			case 'am':
 				// año - mes
 				$lsFecha = $lsAno . "-" . $lsMes;
@@ -606,9 +618,5 @@ class vacacion
 
 }
 
-/*
-$objCalcula2 = new vacacion();
-$resultado = $objCalcula2->getFechaFinal("2018-04-01", "13");
-var_dump($resultado);
-*/
+
 ?>

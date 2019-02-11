@@ -35,7 +35,7 @@ function changeClave() {
 
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
-	header( "Location: conCerrar.php?getMotivoLogOut=$mensaje");
+	header("Location: conCerrar.php?getMotivoLogOut=$mensaje");
 }
 
 

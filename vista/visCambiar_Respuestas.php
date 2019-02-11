@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Cambiar_Respuestas";
 	$liVista = "71";
 ?>
@@ -70,7 +70,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							</div>	
 
 							<div class="col-xs-6 col-sm-8 col-md-6 col-lg-9">
-								<button style="background:#37474F; color:#fff; width:200px; height:40px;" name='iniciar' value="Guardar" onclick="enviar( this.value );" >
+								<button style="background:#37474F; color:#fff; width:200px; height:40px;" name='iniciar' value="Guardar" onclick="enviar(this.value);" >
 									Guardar
 								</button>
 							</div>	
@@ -79,7 +79,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 
 				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
 				<input type='hidden' name='idpersona' id='idpersona' value="<?php
-					if ( isset( $_SESSION["idpersona"] ) )
+					if(isset($_SESSION["idpersona"]))
 						echo $_SESSION["idpersona"]; ?>" />
 			</form>
 		</div>

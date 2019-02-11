@@ -8,11 +8,11 @@ var obj_name="";
 	 nombre=document.getElementById("nombre");	
 	 estado=document.getElementById("idestado");	
 		   	    
-			if(nombre.value=="" ||nombre.length==0 ){
+			if(nombre.value=="" ||nombre.length==0){
 			swal("El nombre de la ciudad está vacío");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}
-			 if(nombre.length<5 ){
+			 if(nombre.length<5){
 			swal("5 carácter mínimo");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}
@@ -49,7 +49,7 @@ $("#buscar").click(function(){
 var obj_name="";
 	 nombre=document.getElementById("nombre");	
 		   	    
-			if(nombre.value=="" ||nombre.length==0 ){
+			if(nombre.value=="" ||nombre.length==0){
 			swal("Ingrese el nombre a buscar");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}
@@ -84,7 +84,7 @@ var obj_name="";
 	 resp2=document.getElementById("resp2");	
 	 var a= $('#resp1').val();
 	var b= $('#resp2').val();   
-			if(nombre.value=="" ||nombre.length==0 ){
+			if(nombre.value=="" ||nombre.length==0){
 			swal("El nombre de usuario esta vacío");nombre.focus();permitido=false;
 			 obj_name=nombre.id; 
 			 return false;}
@@ -102,11 +102,11 @@ return false;
 
 	}
 	   
-			if(resp1.value=="" ||resp1.length==0 ){
+			if(resp1.value=="" ||resp1.length==0){
 			swal("Ingrese la respusta 1");resp1.focus();permitido=false;
 			 obj_name=resp1.id; 
 			 return false;}
-			else if(a.length<6 ){
+			else if(a.length<6){
 			swal("6 carácter mínimo");
 			
 			 return false;}         
@@ -117,11 +117,11 @@ permitido=false;
 return false;
 
 	}	
-if(resp2.value=="" ||resp2.length==0 ){
+if(resp2.value=="" ||resp2.length==0){
 			swal("Ingrese la respusta 2");resp2.focus();permitido=false;
 			 obj_name=resp2.id; 
 			 return false;}
-			 else if(b.length<6 ){
+			 else if(b.length<6){
 			swal("6 carácter mínimo");
 			
 			 return false;}

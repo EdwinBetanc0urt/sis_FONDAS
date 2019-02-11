@@ -17,11 +17,11 @@ class Vacaciones extends clsConexion {
 
 
 	function UltimoCodigo() {
-		$sql= "SELECT MAX( {$this->atrId} ) AS id
+		$sql= "SELECT MAX({$this->atrId}) AS id
 				FROM {$this->atrTabla}  ; ";
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		$arreglo = parent::getConsultaNumerico( $tupla );
-		parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$arreglo = parent::getConsultaNumerico($tupla);
+		parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 		return $arreglo; //sino encuentra nada devuelve un cero
 	}
 
@@ -30,9 +30,9 @@ class Vacaciones extends clsConexion {
 		$sql = "
 			INSERT INTO {$this->atrTabla} (nombre)
 			values
-				( '{$this->atrFormulario["ctxNombre"]}' ); ";
+				('{$this->atrFormulario["ctxNombre"]}'); ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -48,7 +48,7 @@ class Vacaciones extends clsConexion {
 				idvacacion='{$this->atrFormulario["idvacaciones"]}'";
 				echo "$sql";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -62,7 +62,7 @@ class Vacaciones extends clsConexion {
 				idvacacion='{$this->atrFormulario["idvacaciones"]}'";
 				echo "$sql";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -75,9 +75,9 @@ class Vacaciones extends clsConexion {
 			where codnivel = '{$this->codigo}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar() ) {
-			$arreglo = parent::faCambiarArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		if (parent::faVerificar()) {
+			$arreglo = parent::faCambiarArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else
@@ -92,7 +92,7 @@ class Vacaciones extends clsConexion {
 			where
 				codnivel = '{$this->codigo}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar() ) //verifica si se ejecuto bien
+		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
@@ -101,18 +101,18 @@ class Vacaciones extends clsConexion {
 
 
 	//funcion.nivel.Listar
-	function Listar( $psBuscar = "" ) {
+	function Listar($psBuscar = "") {
 		$sql = "
 			SELECT *
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
 
-		if ( $psBuscar != "" ) {
+		if ($psBuscar != "") {
 			$sql .= "
 				WHERE
 					nombre LIKE '%{$psBuscar}%' ";
 		}
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ) //verifica si se ejecuto bien
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
 			return false;
@@ -124,7 +124,7 @@ class Vacaciones extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex( $psBuscar ) {		
+	function fmListarIndex($psBuscar) {		
 		$sql = "
 			SELECT 
 				V.*, P.*
@@ -136,17 +136,17 @@ class Vacaciones extends clsConexion {
 			WHERE
 				V.condicion = 'solicitado' "; //selecciona todo de la tabla
 		
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
@@ -158,7 +158,7 @@ class Vacaciones extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexAprobado( $psBuscar ) {		
+	function fmListarIndexAprobado($psBuscar) {		
 		$sql = "
 			SELECT 
 				V.*, P.*
@@ -172,17 +172,17 @@ class Vacaciones extends clsConexion {
 				V.fecha_inicio > DATE_FORMAT(NOW(),'%Y-%m-%d') AND
 				V.fecha_fin > DATE_FORMAT(NOW(),'%Y-%m-%d') "; //selecciona todo de la tabla
 		
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
@@ -194,7 +194,7 @@ class Vacaciones extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexEnCurso( $psBuscar ) {		
+	function fmListarIndexEnCurso($psBuscar) {		
 		$sql = "
 			SELECT 
 				V.*, P.*
@@ -208,17 +208,17 @@ class Vacaciones extends clsConexion {
 				V.fecha_inicio < DATE_FORMAT(NOW(),'%Y-%m-%d') AND
 				V.fecha_fin > DATE_FORMAT(NOW(),'%Y-%m-%d') "; //selecciona todo de la tabla*/
 
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
@@ -230,7 +230,7 @@ class Vacaciones extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexCulminado( $psBuscar ) {		
+	function fmListarIndexCulminado($psBuscar) {		
 		$sql = "
 			SELECT 
 				V.*, P.*
@@ -244,17 +244,17 @@ class Vacaciones extends clsConexion {
 				V.fecha_inicio < DATE_FORMAT(NOW(),'%Y-%m-%d') AND
 				V.fecha_fin < DATE_FORMAT(NOW(),'%Y-%m-%d') "; //selecciona todo de la tabla
 		
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
@@ -266,7 +266,7 @@ class Vacaciones extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexRechazado( $psBuscar ) {		
+	function fmListarIndexRechazado($psBuscar) {		
 		$sql = "
 			SELECT 
 				V.*, P.*
@@ -278,17 +278,17 @@ class Vacaciones extends clsConexion {
 			WHERE
 				V.condicion = 'rechazado' "; //selecciona todo de la tabla
 		
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
@@ -301,7 +301,7 @@ class Vacaciones extends clsConexion {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarReporte2( $piVacacion ) {		
+	function fmListarReporte2($piVacacion) {		
 		$sql = "
 			SELECT 
 				V.*, P.*
@@ -314,10 +314,10 @@ class Vacaciones extends clsConexion {
 				V.idvacacion = '{$piVacacion}' 
 			LIMIT 1 "; 
 		echo "$sql";
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ){
-			$arreglo = parent::getConsultaArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla)){
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else
@@ -329,7 +329,7 @@ class Vacaciones extends clsConexion {
 
 	//función.modelo.Listar Reporte
 	//devuelve la consulta con los parametros de rango y ordenado que se le indiquen
-	function fmListarReporte( $piVacacion = "" ) {		
+	function fmListarReporte($piVacacion = "") {		
 		$arrFormulario = $this->atrFormulario;
 		$sql = "
 			SELECT 
@@ -340,14 +340,14 @@ class Vacaciones extends clsConexion {
 				ON P.idtrabajador = V.idtrabajador "; //selecciona todo de la tabla
 
 		$sqlTipoRango = " "; //selecciona solo lo que esta dentro del rango
-		if ( array_key_exists("radRangoTipo" , $arrFormulario) ) {
-			if ( $arrFormulario['radRangoTipo'] == "fuera" )
+		if (array_key_exists("radRangoTipo", $arrFormulario)) {
+			if ($arrFormulario['radRangoTipo'] == "fuera")
 				$sqlTipoRango = " NOT "; //selecciona solo lo que esta fuera del rango
 		}
 
 		//define el rango a mostrar
-		if ( array_key_exists("radRango" , $arrFormulario) ) {
-			switch ( $arrFormulario['radRango'] ) {
+		if (array_key_exists("radRango", $arrFormulario)) {
+			switch ($arrFormulario['radRango']) {
 
 				case 'trabajador': //no esta imprimiendo el final
 					$sql .= " WHERE {$sqlTipoRango}
@@ -368,24 +368,24 @@ class Vacaciones extends clsConexion {
 					$arrFormulario["ctxFechaFinal"] = parent::faFechaFormato($arrFormulario["ctxFechaFinal"], "dma", "amd");
 					$sql .= " 
 						WHERE 
-						( fecha_inicio $sqlTipoRango BETWEEN
+						(fecha_inicio $sqlTipoRango BETWEEN
 						'{$arrFormulario["ctxFechaInicio"]}' 
-						AND '{$arrFormulario["ctxFechaFinal"]}' ) ";
+						AND '{$arrFormulario["ctxFechaFinal"]}') ";
 					break;
 			}
 		}
 
 		//define el atributo en que se ordena y de que forma
-		if ( array_key_exists("cmbOrden" , $arrFormulario) )
+		if (array_key_exists("cmbOrden", $arrFormulario))
 			$sql .= " ORDER BY {$arrFormulario['cmbOrden']} {$arrFormulario['radOrden']} ";
 
 		var_dump($sql);
 
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 
 		// var_dump($tupla);
 
-		if ( parent::faVerificar( $tupla ) )
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
@@ -393,7 +393,7 @@ class Vacaciones extends clsConexion {
 
 
 
-	function getPeriodoUsado( $piVacacion ) {
+	function getPeriodoUsado($piVacacion) {
 		$sql = "
 			SELECT GROUP_CONCAT(periodo_usado) AS periodos
 	 		FROM tdetalle_vacacion 
@@ -402,9 +402,9 @@ class Vacaciones extends clsConexion {
 	 		LIMIT 1";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if ( parent::faVerificar() ) {
-			$arreglo = parent::getConsultaArreglo( $tupla ); //convierte el RecordSet en un arreglo
-			parent::faLiberarConsulta( $tupla ); //libera de la memoria el resultado asociado a la consulta
+		if (parent::faVerificar()) {
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo[0]; //retorna los datos obtenidos de la bd en un arreglo
 		}
 		else

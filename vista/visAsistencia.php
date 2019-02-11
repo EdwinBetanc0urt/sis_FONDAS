@@ -1,35 +1,35 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Asistencia";
 	$liVista = "20";
 ?>
-        <script type="text/javascript" >
-            $(function () {
-            	startTime();
-            });
 
+<script type="text/javascript" >
+	$(function () {
+		startTime();
+	});
 
-			function startTime() {
-				let today = new Date();
-				let h = today.getHours();
-			    let m = today.getMinutes();
-			    let s = today.getSeconds();
-			    m = checkTime(m);
-			    s = checkTime(s);
-			    document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
-			    document.getElementById('ctxReloj').value = h + ":" + m + ":" + s;
-			    document.getElementById('ctxHoraEntrada').value = h + ":" + m + ":" + s;
-			    setTimeout(startTime, 500);
-			}
-			function checkTime(i) {
-			    if (i < 10) {
-			    	i = "0" + i
-			    };  // add zero in front of numbers < 10
-			    return i;
-			}
-        </script>
+	function startTime() {
+		let today = new Date();
+		let h = today.getHours();
+		let m = today.getMinutes();
+		let s = today.getSeconds();
+		m = checkTime(m);
+		s = checkTime(s);
+		document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
+		document.getElementById('ctxReloj').value = h + ":" + m + ":" + s;
+		document.getElementById('ctxHoraEntrada').value = h + ":" + m + ":" + s;
+		setTimeout(startTime, 500);
+	}
+	function checkTime(i) {
+		if (i < 10) {
+			i = "0" + i
+		};  // add zero in front of numbers < 10
+		return i;
+	}
+</script>
 
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
@@ -50,7 +50,6 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 			<a data-toggle="tab" href="#pestDetalle">Detalle</a>
 		</li>
 	</ul>
-	
 	<br>
 
 	<div class="tab-content">	
@@ -255,8 +254,8 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 										<span class="glyphicon glyphicon-search"></span>
 									</span>
 									<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
-									 oninput='fjMostrarLista( "Trabajador" , "" , "" , "" , "ListaCatalogo" , [ "" , $( "#ctxCodigos").val() ] );'
-							 		 onkeyup='fjMostrarLista( "Trabajador" , "" , "" , "" , "ListaCatalogo" , [ "" , $( "#ctxCodigos").val() ] );' 
+									 oninput='fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", ["", $("#ctxCodigos").val()]);'
+							 		 onkeyup='fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", ["", $("#ctxCodigos").val()]);' 
 							 		 class="valida_buscar form-control" 
 									 placeholder="Filtro de Busqueda" />
 								</div>	
@@ -268,7 +267,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 										<span class="glyphicon glyphicon-list-alt"></span>
 									</span>
 									<input type="text" id="numIntems" name="numIntems" maxlength="4" 
-									 value="10" onkeyup='fjMostrarLista( "Trabajador" , "" , "" , "" , "ListaCatalogo" , [ "" , $( "#ctxCodigos").val() ] );' required 
+									 value="10" onkeyup='fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", ["", $("#ctxCodigos").val()]);' required 
 									 class="valida_num_entero form-control" placeholder="Items" />
 								</div>	
 							</div>
@@ -296,11 +295,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 </div> <!-- Cierre de div VentanaModal -->
 
 
-
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar

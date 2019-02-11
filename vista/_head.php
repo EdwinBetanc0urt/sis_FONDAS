@@ -12,6 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<link rel="stylesheet" type="text/css" href="public/font-awesome/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" type="text/css" href="public/font-awesome-4.3.0/css/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="public/css/menu_intranet.css" />
 	<link rel="stylesheet" type="text/css" href="public/css/global.css" />
 	<link rel="stylesheet" type="text/css" href="public/bootstrap/css/bootstrap.min.css" />
@@ -148,11 +149,11 @@
 
 
 		    $(".calendario").datetimepicker({
-				//viewMode: 'months' ,
-				//format: 'DD/MM' , 
-				format: 'DD-MM-YYYY' , 
-				//disabledHours: false ,
-				minDate: moment() ,
+				//viewMode: 'months',
+				//format: 'DD/MM', 
+				format: 'DD-MM-YYYY', 
+				//disabledHours: false,
+				minDate: moment(),
 				locale: "es"
 		    });
 			//fjHorasServidorCliente();

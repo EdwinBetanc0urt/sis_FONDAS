@@ -132,7 +132,7 @@ function listarPeriodos()
 
 		foreach ($arrComparado AS $key => $value):
 			if ($liCont > 0)
-				$value = $arrComparado[ ($liCont-1) ] . "-" . $value;
+				$value = $arrComparado[($liCont-1)] . "-" . $value;
 			?>
 				<option value="<?= $value ?>">
 					Periodo <?= ($liCont + 1) . " - " . $value; ?>

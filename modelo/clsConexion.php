@@ -8,7 +8,7 @@
  * @link https://creativecommons.org/licenses/by-sa/4.0/
  */
 
-//define el separador de rutas en Windows \ y basados en Unix /
+// define el separador de rutas en Windows \ y basados en Unix /
 defined("DS") OR define("DS", DIRECTORY_SEPARATOR);
 
 require_once("dato_system.php");
@@ -46,7 +46,6 @@ else{
 // Clase Abstracta para acceder al SMBD utilizando mysqli procedimental
 class clsConexion {
 
-	//private para que la variable/función solamente se pueda utilizar desde la misma clase que las define.
 	private $atrServidor, $atrUsuario, $atrClave, $atrBaseDatos, $atrConexion, $atrLlaveMaestra;
 
 	/**
@@ -55,20 +54,25 @@ class clsConexion {
 	 * @param string $psPrivilegio que dependiendo el privilegio usa el usuario para la conexión
 	 */
 	protected function __construct($psPrivilegio = "") {
-		$this->atrServidor = HOST; //atributo Servidor
-		$this->atrUsuario = USER; //atributo Usuario
-		$this->atrClave = PASSWORD; //atributo Clave
-		$this->atrBaseDatos = BD;  //atributo Base de Datos
-		$this->atrConexion = $this->faConectar(); //atributo de Conexión o link
+		$this->atrServidor = HOST; // atributo Servidor
+		$this->atrUsuario = USER; // atributo Usuario
+		$this->atrClave = PASSWORD; // atributo Clave
+		$this->atrBaseDatos = BD;  // atributo Base de Datos
+		$this->atrConexion = $this->faConectar(); // atributo de Conexión o link
 	} // cierre de la función constructor
 
 
 	/**
-	 * funcion abstracta Conectar, mysqli conecta SMDB y BD
+	 * función abstracta Conectar, mysqli conecta SMDB y BD
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 */
 	private function faConectar() {
-		$vbConexion = mysqli_connect($this->atrServidor, $this->atrUsuario, $this->atrClave, $this->atrBaseDatos);
+		$vbConexion = mysqli_connect(
+			$this->atrServidor,
+			$this->atrUsuario,
+			$this->atrClave,
+			$this->atrBaseDatos
+		);
 		if ($vbConexion) {
 			if (! mysqli_set_charset($vbConexion, "utf8")){
 				echo "<b>no se pudo cambiar el conjunto de caracteres</b> <hr>";
@@ -143,13 +147,13 @@ class clsConexion {
 	}
 
 
-	//funcion abstracta Verificar, verifica si las operaciones Inc,Con,Mod,Eli se ejecutan bien
+	// función abstracta Verificar, verifica si las operaciones Inc,Con,Mod,Eli se ejecutan bien
 	protected function faVerificar($RecordSet = "") {
 		// si las columnas afectadas son mayores a cero, es decir 1 o mas
 		if (mysqli_affected_rows($this->atrConexion) > 0)
 			return true; //retorna verdadero
 		else
-			return false; //retorna falso si no se afecto ninguna columna
+			return false; // retorna falso si no se afecto ninguna columna
 	} // cierre de la función
 
 
@@ -159,7 +163,8 @@ class clsConexion {
 	 * y lo recorre para limpiarlo, es decir existe un arreglo multidimensional
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 * @param array $pcForm, trae todo lo enviado de la vista mediante el arreglo global $_POST
-	 * @return array $this->atrFormulario, arreglo agregado al constructor con todos los valores y quitando las primeras 3 letras de la clave
+	 * @return array $this->atrFormulario, arreglo agregado al constructor con
+	 * todos los valores y quitando las primeras 3 letras de la clave
 	 */
 	public function setFormulario($pcForm) {
 		foreach ($pcForm as $clave => $valor) {
@@ -178,9 +183,9 @@ class clsConexion {
 					);
 				}
 				else {
-					//la clave debe ser diferente a setBusqueda, ya que de lo contrario
-					//se debe modificar todos los controladores y pasar el termino de
-					//búsqueda como parámetro para el fmListarIndex de los modelos
+					// la clave debe ser diferente a setBusqueda, ya que de lo contrario
+					// se debe modificar todos los controladores y pasar el termino de
+					// búsqueda como parámetro para el fmListarIndex de los modelos
 					if ($valor == "" AND $clave != "setBusqueda") {
 						$this->atrFormulario[$clave_new] = NULL;
 					}
@@ -218,10 +223,10 @@ class clsConexion {
 	public function UltimoCodigo() {
 		$sql= "SELECT MAX({$this->atrId}) AS id
 				FROM {$this->atrTabla}  ; ";
-		$tupla = $this->faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = $this->faEjecutar($sql); // Ejecuta la sentencia sql
 		$arreglo = $this->getConsultaNumerico($tupla);
-		$this->faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
-		return $arreglo; //sino encuentra nada devuelve un cero
+		$this->faLiberarConsulta($tupla); // libera de la memoria el resultado asociado a la consulta
+		return $arreglo; // sino encuentra nada devuelve un cero
 	}
 
 
@@ -286,7 +291,7 @@ class clsConexion {
 
 	/**
 	 * función que devuelve los datos de una consulta en arreglo
-	 * utilizada al hacer la paginacion de los listados
+	 * utilizada al hacer la paginación de los listados
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return object el numero total de filas en esa consulta del parámetro enviado
@@ -309,15 +314,14 @@ class clsConexion {
 	 * @param string $pmSQL, Consulta del insert a extraer el numero de insersion
 	 * @return integer del numero de insersion, si es 0 no se inserto nada
 	 */
-	//parametro modelo SQL
 	public function faUltimoId($pmSql) {
 		$this->faEjecutar($pmSql); // se ejecuta el query
 		return mysqli_insert_id($this->atrConexion);  //obtiene el ultimo id, e inserta 1+
 	} // cierre de la función
 
 
-	//funcion abstracta Ultimo ID, funciona solo para las clave primaria INT y autoincrementables
-	//parametro modelo SQL
+	// función abstracta Ultimo ID, funciona solo para las clave primaria INT y
+	// autoincrementables parámetro modelo SQL
 	public function faUltimoId2($pmSql) {
 		$pmSql .= " SELECT @@identity AS id ; ";
 		$RecordSet = $this->faEjecutar($pmSql);
@@ -327,7 +331,7 @@ class clsConexion {
 
 
 	/**
-	 * funcion abstracta Transacción Inicio, indica el comienzo de la transacción
+	 * función abstracta Transacción Inicio, indica el comienzo de la transacción
 	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
 	 */
 	public function faTransaccionInicio() {
@@ -362,7 +366,7 @@ class clsConexion {
 	 * @param string $pmFormatoR, formato en el que se retornara la fecha
 	 * @return string $lsFecha, fecha a convertida en el formato indicado
 	 */
-	public function faFechaFormato($pmFecha = "" , $pmFormatoE = "amd" , $pmFormatoR = "dma") {
+	public function faFechaFormato($pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma") {
 		if ($pmFecha == "") {
 			$lsActual = date("Y-m-d"); //fecha actual php para servidor
 			//$lsActual="NOW()"; //fecha actual SQL para servidor
@@ -387,21 +391,21 @@ class clsConexion {
 			switch ($pmFormatoE) {
 				default:
 				case 'dma':
-					$lsDia = substr($pmFecha , 0 , 2);
-					$lsMes = substr($pmFecha , 3 , 2);
-					$lsAno = substr($pmFecha , 6 , 4);
+					$lsDia = substr($pmFecha, 0, 2);
+					$lsMes = substr($pmFecha, 3, 2);
+					$lsAno = substr($pmFecha, 6, 4);
 					break;
 
 				case 'amd':
-					$lsDia = substr($pmFecha , 8 , 2);
-					$lsMes = substr($pmFecha , 5 , 2);
-					$lsAno = substr($pmFecha , 0 , 4);
+					$lsDia = substr($pmFecha, 8, 2);
+					$lsMes = substr($pmFecha, 5, 2);
+					$lsAno = substr($pmFecha, 0, 4);
 					break;
 
 				case 'mda':
-					$lsDia = substr($pmFecha , 3 , 2);
-					$lsMes = substr($pmFecha , 0 , 2);
-					$lsAno = substr($pmFecha , 6 , 4);
+					$lsDia = substr($pmFecha, 3, 2);
+					$lsMes = substr($pmFecha, 0, 2);
+					$lsAno = substr($pmFecha, 6, 4);
 					break;
 			}
 		}
@@ -409,17 +413,17 @@ class clsConexion {
 		switch ($pmFormatoR) {
 			default:
 			case 'amd':
-				// año - mes - dia
+				// año - mes - día
 				$lsFecha = $lsAno . "-" . $lsMes . "-" . $lsDia;
 				break;
 
 			case 'dma':
-				// dia - mes - año
+				// día - mes - año
 				$lsFecha = $lsDia . "-" . $lsMes . "-" . $lsAno;
 				break;
 
 			case 'mda':
-				// mes - dia - año
+				// mes - día - año
 				$lsFecha = $lsMes . "-" . $lsDia . "-" . $lsAno;
 				break;
 
@@ -430,7 +434,7 @@ class clsConexion {
 				break;
 
 			case 'ad':
-				// año - dia
+				// año - día
 				$lsFecha = $lsAno . "-" . $lsDia;
 				break;
 
@@ -440,22 +444,22 @@ class clsConexion {
 				break;
 
 			case 'md':
-				// mes - dia
+				// mes - día
 				$lsFecha = $lsMes . "-" . $lsDia;
 				break;
 
 			case 'dm':
-				// dia - mes
+				// día - mes
 				$lsFecha = $lsDia . "-" . $lsMes;
 				break;
 
 			case 'da':
-				// dia - año
+				// día - año
 				$lsFecha = $lsDia . "-" . $lsAno;
 				break;
 
 			case 'dM':
-				// dia - año
+				// día - año
 				$dia = date("d", strtotime(date("Y") . "-" . $lsMes . "-" . $lsDia));
 				setlocale(LC_TIME, "ESP");
 				$mes = strftime("%B", strtotime(date("Y") . "-" . $lsMes . "-" . $lsDia));
@@ -475,7 +479,7 @@ class clsConexion {
 class console {
 
 	// función estática se accede de la forma console::log($mensaje);
-	public static function log($psMensaje = "PHP consola" , $psTipo = "log") {
+	public static function log($psMensaje = "PHP consola", $psTipo = "log") {
 		echo '
 			<script type="text/javascript">
 				console.' . $psTipo . '("' . json_encode($psMensaje) . '");

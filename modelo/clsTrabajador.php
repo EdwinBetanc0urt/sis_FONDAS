@@ -23,7 +23,7 @@ class Trabajador extends Persona {
 
 		parent::faTransaccionInicio();
 		$vsId = NULL ;
-		$arrPersona = parent::ConsultarPersona($this->atrFormulario["cmbNacionalidad"] , $this->atrFormulario["numCi"]);
+		$arrPersona = parent::ConsultarPersona($this->atrFormulario["cmbNacionalidad"], $this->atrFormulario["numCi"]);
 		if ($arrPersona) {
 			$vsId = $arrPersona["idpersona"];
 		}
@@ -31,13 +31,13 @@ class Trabajador extends Persona {
 
 			$sql = "
 				INSERT INTO tpersonas
-					(nacionalidad , cedula , nombre , apellido , tel_mov , correo) 
+					(nacionalidad, cedula, nombre, apellido, tel_mov, correo) 
 				VALUES (
-					'{$this->atrFormulario["cmbNacionalidad"]}' ,
-					'{$this->atrFormulario["numCi"]}' ,
-					'{$this->atrFormulario["ctxNombre"]}' ,
-					'{$this->atrFormulario["ctxApellido"]}' ,
-					'{$this->atrFormulario["numTelefono"]}' ,
+					'{$this->atrFormulario["cmbNacionalidad"]}',
+					'{$this->atrFormulario["numCi"]}',
+					'{$this->atrFormulario["ctxNombre"]}',
+					'{$this->atrFormulario["ctxApellido"]}',
+					'{$this->atrFormulario["numTelefono"]}',
 					'{$this->atrFormulario["ctxCorreo"]}' 
 				); ";
 			$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 
@@ -77,10 +77,10 @@ class Trabajador extends Persona {
 		else {
 			$sql = "
 				INSERT INTO {$this->atrTabla} 
-					(fecha_ingreso , idcargo , idpersona) 
+					(fecha_ingreso, idcargo, idpersona) 
 				VALUES (
-					'{$this->atrFormulario["datFechaIngreso"]}' ,
-					'{$this->atrFormulario["cmbCargo"]}' ,
+					'{$this->atrFormulario["datFechaIngreso"]}',
+					'{$this->atrFormulario["cmbCargo"]}',
 					'{$piIdPersona}'  
 				); ";
 			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -102,11 +102,11 @@ class Trabajador extends Persona {
 		else {
 			$sql = "
 				INSERT INTO tusuario 
-					(usuario , idpersona , idtipo_usuario, estatus)
+					(usuario, idpersona, idtipo_usuario, estatus)
 				VALUES
-					('{$this->atrFormulario["numCi"]}' , 
-					'{$piIdPersona}' ,
-					'{$this->atrFormulario["cmbTipo_Usuario"]}' ,
+					('{$this->atrFormulario["numCi"]}', 
+					'{$piIdPersona}',
+					'{$this->atrFormulario["cmbTipo_Usuario"]}',
 					'completar') ; ";
 			$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 
 		}
@@ -124,9 +124,9 @@ class Trabajador extends Persona {
 		unset($objCifrado);
 
 		$sql = "INSERT INTO thistorial_clave
-					(clave , fecha_creacion , estatus , id_usuario)
+					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
-					('{$clave_encriptada}' ,  CURRENT_DATE , 'temporal' , '{$piIdUsuario}') ; ";
+					('{$clave_encriptada}',  CURRENT_DATE, 'temporal', '{$piIdUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
@@ -148,7 +148,7 @@ class Trabajador extends Persona {
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
-				fecha_ingreso = '{$this->atrFormulario["datFechaIngreso"]}' ,
+				fecha_ingreso = '{$this->atrFormulario["datFechaIngreso"]}',
 				idcargo = '{$this->atrFormulario["cmbCargo"]}' 
 			WHERE 
 				{$this->atrId} =  '{$this->atrFormulario["numId"]}' ; ";
@@ -173,8 +173,8 @@ class Trabajador extends Persona {
 			SET 
 				nombre = '{$this->atrFormulario["ctxNombre"]}', 
 				apellido = '{$this->atrFormulario["ctxApellido"]}', 
-				tel_mov = '{$this->atrFormulario["numTelefono"]}' ,
-				correo = '{$this->atrFormulario["ctxCorreo"]}' ,
+				tel_mov = '{$this->atrFormulario["numTelefono"]}',
+				correo = '{$this->atrFormulario["ctxCorreo"]}',
 				nacionalidad = '{$this->atrFormulario["cmbNacionalidad"]}' 
 			WHERE 
 				idpersona = {$liIdPersona["idpersona"]} ; ";
@@ -282,7 +282,7 @@ class Trabajador extends Persona {
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
@@ -312,7 +312,7 @@ class Trabajador extends Persona {
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))

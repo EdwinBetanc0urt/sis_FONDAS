@@ -8,7 +8,7 @@
 	<title>Pagina de Inicio FONDAS</title>
 
 	<link rel="icon" type="image/png" href="public/img/icono.ico" />
-	<link href="public/js/bower_components/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="public/font-awesome-4.3.0/css/font-awesome.min.css" />
 	<link rel="stylesheet" href="public/css/estiloh.css" type="text/css" media="all">
 	<link rel="stylesheet" href="public/css/menu.css">
 	<link rel="stylesheet" href="public/css/w3.css">
