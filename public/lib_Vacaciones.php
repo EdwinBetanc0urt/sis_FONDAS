@@ -93,7 +93,6 @@ class vacacion
 		if (trim($psFechaPeriodo) == "") {
 			$psFechaPeriodo = date("Y-m-d");
 		}
-		//var_dump($psFechaPeriodo);
 
 		$objFecha_Ingreso = new DateTime($psFechaIngreso);
 		$objFecha_Periodo = new DateTime($psFechaPeriodo);
@@ -103,12 +102,12 @@ class vacacion
 
 		unset($objFecha_Ingreso, $objFecha_Periodo, $objAnos);
 
-		//var_dump($liAntiguedad);
 		return $liAntiguedad;
-	} //cierre de la función
+	} // cierre de la función
 
 
 	/**
+	 * VERIFICAR USO
 	 * @param string $psFechaIngreso Fecha de inicio en formato Y-m-d
 	 * @param string $psFechaPeriodo fecha del periodo a calcular la antigüedad Y-m-d
 	 */
@@ -139,8 +138,8 @@ class vacacion
 
 		$arrRetorno = array();
 		if ($liAntiguedad > 0) {
-			for ($liControl = 0; $liControl  <= $liAntiguedad ; $liControl ++) { 
-				$arrRetorno[ $liControl ] = $lsAno + $liControl;
+			for ($liControl = 0; $liControl  <= $liAntiguedad; $liControl ++) { 
+				$arrRetorno[$liControl] = $lsAno + $liControl;
 			}
 		}
 		//var_dump($arrRetorno);
@@ -152,19 +151,12 @@ class vacacion
 	{
 		$lsDia = self::getFechaFormato($psFechaIngreso, "amd", "d");
 		$lsMes = self::getFechaFormato($psFechaIngreso, "amd", "m");
-		/*
-		$lsDia = substr($psFechaIngreso, 8, 2);
-		$lsMes = substr($psFechaIngreso, 5, 2);
-		$lsAno = substr($psFechaIngreso, 0, 4);
-		*/
 
 		if (! is_array($paPeriodos)) {
-			//separa la palabra en cada quien y convierte el string en arreglo
+			// separa la palabra en cada quien y convierte el string en arreglo
 			$paPeriodos = explode("-", $paPeriodos); 
 		}
-		//var_dump($paPeriodos[0]);
 
-		$objFecha_Ingreso = new DateTime($psFechaIngreso);
 		$liCont = 1;
 		$lsVacaciones = 0;
 		$arrRetorno = array();
@@ -172,19 +164,8 @@ class vacacion
 			$liCont = -1;
 		}
 		foreach ($paPeriodos as $key => $value) {
-
-			//$objFecha_Periodo = new DateTime($value . "-" . $lsMes . "-" . $lsDia);
-			//echo ($value . "-" . $lsMes . "-" . $lsDia);
-
-			//$annos = $objFecha_Periodo->diff($objFecha_Ingreso);
-			//$antiguedad =  $annos->y + 1 ;
-			//$antiguedad = self::getAntiguedad("", ($value + 1) . "-" . $lsMes . "-" . $lsDia);
-			//var_dump($antiguedad);
-
-			$objFecha_Periodo = new DateTime($value . "-" . $lsMes . "-" . $lsDia);
-			$annos = $objFecha_Periodo->diff($objFecha_Ingreso);
-			$antiguedad =  $annos->y + 1 ;
-
+			//$antiguedad = self::getAntiguedad($psFechaIngreso, ($value + 1) . "-" . $lsMes . "-" . $lsDia);
+			$antiguedad = self::getAntiguedad($psFechaIngreso, ($value + 2) . "-" . $lsMes . "-" . $lsDia);
 
 			$diasvacaciones = self::getDiasVacacionesAntiguedad($antiguedad);
 
@@ -194,10 +175,9 @@ class vacacion
 			$arrRetorno["periodo"][$liCont]["periodos"] = $value . "-" . ($value + 1);
 
 			//unset($objFecha_Periodo);
-			$lsVacaciones = $lsVacaciones + $diasvacaciones ;
+			$lsVacaciones = $lsVacaciones + $diasvacaciones;
 			$liCont ++;
 		}
-		//var_dump($this->getDiasVacacionesAntiguedad(1));
 
 		$arrRetorno["dias_vacaciones"] = $lsVacaciones;
 		return $arrRetorno;
@@ -226,10 +206,10 @@ class vacacion
 	} //cierre de la función
 
 
-	static function getDiasPorAntiguedad( $antiguedad = 0 ) 
+	static function getDiasPorAntiguedad($antiguedad = 0 ) 
 	{
 		$diasVacaciones = "nada";
-		switch ( $antiguedad ) {
+		switch ($antiguedad ) {
 			
 			case ($antiguedad == 1):
 				$diasVacaciones = 15;
@@ -301,7 +281,7 @@ class vacacion
 	public function getDiasVacacionesBono($piAntiguedad = 0)
 	{
 		if (trim($piAntiguedad) == "") {
-			$piAntiguedad = $this->getAntiguedad($this->atrFechaIngreso);
+			$piAntiguedad = self::getAntiguedad($this->atrFechaIngreso);
 		}
 		else
 			$piAntiguedad = intval(trim($piAntiguedad));
@@ -369,7 +349,7 @@ class vacacion
 
 			foreach ($arrComparado AS $key => $value) {
 				if ($liCont > 0) 
-					$value = $arrComparado[ ($liCont-1) ] . "-" . $value;
+					$value = $arrComparado[($liCont-1)] . "-" . $value;
 					$arrRetorno[$liCont] = $value;
 				$liCont++;
 			}
@@ -380,7 +360,12 @@ class vacacion
 
 	//Esta pequeña función me crea una fecha de entrega sin sábados ni domingos ni días feriados
 	//el formato de fecha inicio es Y-m-d
-	static public function getFechaFinal($psFechainicio = "", $piDiasHabiles = 0, $paDiasferiados = array(), $paDiasNoHabiles = array(6,7))
+	static public function getFechaFinal(
+		$psFechainicio = "",
+		$piDiasHabiles = 0,
+		$paDiasferiados = array(),
+		$paDiasNoHabiles = array(6,7)
+	)
 	{
 		if (trim($psFechainicio) == "") {
 			$psFechainicio = date("Y/m/d");
@@ -407,11 +392,13 @@ class vacacion
 			//Acumulamos la cantidad de segundos que tiene un día en cada vuelta del for  
 			$liSegundos = $liSegundos + 86400;  
 
-			//Obtenemos el día de la fecha, aumentando el tiempo en N cantidad de días 1 al 7, según la vuelta en la que estemos  
+			// Obtenemos el día de la fecha, aumentando el tiempo en N cantidad
+			// de días 1 al 7, según la vuelta en la que estemos  
 			//$diatranscurrido = date("Y-m-d",time() + $Segundos);
 			//$diatranscurrido = date("Y-m-d", $fechaInicial + $Segundos);
 			//$diaSemanatranscurrido = date("N", $fechaInicial + $Segundos);
-			//Comparamos si estamos en sábado o domingo, si es así restamos una vuelta al for, para brincarnos el o los días...
+			// Comparamos si estamos en sábado o domingo, si es así restamos una
+			// vuelta al for, para brincarnos el o los días...
 			// DOC: http://www.php.net/manual/es/function.date.php
 			if (in_array(date("N", $fechaInicial + $liSegundos), $paDiasNoHabiles)) { 
 				$liDiaRecorrido--; 

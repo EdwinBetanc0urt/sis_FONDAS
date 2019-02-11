@@ -7,7 +7,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 ?>
 
 <div class="panel-heading">
-	<h3 class="panel-title"> 	
+	<h3 class="panel-title"> 
 		<button id="btnNuevo" class="btn btn-primary" data-toggle="modal" 
 			data-target="#VentanaModal" onclick="fjNuevoRegistro();">
 			<span class="glyphicon glyphicon-plus"></span>
@@ -17,7 +17,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
@@ -98,14 +98,17 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<input name="numId" id="numId" type="hidden" readonly
 									value="<?php 
 									if(isset($_GET["getId"])) 
-										echo $_GET["getId"]; ?>" />		
+										echo $_GET["getId"]; ?>" />
 								<input type="hidden" name="numIdTrabajador" id="numIdTrabajador"
 									value="<?= $_SESSION["idtrabajador"]; ?>" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaIngreso"> F. Ingreso </label>
-								<input id="ctxFechaIngreso" class=" form-control" name="ctxFechaIngreso" type="text" readonly placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+								<input id="ctxFechaIngreso" class=" form-control" name="ctxFechaIngreso" type="text" readonly placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio"
+									value="<?php 
+									if(isset($_SESSION["fecha_ingreso2"])) 
+										echo $_SESSION["fecha_ingreso2"]; ?>" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -131,9 +134,16 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 									<div class="panel-body">
 										<div class="row">
 											<div id="divPeriodos" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+												<label for="cmbPeriodo">* Seleccionar Periodo </label>
+												<select name="cmbPeriodo" id="cmbPeriodo" class="form-control select2 dinamico" style="width: 100%;">
+													<option value=''> Seleccione una opción </option>
+													<option value="0">Sin periodos de antigüedad vencidos</option>
+												</select>
+												<!--
 												<label for="sinPeriodos">
 													* NO PUEDE SOLICITAR VACAIONES YA QUE NO TIENE PERIODOS DE ANTIGUEDAD VENCIDOS
 												</label>
+												-->
 											</div>
 
 											<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -149,8 +159,8 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaInicio">* Fecha de Inicio Vacacional</label>
-								<input type="text" id="ctxFechaInicio" name="ctxFechaInicio"
-									class="valida_alfabetico form-control calendario" required
+								<input type="date" id="ctxFechaInicio" name="ctxFechaInicio"
+									class="valida_alfabetico form-control" required
 									maxlength="45" placeholder="Ingrese la Descripción"
 									data-toggle="tooltip" data-placement="top"
 									title="Campo Obligatorio" onchange="fjFechaFinal(this.value);"

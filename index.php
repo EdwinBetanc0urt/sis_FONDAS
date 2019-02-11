@@ -1,5 +1,4 @@
 <?php
-
 	/**
 	 * Index dieccionador de vistas y paginas, para ocultar las rutas de las
 	 * carpetas y archivos, ademas de contener configuración global

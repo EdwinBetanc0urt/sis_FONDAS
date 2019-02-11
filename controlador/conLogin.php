@@ -41,7 +41,8 @@ else {
 				$vsDiferencia = $objFechaInicio->diff($objFechaActual);
 
 				// Clave Caducada
-				if ($vsDiferencia->days >= $objUsuario->getDiasCaducidad()) {
+				if ($vsDiferencia->days >= $objUsuario->getDiasCaducidad()
+					&& $arrClave["fecha_creacion"] != "0000-00-00 00:00:00") {
 					$_SESSION = array(
 						'sesion' => 'caducado',
 						'sistema' => 'fondas',
@@ -72,7 +73,7 @@ else {
 						'estatus' => $arrDatos['estatus'],
 						'fecha_ingreso' => $arrDatos['fecha_ingreso'],
 						'fecha_ingreso2' => $objUsuario->faFechaFormato(
-							faFechaFormato$arrDatos['fecha_ingreso']
+							$arrDatos['fecha_ingreso']
 						),
 						'tiempo_sesion' => $arrUsuario['tiempo_sesion']
 					);
@@ -117,11 +118,11 @@ else {
 
 		// clave y usuario no corresponden
 		else {
-			$objUsuario->fmIntentoErroneo();//cada intento fallido aumenta a 1 mas
-			// consulta los intentos que lleva el usuario y el maximo permitido que
+			$objUsuario->fmIntentoErroneo();// cada intento fallido aumenta a 1 mas
+			// consulta los intentos que lleva el usuario y el máximo permitido que
 			// especifica la configuración
 			if ($objUsuario->fmContadorIntentos() >= 3) {
-				//si los intentos llegan al maximo establecido bloquea al usuario
+				// si los intentos llegan al máximo establecido bloquea al usuario
 				$objUsuario->fmBloqueoUsuario();
 				header("Location: {$ruta}?accion=Login&msjAlerta=bloqueo_intentos");
 			}
@@ -140,12 +141,11 @@ function codigo_captcha(){
 	$paramentros = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	$maximo = strlen($paramentros)-1;
 
-	for($i=0; $i<5; $i++){
+	for($i=0; $i<5; $i++) {
 		$k .= $paramentros{
 			mt_rand(0, $maximo)
 		};
 	}
-
 	echo $k;
 }
 

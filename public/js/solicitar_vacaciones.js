@@ -7,25 +7,67 @@ $(function () {
     //$("#numVacaciones").on("change" , function() {
 
     //});
-    $("#ctxFechaInicio").on("change",function() {
-		//fjFechaInicio();
-		if ( $("#numDiasHabiles").val() != "" && parseInt($("#numDiasHabiles").val()) != 0 ) {
-			// console.log("ctx fecha inicio no esta vacía");
-			fjFechaFinal(this.value);
+    $("#ctxFechaInicio").on("change", function() {
+		if ($("#numDiasHabiles").val() != "" && parseInt($("#numDiasHabiles").val()) != 0 ) {
+			fjFechaFinal();
 		}
-	    //alert(this.value);
-    	fjFechaFinal(this.value);
 	});
 
-    $("#numDiasHabiles").on("change",function() {
-	    //alert(this.value);
-	    lsFecha = $("#ctxFechaInicio").val().toString();
-    	fjFechaFinal(lsFecha);
+    $("#numDiasHabiles").on("change", function() {
+		if ($("#ctxFechaInicio").val() != "" && parseInt($("#ctxFechaInicio").val()) != 0) {
+			fjFechaFinal();
+		}
+	});
+
+	$("#cmbPeriodo").on("change", function() {
+		// console.log($("#cmbPeriodo").val());
+		if(parseInt($("#cmbPeriodo").val()) == 0) {
+			swal({
+				title: '¡Atención!',
+				html: 'No posee períodos vacacionales aun, hasta no cumplir ' +
+					'por lo menos un (1) año de haber ingresado o de haber ' +
+					'usado las vacaciones no pude solicitar las mismas.',
+				type: 'info',
+				showCloseButton: true,
+				confirmButtonText: 'Ok',
+				footer: ' '
+			});
+			return;
+		}
+		else if ($("#cmbPeriodo").val() == '') {
+			swal({
+				title: '¡Atención!',
+				html: 'Debe seleccionar un periodo valido para calcular los ' +
+					'días habitables de las vacaciones ',
+				type: 'warning',
+				showCloseButton: true,
+				confirmButtonText: 'Ok',
+				footer: ' '
+			});
+			$("#numDiasHabiles" ).val('');
+			$("#ctxFechaFin" ).val('');
+			return;
+		}
+		else {
+			setTimeout(() => {
+					fjCalculaDias($("#cmbPeriodo").val());
+				},
+				500
+			);
+
+			if ($("#ctxFechaInicio").val() != "" && parseInt($("#ctxFechaInicio").val()) != 0) {
+				setTimeout(() => {
+						fjFechaFinal();
+					},
+					1000
+				);
+			}
+		}
 	});
 });
 
 
-//funcion.javascript.Enviar (parametro.vista.Valor)
+//funcion.javascript.Enviar (parámetro.vista.Valor)
 function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
 	var viCodigo = document.getElementById("numId");
@@ -88,28 +130,11 @@ function enviar(pvValor) {
 }
 
 
-
-//comprueba si fue seleecionado por lo menos 1 elemento
-function fjComprobarRadio() {
-	//a = $('.chkBotones').is(':checked').length;
-	//console.log(a);
-	//if($('.chkBotones').prop('checked')) {
-	//if($('.chkBotones').attr('checked')) {
-	if($('.periodos').is(':checked')) {
-		return true;
-	}
-	else
-		return false;
-}
-
 function fjNuevoRegistro() {
-
 	$("#form" + lsVista)[0].reset();
-	$("#form" + lsVista + " #divPeriodos").html("NO TIENE PERIODOS VENCIDOS");
-	
-	fjFechaIngreso();
+	//$("#form" + lsVista + " #divPeriodos").html("NO TIENE PERIODOS VENCIDOS");
 	fjListaPeriodos();
-	fjUltimoID(lsVista);
+
 	if ($("#Registrar")) {
 		$("#Registrar").css("display", "");
 	}
@@ -127,6 +152,8 @@ function fjNuevoRegistro() {
 	}
 	fjAntiguedad();
 }
+
+
 function fjEditarRegistro() {
 	if ($("#Registrar")) {
 		$("#Registrar").css("display", "none");
@@ -144,7 +171,6 @@ function fjEditarRegistro() {
 		$("#Restaurar").css("display", "none");
 	}
 }
-
 
 
 function fjSeleccionarRegistro(pvDOM) {
@@ -200,13 +226,13 @@ function fjSeleccionarRegistro(pvDOM) {
 			$("#Restaurar").css("display", "none");
     }
 
-    $("#VentanaModal").modal('show'); //para boostrap v3.3.7
+    $("#VentanaModal").modal('show'); //para bootstrap v3.3.7
 }
+
 
 //Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjListaPeriodos() {
-
 	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
@@ -215,12 +241,21 @@ function fjListaPeriodos() {
 			operacion: "ListaPeriodo"
 		},
 		function(resultado) {
-			if(resultado == false)
+			// console.log(resultado);
+			if(resultado == false) {
 				console.log("sin consultas ");
+			}
 			else {
-				vjResultado = document.getElementById("divPeriodos") ; //*/$("#divListaAcceso").val();
-				vjResultado.innerHTML = resultado;
-				//console.log(resultado);	
+				document.getElementById("cmbPeriodo").length = 1; //limpia los option del select
+
+				$("#cmbPeriodo")
+					.attr("disabled", false). //habilita el campo de estado
+					append(resultado); //agrega los nuevos option al select
+				/*$("#cmbPeriodo")
+					.val()
+					.trigger()*/
+				//vjResultado = document.getElementById("divPeriodos") ; //*/$("#divListaAcceso").val();
+				//vjResultado.innerHTML = resultado;
 			}
 		}
 	);
@@ -230,20 +265,19 @@ function fjListaPeriodos() {
 //Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjCalculaDias(paPeriodos = "") {
-
-	//abre el archivo controlador y envia por POST
+	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
 	$.post(vsRuta, { 
-			//variables enviadas (name: valor)
 			operacion: "CalculaDias",
 			radPeriodo: paPeriodos
 		},
 		function(resultado) {
-			if(resultado == false)
+			console.log(resultado);
+			if(resultado == false) {
 				console.log("sin consultas ");
+			}
 			else {
-				console.log(resultado);
 				$("#form" + lsVista + " #numDiasHabiles").val(parseInt(resultado));
 			}
 		}
@@ -251,36 +285,47 @@ function fjCalculaDias(paPeriodos = "") {
 }
 
 
-
 //Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
-function fjFechaIngreso(piTrabajador = "") {
-	//abre el archivo controlador y envía por POST
-	vsRuta = "controlador/conSolicitar_Vacaciones.php";
-
-	$.post(vsRuta, { 
-			//variables enviadas (name: valor)
-			operacion: "FechaIngreso",
-			trabajdor: parseInt(piTrabajador)
-		},
-		function(resultado) {
-			if(resultado == false)
-				console.log("sin consultas ");
-			else {
-				console.log(resultado);
-				$("#ctxFechaIngreso").val(resultado);
-			}
-		}
-	);
-}
-
-
-
-
-//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
-// sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
-function fjFechaFinal(psFechaInicio = "") {
-
+function fjFechaFinal() {
+	if ($("#cmbPeriodo").val() == '' || parseInt($("#cmbPeriodo").val()) == 0) {
+		swal({
+			title: '¡Atención!',
+			html: 'Debe seleccionar un periodo valido para obtener los ' +
+				'días habitables de las vacaciones y calcular la fecha de reingreso.',
+			type: 'warning',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' '
+		});
+		$("#ctxFechaFin" ).val('');
+		return;
+	}
+	if ($("#numDiasHabiles").val() == '' || parseInt($("#numDiasHabiles").val()) == 0) {
+		swal({
+			title: '¡Atención!',
+			html: 'Debe seleccionar un periodo valido para obtener los ' +
+				'días habitables de las vacaciones y calcular la fecha de reingreso.',
+			type: 'warning',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' '
+		});
+		$("#ctxFechaFin" ).val('');
+		return;
+	}
+	if ($("#ctxFechaInicio").val() == '' || parseInt($("#ctxFechaInicio").val()) == 0) {
+		swal({
+			title: '¡Atención!',
+			html: 'Debe indicar la fecha de inicio para calcular la fecha de reingreso.',
+			type: 'warning',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' '
+		});
+		$("#ctxFechaFin" ).val('');
+		return;
+	}
 	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
@@ -301,6 +346,7 @@ function fjFechaFinal(psFechaInicio = "") {
 		}
 	);
 }
+
 
 function fjAntiguedad(psFechaInicio = "") {
 
