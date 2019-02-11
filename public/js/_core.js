@@ -27,7 +27,7 @@ $(function() {
 		//asigna el valor del select al hidden
 		$("#hid" + vsComponente).val($(this).val());
 		// console.log(vsComponente);
-		console.log($("#hid" + vsComponente).val());
+		//console.log($("#hid" + vsComponente).val());
 
 		//para tomar el texto
 		if ($("#hid " + vsComponente + "Texto")) {
