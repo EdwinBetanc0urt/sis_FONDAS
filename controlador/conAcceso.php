@@ -200,7 +200,7 @@ function fcListaAcceso() {
 
 					<td>
 						<?php
-			 				if (in_array($arrRegistro["idvista"] , $arrVistaSi)) {
+			 				if (in_array($arrRegistro["idvista"], $arrVistaSi)) {
 			 					?>
 								<button type="button" class="btn btn-danger" aria-label="Left Align" data-toggle='tooltip' data-placement='top'
 									title='Quitar el acceso total a esta pagina' onClick='fjQuitarVista(<?= $arrRegistro["idvista"]; ?>)' >
@@ -295,7 +295,7 @@ function fcListaBotonSi($piVista = "") {
 		do {		
 			$vsSeleccionado = "";
 
-			if (in_array($arrRegistro["idboton"] , $arrB))
+			if (in_array($arrRegistro["idboton"], $arrB))
 				$vsSeleccionado .= " checked='checked' ";
 			?>
 

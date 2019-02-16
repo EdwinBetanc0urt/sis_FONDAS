@@ -1,6 +1,6 @@
 
 # IDE generated files #
-################
+#######################
 *.iml
 atlassian-ide-plugin.xml
 yuicompressor-*
@@ -10,7 +10,9 @@ yuicompressor-*
 *.sln
 
 
-# -- IDE Editors -----------------------------------------
+
+# IDE Editors #
+###############
 
 # vim
 .*.sw[a-z]
@@ -75,6 +77,7 @@ nb-configuration.xml
 *.so
 
 
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -89,9 +92,11 @@ nb-configuration.xml
 *.zip
 
 
+
 # Logs and databases #
 ######################
 *.log
+#*.sql
 *.sqlite
 .sizecache.json
 npm-debug.log*
@@ -103,7 +108,9 @@ selenium-debug.log
 **/*.bak
 
 
-# -- OS generated files ------------------------------
+
+# OS generated files #
+######################
 # Windows
 Thumbs.db
 ehthumbs.db
@@ -144,11 +151,13 @@ bower_components/
 /test/unit/coverage/
 /test/e2e/reports/
 
-#package-lock.json
-#yarn.lock
+package-lock.json
+yarn.lock
 
 
-# Composer downloads
+
+# Composer downloads #
+######################
 composer
 composer.phar
 docs/

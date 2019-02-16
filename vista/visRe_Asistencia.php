@@ -66,7 +66,7 @@ $row5= $micon->Buscar_Asistencia3($fecha);
 
 function imprimir(){
 	fecha=document.getElementById('fecha_asis').value;
-				if( fecha==""){
+				if(fecha==""){
                   swal("Seleccion la fecha que quieres imprimir!");
 				  
                    return false;

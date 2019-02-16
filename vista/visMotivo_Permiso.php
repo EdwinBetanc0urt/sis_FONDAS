@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Motivo_Permiso";
 	$liVista = "21";
 ?>
@@ -85,11 +85,11 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-12">
 								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
-									if( isset( $_GET["getId"] ) ) 
+									if(isset($_GET["getId"])) 
 										echo $_GET["getId"]; ?>" />	
 								<label for="ctxNombre">* Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
-									if( isset( $_GET['getNombre'] ) )
+									if(isset($_GET['getNombre']))
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese el nombre" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -97,7 +97,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label for="ctxCantidad_Dias">* Cantidad dias</label>
 								<input id="ctxCantidad_Dias" class="valida_num_entero form-control" maxlength="45" name="ctxCantidad_Dias" type="text" size="20" required value="<?php
-									if( isset( $_GET['getCantidad_Dias'] ) )
+									if(isset($_GET['getCantidad_Dias']))
 										echo $_GET['getCantidad_Dias'];
 								?>" placeholder="Ingrese cantidad en dias" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -105,7 +105,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label for="ctxCantidad_Tiempo">* Cantidad en Minutos</label>
 								<input id="ctxCantidad_Tiempo" class="valida_num_entero form-control" maxlength="45" name="ctxCantidad_Tiempo" type="text" size="20" required value="<?php
-									if( isset( $_GET['getCantidad_Tiempo'] ) )
+									if(isset($_GET['getCantidad_Tiempo']))
 										echo $_GET['getCantidad_Tiempo'];
 								?>" placeholder="Ingrese cantidad en dias" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>					
@@ -120,13 +120,13 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 				</div>
 				<div class="modal-footer">
 					<?php
-						include_once( "_botones.php" );
+						include_once("_botones.php");
 					?>
 
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if( isset( $_GET['getEstatus'] ) ) echo $_GET['getEstatus']; ?>" />
+		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if(isset($_GET['getEstatus'])) echo $_GET['getEstatus']; ?>" />
 		<input type="hidden" name="operacion" id="operacion" />
 	</form>
 </div>

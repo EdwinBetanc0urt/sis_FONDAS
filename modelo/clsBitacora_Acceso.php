@@ -24,10 +24,10 @@ class Bitacora_Acceso extends Persona {
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex( $psBuscar ) {		
+	function fmListarIndex($psBuscar) {		
 		$sql = "
-			SELECT B.* , U.id_usuario , U.usuario, T.idtipo_usuario , T.nombre AS tipo_usuario,
-				P.nombre , P.apellido, P.nacionalidad
+			SELECT B.*, U.id_usuario, U.usuario, T.idtipo_usuario, T.nombre AS tipo_usuario,
+				P.nombre, P.apellido, P.nacionalidad
 
 			FROM {$this->atrTabla} AS B
 
@@ -40,20 +40,20 @@ class Bitacora_Acceso extends Persona {
 			INNER JOIN ttipo_usuario AS T
 				ON T.idtipo_usuario = U.idtipo_usuario
 			WHERE
-				( {$this->atrId} LIKE '%{$psBuscar}%' OR
-				{$this->atrNombre} LIKE '%{$psBuscar}%' ) "; //selecciona todo de la tabla
+				({$this->atrId} LIKE '%{$psBuscar}%' OR
+				{$this->atrNombre} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
 		
-		if ( $this->atrOrden != "" )
+		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
-		$this->atrTotalRegistros = parent::getNumeroFilas( parent::faEjecutar( $sql ) );
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
 		
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio} , {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 
-		$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) )
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;

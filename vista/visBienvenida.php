@@ -1,13 +1,13 @@
 <?php
 	/*
-	include_once( "public/lib_Cifrado.php");
+	include_once("public/lib_Cifrado.php");
 	$objCifrado = new clsCifrado(); //instancia la clase de Cifrado
 	$texto = "26273412";
-	$ENCRIPTADO = $objCifrado->flEncriptar( $texto );
-	var_dump( $ENCRIPTADO );
+	$ENCRIPTADO = $objCifrado->flEncriptar($texto);
+	var_dump($ENCRIPTADO);
 	echo "<hr>";
-	$desencriptado = $objCifrado->flDesencriptar( $ENCRIPTADO );
-	var_dump( $desencriptado);
+	$desencriptado = $objCifrado->flDesencriptar($ENCRIPTADO);
+	var_dump($desencriptado);
 	// */
 ?>
 <!--titulo formulario-->

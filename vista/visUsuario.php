@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Usuario";
 	$liVista = "2";
 ?>
@@ -86,7 +86,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
 								<label for="numId">* Código</label>
 								<input name="numId" id="numId" type="number" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
-									if( isset( $_GET["getId"] ) ) 
+									if(isset($_GET["getId"])) 
 										echo $_GET["getId"]; ?>" />								
 							</div>
 
@@ -98,14 +98,14 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="e">E - Extranjero</option>
 								</select>
 								<input id="hidNacionalidad" type="hidden" value="<?php
-									if( isset( $_GET['getNacionalidad'] ) )
+									if(isset($_GET['getNacionalidad']))
 										echo $_GET['getNacionalidad']; ?>" />
 							</div>
 						
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="numCi">* C.I. (Usuario)</label>
 								<input id="numCi" class="valida_num_entero form-control" maxlength="45" name="numCi" type="number" size="20" required value="<?php
-									if( isset( $_GET['getCI'] ) )
+									if(isset($_GET['getCI']))
 										echo $_GET['getCI'];
 								?>" placeholder="Ingrese el numero de identificacion" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -113,7 +113,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 								<label for="ctxNombre">* Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
-									if( isset( $_GET['getNombre'] ) )
+									if(isset($_GET['getNombre']))
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese el Nombre" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -121,7 +121,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 								<label for="ctxApellido">* Apellido</label>
 								<input id="ctxApellido" class="valida_alfabetico form-control" maxlength="45" name="ctxApellido" type="text" size="20" required value="<?php
-									if( isset( $_GET['getApellido'] ) )
+									if(isset($_GET['getApellido']))
 										echo $_GET['getApellido'];
 								?>" placeholder="Ingrese el Apellido" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -135,14 +135,14 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="i">Indefinido</option>
 								</select>
 								<input id="hidSexo" type="hidden" value="<?php
-									if( isset( $_GET['getSexo'] ) )
+									if(isset($_GET['getSexo']))
 										echo $_GET['getSexo']; ?>" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 								<label for="ctxCorreo"> Correo</label>
 								<input id="ctxCorreo" class="valida_correo form-control" maxlength="255" name="ctxCorreo" type="email" size="20" value="<?php
-									if( isset( $_GET['getCorreo'] ) )
+									if(isset($_GET['getCorreo']))
 										echo $_GET['getCorreo'];
 								?>" placeholder="Ingrese el Correo" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -150,7 +150,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 								<label for="numTelefono">* Telefono Movil</label>
 								<input id="numTelefono" class="valida_num_telefono form-control" maxlength="45" name="numTelefono" type="text" size="20" required value="<?php
-									if( isset( $_GET['getTeleMovil'] ) )
+									if(isset($_GET['getTeleMovil']))
 										echo $_GET['getTeleMovil'];
 								?>" placeholder="Ingrese el Telefono Movil" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -161,7 +161,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="">Seleccione una opción..</option>
 								</select>
 								<input id="hidTipo_Usuario" type="hidden" value="<?php
-									if( isset( $_GET['getTipo_Usuario'] ) )
+									if(isset($_GET['getTipo_Usuario']))
 										echo $_GET['getTipo_Usuario']; ?>" />
 							</div>
 
@@ -181,7 +181,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4" id="divIngreso">
 								<label for="datFechaIngreso">* Fecha de Ingreso</label>
 								<input type="date" id="datFechaIngreso" class="valida_alfabetico form-control" maxlength="45" name="datFechaIngreso"  size="20" value="<?php
-									if( isset( $_GET['getFechaIngre'] ) )
+									if(isset($_GET['getFechaIngre']))
 										echo $_GET['getFechaIngre'];
 								?>" placeholder="Ingrese La Fecha de Ingreso" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -194,7 +194,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="">Seleccione una opción..</option>
 								</select>
 								<input id="hidDepartamento" type="hidden" value="<?php
-									if( isset( $_GET['getDepartamento'] ) )
+									if(isset($_GET['getDepartamento']))
 										echo $_GET['getDepartamento']; ?>" />
 							</div>
 
@@ -205,7 +205,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="">Seleccione una opción..</option>
 								</select>
 								<input id="hidCargo" type="hidden" value="<?php
-									if( isset( $_GET['getCargo'] ) )
+									if(isset($_GET['getCargo']))
 										echo $_GET['getCargo']; ?>" />
 							</div>
 							
@@ -217,13 +217,13 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 				</div>
 				<div class="modal-footer">
 					<?php
-						include_once( "_botones.php" );
+						include_once("_botones.php");
 					?>
 
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if( isset( $_GET['getEstatus'] ) ) echo $_GET['getEstatus']; ?>" />
+		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if(isset($_GET['getEstatus'])) echo $_GET['getEstatus']; ?>" />
 		<input type="hidden" name="operacion" id="operacion" />
 	</form>
 </div>

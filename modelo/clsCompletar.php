@@ -44,11 +44,11 @@ class Completar extends clsConexion {
 				idpersona = '{$_SESSION["idpersona"]}'; ";
 
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		echo( $sql);
-		if ( parent::faVerificar() ) { 
+		echo($sql);
+		if (parent::faVerificar()) { 
 			echo "si persona";
 			//verifica si se ejecuto bien
-			if ( $this->CambiarUsuario( $_SESSION["idpersona"] ) ){
+			if ($this->CambiarUsuario($_SESSION["idpersona"])){
 				parent::faTransaccionFin();
 				return true; //envia el id para insertar el usuario
 			}
@@ -65,40 +65,40 @@ class Completar extends clsConexion {
 	}
 
 	//funcion.modelo.Insertar
-	function CambiarUsuario( $piIdPersona ) {
+	function CambiarUsuario($piIdPersona) {
 
 		$sql = "
 			UPDATE tusuario 
 			SET
-				estatus = 'activo' ,
-				ultima_actividad = CURRENT_DATE ,
+				estatus = 'activo',
+				ultima_actividad = CURRENT_DATE,
 				intento_fallido = '0'
 			WHERE
 				id_usuario = '{$_SESSION["id_usuario"]}' ";	
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ) {
+		if (parent::faVerificar($tupla)) {
 			echo "SI usuario";
-			return $this->InsertarClave( $_SESSION["id_usuario"] ); 
+			return $this->InsertarClave($_SESSION["id_usuario"]); 
 		}
 		else
 			return false;
 	}
 	//funcion.modelo.Insertar
-	function InsertarClave( $piIdUsuario ) {
+	function InsertarClave($piIdUsuario) {
 
 		$objCifrado = new clsCifrado(); //instancia el objeto de cifrado
 		//nacionalidad, guion, documento. Ejemplo. V-12345678
-		$clave_encriptada = $objCifrado->flEncriptar( $this->atrFormulario["pswClave"] );
-		unset( $objCifrado );
+		$clave_encriptada = $objCifrado->flEncriptar($this->atrFormulario["pswClave"]);
+		unset($objCifrado);
 
 		$sql = "INSERT INTO thistorial_clave
-					( clave , fecha_creacion , estatus , id_usuario )
+					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
-					( '{$clave_encriptada}' ,  CURRENT_DATE , 'activo' , '{$piIdUsuario}' ) ; ";
+					('{$clave_encriptada}',  CURRENT_DATE, 'activo', '{$piIdUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if ( parent::faVerificar( $tupla ) ) {
+		if (parent::faVerificar($tupla)) {
 			echo "si clave";
-			return $this->InsertarRespuestas( $_SESSION["id_usuario"] ); //envia el arreglo
+			return $this->InsertarRespuestas($_SESSION["id_usuario"]); //envia el arreglo
 		}
 		else
 			return false;
@@ -113,23 +113,23 @@ class Completar extends clsConexion {
 		//$objCifrado = new clsCifrado(); //instancia el objeto de cifrado
 		
 		//ciclo del 1 al 5 que son los name que exiten en la vista (ctxRespuesta1-5 y cmbPregunta1-5)
-		for ( $i = 1 ; $i <= 2 ; $i++ ) {
+		for ($i = 1 ; $i <= 2 ; $i++) {
 
-			//$respuesta_encriptada = $objCifrado->flEncriptar( $this->atrFormulario["ctxRespuesta" . $i] );
+			//$respuesta_encriptada = $objCifrado->flEncriptar($this->atrFormulario["ctxRespuesta" . $i]);
 			$sql = "INSERT INTO trespuesta
-						( nombre , id_usuario , idpregunta )
+						(nombre, id_usuario, idpregunta)
 					VALUES
-						( '{$this->atrFormulario["ctxRespuesta" . $i]}' ,
-						'{$_SESSION["id_usuario"]}' ,
-						'" . $this->atrFormulario["cmbPregunta" . $i ] . "' ) ; ";
-			$tupla = parent::faEjecutar( $sql ); //Ejecuta la sentencia sql
-			if ( parent::faVerificar( $tupla ) ) //verifica si se ejecuto bien
+						('{$this->atrFormulario["ctxRespuesta" . $i]}',
+						'{$_SESSION["id_usuario"]}',
+						'" . $this->atrFormulario["cmbPregunta" . $i] . "') ; ";
+			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+			if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 				continue; //continua el ciclo for
 			else
 				$liError = $liError + 1;
 		}
-		//unset( $objCifrado ); //destruye el objeto de creado
-		if ( $liError == 0 ) {
+		//unset($objCifrado); //destruye el objeto de creado
+		if ($liError == 0) {
 			echo "si pregunta";
 			return true;
 		}

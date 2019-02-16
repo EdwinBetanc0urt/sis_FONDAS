@@ -1,5 +1,9 @@
-<?php 
+<?php
 
+// inicio de sesión
+if (strlen(session_id()) < 1) {
+	session_start();
+}
 
 $gsClase = "Vacaciones";
 
@@ -19,11 +23,8 @@ else{
 	require_once("{$ruta}public/lib_Vacaciones.php");
 }
 
-session_start();
 
-$objCalcula = new vacacion( $_SESSION["fecha_ingreso"] );
-
-switch( $_POST['operacion'] ) {
+switch($_POST['operacion']) {
 
 	case "AprobarVacaciones":
 		fcAprobar();
@@ -62,20 +63,20 @@ function fcAprobar() {
 	global $gsClase;
 	$objVacaciones = new Vacaciones();
 	$objVacaciones->setFormulario($_POST);
-	//var_dump( $objVacaciones->Aprobar() );/*
-	if ( $objVacaciones->Aprobar() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}&msjAlerta=aprobado" ); //envía a la vista, con mensaje de la consulta
+	//var_dump($objVacaciones->Aprobar());/*
+	if ($objVacaciones->Aprobar()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}&msjAlerta=aprobado"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form={$gsClase}&msjAlerta=noaprobado" ); //envía a la vista, con */
+		header("Location: ../?form={$gsClase}&msjAlerta=noaprobado"); //envía a la vista, con */
 }
 function fcRechazar() {
 	global $gsClase;
 	$objVacaciones = new Vacaciones();
 	$objVacaciones->setFormulario($_POST);
-	if ( $objVacaciones->Rechazar() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}&msjAlerta=rechazado" ); //envía a la vista, con mensaje de la consulta
+	if ($objVacaciones->Rechazar()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}&msjAlerta=rechazado"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form={$gsClase}&msjAlerta=norechazado" ); //envía a la vista, con 
+		header("Location: ../?form={$gsClase}&msjAlerta=norechazado"); //envía a la vista, con 
 }
 
 
@@ -86,9 +87,9 @@ function ListaVacaciones() {
 
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$vpItems = 10;
-	if ( isset( $_POST["setItems"] ) )  {
-		$vpItems = htmlentities( trim( addslashes( intval( $_POST['setItems'] ) ) ) ) ;
-		if ( $vpItems < 1 ) {
+	if (isset($_POST["setItems"]))  {
+		$vpItems = htmlentities(trim(addslashes(intval($_POST['setItems'])))) ;
+		if ($vpItems < 1) {
 		 	$vpItems = 10 ; //muestra los items predeterminados
 		}
 	}
@@ -96,80 +97,80 @@ function ListaVacaciones() {
 
 	//por defecto muesta la primera pagina del resultado
 	
-	if ( isset( $_POST['subPagina'] ) AND $_POST['subPagina'] > 1 ) {
-		$vpPaginaActual = htmlentities( trim( intval( $_POST['subPagina'] ) ) ) ;
+	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
+		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
 	else
 		$vpPaginaActual = 1 ;
 
 	//si existe el elemento oculto hidOrden le indica al modelo por cual atributo listara
-	if ( isset( $_POST["setOrden"] ) ) {
-		$objeto->atrOrden =  htmlentities( trim ( strtolower( $_POST["setOrden"] ) ) );
+	if (isset($_POST["setOrden"])) {
+		$objeto->atrOrden =  htmlentities(trim (strtolower($_POST["setOrden"])));
 		//tambien idica de la forma en que listara ASC o DESC
-		$objeto->atrTipoOrden = isset( $_POST['setTipoOrden'] ) ? $_POST['setTipoOrden'] : "ASC";
+		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
 
-	$objeto->atrPaginaInicio = ( $vpPaginaActual -1 ) * $objeto->atrItems;
+	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 
-	$rstRecordSet = $objeto->fmListarIndex( htmlentities( addslashes( trim( strtolower( $_POST['setBusqueda'] ) ) ) ) );
+	$rstRecordSet = $objeto->fmListarIndex(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
-	header( "Content-Type: text/html; charset=utf-8" );
-	if ( $rstRecordSet ) {
-		//$arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ); //convierte el RecordSet en un arreglo
+	header("Content-Type: text/html; charset=utf-8");
+	if ($rstRecordSet) {
+		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
 				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
 					<thead>
 						<tr class='info'>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Cedula <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Trabajador <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Periodo <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Condicion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Accion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 		<?php 
-		while ($arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) ) {
-				$arrPeriodo = $objeto->getPeriodoUsado( $arrRegistro["idvacacion"]);
+		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
+				$arrPeriodo = $objeto->getPeriodoUsado($arrRegistro["idvacacion"]);
 			?>
 						<tr >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
-							<td> <?= $arrRegistro[ "nacionalidad" ] . "-" . $arrRegistro[ "cedula" ] ; ?> </td>
-							<td> <?= $arrRegistro[ "nombre" ] . " " . $arrRegistro[ "apellido" ] ; ?> </td>
+							<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] ; ?> </td>
+							<td> <?= $arrRegistro["nombre"] . " " . $arrRegistro["apellido"] ; ?> </td>
 							<td> <?= $arrPeriodo ; ?> </td>
-							<td> <?= $arrRegistro[ "cantidad_dias" ]; ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_inicio" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_fin" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $arrRegistro[ "condicion" ]; ?> </td>
+							<td> <?= $arrRegistro["cantidad_dias"]; ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?> </td>
+							<td> <?= $arrRegistro["condicion"]; ?> </td>
 							<td>
-								<button type="button" class="btn" onclick="fjVerVacacion( <?= $arrRegistro["idvacacion"] ?> )">
+								<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idvacacion"] ?>)">
 									Ver
 								</button>
-								<button type="button" class="btn" onclick="fjAprobar( <?= $arrRegistro["idvacacion"] ?> )">
+								<button type="button" class="btn" onclick="fjAprobar(<?= $arrRegistro["idvacacion"] ?>)">
 									Aprobar
 								</button>
-								<button type="button" class="btn" onclick="fjRechazar( <?= $arrRegistro["idvacacion"] ?> )">
+								<button type="button" class="btn" onclick="fjRechazar(<?= $arrRegistro["idvacacion"] ?>)">
 									Rechazar
 								</button>
 							</td>
@@ -183,19 +184,19 @@ function ListaVacaciones() {
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
 					<li>
-						<a aria-label="Previous" rel="1" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<?php
-					for ( $i = 1; $i <= $objeto->atrPaginaFinal; $i++ )  {
-						if ( $i == $vpPaginaActual )
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
 							$Activo = "active";
 						else
 							$Activo = "";
 						?>
 						<li class="<?= $Activo; ?> ">
-							<a rel="<?= $i; ?>" onclick='console.log( this.rel ); fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 								<?= $i; ?>
 							</a>
 						</li>
@@ -204,14 +205,14 @@ function ListaVacaciones() {
 					?>
 
 					<li>
-						<a aria-label="Next" rel="<?= ( $objeto->atrPaginaFinal ); ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 		<?php
-		$objeto->faLiberarConsulta( $rstRecordSet ); //libera de la memoria el resultado asociado a la consulta
+		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
 
 	else {
@@ -222,7 +223,7 @@ function ListaVacaciones() {
 		<?php
 	}
 	$objeto->faDesconectar(); //cierra la conexión
-	unset( $objeto ); //destruye el objeto
+	unset($objeto); //destruye el objeto
 } //cierre de la función
 
 
@@ -233,9 +234,9 @@ function ListaVacacionesAprobadas() {
 
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$vpItems = 10;
-	if ( isset( $_POST["setItems"] ) )  {
-		$vpItems = htmlentities( trim( addslashes( intval( $_POST['setItems'] ) ) ) ) ;
-		if ( $vpItems < 1 ) {
+	if (isset($_POST["setItems"]))  {
+		$vpItems = htmlentities(trim(addslashes(intval($_POST['setItems'])))) ;
+		if ($vpItems < 1) {
 		 	$vpItems = 10 ; //muestra los items predeterminados
 		}
 	}
@@ -243,74 +244,74 @@ function ListaVacacionesAprobadas() {
 
 	//por defecto muesta la primera pagina del resultado
 	
-	if ( isset( $_POST['subPagina'] ) AND $_POST['subPagina'] > 1 ) {
-		$vpPaginaActual = htmlentities( trim( intval( $_POST['subPagina'] ) ) ) ;
+	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
+		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
 	else
 		$vpPaginaActual = 1 ;
 
 	//si existe el elemento oculto hidOrden le indica al modelo por cual atributo listara
-	if ( isset( $_POST["setOrden"] ) ) {
-		$objeto->atrOrden =  htmlentities( trim ( strtolower( $_POST["setOrden"] ) ) );
+	if (isset($_POST["setOrden"])) {
+		$objeto->atrOrden =  htmlentities(trim (strtolower($_POST["setOrden"])));
 		//tambien idica de la forma en que listara ASC o DESC
-		$objeto->atrTipoOrden = isset( $_POST['setTipoOrden'] ) ? $_POST['setTipoOrden'] : "ASC";
+		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
 
-	$objeto->atrPaginaInicio = ( $vpPaginaActual -1 ) * $objeto->atrItems;
+	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 
-	$rstRecordSet = $objeto->fmListarIndexAprobado( htmlentities( addslashes( trim( strtolower( $_POST['setBusqueda'] ) ) ) ) );
+	$rstRecordSet = $objeto->fmListarIndexAprobado(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
-	header( "Content-Type: text/html; charset=utf-8" );
-	if ( $rstRecordSet ) {
-		//$arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ); //convierte el RecordSet en un arreglo
+	header("Content-Type: text/html; charset=utf-8");
+	if ($rstRecordSet) {
+		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
 				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
 					<thead>
 						<tr class='info'>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Cedula <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Trabajador <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Periodo <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Condicion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Accion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 		<?php 
-		while ($arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) ) {
-				$arrPeriodo = $objeto->getPeriodoUsado( $arrRegistro["idvacacion"]);
+		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
+				$arrPeriodo = $objeto->getPeriodoUsado($arrRegistro["idvacacion"]);
 			?>
 						<tr >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
-							<td> <?= $arrRegistro[ "nacionalidad" ] . "-" . $arrRegistro[ "cedula" ] ; ?> </td>
-							<td> <?= $arrRegistro[ "nombre" ] . " " . $arrRegistro[ "apellido" ] ; ?> </td>
+							<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] ; ?> </td>
+							<td> <?= $arrRegistro["nombre"] . " " . $arrRegistro["apellido"] ; ?> </td>
 							<td> <?= $arrPeriodo ; ?> </td>
-							<td> <?= $arrRegistro[ "cantidad_dias" ]; ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_inicio" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_fin" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $arrRegistro[ "condicion" ]; ?> </td>
+							<td> <?= $arrRegistro["cantidad_dias"]; ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?> </td>
+							<td> <?= $arrRegistro["condicion"]; ?> </td>
 							<td>
-								<button type="button" class="btn" onclick="fjVerVacacion( <?= $arrRegistro["idvacacion"] ?> )">
+								<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idvacacion"] ?>)">
 									Ver
 								</button>
 							</td>
@@ -324,19 +325,19 @@ function ListaVacacionesAprobadas() {
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
 					<li>
-						<a aria-label="Previous" rel="1" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<?php
-					for ( $i = 1; $i <= $objeto->atrPaginaFinal; $i++ )  {
-						if ( $i == $vpPaginaActual )
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
 							$Activo = "active";
 						else
 							$Activo = "";
 						?>
 						<li class="<?= $Activo; ?> ">
-							<a rel="<?= $i; ?>" onclick='console.log( this.rel ); fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 								<?= $i; ?>
 							</a>
 						</li>
@@ -345,14 +346,14 @@ function ListaVacacionesAprobadas() {
 					?>
 
 					<li>
-						<a aria-label="Next" rel="<?= ( $objeto->atrPaginaFinal ); ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 		<?php
-		$objeto->faLiberarConsulta( $rstRecordSet ); //libera de la memoria el resultado asociado a la consulta
+		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
 
 	else {
@@ -363,7 +364,7 @@ function ListaVacacionesAprobadas() {
 		<?php
 	}
 	$objeto->faDesconectar(); //cierra la conexión
-	unset( $objeto ); //destruye el objeto
+	unset($objeto); //destruye el objeto
 } //cierre de la función
 
 
@@ -374,9 +375,9 @@ function ListaVacacionesEnCurso() {
 
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$vpItems = 10;
-	if ( isset( $_POST["setItems"] ) )  {
-		$vpItems = htmlentities( trim( addslashes( intval( $_POST['setItems'] ) ) ) ) ;
-		if ( $vpItems < 1 ) {
+	if (isset($_POST["setItems"]))  {
+		$vpItems = htmlentities(trim(addslashes(intval($_POST['setItems'])))) ;
+		if ($vpItems < 1) {
 		 	$vpItems = 10 ; //muestra los items predeterminados
 		}
 	}
@@ -384,74 +385,74 @@ function ListaVacacionesEnCurso() {
 
 	//por defecto muesta la primera pagina del resultado
 	
-	if ( isset( $_POST['subPagina'] ) AND $_POST['subPagina'] > 1 ) {
-		$vpPaginaActual = htmlentities( trim( intval( $_POST['subPagina'] ) ) ) ;
+	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
+		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
 	else
 		$vpPaginaActual = 1 ;
 
 	//si existe el elemento oculto hidOrden le indica al modelo por cual atributo listara
-	if ( isset( $_POST["setOrden"] ) ) {
-		$objeto->atrOrden =  htmlentities( trim ( strtolower( $_POST["setOrden"] ) ) );
+	if (isset($_POST["setOrden"])) {
+		$objeto->atrOrden =  htmlentities(trim (strtolower($_POST["setOrden"])));
 		//tambien idica de la forma en que listara ASC o DESC
-		$objeto->atrTipoOrden = isset( $_POST['setTipoOrden'] ) ? $_POST['setTipoOrden'] : "ASC";
+		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
 
-	$objeto->atrPaginaInicio = ( $vpPaginaActual -1 ) * $objeto->atrItems;
+	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 
-	$rstRecordSet = $objeto->fmListarIndexEnCurso( htmlentities( addslashes( trim( strtolower( $_POST['setBusqueda'] ) ) ) ) );
+	$rstRecordSet = $objeto->fmListarIndexEnCurso(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
-	header( "Content-Type: text/html; charset=utf-8" );
-	if ( $rstRecordSet ) {
-		//$arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ); //convierte el RecordSet en un arreglo
+	header("Content-Type: text/html; charset=utf-8");
+	if ($rstRecordSet) {
+		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
 				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
 					<thead>
 						<tr class='info'>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Cedula <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Trabajador <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Periodo <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Condicion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Accion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 		<?php 
-		while ($arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) ) {
-				$arrPeriodo = $objeto->getPeriodoUsado( $arrRegistro["idvacacion"]);
+		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
+				$arrPeriodo = $objeto->getPeriodoUsado($arrRegistro["idvacacion"]);
 			?>
 						<tr >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
-							<td> <?= $arrRegistro[ "nacionalidad" ] . "-" . $arrRegistro[ "cedula" ] ; ?> </td>
-							<td> <?= $arrRegistro[ "nombre" ] . " " . $arrRegistro[ "apellido" ] ; ?> </td>
+							<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] ; ?> </td>
+							<td> <?= $arrRegistro["nombre"] . " " . $arrRegistro["apellido"] ; ?> </td>
 							<td> <?= $arrPeriodo ; ?> </td>
-							<td> <?= $arrRegistro[ "cantidad_dias" ]; ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_inicio" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_fin" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $arrRegistro[ "condicion" ]; ?> </td>
+							<td> <?= $arrRegistro["cantidad_dias"]; ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?> </td>
+							<td> <?= $arrRegistro["condicion"]; ?> </td>
 							<td>
-								<button type="button" class="btn" onclick="fjVerVacacion( <?= $arrRegistro["idvacacion"] ?> )">
+								<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idvacacion"] ?>)">
 									Ver
 								</button>
 							</td>
@@ -465,19 +466,19 @@ function ListaVacacionesEnCurso() {
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
 					<li>
-						<a aria-label="Previous" rel="1" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<?php
-					for ( $i = 1; $i <= $objeto->atrPaginaFinal; $i++ )  {
-						if ( $i == $vpPaginaActual )
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
 							$Activo = "active";
 						else
 							$Activo = "";
 						?>
 						<li class="<?= $Activo; ?> ">
-							<a rel="<?= $i; ?>" onclick='console.log( this.rel ); fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 								<?= $i; ?>
 							</a>
 						</li>
@@ -486,14 +487,14 @@ function ListaVacacionesEnCurso() {
 					?>
 
 					<li>
-						<a aria-label="Next" rel="<?= ( $objeto->atrPaginaFinal ); ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 		<?php
-		$objeto->faLiberarConsulta( $rstRecordSet ); //libera de la memoria el resultado asociado a la consulta
+		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
 
 	else {
@@ -504,7 +505,7 @@ function ListaVacacionesEnCurso() {
 		<?php
 	}
 	$objeto->faDesconectar(); //cierra la conexión
-	unset( $objeto ); //destruye el objeto
+	unset($objeto); //destruye el objeto
 } //cierre de la función
 
 
@@ -515,9 +516,9 @@ function ListaVacacionesCulminado() {
 
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$vpItems = 10;
-	if ( isset( $_POST["setItems"] ) )  {
-		$vpItems = htmlentities( trim( addslashes( intval( $_POST['setItems'] ) ) ) ) ;
-		if ( $vpItems < 1 ) {
+	if (isset($_POST["setItems"]))  {
+		$vpItems = htmlentities(trim(addslashes(intval($_POST['setItems'])))) ;
+		if ($vpItems < 1) {
 		 	$vpItems = 10 ; //muestra los items predeterminados
 		}
 	}
@@ -525,74 +526,74 @@ function ListaVacacionesCulminado() {
 
 	//por defecto muesta la primera pagina del resultado
 	
-	if ( isset( $_POST['subPagina'] ) AND $_POST['subPagina'] > 1 ) {
-		$vpPaginaActual = htmlentities( trim( intval( $_POST['subPagina'] ) ) ) ;
+	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
+		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
 	else
 		$vpPaginaActual = 1 ;
 
 	//si existe el elemento oculto hidOrden le indica al modelo por cual atributo listara
-	if ( isset( $_POST["setOrden"] ) ) {
-		$objeto->atrOrden =  htmlentities( trim ( strtolower( $_POST["setOrden"] ) ) );
+	if (isset($_POST["setOrden"])) {
+		$objeto->atrOrden =  htmlentities(trim (strtolower($_POST["setOrden"])));
 		//tambien idica de la forma en que listara ASC o DESC
-		$objeto->atrTipoOrden = isset( $_POST['setTipoOrden'] ) ? $_POST['setTipoOrden'] : "ASC";
+		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
 
-	$objeto->atrPaginaInicio = ( $vpPaginaActual -1 ) * $objeto->atrItems;
+	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 
-	$rstRecordSet = $objeto->fmListarIndexCulminado( htmlentities( addslashes( trim( strtolower( $_POST['setBusqueda'] ) ) ) ) );
+	$rstRecordSet = $objeto->fmListarIndexCulminado(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
-	header( "Content-Type: text/html; charset=utf-8" );
-	if ( $rstRecordSet ) {
-		//$arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ); //convierte el RecordSet en un arreglo
+	header("Content-Type: text/html; charset=utf-8");
+	if ($rstRecordSet) {
+		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
 				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
 					<thead>
 						<tr class='info'>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Cedula <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Trabajador <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Periodo <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Condicion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Accion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 		<?php 
-		while ($arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) ) {
-				$arrPeriodo = $objeto->getPeriodoUsado( $arrRegistro["idvacacion"]);
+		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
+				$arrPeriodo = $objeto->getPeriodoUsado($arrRegistro["idvacacion"]);
 			?>
 						<tr >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
-							<td> <?= $arrRegistro[ "nacionalidad" ] . "-" . $arrRegistro[ "cedula" ] ; ?> </td>
-							<td> <?= $arrRegistro[ "nombre" ] . " " . $arrRegistro[ "apellido" ] ; ?> </td>
+							<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] ; ?> </td>
+							<td> <?= $arrRegistro["nombre"] . " " . $arrRegistro["apellido"] ; ?> </td>
 							<td> <?= $arrPeriodo ; ?> </td>
-							<td> <?= $arrRegistro[ "cantidad_dias" ]; ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_inicio" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_fin" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $arrRegistro[ "condicion" ]; ?> </td>
+							<td> <?= $arrRegistro["cantidad_dias"]; ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?> </td>
+							<td> <?= $arrRegistro["condicion"]; ?> </td>
 							<td>
-								<button type="button" class="btn" onclick="fjVerVacacion( <?= $arrRegistro["idvacacion"] ?> )">
+								<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idvacacion"] ?>)">
 									Ver
 								</button>
 							</td>
@@ -606,19 +607,19 @@ function ListaVacacionesCulminado() {
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
 					<li>
-						<a aria-label="Previous" rel="1" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<?php
-					for ( $i = 1; $i <= $objeto->atrPaginaFinal; $i++ )  {
-						if ( $i == $vpPaginaActual )
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
 							$Activo = "active";
 						else
 							$Activo = "";
 						?>
 						<li class="<?= $Activo; ?> ">
-							<a rel="<?= $i; ?>" onclick='console.log( this.rel ); fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 								<?= $i; ?>
 							</a>
 						</li>
@@ -627,14 +628,14 @@ function ListaVacacionesCulminado() {
 					?>
 
 					<li>
-						<a aria-label="Next" rel="<?= ( $objeto->atrPaginaFinal ); ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 		<?php
-		$objeto->faLiberarConsulta( $rstRecordSet ); //libera de la memoria el resultado asociado a la consulta
+		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
 
 	else {
@@ -645,7 +646,7 @@ function ListaVacacionesCulminado() {
 		<?php
 	}
 	$objeto->faDesconectar(); //cierra la conexión
-	unset( $objeto ); //destruye el objeto
+	unset($objeto); //destruye el objeto
 } //cierre de la función
 
 
@@ -656,9 +657,9 @@ function ListaVacacionesRechazadas() {
 
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$vpItems = 10;
-	if ( isset( $_POST["setItems"] ) )  {
-		$vpItems = htmlentities( trim( addslashes( intval( $_POST['setItems'] ) ) ) ) ;
-		if ( $vpItems < 1 ) {
+	if (isset($_POST["setItems"]))  {
+		$vpItems = htmlentities(trim(addslashes(intval($_POST['setItems'])))) ;
+		if ($vpItems < 1) {
 		 	$vpItems = 10 ; //muestra los items predeterminados
 		}
 	}
@@ -666,74 +667,74 @@ function ListaVacacionesRechazadas() {
 
 	//por defecto muesta la primera pagina del resultado
 	
-	if ( isset( $_POST['subPagina'] ) AND $_POST['subPagina'] > 1 ) {
-		$vpPaginaActual = htmlentities( trim( intval( $_POST['subPagina'] ) ) ) ;
+	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
+		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
 	else
 		$vpPaginaActual = 1 ;
 
 	//si existe el elemento oculto hidOrden le indica al modelo por cual atributo listara
-	if ( isset( $_POST["setOrden"] ) ) {
-		$objeto->atrOrden =  htmlentities( trim ( strtolower( $_POST["setOrden"] ) ) );
+	if (isset($_POST["setOrden"])) {
+		$objeto->atrOrden =  htmlentities(trim (strtolower($_POST["setOrden"])));
 		//tambien idica de la forma en que listara ASC o DESC
-		$objeto->atrTipoOrden = isset( $_POST['setTipoOrden'] ) ? $_POST['setTipoOrden'] : "ASC";
+		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
 
-	$objeto->atrPaginaInicio = ( $vpPaginaActual -1 ) * $objeto->atrItems;
+	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 
-	$rstRecordSet = $objeto->fmListarIndexRechazado( htmlentities( addslashes( trim( strtolower( $_POST['setBusqueda'] ) ) ) ) );
+	$rstRecordSet = $objeto->fmListarIndexRechazado(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
-	header( "Content-Type: text/html; charset=utf-8" );
-	if ( $rstRecordSet ) {
-		//$arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ); //convierte el RecordSet en un arreglo
+	header("Content-Type: text/html; charset=utf-8");
+	if ($rstRecordSet) {
+		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
 				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
 					<thead>
 						<tr class='info'>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Cedula <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Trabajador <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrNombre; ?>" )' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
 								Periodo <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Condicion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , "<?= $vpPaginaActual; ?>" , "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Accion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 		<?php 
-		while ($arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) ) {
-				$arrPeriodo = $objeto->getPeriodoUsado( $arrRegistro["idvacacion"]);
+		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
+				$arrPeriodo = $objeto->getPeriodoUsado($arrRegistro["idvacacion"]);
 			?>
 						<tr >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
-							<td> <?= $arrRegistro[ "nacionalidad" ] . "-" . $arrRegistro[ "cedula" ] ; ?> </td>
-							<td> <?= $arrRegistro[ "nombre" ] . " " . $arrRegistro[ "apellido" ] ; ?> </td>
+							<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] ; ?> </td>
+							<td> <?= $arrRegistro["nombre"] . " " . $arrRegistro["apellido"] ; ?> </td>
 							<td> <?= $arrPeriodo ; ?> </td>
-							<td> <?= $arrRegistro[ "cantidad_dias" ]; ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_inicio" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $objeto->faFechaFormato( $arrRegistro[ "fecha_fin" ], "amd" , "dma" ); ?> </td>
-							<td> <?= $arrRegistro[ "condicion" ]; ?> </td>
+							<td> <?= $arrRegistro["cantidad_dias"]; ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?> </td>
+							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?> </td>
+							<td> <?= $arrRegistro["condicion"]; ?> </td>
 							<td>
-								<button type="button" class="btn" onclick="fjVerVacacion( <?= $arrRegistro["idvacacion"] ?> )">
+								<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idvacacion"] ?>)">
 									Ver
 								</button>
 							</td>
@@ -747,19 +748,19 @@ function ListaVacacionesRechazadas() {
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
 					<li>
-						<a aria-label="Previous" rel="1" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<?php
-					for ( $i = 1; $i <= $objeto->atrPaginaFinal; $i++ )  {
-						if ( $i == $vpPaginaActual )
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
 							$Activo = "active";
 						else
 							$Activo = "";
 						?>
 						<li class="<?= $Activo; ?> ">
-							<a rel="<?= $i; ?>" onclick='console.log( this.rel ); fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 								<?= $i; ?>
 							</a>
 						</li>
@@ -768,14 +769,14 @@ function ListaVacacionesRechazadas() {
 					?>
 
 					<li>
-						<a aria-label="Next" rel="<?= ( $objeto->atrPaginaFinal ); ?>" onclick='fjMostrarLista( "<?= $gsClase; ?>" , this.rel );' >
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 		<?php
-		$objeto->faLiberarConsulta( $rstRecordSet ); //libera de la memoria el resultado asociado a la consulta
+		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
 
 	else {
@@ -786,7 +787,7 @@ function ListaVacacionesRechazadas() {
 		<?php
 	}
 	$objeto->faDesconectar(); //cierra la conexión
-	unset( $objeto ); //destruye el objeto
+	unset($objeto); //destruye el objeto
 } //cierre de la función
 
 

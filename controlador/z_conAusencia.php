@@ -11,7 +11,7 @@ else{
 	require_once("{$ruta}modelo/cls{$gsClase}.php");
 }
 
-switch( $_POST['operacion'] ) {
+switch($_POST['operacion']) {
 
 	case "UltimoCodigo":
 		UltimoCodigoEstado();
@@ -53,11 +53,11 @@ function UltimoCodigoAusencia() {
 function registrar() {
 	global $gsClase;
 	$objAusencia = new Ausencia();
-	$objAusencia->setFormulario( $_POST);
-	if ( $objAusencia->Incluir() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}&msjAlerta=registro" ); //envía a la vista, con mensaje de la consulta
+	$objAusencia->setFormulario($_POST);
+	if ($objAusencia->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form={$gsClase}&msjAlerta=noregistro" ); //envía a la vista, con mensaje de la consulta
+		header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con mensaje de la consulta
 }
 
 
@@ -66,10 +66,10 @@ function cambiar() {
 	global $gsClase;
 	$objAusencia = new Ausencia();
 	$objAusencia->setFormulario($_POST);
-	if ( $objAusencia->modificar() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}.php?msjAlerta=cambio" ); //envía a la vista, con mensaje de la consulta
+	if ($objAusencia->modificar()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}.php?msjAlerta=cambio"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form=_{$gsClase}.php?msjAlerta=nocambio" ); //envía a la vista, con 
+		header("Location: ../?form=_{$gsClase}.php?msjAlerta=nocambio"); //envía a la vista, con 
 }
 
 
@@ -78,10 +78,10 @@ function borrar() {
 	global $gsClase;
 	$objAusencia = new Estado();
 	$objAusencia->setFormulario($_POST);
-	if ( $objAusencia->eliminar() ) //si el fmInsertar es verdadero, realiza las sentencias
-		header( "Location: ../?form={$gsClase}.php?msjAlerta=elimino" ); //envía a la vista, con mensaje de la consulta
+	if ($objAusencia->eliminar()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}.php?msjAlerta=elimino"); //envía a la vista, con mensaje de la consulta
 	else
-		header( "Location: ../?form={$gsClase}.php?msjAlerta=noelimino" ); //envía a la vista, con 
+		header("Location: ../?form={$gsClase}.php?msjAlerta=noelimino"); //envía a la vista, con 
 }
 
 
@@ -93,10 +93,10 @@ function lista() {
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$rstRecordSet = $objeto->Listar();
 
-	if ( $rstRecordSet ) {
-		//$arrRegistro = $objeto->fCambiarAsociativo( $rstRecordSet ); //convierte el RecordSet en un arreglo
-		//var_dump( $rstRecordSet);
-		while( $row = $objeto->getConsultaAsociativo( $rstRecordSet ) ) {
+	if ($rstRecordSet) {
+		//$arrRegistro = $objeto->fCambiarAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
+		//var_dump($rstRecordSet);
+		while($row = $objeto->getConsultaAsociativo($rstRecordSet)) {
 			$data[] = $row;
 		}
 
@@ -125,8 +125,8 @@ function lista() {
 
 
 function Combo() {
-    if ( isset( $_POST["hidCodigo"] ) )
-        $pvCodigo =  htmlentities( trim ( addslashes( strtolower( $_POST["hidCodigo"] ) ) ) );
+    if (isset($_POST["hidCodigo"]))
+        $pvCodigo =  htmlentities(trim (addslashes(strtolower($_POST["hidCodigo"]))));
     else
         $pvCodigo = "";
     $lsSeleccionado = "";
@@ -134,20 +134,20 @@ function Combo() {
     $rstRecordSet = $objeto->Listar();
     //si hay un arreglo devuelto en la consulta
     header("Content-Type: text/html; charset=utf-8");
-    if ( $rstRecordSet ) {
-        $arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet );
+    if ($rstRecordSet) {
+        $arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
         do {
-            if( intval( $pvCodigo ) == intval( $arrRegistro[$objeto->atrId] ) ) 
+            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId])) 
                 $lsSeleccionado = "selected='selected'";
             else
                 $lsSeleccionado = "";
             ?>
             <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> > 
-                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords( $arrRegistro["nombre"] ); ?> 
+                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?> 
             </option>
             <?php
         } 
-        while ( $arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) );
+        while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet));
     }
     //si no existe una consulta
     else {
@@ -157,23 +157,23 @@ function Combo() {
         <option value='0' > Sin Registros </option>
         <?php
     }
-    unset( $objeto ); //destruye el objeto creado
+    unset($objeto); //destruye el objeto creado
 }
 
 
 function Autocompletar() {
 	$objeto = new Ausencia();
-	$vsBuqueda = htmlentities( trim ( strtoupper( $_REQUEST["setBuscar"] ) ) );
+	$vsBuqueda = htmlentities(trim (strtoupper($_REQUEST["setBuscar"])));
 	$arrRetorno = array();
-	$rstRecordSet = $objeto->Listar( $vsBuqueda );
+	$rstRecordSet = $objeto->Listar($vsBuqueda);
 
-	if ( $rstRecordSet ) {
-		$arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet );
+	if ($rstRecordSet) {
+		$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
 		do {
-			//echo json_encode( $arrRegistro );
-			array_push($arrRetorno , $arrRegistro );
+			//echo json_encode($arrRegistro);
+			array_push($arrRetorno, $arrRegistro);
 		}
-		while ( $arrRegistro = $objeto->getConsultaAsociativo( $rstRecordSet ) ) ;
+		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) ;
 	}
 
 	//modifica encabezado http a json, para ayudar a los navegadores a manejar tu respuesta con naturalidad	
@@ -181,7 +181,7 @@ function Autocompletar() {
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-type: application/json');
 	/* Codifica el resultado del array en JSON. */
-	echo json_encode( $arrRetorno );
+	echo json_encode($arrRetorno);
 }
 
 

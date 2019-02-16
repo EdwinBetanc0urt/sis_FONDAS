@@ -1,34 +1,34 @@
 
 $(function() {
 	fjComboGeneral("Estado");
-	$("#cmbMunicipio").attr("disabled" , true);
+	$("#cmbMunicipio").attr("disabled", true);
 
 	// cuando se hace un cambio en el combo del estado se cargan las ciudades
 	$("#cmbEstado").change(function() {
 		// habilita el combo hijo
-		$("#cmbMunicipio").attr("disabled" , false);
+		$("#cmbMunicipio").attr("disabled", false);
 		$("#cmbMunicipio").val(""); // deselecciona el campo del combo
 		$("#hidMunicipio").val(""); // blanquea el campo del hidden
-		fjComboGeneral("Municipio" , "Estado");
+		fjComboGeneral("Municipio", "Estado");
 
 		$("#cmbParroquia").val(""); // deselecciona el campo del combo
 		$("#hidParroquia").val(""); // blanquea el campo del hidden
-		$("#cmbParroquia").attr("disabled" , true); // desabilita el combo de 3er nivel
+		$("#cmbParroquia").attr("disabled", true); // desabilita el combo de 3er nivel
 	});
 
-	$("#cmbParroquia").attr("disabled" , true);
+	$("#cmbParroquia").attr("disabled", true);
 
 	// cuando se hace un cambio en el combo del estado se cargan las ciudades
 	$("#cmbMunicipio").change(function() {
 		// habilita el combo de 2do nivel
-		$("#cmbParroquia").attr("disabled" , false);
+		$("#cmbParroquia").attr("disabled", false);
 		$("#cmbParroquia").val(""); // deselecciona el campo del combo
 		$("#hidParroquia").val(""); // blanquea el campo del hidden
-		fjComboGeneral("Parroquia" , "Municipio");
+		fjComboGeneral("Parroquia", "Municipio");
 	});
 
-	fjComboGeneral("Pregunta" , "" , "Pregunta1");
-	fjComboGeneral("Pregunta" , "" , "Pregunta2");
+	fjComboGeneral("Pregunta", "", "Pregunta1");
+	fjComboGeneral("Pregunta", "", "Pregunta2");
 });
 
 
@@ -53,7 +53,7 @@ function enviar(pvValor) {
 				title: '¡Atención!',
 				text: 'EL USUARIO ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
 				type: 'info',
-				showCloseButton: true ,
+				showCloseButton: true,
 				confirmButtonText: 'Ok'
 			}).then((result) => {
 				vsUsuario.focus();
@@ -72,7 +72,7 @@ function enviar(pvValor) {
 					title: '¡Atención!',
 					html: 'LA EDAD INTRODUCIDA (' + arrEdad[0] + '), ES MENOR A LA ' +
 						'PERMITIDA <br /> Por favor introduzca una edad minima (' +
-						arrEdad[1] + ') valida para ' + pvValor.toUpperCase() ,
+						arrEdad[1] + ') valida para ' + pvValor.toUpperCase(),
 					type: 'info',
 					confirmButtonText: 'Ok'
 			}).then((result) => {
@@ -87,9 +87,9 @@ function enviar(pvValor) {
 			swal({
 				title: '¡Atención!',
 				html: 'DEBE SELECCIONAR LA PREGUNTA DE SEGURIDAD <br /> De la cual ' +
-					'usted previamente registro ' ,
+					'usted previamente registro ',
 				type: 'info',
-				showCloseButton: true ,
+				showCloseButton: true,
 				confirmButtonText: 'Ok'
 			}).then((result) => {
 				vsPregunta.focus();
@@ -102,9 +102,9 @@ function enviar(pvValor) {
 			swal({
 				title: '¡Atención!',
 				html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
-					'la respuesta correcta ' ,
+					'la respuesta correcta ',
 				type: 'info',
-				showCloseButton: true ,
+				showCloseButton: true,
 				confirmButtonText: 'Ok'
 			}).then((result) => {
 				vsRespuesta.focus();
@@ -118,9 +118,9 @@ function enviar(pvValor) {
 			swal({
 				title: '¡Atención!',
 				html: 'DEBE SELECCIONAR LA PREGUNTA DE SEGURIDAD <br /> De la cual ' +
-					'usted previamente registro ' ,
+					'usted previamente registro ',
 				type: 'info',
-				showCloseButton: true ,
+				showCloseButton: true,
 				confirmButtonText: 'Ok'
 			}).then((result) => {
 				vsPregunta2.focus();
@@ -133,9 +133,9 @@ function enviar(pvValor) {
 			swal({
 				title: '¡Atención!',
 				html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
-					'la respuesta correcta ' ,
+					'la respuesta correcta ',
 				type: 'info',
-				showCloseButton: true ,
+				showCloseButton: true,
 				confirmButtonText: 'Ok'
 			}).then((result) => {
 				vsRespuesta2.focus();

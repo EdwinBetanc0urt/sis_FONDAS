@@ -40,8 +40,8 @@ class Login extends clsConexion {
 					usuario_aplicacion
 				)
 				VALUES (
-					CURRENT_TIMESTAMP() , '{$objAgente->getSistemaOperativo()}' ,
-					'{$NavegadorWeb}' , '{$objAgente->getIPv4()}',
+					CURRENT_TIMESTAMP(), '{$objAgente->getSistemaOperativo()}',
+					'{$NavegadorWeb}', '{$objAgente->getIPv4()}',
 					'{$piId_Usuario}'
 				) ; ";
 		unset($objAgente);
@@ -97,7 +97,7 @@ class Login extends clsConexion {
 	 * @param integer $piId_Persona, clave foránea en usuario que debe ser igual a la clave principal en persona
 	 */
 	function fmConsultarPersona($piId_Persona) {
-		$sql = "SELECT  P.* , U.idtipo_usuario
+		$sql = "SELECT  P.*, U.idtipo_usuario
 			FROM vpersona AS P
 
 			LEFT JOIN tusuario AS U

@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Parroquia";
 	$liVista = "10";
 ?>
@@ -95,11 +95,11 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 						
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-6">
 								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
-									if( isset( $_GET["getId"] ) ) 
+									if(isset($_GET["getId"])) 
 										echo $_GET["getId"]; ?>" />	
 								<label for="ctxNombre">* Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
-									if( isset( $_GET['getNombre'] ) )
+									if(isset($_GET['getNombre']))
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese el nombre " data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -110,7 +110,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidEstado" type="hidden" value="<?php
-									if( isset( $_GET['getEstado'] ) )
+									if(isset($_GET['getEstado']))
 										echo $_GET['getEstado']; ?>" />
 							</div>
 							
@@ -120,7 +120,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidMunicipio" type="hidden" value="<?php
-									if( isset( $_GET['getMunicipio'] ) )
+									if(isset($_GET['getMunicipio']))
 										echo $_GET['getMunicipio']; ?>" />
 							</div>
 						</div>
@@ -130,13 +130,13 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 				</div>
 				<div class="modal-footer">
 					<?php
-						include_once( "_botones.php" );
+						include_once("_botones.php");
 					?>
 
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if( isset( $_GET['getEstatus'] ) ) echo $_GET['getEstatus']; ?>" />
+		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if(isset($_GET['getEstatus'])) echo $_GET['getEstatus']; ?>" />
 		<input type="hidden" name="operacion" id="operacion" />
 	</form>
 </div>

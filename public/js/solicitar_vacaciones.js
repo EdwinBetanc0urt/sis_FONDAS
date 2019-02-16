@@ -2,302 +2,369 @@
 var lsVista = "Solicitar_Vacaciones";
 
 $(function () {
-	fjMostrarLista( lsVista );
+	fjMostrarLista(lsVista);
+
+    //$("#numVacaciones").on("change", function() {
+
+    //});
+    $("#ctxFechaInicio").on("change", function() {
+		if ($("#numDiasHabiles").val() != "" && parseInt($("#numDiasHabiles").val()) != 0) {
+			fjFechaFinal();
+		}
+	});
+
+    $("#numDiasHabiles").on("change", function() {
+		if ($("#ctxFechaInicio").val() != "" && parseInt($("#ctxFechaInicio").val()) != 0) {
+			fjFechaFinal();
+		}
+	});
+
+	$("#cmbPeriodo").on("change", function() {
+		// console.log($("#cmbPeriodo").val());
+		if(parseInt($("#cmbPeriodo").val()) == 0) {
+			swal({
+				title: '¡Atención!',
+				html: 'No posee períodos vacacionales aun, hasta no cumplir ' +
+					'por lo menos un (1) año de haber ingresado o de haber ' +
+					'usado las vacaciones no pude solicitar las mismas.',
+				type: 'info',
+				showCloseButton: true,
+				confirmButtonText: 'Ok',
+				footer: ' '
+			});
+			return;
+		}
+		else if ($("#cmbPeriodo").val() == '') {
+			swal({
+				title: '¡Atención!',
+				html: 'Debe seleccionar un periodo valido para calcular los ' +
+					'días habitables de las vacaciones ',
+				type: 'warning',
+				showCloseButton: true,
+				confirmButtonText: 'Ok',
+				footer: ' '
+			});
+			$("#numDiasHabiles").val('');
+			$("#ctxFechaFin").val('');
+			return;
+		}
+		else {
+			setTimeout(() => {
+					fjCalculaDias($("#cmbPeriodo").val());
+				},
+				500
+			);
+
+			if ($("#ctxFechaInicio").val() != "" && parseInt($("#ctxFechaInicio").val()) != 0) {
+				setTimeout(() => {
+						fjFechaFinal();
+					},
+					1000
+				);
+			}
+		}
+	});
 });
 
 
-
-//funcion.javascript.Enviar (parametro.vista.Valor)
-function enviar( pvValor ) {
-	let arrFormulario = $( "#form" + lsVista );
+//funcion.javascript.Enviar (parámetro.vista.Valor)
+function enviar(pvValor) {
+	let arrFormulario = $("#form" + lsVista);
 	var viCodigo = document.getElementById("numId");
 	var vsFechaIngreso = document.getElementById("ctxFechaIngreso");
-	var Periodo = $( "#form" + lsVista + " .periodos" );
-	var vsFechaInicio = $( "#form" + lsVista + " #ctxFechaInicio" );
-	var vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
+	var Periodo = $("#form" + lsVista + " .periodos");
+	var vsFechaInicio = $("#form" + lsVista + " #ctxFechaInicio");
+	var vbComprobar = true; // verifica que todo este true o un solo false no envía
 
-	//si el cod está vació y el botón pulsado es igual a Registrar o Modificar no enviara el formulario
-	if ( pvValor === "Registrar" || pvValor === "Modificar"  ) {
+	// verificar el formulario al Registrar o Modificar
+	if (pvValor === "Registrar" || pvValor === "Modificar") {
 		
-		if (vsFechaIngreso.value.trim() === "" ) {
+		if (vsFechaIngreso.value.trim() === "") {
 			vbComprobar = false;
 			swal({
 				title: '¡Atención!',
-				html: "LA Feca de ingreso ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>" ,
+				html: "LA Fecha de ingreso ES OBLIGATORIA<br /> No puede estar " +
+					"vacía para <b>" + pvValor.toUpperCase() + "</b>",
 				type: 'error',
 				confirmButtonText: 'Ok',
 				showCloseButton: true
-			}).then( ( result ) => {
+			}).then((result) => {
 				vsFechaIngreso.focus(); //enfoca el cursor en el campo que falta del formulario
 			});
 			return; // rompe la función para que el usuario verifique antes de continuar
 		}
-		if ( Periodo.length <= 0 || Periodo.is(':checked') == false ) {
+		if (Periodo.length <= 0 || Periodo.is(':checked') == false) {
 			vbComprobar = false;
 			swal({
 				title: '¡Atención!',
-				html: "Debe seleccionar un periodo vencido <br> si no aparece ningun periodo de año no puede solicitar vacaciones" ,
+				html: "Debe seleccionar un periodo vencido <br> si no aparece " +
+					"ningún periodo de año no puede solicitar vacaciones",
 				type: 'error',
 				confirmButtonText: 'Ok',
 				showCloseButton: true
 			});
-			return; // rompe la función para que el usuario verifique antes de continuar
+			return; // rompe la función verificar antes de continuar
 		}
-		if (vsFechaInicio.val().trim() === "" ) {
+		if (vsFechaInicio.val().trim() === "") {
 			vbComprobar = false;
 			swal({
 				title: '¡Atención!',
-				html: "LA Fecha de inicio de vacaciones es ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>" ,
+				html: "LA Fecha de inicio de vacaciones es ES OBLIGATORIA<br />" +
+					" No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>",
 				type: 'error',
 				confirmButtonText: 'Ok',
 				showCloseButton: true
-			}).then( ( result ) => {
+			}).then((result) => {
 				vsFechaInicio.focus(); //enfoca el cursor en el campo que falta del formulario
 			});
-			return; // rompe la función para que el usuario verifique antes de continuar
+			return; // rompe la función verificar antes de continuar
 		}
 
 	} //cierre del condicional si es boton Modificar o Incluir
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
-	if ( vbComprobar ) {
+	if (vbComprobar) {
 		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
 
 
-
-//comprueba si fue seleecionado por lo menos 1 elemento
-function fjComprobarRadio() {
-	//a = $('.chkBotones').is(':checked').length;
-	//console.log( a );
-	//if( $('.chkBotones').prop('checked') ) {
-	//if( $('.chkBotones').attr('checked') ) {
-	if( $('.periodos').is(':checked') ) {
-		return true;
-	}
-	else
-		return false;
-}
-
-function fjNuevoRegistro( ) {
-
-	$("#form" + lsVista )[0].reset();
-	$( "#form" + lsVista + " #divPeriodos" ).html("NO TIENE PERIODOS VENCIDOS" );
-	
-	fjFechaIngreso();
+function fjNuevoRegistro() {
+	$("#form" + lsVista)[0].reset();
+	//$("#form" + lsVista + " #divPeriodos").html("NO TIENE PERIODOS VENCIDOS");
 	fjListaPeriodos();
-	fjUltimoID( lsVista );
-	if ( $( "#Registrar") ) {
-		$( "#Registrar" ).css( "display" , "" );
+
+	if ($("#Registrar")) {
+		$("#Registrar").css("display", "");
 	}
 
-	if ( $( "#Modificar") ) {
-		$( "#Modificar" ).css( "display" , "none" );
+	if ($("#Modificar")) {
+		$("#Modificar").css("display", "none");
 	}
 
-	if ( $( "#Borrar") ) {
-		$( "#Borrar" ).css( "display" , "none" );
+	if ($("#Borrar")) {
+		$("#Borrar").css("display", "none");
 	}
 
-	if ( $( "#Restaurar") ) {
-		$( "#Restaurar" ).css( "display" , "none" );
+	if ($("#Restaurar")) {
+		$("#Restaurar").css("display", "none");
 	}
 	fjAntiguedad();
 }
-function fjEditarRegistro( ) {
-	if ( $( "#Registrar") ) {
-		$( "#Registrar" ).css( "display" , "none" );
+
+
+function fjEditarRegistro() {
+	if ($("#Registrar")) {
+		$("#Registrar").css("display", "none");
 	}
 
-	if ( $( "#Modificar") ) {
-		$( "#Modificar" ).css( "display" , "" );
+	if ($("#Modificar")) {
+		$("#Modificar").css("display", "");
 	}
 
-	if ( $( "#Borrar") ) {
-		$( "#Borrar" ).css( "display" , "" );
+	if ($("#Borrar")) {
+		$("#Borrar").css("display", "");
 	}
 
-	if ( $( "#Restaurar") ) {
-		$( "#Restaurar" ).css( "display" , "none" );
+	if ($("#Restaurar")) {
+		$("#Restaurar").css("display", "none");
 	}
 }
 
 
+function fjSeleccionarRegistro(pvDOM) {
+    console.log(pvDOM);
 
-function fjSeleccionarRegistro( pvDOM ) {
-    console.log( pvDOM );
+    //debe ser con jquery porque es recibido como tal con jquery
+    if (jQuery.isFunction(pvDOM.attr))
+        arrFilas = pvDOM.attr('datos_registro').split('|');
+	//debe ser con javascript porque es recibido directamente del DOM
+    if (typeof pvDOM.getAttribute !== 'undefined')
+        arrFilas = pvDOM.getAttribute('datos_registro').split('|'); 
     
-    if ( jQuery.isFunction( pvDOM.attr ) )
-        arrFilas = pvDOM.attr('datos_registro').split('|'); //debe ser con jquery porque es recibido como tal con jquery
+    console.log(arrFilas);
 
-    if ( typeof pvDOM.getAttribute !== 'undefined' )
-        arrFilas = pvDOM.getAttribute('datos_registro').split('|'); //debe ser con javascript porque es recibido cdirectamete del DOM
-    
-    console.log( arrFilas );
+    $("#btnHabilitar").attr('disabled', false);
 
-    $("#btnHabilitar").attr( 'disabled' , false );
-
-    $( "#form" + lsVista + " #hidEstatus" ).val( arrFilas[1].trim() );
-	$( "#form" + lsVista + " #numId" ).val(  parseInt( arrFilas[2].trim() ) );
+    $("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
+	$("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
 	
-	$( "#form" + lsVista + " #divPeriodos" ).html( arrFilas[3].trim() );
+	$("#form" + lsVista + " #divPeriodos").html(arrFilas[3].trim());
 	
-    $( "#form" + lsVista + " #ctxFechaInicio" ).val( arrFilas[4].trim() );
-    $( "#form" + lsVista + " #ctxFechaFin" ).val( arrFilas[5].trim() );
-    $( "#form" + lsVista + " #numDiasHabiles" ).val( arrFilas[6].trim() );
+    $("#form" + lsVista + " #ctxFechaInicio").val(arrFilas[4].trim());
+    $("#form" + lsVista + " #ctxFechaFin").val(arrFilas[5].trim());
+    $("#form" + lsVista + " #numDiasHabiles").val(arrFilas[6].trim());
 
-    $( "#operacion" ).val( arrFilas[0].trim() );
+    $("#operacion").val(arrFilas[0].trim());
 
-    if ( arrFilas[1].trim() === "activo" ) {
-		if ( $( "#Registrar") )
-			$( "#Registrar" ).css( "display" , "none" );
+    if (arrFilas[1].trim() === "activo") {
+		if ($("#Registrar"))
+			$("#Registrar").css("display", "none");
 
-		if ( $( "#Modificar") )
-			$( "#Modificar" ).css( "display" , "none" );
+		if ($("#Modificar"))
+			$("#Modificar").css("display", "none");
 
-		if ( $( "#Borrar") )
-			$( "#Borrar" ).css( "display" , "none" );
+		if ($("#Borrar"))
+			$("#Borrar").css("display", "none");
 
-		if ( $( "#Restaurar") )
-			$( "#Restaurar" ).css( "display" , "none" );
+		if ($("#Restaurar"))
+			$("#Restaurar").css("display", "none");
     }
     //anulado o cerrado
     else {
-		if ( $( "#Registrar") )
-			$( "#Registrar" ).css( "display" , "none" );
+		if ($("#Registrar"))
+			$("#Registrar").css("display", "none");
 
-		if ( $( "#Modificar") )
-			$( "#Modificar" ).css( "display" , "none" );
+		if ($("#Modificar"))
+			$("#Modificar").css("display", "none");
 
-		if ( $( "#Borrar") )
-			$( "#Borrar" ).css( "display" , "none" );
+		if ($("#Borrar"))
+			$("#Borrar").css("display", "none");
 
-		if ( $( "#Restaurar") )
-			$( "#Restaurar" ).css( "display" , "none" );
+		if ($("#Restaurar"))
+			$("#Restaurar").css("display", "none");
     }
 
-    $("#VentanaModal").modal('show'); //para boostrap v3.3.7
+    $("#VentanaModal").modal('show'); //para bootstrap v3.3.7
 }
 
-//Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
-// sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
-function fjListaPeriodos( ) {
 
-	//abre el archivo controlador y envia por POST
+//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
+// sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
+function fjListaPeriodos() {
+	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post( vsRuta , { 
+	$.post(vsRuta, { 
 			//variables enviadas (name: valor)
 			operacion: "ListaPeriodo"
-		} ,
-		function( resultado ) {
-			if( resultado == false )
-				console.log( "sin consultas " );
+		},
+		function(resultado) {
+			// console.log(resultado);
+			if(resultado == false) {
+				console.log("sin consultas ");
+			}
 			else {
-				vjResultado = document.getElementById("divPeriodos") ; //*/$( "#divListaAcceso" ).val();
-				vjResultado.innerHTML = resultado;
-				//console.log( resultado );	
+				document.getElementById("cmbPeriodo").length = 1; //limpia los option del select
+
+				$("#cmbPeriodo")
+					.attr("disabled", false). //habilita el campo de estado
+					append(resultado); //agrega los nuevos option al select
+				/*$("#cmbPeriodo")
+					.val()
+					.trigger()*/
+				//vjResultado = document.getElementById("divPeriodos") ; //*/$("#divListaAcceso").val();
+				//vjResultado.innerHTML = resultado;
 			}
 		}
 	);
 }
 
 
-//Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
+//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
-function fjCalculaDias( paPeriodos = "" ) {
-
-	//abre el archivo controlador y envia por POST
+function fjCalculaDias(paPeriodos = "") {
+	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post( vsRuta , { 
-			//variables enviadas (name: valor)
-			operacion: "CalculaDias" ,
+	$.post(vsRuta, { 
+			operacion: "CalculaDias",
 			radPeriodo: paPeriodos
-		} ,
-		function( resultado ) {
-			if( resultado == false )
-				console.log( "sin consultas " );
+		},
+		function(resultado) {
+			console.log(resultado);
+			if(resultado == false) {
+				console.log("sin consultas ");
+			}
 			else {
-				console.log( resultado );
-				$("#form" + lsVista + " #numDiasHabiles" ).val( parseInt(resultado) );
+				$("#form" + lsVista + " #numDiasHabiles").val(parseInt(resultado));
 			}
 		}
 	);
 }
 
 
-
-//Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
+//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
-function fjFechaIngreso( piTrabajador = "" ) {
-
-	//abre el archivo controlador y envia por POST
+function fjFechaFinal() {
+	if ($("#cmbPeriodo").val() == '' || parseInt($("#cmbPeriodo").val()) == 0) {
+		swal({
+			title: '¡Atención!',
+			html: 'Debe seleccionar un periodo valido para obtener los ' +
+				'días habitables de las vacaciones y calcular la fecha de reingreso.',
+			type: 'warning',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' '
+		});
+		$("#ctxFechaFin").val('');
+		return;
+	}
+	if ($("#numDiasHabiles").val() == '' || parseInt($("#numDiasHabiles").val()) == 0) {
+		swal({
+			title: '¡Atención!',
+			html: 'Debe seleccionar un periodo valido para obtener los ' +
+				'días habitables de las vacaciones y calcular la fecha de reingreso.',
+			type: 'warning',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' '
+		});
+		$("#ctxFechaFin").val('');
+		return;
+	}
+	if ($("#ctxFechaInicio").val() == '' || parseInt($("#ctxFechaInicio").val()) == 0) {
+		swal({
+			title: '¡Atención!',
+			html: 'Debe indicar la fecha de inicio para calcular la fecha de reingreso.',
+			type: 'warning',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' '
+		});
+		$("#ctxFechaFin").val('');
+		return;
+	}
+	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post( vsRuta , { 
+	$.post(vsRuta, { 
 			//variables enviadas (name: valor)
-			operacion: "FechaIngreso" ,
-			trabajdor: parseInt( piTrabajador )
-		} ,
-		function( resultado ) {
-			if( resultado == false )
-				console.log( "sin consultas " );
+			operacion: "FechaFin",
+			numDiasHabiles: parseInt($("#form" + lsVista + " #numDiasHabiles").val()),
+			ctxFechaInicio: $("#form" + lsVista + " #ctxFechaInicio").val().toString() 
+		},
+		function(resultado) {
+			if(resultado == false)
+				console.log("sin consultas ");
 			else {
-				console.log( resultado );
-				$("#ctxFechaIngreso" ).val( resultado );
+				console.log(resultado);
+				$("#form" + lsVista + " #ctxFechaFin").val("");
+				$("#form" + lsVista + " #ctxFechaFin").val(resultado);
 			}
 		}
 	);
 }
 
 
+function fjAntiguedad(psFechaInicio = "") {
 
-
-//Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
-// sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
-function fjFechaFinal( psFechaInicio = "" ) {
-
-	//abre el archivo controlador y envia por POST
+	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post( vsRuta , { 
+	$.post(vsRuta, { 
 			//variables enviadas (name: valor)
-			operacion: "FechaFin" ,
-			numDiasHabiles: parseInt( $("#form" + lsVista + " #numDiasHabiles" ).val() ),
-			ctxFechaInicio: $("#form" + lsVista + " #ctxFechaInicio" ).val().toString() 
-		} ,
-		function( resultado ) {
-			if( resultado == false )
-				console.log( "sin consultas " );
+			operacion: "Antiguedad",
+		},
+		function(resultado) {
+			if(resultado == false)
+				console.log("sin consultas ");
 			else {
-				console.log( resultado );
-				$("#form" + lsVista + " #ctxFechaFin" ).val("");
-				$("#form" + lsVista + " #ctxFechaFin" ).val( resultado );
-			}
-		}
-	);
-}
-
-function fjAntiguedad( psFechaInicio = "" ) {
-
-	//abre el archivo controlador y envia por POST
-	vsRuta = "controlador/conSolicitar_Vacaciones.php";
-
-	$.post( vsRuta , { 
-			//variables enviadas (name: valor)
-			operacion: "Antiguedad" ,
-		} ,
-		function( resultado ) {
-			if( resultado == false )
-				console.log( "sin consultas " );
-			else {
-				console.log( resultado );
-				$("#form" + lsVista + " #Antiguedad" ).val( "" );
-				$("#form" + lsVista + " #Antiguedad" ).val( resultado + " año(s)");
-				$("#form" + lsVista + " #numAntiguedad" ).val( resultado );
+				console.log(resultado);
+				$("#form" + lsVista + " #Antiguedad").val("");
+				$("#form" + lsVista + " #Antiguedad").val(resultado + " año(s)");
+				$("#form" + lsVista + " #numAntiguedad").val(resultado);
 			}
 		}
 	);

@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Acceso";
 	$liVista = "10";
 
@@ -22,7 +22,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 			<option value="">Seleccione una Rol..</option>
 		</select>
 		<input id="hidTipo_Usuario" type="hidden" value="<?php
-			if( isset( $_GET['getTipo_Usuario'] ) )
+			if(isset($_GET['getTipo_Usuario']))
 				echo $_GET['getTipo_Usuario']; ?>" />
 		<br />
 		<br />
@@ -52,12 +52,12 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 						
 						<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 							<button type='button' id="btnAgregar" name="btnAgregar" class="btn btn-success" 
-								onClick='fjEnviar( this.value );' value="Agregar">
+								onClick='fjEnviar(this.value);' value="Agregar">
 								<i class="glyphicon glyphicon-eye-open"></i> 
 								Asignar Accesos
 							</button>
 							<button type='button' id="btnQuitar" name="btnAgregar" class="btn btn-danger waves-light red darken-3" 
-								onClick='fjQuitarVista( this.form.numId.value );'  data-toggle='tooltip' data-placement='top' title='Quitar el acceso total a esta pagina'>
+								onClick='fjQuitarVista(this.form.numId.value);'  data-toggle='tooltip' data-placement='top' title='Quitar el acceso total a esta pagina'>
 								<i class='glyphicon glyphicon-eye-close'></i>
 								Quitar Accesos
 							</button>

@@ -1,6 +1,6 @@
 
 function htmlbodyHeightUpdate(){
-    var height3 = $( window ).height()
+    var height3 = $(window).height()
     var height1 = $('.nav').height()+50
     height2 = $('.main').height()
     if(height2 > height3){
@@ -16,10 +16,10 @@ function htmlbodyHeightUpdate(){
 }
 $(document).ready(function () {
     htmlbodyHeightUpdate()
-    $( window ).resize(function() {
+    $(window).resize(function() {
         htmlbodyHeightUpdate()
     });
-    $( window ).scroll(function() {
+    $(window).scroll(function() {
         height2 = $('.main').height()
         htmlbodyHeightUpdate()
     });

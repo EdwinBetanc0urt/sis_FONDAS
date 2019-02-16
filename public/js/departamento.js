@@ -14,7 +14,7 @@ function enviar(pvValor) {
 		vbComprobar = false;
 		swal({
 			title: '¡Atención!',
-			html: "LA DESCRIPCION ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>" ,
+			html: "LA DESCRIPCION ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>",
 			type: 'error',
 			confirmButtonText: 'Ok',
 			showCloseButton: true
@@ -50,36 +50,36 @@ function fjNuevoRegistro() {
     $("#divEncargado").css("display", "none");
 
 	if ($("#Registar")) {
-		$("#Registar").css("display" , "");
+		$("#Registar").css("display", "");
 	}
 
 	if ($("#Modificar")) {
-		$("#Modificar").css("display" , "none");
+		$("#Modificar").css("display", "none");
 	}
 
 	if ($("#Borrar")) {
-		$("#Borrar").css("display" , "none");
+		$("#Borrar").css("display", "none");
 	}
 
 	if ($("#Restaurar")) {
-		$("#Restaurar").css("display" , "none");
+		$("#Restaurar").css("display", "none");
 	}
 }
 function fjEditarRegistro() {
 	if ($("#Registar")) {
-		$("#Registar").css("display" , "none");
+		$("#Registar").css("display", "none");
 	}
 
 	if ($("#Modificar")) {
-		$("#Modificar").css("display" , "");
+		$("#Modificar").css("display", "");
 	}
 
 	if ($("#Borrar")) {
-		$("#Borrar").css("display" , "");
+		$("#Borrar").css("display", "");
 	}
 
 	if ($("#Restaurar")) {
-		$("#Restaurar").css("display" , "none");
+		$("#Restaurar").css("display", "none");
 	}
 }
 
@@ -96,10 +96,10 @@ function fjSeleccionarRegistro(pvDOM) {
     
     console.log(arrFilas);
 
-    $("#btnHabilitar").attr('disabled' , false);
+    $("#btnHabilitar").attr('disabled', false);
 
     $("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
-    $("#form" + lsVista + " #numId").val( parseInt(arrFilas[2].trim()));
+    $("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
     $("#form" + lsVista + " #ctxNombre").val(arrFilas[3].trim());
     $("#form" + lsVista + " #ctxDescripcion").val(arrFilas[4].trim());
 
@@ -111,30 +111,30 @@ function fjSeleccionarRegistro(pvDOM) {
 
     if (arrFilas[1].trim() === "activo") {
 		if ($("#Registar"))
-			$("#Registar").css("display" , "none");
+			$("#Registar").css("display", "none");
 
 		if ($("#Modificar"))
-			$("#Modificar").css("display" , "");
+			$("#Modificar").css("display", "");
 
 		if ($("#Borrar"))
-			$("#Borrar").css("display" , "");
+			$("#Borrar").css("display", "");
 
 		if ($("#Restaurar"))
-			$("#Restaurar").css("display" , "none");
+			$("#Restaurar").css("display", "none");
     }
     //anulado o cerrado
     else {
 		if ($("#Registar"))
-			$("#Registar").css("display" , "none");
+			$("#Registar").css("display", "none");
 
 		if ($("#Modificar"))
-			$("#Modificar").css("display" , "none");
+			$("#Modificar").css("display", "none");
 
 		if ($("#Borrar"))
-			$("#Borrar").css("display" , "none");
+			$("#Borrar").css("display", "none");
 
 		if ($("#Restaurar"))
-			$("#Restaurar").css("display" , "");
+			$("#Restaurar").css("display", "");
     }
 
     $("#VentanaModal").modal('show'); //para boostrap v3.3.7

@@ -1,7 +1,7 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Mi_Perfil";
 	$liVista = "71";
 ?>
@@ -32,7 +32,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="ctxNombre">* Primer Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
-									if( isset( $_SESSION['nombre'] ) )
+									if(isset($_SESSION['nombre']))
 										echo $_SESSION['nombre'];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -45,7 +45,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="ctxApellido">* Primer Apellido</label>
 								<input id="ctxApellido" class="valida_alfabetico form-control" maxlength="45" name="ctxApellido" type="text" size="20" required value="<?php
-									if( isset( $_SESSION['apellido'] ) )
+									if(isset($_SESSION['apellido']))
 										echo $_SESSION['apellido'];
 								?>" placeholder="Ingrese la Apellido" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -64,7 +64,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 											<option value="i">Indefinido</option>
 								</select>
 								<input id="hidSexo" type="hidden" value="<?php
-									if( isset( $_SESSION['sexo'] ) )
+									if(isset($_SESSION['sexo']))
 										echo $_SESSION['sexo']; ?>" />
 							</div>
 
@@ -88,14 +88,14 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="ctxCorreo">* Correo</label>
 								<input id="ctxCorreo" class="valida_correo form-control" maxlength="45" name="ctxCorreo" type="text" size="20" required value="<?php
-									if( isset( $_SESSION['correo'] ) )
+									if(isset($_SESSION['correo']))
 										echo $_SESSION['correo'];
 								?>" placeholder="Ingrese el Correo" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="numTelefono">* Telefono Movil</label>
 								<input id="numTelefono" class="valida_numerico form-control" maxlength="45" name="numTelefono" type="text" size="20" required value="<?php
-									if( isset( $_SESSION['tel_mov'] ) )
+									if(isset($_SESSION['tel_mov']))
 										echo $_SESSION['tel_mov'];
 								?>" placeholder="Ingrese el Telefono Movil" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -140,7 +140,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 							</div>	
 
 							<div class="col-xs-6 col-sm-8 col-md-6 col-lg-9">
-								<button style="background:#37474F; color:#fff; width:200px; height:40px;" name='iniciar' value="Guardar" onclick="enviar( this.value );" >
+								<button style="background:#37474F; color:#fff; width:200px; height:40px;" name='iniciar' value="Guardar" onclick="enviar(this.value);" >
 									Guardar
 								</button>
 							</div>	
@@ -149,7 +149,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 
 				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
 				<input type='hidden' name='idpersona' id='idpersona' value="<?php
-					if ( isset( $_SESSION["idpersona"] ) )
+					if(isset($_SESSION["idpersona"]))
 						echo $_SESSION["idpersona"]; ?>" />
 			</form>
 		</div>

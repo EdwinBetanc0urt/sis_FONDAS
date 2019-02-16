@@ -62,7 +62,7 @@ class CambiarClave extends clsConexion {
 			INSERT INTO thistorial_clave
 				(clave, estatus, id_usuario)
 			VALUES
-				('{$crypClave}', 'activo' , '{$idUsuario}') ; ";
+				('{$crypClave}', 'activo', '{$idUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) { //verifica si se ejecuto bien
 			parent::faTransaccionFin();

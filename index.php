@@ -1,4 +1,18 @@
 <?php
+	/**
+	 * Index dieccionador de vistas y paginas, para ocultar las rutas de las
+	 * carpetas y archivos, ademas de contener configuración global
+	 * @author: Edwin Betancourt <EdwinBetanc0urt@outlook.com>
+	 * @license: CC BY-SA, Creative Commons Atribución - CompartirIgual (CC BY-SA) 4.0 Internacional.
+	 * @link https://creativecommons.org/licenses/by-sa/4.0/
+	 */
+
+	//define el separador de rutas en Windows \ y basados en Unix /
+	defined("DS") OR define("DS", DIRECTORY_SEPARATOR);
+
+	//constantes y configuraciones del sistema
+	require_once("_core" . DS . "config.php");
+
 
 	ini_set("expose_php", "off"); // Expone al mundo que PHP está instalado en el servidor
 

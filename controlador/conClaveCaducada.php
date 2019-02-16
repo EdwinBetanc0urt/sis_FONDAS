@@ -34,9 +34,9 @@ function fcCambiarClave() {
 		//envía a la vista, con mensaje de la consulta
 		header("Location: ../?form={$gsClase}" .
 			"&msjAlerta=duplicado&getOpcion=" . $_POST["operacion"] .
-			"&getId=" . $arreglo[ $objeto->atrId ] .
-			"&getNombre=" . $arreglo[ $objeto->atrNombre ] .
-			"&getEstatus=" . $arreglo[ $objeto->atrEstatus ]);
+			"&getId=" . $arreglo[$objeto->atrId] .
+			"&getNombre=" . $arreglo[$objeto->atrNombre] .
+			"&getEstatus=" . $arreglo[$objeto->atrEstatus]);
 	} //cierre del condicional si el RecordSet es verdadero
 	else {
 		if ($objeto->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias

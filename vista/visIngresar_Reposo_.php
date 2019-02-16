@@ -1,33 +1,33 @@
 <?php
 
 // existe y esta la variable de sesión rol
-if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
+if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Ingresar_Reposo";
 	$liVista = "24";
 ?>
 <script type="text/javascript">
             $(function () {
 
-                //$("#numVacaciones").on( "change" , function() {
+                //$("#numVacaciones").on("change", function() {
 
                 //});
                 $("#ctxFechaInicio").on("change",function() {
 				    //alert(this.value);
-			    	fjFechaFinal( this.value );
+			    	fjFechaFinal(this.value);
 				});
 
                 $("#numDiasHabiles").on("change",function() {
 				    //alert(this.value);
 				    lsFecha = $("#ctxFechaInicio").val().toString();
-			    	fjFechaFinal( lsFecha );
+			    	fjFechaFinal(lsFecha);
 				});
 
 			    $(".calendario").datepicker({
-					//viewMode: 'months' ,
-					//format: 'DD/MM' , 
-					format: 'dd-mm-yyyy' , 
-					//disabledHours: false ,
-					minDate: moment() ,
+					//viewMode: 'months',
+					//format: 'DD/MM', 
+					format: 'dd-mm-yyyy', 
+					//disabledHours: false,
+					minDate: moment(),
 					language: "es"
 			    });
             });
@@ -113,7 +113,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 
 							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
 								<input name="numId" id="numId" type="hidden" readonly onkeypress="return false" value="<?php 
-									if( isset( $_GET["getId"] ) ) 
+									if(isset($_GET["getId"])) 
 										echo $_GET["getId"]; ?>" />
 
 								<label for="ctxNombre">* Solicitante</label>
@@ -141,14 +141,14 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidMotivo_Permiso" type="hidden" value="<?php
-									if( isset( $_GET['getMotivo_Permiso'] ) )
+									if(isset($_GET['getMotivo_Permiso']))
 										echo $_GET['getMotivo_Permiso']; ?>" />
 							</div>
 
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label for="ctxObservacion">* Justificaciones o Comprobante</label>
 								<textarea cols="5" id="ctxObservacion" class="valida_alfabetico form-control" required maxlength="150" name="ctxObservacion" type="text" placeholder="Ingrese la Justificacion" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" ><?php
-									if( isset( $_GET['getObservacion'] ) )
+									if(isset($_GET['getObservacion']))
 										echo $_GET['getObservacion'];
 								?></textarea>
 							</div>
@@ -168,7 +168,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 				</div>
 					<div class="modal-footer">
 						<?php
-						include_once( "_botones.php" );
+						include_once("_botones.php");
 						?>
 
 					</div>
@@ -176,7 +176,7 @@ if ( isset( $_SESSION["sesion"] ) AND $_SESSION["sesion"] == "sistema" ) {
 				
 			</div>
 		</div>
-		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if( isset( $_GET['getEstatus'] ) ) echo $_GET['getEstatus']; ?>" />
+		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if(isset($_GET['getEstatus'])) echo $_GET['getEstatus']; ?>" />
 		<input type="hidden" name="operacion" id="operacion" />
 	</form>
 </div>

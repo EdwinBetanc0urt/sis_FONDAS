@@ -31,12 +31,12 @@ function fjAprobar(piPermiso = "") {
 		showCloseButton: true
 	}).then((result) => {
 		if (result.value) {	
-			$.post(vsRuta , { 
+			$.post(vsRuta, { 
 					//variables enviadas (name: valor)
-					operacion: "AprobarPermisos" ,
+					operacion: "AprobarPermisos",
 					idpermiso: parseInt(piPermiso),
 					observacion: result.value.trim()
-				} ,
+				},
 				function (resultado) {
 					if (resultado == false)
 						console.log("sin consultas ");
@@ -66,12 +66,12 @@ function fjRechazar(piPermiso = "") {
 		showCloseButton: true
 	}).then((result) => {
 		if (result.value) {	
-			$.post(vsRuta , { 
+			$.post(vsRuta, { 
 					//variables enviadas (name: valor)
-					operacion: "RechazarPermisos" ,
+					operacion: "RechazarPermisos",
 					idpermiso: parseInt(piPermiso),
 					observacion: result.value.trim()
-				} ,
+				},
 				function(resultado) {
 					if(resultado == false)
 						console.log("sin consultas ");
@@ -88,7 +88,7 @@ function fjRechazar(piPermiso = "") {
 
 function fjActualizarListas() {
 	fjMostrarLista(lsVista);
-	fjMostrarLista(lsVista , "", "", lsVista + "EnCurso", "ListaViewEnCurso");
-	fjMostrarLista(lsVista , "", "", lsVista + "Culminado", "ListaViewCulminado");
-	fjMostrarLista(lsVista , "", "", lsVista + "Rechazado", "ListaViewRechazado");
+	fjMostrarLista(lsVista, "", "", lsVista + "EnCurso", "ListaViewEnCurso");
+	fjMostrarLista(lsVista, "", "", lsVista + "Culminado", "ListaViewCulminado");
+	fjMostrarLista(lsVista, "", "", lsVista + "Rechazado", "ListaViewRechazado");
 }
