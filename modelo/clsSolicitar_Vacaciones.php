@@ -31,7 +31,6 @@ class Solicitar_Vacaciones extends clsConexion {
 			); ";
 
 		$vsId = parent::faUltimoId($sql); // ejecuta la sentencia y obtiene el ID 
-		// var_dump($vsId);
 		// verifica si se ejecuto bien
 		if ($vsId > 0) {
 			// verifica si se ejecuto bien

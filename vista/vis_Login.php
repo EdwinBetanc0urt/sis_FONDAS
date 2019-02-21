@@ -72,7 +72,10 @@
 									<span class="glyphicon glyphicon-refresh"></span>
 								</a>
 
-								<p><input type="text" class="w3-input valor_mayuscula" name="txtcopia" id="txtcopia"/></p>
+								<p>
+									<input type="text" class="w3-input valor_mayuscula"
+										name="txtcopia" id="txtcopia" maxlength="5" />
+								</p>
 								<p>
 									<button style="background:#37474F" class="w3-button w3-block"
 										name='iniciar' value="ingresar" >

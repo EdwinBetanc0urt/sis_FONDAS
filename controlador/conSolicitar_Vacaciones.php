@@ -62,21 +62,20 @@ switch($_POST['operacion']) {
 }
 
 function FechaFin() {
-	$fechafin = vacacion::getFechaFinal($_POST["ctxFechaInicio"], trim($_POST["numDiasHabiles"]));
+	$fechafin = vacacion::getFechaFinal(
+		$_POST["ctxFechaInicio"],
+		trim($_POST["numDiasHabiles"])
+	);
 	$resultado = vacacion::getFechaFormato($fechafin, "amd", "dma");
 	echo $resultado;
 }
 
 
 function CalcularDias() {
-
-	//$resultado = $objCalcula->getDetalleDiasVacacionesPeriodo(
 	$resultado = vacacion::getDetalleDiasVacacionesPeriodo(
 		$_SESSION["fecha_ingreso"],
 		$_POST["radPeriodo"]
 	);
-
-	//var_dump($resultado);
 	echo $resultado["dias_vacaciones"];
 }
 
@@ -94,21 +93,33 @@ function registrar() {
 	//session_start();
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 
-	$arrVacaciones = vacacion::getDetalleDiasVacacionesPeriodo($_SESSION["fecha_ingreso"], $_POST["radPeriodo"]);
+	$arrVacaciones = vacacion::getDetalleDiasVacacionesPeriodo(
+		$_SESSION["fecha_ingreso"],
+		$_POST["radPeriodo"]
+	);
+	/*
+	$fecha_culmina =  vacacion::getFechaFinal(
+		$_POST["ctxFechaInicio"],
+		trim($arrVacaciones["dias_vacaciones"] - 1)
+	);
+	*/
 
-	$fecha_culmina = getFechaFinal($_POST["ctxFechaInicio"], $arrVacaciones["dias_vacaciones"]);
+	$_POST["ctxFechaFin"] = vacacion::getFechaFormato($_POST["ctxFechaFin"], "dma", "amd");
 
 	$envio= array(
 		"numIdTrabajador" => $_SESSION["idtrabajador"],
 		"datFechaIngreso" => $_SESSION["fecha_ingreso"],
 		"datFechaInicio" => $_POST["ctxFechaInicio"],
-		"datFechaFin" => $fecha_culmina,
+		"datFechaFin" => $_POST["ctxFechaFin"],
 		"cantidad_periodos" => count(explode("-", $_POST["radPeriodo"])),
 		"vacaciones" => $arrVacaciones
 	);
-	$objSolicitar_Vacaciones->setFormulario($envio);
+	echo "<pre>";
+	var_dump($_POST);
 	var_dump($envio);
-
+	$objSolicitar_Vacaciones->setFormulario($envio);
+	var_dump($objSolicitar_Vacaciones->Incluir());
+	/*
 	if ($objSolicitar_Vacaciones->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con mensaje de la consulta
 	else
