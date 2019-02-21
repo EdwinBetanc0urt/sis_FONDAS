@@ -71,11 +71,11 @@ function fcAgregarAcceso() {
 
 //funcion.control.Modificar
 function fcModificarAccesos() {	
-	echo "<pre>";
+	//echo "<pre>";
 	global $gsIndex; // variable global que contiene la ubicación del header
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Acceso(); //nuevo objeto o clase Accesos
-	var_dump($_POST["chkBoton"]);
+	//var_dump($_POST["chkBoton"]);
 	$objeto->setFormulario($_POST); //recibe los valores de la vista y los sanea
 	$objeto->setBotones($_POST["chkBoton"]); //recibe los valores de la vista y los sanea
 
