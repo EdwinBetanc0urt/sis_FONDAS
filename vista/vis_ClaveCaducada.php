@@ -97,33 +97,37 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 						<div class="form-group ui-front">
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="pswClave">* Ingresar Clave Nueva</label>
-								<input id="pswClave" name="pswClave" type="password" maxlength="45"
-									class="form-control new-password" required placeholder="Ingrese la Clave"
-									data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+								<input id="pswClave" name="pswClave" type="password" 
+									maxlength="45" placeholder="Ingrese la Clave"
+									class="form-control new-password valida_clave"
+									required data-toggle="tooltip" data-placement="right"
+									title="Campo Obligatorio" />
 								<div class="divItemsClave">
 									<p id="claveMinuscula" class="invalido">
-										Al menos <strong>1 letra en minúscula (a-z)</strong>
+										Al menos <b>1 letra en minúscula (a-z)</b>
 									</p>
 									<p id="claveMayuscula" class="invalido">
-										Al menos <strong>1 letra en MAYUSCULA (A-Z)</strong>
+										Al menos <b>1 letra en MAYUSCULA (A-Z)</b>
 									</p>
 									<p id="claveNumero" class="invalido">
-										Al menos <strong>1 numero (0-9)</strong>
+										Al menos <b>1 numero (0-9)</b>
 									</p>
 									<p id="claveEspecial" class="invalido">
-										Al menos <strong>1 carácter especial (_.-+*$)</strong>
+										Al menos <b>1 carácter especial (_.-+*$)</b>
 									</p>
 									<p id="claveLongitud" class="invalido">
-										Longitud min. de <strong>8 caracteres</strong>
+										Longitud min. de <b>8 caracteres</b>
 									</p>
 								</div>
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="pswClave2">* Confirmar Clave Nueva</label>
-								<input id="pswClave2" type="password" maxlength="45" required
-									class="form-control confirm-password" placeholder="Confirme la clave"
-									data-placement="top" title="Campo Obligatorio" data-toggle="tooltip" />
+								<input id="pswClave2" type="password" maxlength="45"
+									class="form-control confirm-password valida_clave"
+									required placeholder="Confirme la clave"
+									data-placement="top" title="Campo Obligatorio"
+									data-toggle="tooltip" />
 							</div>
 
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -168,9 +172,9 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 </html>
 
 <?php
-} //cierra el condicional de sesión
+} // cierra el condicional de sesión
 
-//no esta logueado y trata de entrar sin autenticar
+// no esta logueado y trata de entrar sin autenticar
 else {
 	header("location: controlador/conCerrar.php?getMotivoLogOut=sinlogin");
 }
