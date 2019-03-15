@@ -4,16 +4,13 @@ var lsVista = "Solicitar_Vacaciones";
 $(function () {
 	fjMostrarLista(lsVista);
 
-    //$("#numVacaciones").on("change", function() {
-
-    //});
-    $("#ctxFechaInicio").on("change", function() {
+	$("#ctxFechaInicio").on("change", function() {
 		if ($("#numDiasHabiles").val() != "" && parseInt($("#numDiasHabiles").val()) != 0) {
 			fjFechaFinal();
 		}
 	});
 
-    $("#numDiasHabiles").on("change", function() {
+	$("#numDiasHabiles").on("change", function() {
 		if ($("#ctxFechaInicio").val() != "" && parseInt($("#ctxFechaInicio").val()) != 0) {
 			fjFechaFinal();
 		}
@@ -54,7 +51,6 @@ $(function () {
 				},
 				500
 			);
-
 			if ($("#ctxFechaInicio").val() != "" && parseInt($("#ctxFechaInicio").val()) != 0) {
 				setTimeout(() => {
 						fjFechaFinal();
@@ -72,7 +68,7 @@ function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
 	var viCodigo = document.getElementById("numId");
 	var vsFechaIngreso = document.getElementById("ctxFechaIngreso");
-	var Periodo = $("#form" + lsVista + " .periodos");
+	var Periodo = $("#form" + lsVista + " #cmbPeriodo");
 	var vsFechaInicio = $("#form" + lsVista + " #ctxFechaInicio");
 	var vbComprobar = true; // verifica que todo este true o un solo false no envía
 
@@ -89,11 +85,12 @@ function enviar(pvValor) {
 				confirmButtonText: 'Ok',
 				showCloseButton: true
 			}).then((result) => {
-				vsFechaIngreso.focus(); //enfoca el cursor en el campo que falta del formulario
+				vsFechaIngreso.focus(); // enfoca el cursor en el campo que falta del formulario
 			});
 			return; // rompe la función para que el usuario verifique antes de continuar
 		}
-		if (Periodo.length <= 0 || Periodo.is(':checked') == false) {
+
+		if (Periodo.val() == '' || parseInt(Periodo.val()) == 0) {
 			vbComprobar = false;
 			swal({
 				title: '¡Atención!',
@@ -102,7 +99,10 @@ function enviar(pvValor) {
 				type: 'error',
 				confirmButtonText: 'Ok',
 				showCloseButton: true
+			}).then((result) => {
+				Periodo.focus(); // enfoca el cursor en el campo que falta del formulario
 			});
+
 			return; // rompe la función verificar antes de continuar
 		}
 		if (vsFechaInicio.val().trim() === "") {
@@ -115,12 +115,12 @@ function enviar(pvValor) {
 				confirmButtonText: 'Ok',
 				showCloseButton: true
 			}).then((result) => {
-				vsFechaInicio.focus(); //enfoca el cursor en el campo que falta del formulario
+				vsFechaInicio.focus(); // enfoca el cursor en el campo que falta del formulario
 			});
 			return; // rompe la función verificar antes de continuar
 		}
 
-	} //cierre del condicional si es boton Modificar o Incluir
+	} // cierre del condicional si es boton Modificar o Incluir
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if (vbComprobar) {
@@ -132,7 +132,6 @@ function enviar(pvValor) {
 
 function fjNuevoRegistro() {
 	$("#form" + lsVista)[0].reset();
-	//$("#form" + lsVista + " #divPeriodos").html("NO TIENE PERIODOS VENCIDOS");
 	fjListaPeriodos();
 
 	if ($("#Registrar")) {
@@ -174,31 +173,39 @@ function fjEditarRegistro() {
 
 
 function fjSeleccionarRegistro(pvDOM) {
-    console.log(pvDOM);
+	// debe ser con jquery porque es recibido como tal con jquery
+	if (jQuery.isFunction(pvDOM.attr))
+		arrFilas = pvDOM.attr('datos_registro').split('|');
+	// debe ser con javascript porque es recibido directamente del DOM
+	if (typeof pvDOM.getAttribute !== 'undefined')
+		arrFilas = pvDOM.getAttribute('datos_registro').split('|'); 
+	// console.log(arrFilas);
 
-    //debe ser con jquery porque es recibido como tal con jquery
-    if (jQuery.isFunction(pvDOM.attr))
-        arrFilas = pvDOM.attr('datos_registro').split('|');
-	//debe ser con javascript porque es recibido directamente del DOM
-    if (typeof pvDOM.getAttribute !== 'undefined')
-        arrFilas = pvDOM.getAttribute('datos_registro').split('|'); 
-    
-    console.log(arrFilas);
+	$("#btnHabilitar").attr('disabled', false);
 
-    $("#btnHabilitar").attr('disabled', false);
-
-    $("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
+	$("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
 	$("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
 	
-	$("#form" + lsVista + " #divPeriodos").html(arrFilas[3].trim());
-	
-    $("#form" + lsVista + " #ctxFechaInicio").val(arrFilas[4].trim());
-    $("#form" + lsVista + " #ctxFechaFin").val(arrFilas[5].trim());
-    $("#form" + lsVista + " #numDiasHabiles").val(arrFilas[6].trim());
+	$("#form" + lsVista + " #cmbPeriodo")
+		.prop('length', 1)
+		.append(
+			'<option value="' + arrFilas[3].trim() + '">' + 
+				arrFilas[3].trim() +
+			'</option>' 
+		) // agrega los nuevos option al select
+		.val(arrFilas[3].trim())
+		// .attr('disabled', true)
+		.trigger('change');
 
-    $("#operacion").val(arrFilas[0].trim());
+	$("#form" + lsVista + " #ctxFechaInicio")
+		// .attr('disabled', true)
+		.val(arrFilas[4].trim());
+	$("#form" + lsVista + " #ctxFechaFin").val(arrFilas[5].trim());
+	$("#form" + lsVista + " #numDiasHabiles").val(arrFilas[6].trim());
 
-    if (arrFilas[1].trim() === "activo") {
+	$("#operacion").val(arrFilas[0].trim());
+
+	if (arrFilas[1].trim() === "activo") {
 		if ($("#Registrar"))
 			$("#Registrar").css("display", "none");
 
@@ -210,9 +217,9 @@ function fjSeleccionarRegistro(pvDOM) {
 
 		if ($("#Restaurar"))
 			$("#Restaurar").css("display", "none");
-    }
-    //anulado o cerrado
-    else {
+	}
+	// anulado o cerrado
+	else {
 		if ($("#Registrar"))
 			$("#Registrar").css("display", "none");
 
@@ -224,20 +231,19 @@ function fjSeleccionarRegistro(pvDOM) {
 
 		if ($("#Restaurar"))
 			$("#Restaurar").css("display", "none");
-    }
+	}
 
-    $("#VentanaModal").modal('show'); //para bootstrap v3.3.7
+	$("#VentanaModal").modal('show'); //para bootstrap v3.3.7
 }
 
 
-//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
+// Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjListaPeriodos() {
 	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
 	$.post(vsRuta, { 
-			//variables enviadas (name: valor)
 			operacion: "ListaPeriodo"
 		},
 		function(resultado) {
@@ -246,23 +252,17 @@ function fjListaPeriodos() {
 				console.log("sin consultas ");
 			}
 			else {
-				document.getElementById("cmbPeriodo").length = 1; //limpia los option del select
-
 				$("#cmbPeriodo")
-					.attr("disabled", false). //habilita el campo de estado
-					append(resultado); //agrega los nuevos option al select
-				/*$("#cmbPeriodo")
-					.val()
-					.trigger()*/
-				//vjResultado = document.getElementById("divPeriodos") ; //*/$("#divListaAcceso").val();
-				//vjResultado.innerHTML = resultado;
+					.prop('length', 1) //limpia los option del select
+					.attr("disabled", false) //habilita el campo de estado
+					.append(resultado); //agrega los nuevos option al select
 			}
 		}
 	);
 }
 
 
-//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
+// Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjCalculaDias(paPeriodos = "") {
 	//abre el archivo controlador y envía por POST
@@ -273,7 +273,7 @@ function fjCalculaDias(paPeriodos = "") {
 			radPeriodo: paPeriodos
 		},
 		function(resultado) {
-			console.log(resultado);
+			// console.log(resultado);
 			if(resultado == false) {
 				console.log("sin consultas ");
 			}
@@ -285,7 +285,7 @@ function fjCalculaDias(paPeriodos = "") {
 }
 
 
-//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
+// Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjFechaFinal() {
 	if ($("#cmbPeriodo").val() == '' || parseInt($("#cmbPeriodo").val()) == 0) {
@@ -326,11 +326,10 @@ function fjFechaFinal() {
 		$("#ctxFechaFin").val('');
 		return;
 	}
-	//abre el archivo controlador y envía por POST
+	// abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
 	$.post(vsRuta, { 
-			//variables enviadas (name: valor)
 			operacion: "FechaFin",
 			numDiasHabiles: parseInt($("#form" + lsVista + " #numDiasHabiles").val()),
 			ctxFechaInicio: $("#form" + lsVista + " #ctxFechaInicio").val().toString() 
@@ -339,7 +338,7 @@ function fjFechaFinal() {
 			if(resultado == false)
 				console.log("sin consultas ");
 			else {
-				console.log(resultado);
+				// console.log(resultado);
 				$("#form" + lsVista + " #ctxFechaFin").val("");
 				$("#form" + lsVista + " #ctxFechaFin").val(resultado);
 			}
@@ -348,20 +347,19 @@ function fjFechaFinal() {
 }
 
 
-function fjAntiguedad(psFechaInicio = "") {
-
-	//abre el archivo controlador y envía por POST
+function fjAntiguedad() {
+	// abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
 	$.post(vsRuta, { 
-			//variables enviadas (name: valor)
+			// variables enviadas (name: valor)
 			operacion: "Antiguedad",
 		},
 		function(resultado) {
 			if(resultado == false)
 				console.log("sin consultas ");
 			else {
-				console.log(resultado);
+				// console.log(resultado);
 				$("#form" + lsVista + " #Antiguedad").val("");
 				$("#form" + lsVista + " #Antiguedad").val(resultado + " año(s)");
 				$("#form" + lsVista + " #numAntiguedad").val(resultado);

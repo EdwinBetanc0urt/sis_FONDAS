@@ -119,8 +119,6 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<input type="hidden" class="form-control" id="numAntiguedad" name="numAntiguedad" >
 							</div>
 
-
-
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<br />
 							</div>
@@ -173,28 +171,27 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 									placeholder="Ingrese la Descripción" data-placement="right" title="Generado automaticamente" readonly />
 							</div>
 						</div>
-
-								
 					</div>
 				</div>
 				<div class="modal-footer">
 					<?php
 						include_once("_botones.php");
 					?>
-
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php if(isset($_GET['getEstatus'])) echo $_GET['getEstatus']; ?>" />
+		<input type="hidden" name="hidEstatus" id="hidEstatus" value="<?php 
+			if(isset($_GET['getEstatus']))
+				echo $_GET['getEstatus']; ?>" />
 		<input type="hidden" name="operacion" id="operacion" />
 	</form>
 </div>
 
 
 <?php
-} //cierra el condicional de sesión rol (isset($_SESSION['rol']))
+} // cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
-//no esta logueado y trata de entrar sin autenticar
+// no esta logueado y trata de entrar sin autenticar
 else {
 	header("location: ../controlador/conCerrar.php?getMotivoLogOut=sinlogin");
 }

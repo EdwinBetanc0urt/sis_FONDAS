@@ -289,7 +289,8 @@ class vacacion
 		}
 		else
 			$piAntiguedad = intval(trim($piAntiguedad));
-		$liDiasBono = $this->$atrDiasVacaciones + $piAntiguedad;
+		// $liDiasBono = $this->$atrDiasVacaciones + $piAntiguedad;
+		$liDiasBono = getDiasVacacionesAntiguedadFuncionario($piAntiguedad);
 		if ($liDiasBono > 30) {
 			$liDiasBono = 30;
 		}
@@ -520,11 +521,11 @@ class vacacion
 
 	// parámetro del modelo FechaBD
 	static public function getFechaFormato(
-		$pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma"
+		$pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma", $separathor = '/'
 	)
 	{
 		if ($pmFecha == "") {
-			$pmFecha = date("d-m-Y");
+			$pmFecha = date("d" . $separathor . "m" . $separathor . "Y");
 		}
 
 		switch ($pmFormatoE) {
@@ -551,52 +552,52 @@ class vacacion
 			default:
 			case 'amd':
 				// año - mes - día
-				$lsFecha = $lsAno . "-" . $lsMes . "-" . $lsDia;
+				$lsFecha = $lsAno . $separathor . $lsMes . $separathor . $lsDia;
 				break;
 			case 'dma':
 				// dia - mes - año
-				$lsFecha = $lsDia . "-" . $lsMes . "-" . $lsAno;
+				$lsFecha = $lsDia . $separathor . $lsMes . $separathor . $lsAno;
 				break;
 			case 'mda':
 				// mes - día - año
-				$lsFecha = $lsMes . "-" . $lsDia . "-" . $lsAno;
+				$lsFecha = $lsMes . $separathor . $lsDia . $separathor . $lsAno;
 				break;
 			case 'dam':
 				// mes - día - año
-				$lsFecha = $lsDia . "-" . $lsAno . "-" . $lsMes;
+				$lsFecha = $lsDia . $separathor . $lsAno . $separathor . $lsMes;
 				break;
 			case 'adm':
 				// mes - día - año
-				$lsFecha = $lsAno . "-" . $lsDia . "-" . $lsMes;
+				$lsFecha = $lsAno . $separathor . $lsDia . $separathor . $lsMes;
 				break;
 			case 'mad':
 				// mes - día - año
-				$lsFecha = $lsMes . "-" . $lsAno . "-" . $lsDia;
+				$lsFecha = $lsMes . $separathor . $lsAno . $separathor . $lsDia;
 				break;
 
 			case 'am':
 				// año - mes
-				$lsFecha = $lsAno . "-" . $lsMes;
+				$lsFecha = $lsAno . $separathor . $lsMes;
 				break;
 			case 'ad':
 				// año - día
-				$lsFecha = $lsAno . "-" . $lsDia;
+				$lsFecha = $lsAno . $separathor . $lsDia;
 				break;
 			case 'ma':
 				// mes - año
-				$lsFecha = $lsMes . "-" . $lsAno;
+				$lsFecha = $lsMes . $separathor . $lsAno;
 				break;
 			case 'md':
 				// mes - día
-				$lsFecha = $lsMes . "-" . $lsDia;
+				$lsFecha = $lsMes . $separathor . $lsDia;
 				break;
 			case 'dm':
 				// día - mes
-				$lsFecha = $lsDia . "-" . $lsMes;
+				$lsFecha = $lsDia . $separathor . $lsMes;
 				break;
 			case 'da':
 				// día - año
-				$lsFecha = $lsDia . "-" . $lsAno;
+				$lsFecha = $lsDia . $separathor . $lsAno;
 				break;
 				
 			case 'a':

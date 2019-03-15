@@ -42,6 +42,7 @@ else {
 
 				// Clave Caducada
 				if ($vsDiferencia->days >= $objUsuario->getDiasCaducidad()
+					&& $arrClave["fecha_creacion"] != "0000-00-00"
 					&& $arrClave["fecha_creacion"] != "0000-00-00 00:00:00") {
 					$_SESSION = array(
 						'sesion' => 'caducado',
