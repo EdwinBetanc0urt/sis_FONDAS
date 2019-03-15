@@ -58,10 +58,10 @@ switch($_POST['operacion']) {
 	case 'FechaIngreso':
 		FechaIngreso();
 		break;
-
 }
 
-function FechaFin() {
+function FechaFin()
+{
 	$fechafin = vacacion::getFechaFinal(
 		$_POST["ctxFechaInicio"],
 		trim($_POST["numDiasHabiles"])
@@ -71,7 +71,8 @@ function FechaFin() {
 }
 
 
-function CalcularDias() {
+function CalcularDias()
+{
 	$resultado = vacacion::getDetalleDiasVacacionesPeriodo(
 		$_SESSION["fecha_ingreso"],
 		$_POST["radPeriodo"]
@@ -80,7 +81,8 @@ function CalcularDias() {
 }
 
 
-function FechaIngreso() {
+function FechaIngreso()
+{
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 	$lsFechaIngreso = $objSolicitar_Vacaciones->getFechaIngreso($_SESSION["idtrabajador"]);
 	$resultado = vacacion::getFechaFormato($lsFechaIngreso, "amd", "dma");
@@ -88,14 +90,14 @@ function FechaIngreso() {
 }
 
 
-function registrar() {
+function registrar()
+{
 	global $gsClase;
-	//session_start();
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 
 	$arrVacaciones = vacacion::getDetalleDiasVacacionesPeriodo(
 		$_SESSION["fecha_ingreso"],
-		$_POST["radPeriodo"]
+		$_POST["cmbPeriodo"]
 	);
 	/*
 	$fecha_culmina =  vacacion::getFechaFinal(
@@ -108,18 +110,14 @@ function registrar() {
 
 	$envio= array(
 		"numIdTrabajador" => $_SESSION["idtrabajador"],
-		"datFechaIngreso" => $_SESSION["fecha_ingreso"],
 		"datFechaInicio" => $_POST["ctxFechaInicio"],
 		"datFechaFin" => $_POST["ctxFechaFin"],
-		"cantidad_periodos" => count(explode("-", $_POST["radPeriodo"])),
+		"cantidad_periodos" => count(explode("-", $_POST["cmbPeriodo"])),
 		"vacaciones" => $arrVacaciones
 	);
-	echo "<pre>";
-	var_dump($_POST);
-	var_dump($envio);
+
 	$objSolicitar_Vacaciones->setFormulario($envio);
-	var_dump($objSolicitar_Vacaciones->Incluir());
-	/*
+
 	if ($objSolicitar_Vacaciones->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con mensaje de la consulta
 	else
@@ -133,7 +131,7 @@ function listarPeriodos()
 	$arrPeriodos = vacacion::getPeriodosAntiguedad(
 		$_SESSION["fecha_ingreso"]
 	);
-	$arrConsulta = array();
+
 	$arrConsulta = $objInstancia->listarPeriodos($_SESSION["idtrabajador"]);
 	$arrComparado = array_diff($arrPeriodos, $arrConsulta);
 
@@ -160,7 +158,8 @@ function listarPeriodos()
 }
 
 
-function cambiar() {
+function cambiar()
+{
 	global $gsClase;
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 	$objSolicitar_Vacaciones->setFormulario($_POST);
@@ -172,7 +171,8 @@ function cambiar() {
 }
 
 
-function Combo() {
+function Combo()
+{
     if (isset($_POST["hidCodigo"]))
         $pvCodigo =  htmlentities(trim (addslashes(strtolower($_POST["hidCodigo"]))));
     else
@@ -209,7 +209,8 @@ function Combo() {
 }
 
 
-function ListaSolicitar_Vacaciones() {
+function ListaSolicitar_Vacaciones()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Solicitar_Vacaciones; //instancia la clase
 
@@ -277,7 +278,7 @@ function ListaSolicitar_Vacaciones() {
 							|<?= $arrRegistro["condicion"]; ?>
 							|<?= $arrRegistro[$objeto->atrId]; ?>
 							|<?= $arrRegistro["periodo_usado"]; ?>
-							|<?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?>
+							|<?= $arrRegistro["fecha_inicio"] ?>
 							|<?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?>
 							|<?= $arrRegistro["cant_dias_periodo"]; ?>' >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->

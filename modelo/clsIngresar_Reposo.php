@@ -3,7 +3,7 @@ include_once('clsConexion.php');
 
 class Ingresar_Reposo extends clsConexion {
 
-	//atributos de paginacion
+	//atributos de paginación
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
 	function __construct() {
@@ -69,7 +69,6 @@ class Ingresar_Reposo extends clsConexion {
 	}
 
 
-
 	function consultar() {
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
@@ -88,7 +87,6 @@ class Ingresar_Reposo extends clsConexion {
 	}
 
 
-
 	function Eliminar()	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
@@ -100,8 +98,6 @@ class Ingresar_Reposo extends clsConexion {
 		else
 			return false;
 	}
-
-
 
 
 	//funcion.nivel.Listar
@@ -144,13 +140,13 @@ class Ingresar_Reposo extends clsConexion {
 	}
 
 
-
-  	/** 
-	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
-	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
+	/**
+	 * función modelo Listar Parámetros, consulta en la base de datos según el
+	 * termino de búsqueda, paginación y orden
+	 * @param string parámetro control Búsqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar) {
 		$sql = "
 			SELECT Perm.*, P.*, M.nombre AS motivo_reposo
 			FROM $this->atrTabla AS Perm

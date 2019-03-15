@@ -173,25 +173,33 @@ function fjEditarRegistro() {
 
 
 function fjSeleccionarRegistro(pvDOM) {
-	console.log(pvDOM);
-
 	// debe ser con jquery porque es recibido como tal con jquery
 	if (jQuery.isFunction(pvDOM.attr))
 		arrFilas = pvDOM.attr('datos_registro').split('|');
 	// debe ser con javascript porque es recibido directamente del DOM
 	if (typeof pvDOM.getAttribute !== 'undefined')
 		arrFilas = pvDOM.getAttribute('datos_registro').split('|'); 
-	
-	console.log(arrFilas);
+	// console.log(arrFilas);
 
 	$("#btnHabilitar").attr('disabled', false);
 
 	$("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
 	$("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
 	
-	$("#form" + lsVista + " #divPeriodos").html(arrFilas[3].trim());
-	
-	$("#form" + lsVista + " #ctxFechaInicio").val(arrFilas[4].trim());
+	$("#form" + lsVista + " #cmbPeriodo")
+		.prop('length', 1)
+		.append(
+			'<option value="' + arrFilas[3].trim() + '">' + 
+				arrFilas[3].trim() +
+			'</option>' 
+		) // agrega los nuevos option al select
+		.val(arrFilas[3].trim())
+		// .attr('disabled', true)
+		.trigger('change');
+
+	$("#form" + lsVista + " #ctxFechaInicio")
+		// .attr('disabled', true)
+		.val(arrFilas[4].trim());
 	$("#form" + lsVista + " #ctxFechaFin").val(arrFilas[5].trim());
 	$("#form" + lsVista + " #numDiasHabiles").val(arrFilas[6].trim());
 
@@ -244,11 +252,10 @@ function fjListaPeriodos() {
 				console.log("sin consultas ");
 			}
 			else {
-				document.getElementById("cmbPeriodo").length = 1; //limpia los option del select
-
 				$("#cmbPeriodo")
-					.attr("disabled", false). //habilita el campo de estado
-					append(resultado); //agrega los nuevos option al select
+					.prop('length', 1) //limpia los option del select
+					.attr("disabled", false) //habilita el campo de estado
+					.append(resultado); //agrega los nuevos option al select
 			}
 		}
 	);
@@ -266,7 +273,7 @@ function fjCalculaDias(paPeriodos = "") {
 			radPeriodo: paPeriodos
 		},
 		function(resultado) {
-			console.log(resultado);
+			// console.log(resultado);
 			if(resultado == false) {
 				console.log("sin consultas ");
 			}
@@ -331,7 +338,7 @@ function fjFechaFinal() {
 			if(resultado == false)
 				console.log("sin consultas ");
 			else {
-				console.log(resultado);
+				// console.log(resultado);
 				$("#form" + lsVista + " #ctxFechaFin").val("");
 				$("#form" + lsVista + " #ctxFechaFin").val(resultado);
 			}
@@ -340,8 +347,7 @@ function fjFechaFinal() {
 }
 
 
-function fjAntiguedad(psFechaInicio = "") {
-
+function fjAntiguedad() {
 	// abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
@@ -353,7 +359,7 @@ function fjAntiguedad(psFechaInicio = "") {
 			if(resultado == false)
 				console.log("sin consultas ");
 			else {
-				console.log(resultado);
+				// console.log(resultado);
 				$("#form" + lsVista + " #Antiguedad").val("");
 				$("#form" + lsVista + " #Antiguedad").val(resultado + " año(s)");
 				$("#form" + lsVista + " #numAntiguedad").val(resultado);
