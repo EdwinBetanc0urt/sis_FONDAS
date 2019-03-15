@@ -2,12 +2,14 @@
 
 include_once('clsConexion.php');
 
-class Solicitar_Vacaciones extends clsConexion {
+class Solicitar_Vacaciones extends clsConexion
+{
 
 	// atributos de paginación
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); // instancia al constructor padre
 
 		$this->atrTabla = "tvacacion";
@@ -17,7 +19,8 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-	function Incluir() {
+	function Incluir()
+	{
 		parent::faTransaccionInicio();
 		$sql = "
 			INSERT INTO {$this->atrTabla} 
@@ -31,7 +34,6 @@ class Solicitar_Vacaciones extends clsConexion {
 			); ";
 
 		$vsId = parent::faUltimoId($sql); // ejecuta la sentencia y obtiene el ID 
-		// var_dump($vsId);
 		// verifica si se ejecuto bien
 		if ($vsId > 0) {
 			// verifica si se ejecuto bien
@@ -50,10 +52,11 @@ class Solicitar_Vacaciones extends clsConexion {
 		}
 	}
 
-	function IncluirDetalle($piId ="") {
+
+	function IncluirDetalle($piId)
+	{
 		$liError = 0;
 		foreach ($this->atrFormulario["vacaciones"]["periodo"] as $key => $value) {
-				
 			$sql = "
 				INSERT INTO tdetalle_vacacion 
 					(idvacacion, periodo_usado, cant_dias_periodo)
@@ -63,18 +66,20 @@ class Solicitar_Vacaciones extends clsConexion {
 					'{$value["dias"]}'
 				); ";
 			$tupla = parent::faEjecutar($sql); // Ejecuta la sentencia sql
-			if (! parent::faVerificar()) // verifica si se ejecuto bien
+			// verifica si se ejecuto bien
+			if (! parent::faVerificar($tupla)) {
 				$liError = $liError + 1;
-
+			}
 		}
-		if ($liError == 0) // verifica si se ejecuto bien
+		if ($liError == 0)
 			return true;
 		else
 			return false;
 	}
 
 
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			update {$this->atrTabla}
 			set
@@ -90,7 +95,8 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			select * from {$this->atrTabla}
 			where codnivel = '{$this->codigo}' ";
@@ -106,7 +112,8 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-	function getFechaIngreso($psIdTrabajador) {
+	function getFechaIngreso($psIdTrabajador)
+	{
 		$sql = "
 			select fecha_ingreso from ttrabajador
 			where idtrabajador = '{$psIdTrabajador}' ";
@@ -122,10 +129,11 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-	function eliminar()	{
+	function eliminar()
+	{
 		$sql = "
-			delete from {$this->atrTabla}
-			where
+			DELETE FROM {$this->atrTabla}
+			WHERE
 				codnivel = '{$this->codigo}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
@@ -136,7 +144,8 @@ class Solicitar_Vacaciones extends clsConexion {
 
 
 	// función.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT *
 			FROM  {$this->atrTabla} "; // selecciona todo el contenido de la tabla
@@ -154,13 +163,14 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-  	/** 
+	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el
 	 * termino de búsqueda, paginación y orden
 	 * @param string parámetro control Búsqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
-	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
+	 * @return array $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function listarPeriodos($psBuscar) {		
+	function listarPeriodos($psBuscar)
+	{
 		$sql = "
 			SELECT 
 				D.periodo_usado
@@ -191,12 +201,14 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
-  	/** 
-	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
+	/**
+	 * función modelo Listar Parámetros, consulta en la base de datos según el
+	 * termino de búsqueda, paginación y orden
 	 * @param string parámetro control Búsqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
-	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
+	 * @return object|bool $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {
+	function fmListarIndex($psBuscar)
+	{
 		$sql = "
 			SELECT 
 				V.*, D.iddetalle_vacacion, D.periodo_usado, D.cant_dias_periodo 
@@ -225,6 +237,6 @@ class Solicitar_Vacaciones extends clsConexion {
 	}
 
 
- }
+}
 
 ?>

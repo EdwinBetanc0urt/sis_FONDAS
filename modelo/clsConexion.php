@@ -366,9 +366,10 @@ class clsConexion {
 	 * @param string $pmFormatoR, formato en el que se retornara la fecha
 	 * @return string $lsFecha, fecha a convertida en el formato indicado
 	 */
-	public function faFechaFormato($pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma") {
+	public function faFechaFormato($pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma", $separathor = '/'
+	) {
 		if ($pmFecha == "") {
-			$lsActual = date("Y-m-d"); //fecha actual php para servidor
+			$lsActual = date("Y" . $separathor . "m" . $separathor . "d"); //fecha actual php para servidor
 			//$lsActual="NOW()"; //fecha actual SQL para servidor
 
 			$lsDiaSemanaN = date("N"); // día de la semana en números, 1 (lunes) a 7 (domingo)
@@ -414,55 +415,55 @@ class clsConexion {
 			default:
 			case 'amd':
 				// año - mes - día
-				$lsFecha = $lsAno . "-" . $lsMes . "-" . $lsDia;
+				$lsFecha = $lsAno . $separathor . $lsMes . $separathor . $lsDia;
 				break;
 
 			case 'dma':
 				// día - mes - año
-				$lsFecha = $lsDia . "-" . $lsMes . "-" . $lsAno;
+				$lsFecha = $lsDia . $separathor . $lsMes . $separathor . $lsAno;
 				break;
 
 			case 'mda':
 				// mes - día - año
-				$lsFecha = $lsMes . "-" . $lsDia . "-" . $lsAno;
+				$lsFecha = $lsMes . $separathor . $lsDia . $separathor . $lsAno;
 				break;
 
 
 			case 'am':
 				// año - mes
-				$lsFecha = $lsAno . "-" . $lsMes;
+				$lsFecha = $lsAno . $separathor . $lsMes;
 				break;
 
 			case 'ad':
 				// año - día
-				$lsFecha = $lsAno . "-" . $lsDia;
+				$lsFecha = $lsAno . $separathor . $lsDia;
 				break;
 
 			case 'ma':
 				// mes - año
-				$lsFecha = $lsMes . "-" . $lsAno;
+				$lsFecha = $lsMes . $separathor . $lsAno;
 				break;
 
 			case 'md':
 				// mes - día
-				$lsFecha = $lsMes . "-" . $lsDia;
+				$lsFecha = $lsMes . $separathor . $lsDia;
 				break;
 
 			case 'dm':
 				// día - mes
-				$lsFecha = $lsDia . "-" . $lsMes;
+				$lsFecha = $lsDia . $separathor . $lsMes;
 				break;
 
 			case 'da':
 				// día - año
-				$lsFecha = $lsDia . "-" . $lsAno;
+				$lsFecha = $lsDia . $separathor . $lsAno;
 				break;
 
 			case 'dM':
 				// día - año
-				$dia = date("d", strtotime(date("Y") . "-" . $lsMes . "-" . $lsDia));
+				$dia = date("d", strtotime(date("Y") . $separathor . $lsMes . $separathor . $lsDia));
 				setlocale(LC_TIME, "ESP");
-				$mes = strftime("%B", strtotime(date("Y") . "-" . $lsMes . "-" . $lsDia));
+				$mes = strftime("%B", strtotime(date("Y") . $separathor . $lsMes . $separathor . $lsDia));
 				$lsFecha = $dia . " de " . $mes;
 				//$lsFecha =  strtotime($pmFecha);
 				break;
