@@ -50,7 +50,7 @@ class clsConexion {
 
 	/**
 	 * función constructor de la clase
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param string $psPrivilegio que dependiendo el privilegio usa el usuario para la conexión
 	 */
 	protected function __construct($psPrivilegio = "") {
@@ -64,7 +64,7 @@ class clsConexion {
 
 	/**
 	 * función abstracta Conectar, mysqli conecta SMDB y BD
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
 	private function faConectar() {
 		$vbConexion = mysqli_connect(
@@ -95,7 +95,7 @@ class clsConexion {
 
 	/**
 	 * función abstracta Desconectar, cierra la conexión actual
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param link, o enlace de conexión (tomado directamente del constructor)
 	 * @return boolean, Dependiendo si se cerro o no la conexión actual con el servidor
 	 */
@@ -115,7 +115,7 @@ class clsConexion {
 	/**
 	 * función abstracta Liberar Consulta, libera de la memoria del servidor los
  	 * resultados obtenidos
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object $pmConsulta, tupla o recordset (solo con SELECT)
 	 */
 	public function faLiberarConsulta($pmConsulta) {
@@ -161,7 +161,7 @@ class clsConexion {
 	 * función que envía y sanea los datos del controlador al constructor en
 	 * conjunto con la función sanearFormulario que detectan cuando hay un arreglo
 	 * y lo recorre para limpiarlo, es decir existe un arreglo multidimensional
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param array $pcForm, trae todo lo enviado de la vista mediante el arreglo global $_POST
 	 * @return array $this->atrFormulario, arreglo agregado al constructor con
 	 * todos los valores y quitando las primeras 3 letras de la clave
@@ -218,7 +218,7 @@ class clsConexion {
 
 
 	/**
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
 	public function UltimoCodigo() {
 		$sql= "SELECT MAX({$this->atrId}) AS id
@@ -237,7 +237,7 @@ class clsConexion {
 
 	/**
 	 * función que devuelve los datos de una consulta en arreglo
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return array asociativos por nombre de indice y asociados por numero (o posición) de indice
 	 */
@@ -258,7 +258,7 @@ class clsConexion {
 
 	/**
 	 * función que devuelve los datos de una consulta en arreglo
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return array asociativos por nombre de indice
 	 */
@@ -269,7 +269,7 @@ class clsConexion {
 
 	/**
 	 * función que devuelve los datos de una consulta en objeto
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return object, el parámetro convertido en un objeto (accede solamente al nombre del campo)
 	 */
@@ -280,7 +280,7 @@ class clsConexion {
 
 	/**
 	 * función que devuelve los el numero de columnas de una consulta
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object sql, $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return object sql integer, devuelve el numero total de filas en esa consulta
 	 */
@@ -292,7 +292,7 @@ class clsConexion {
 	/**
 	 * función que devuelve los datos de una consulta en arreglo
 	 * utilizada al hacer la paginación de los listados
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return object el numero total de filas en esa consulta del parámetro enviado
 	 */
@@ -310,7 +310,7 @@ class clsConexion {
 	/**
 	 * función abstracta Ultimo ID, funciona solo para las clave primaria INT y
 	 * auto incrementable
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param string $pmSQL, Consulta del insert a extraer el numero de insersion
 	 * @return integer del numero de insersion, si es 0 no se inserto nada
 	 */
@@ -332,7 +332,7 @@ class clsConexion {
 
 	/**
 	 * función abstracta Transacción Inicio, indica el comienzo de la transacción
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
 	public function faTransaccionInicio() {
 		$this->faEjecutar("START TRANSACTION;");
@@ -342,7 +342,7 @@ class clsConexion {
 
 	/**
 	 * funcion abstracta Transacción Fin, indica que la transacción culmino
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
 	public function faTransaccionFin() {
 		$this->faEjecutar("COMMIT;");
@@ -352,7 +352,7 @@ class clsConexion {
 	/**
 	 * función abstracta Transacción Deshace. devuelve al estado anterior del
 	 * inicio de la transacción cada cambio hecho
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
 	public function faTransaccionDeshace() {
 		$this->faEjecutar("ROLLBACK;");
@@ -360,15 +360,16 @@ class clsConexion {
 
 
 	/**
-	 * @author Edwin Betancourt <EdwinBetanc0urt@hotmail.com>
+	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param string $pmFecha, cadena de la fecha a convertir
 	 * @param string $pmFormatoE, formato en el que se envió la fecha
 	 * @param string $pmFormatoR, formato en el que se retornara la fecha
 	 * @return string $lsFecha, fecha a convertida en el formato indicado
 	 */
-	public function faFechaFormato($pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma") {
+	public function faFechaFormato($pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma", $separathor = '/'
+	) {
 		if ($pmFecha == "") {
-			$lsActual = date("Y-m-d"); //fecha actual php para servidor
+			$lsActual = date("Y" . $separathor . "m" . $separathor . "d"); //fecha actual php para servidor
 			//$lsActual="NOW()"; //fecha actual SQL para servidor
 
 			$lsDiaSemanaN = date("N"); // día de la semana en números, 1 (lunes) a 7 (domingo)
@@ -414,55 +415,55 @@ class clsConexion {
 			default:
 			case 'amd':
 				// año - mes - día
-				$lsFecha = $lsAno . "-" . $lsMes . "-" . $lsDia;
+				$lsFecha = $lsAno . $separathor . $lsMes . $separathor . $lsDia;
 				break;
 
 			case 'dma':
 				// día - mes - año
-				$lsFecha = $lsDia . "-" . $lsMes . "-" . $lsAno;
+				$lsFecha = $lsDia . $separathor . $lsMes . $separathor . $lsAno;
 				break;
 
 			case 'mda':
 				// mes - día - año
-				$lsFecha = $lsMes . "-" . $lsDia . "-" . $lsAno;
+				$lsFecha = $lsMes . $separathor . $lsDia . $separathor . $lsAno;
 				break;
 
 
 			case 'am':
 				// año - mes
-				$lsFecha = $lsAno . "-" . $lsMes;
+				$lsFecha = $lsAno . $separathor . $lsMes;
 				break;
 
 			case 'ad':
 				// año - día
-				$lsFecha = $lsAno . "-" . $lsDia;
+				$lsFecha = $lsAno . $separathor . $lsDia;
 				break;
 
 			case 'ma':
 				// mes - año
-				$lsFecha = $lsMes . "-" . $lsAno;
+				$lsFecha = $lsMes . $separathor . $lsAno;
 				break;
 
 			case 'md':
 				// mes - día
-				$lsFecha = $lsMes . "-" . $lsDia;
+				$lsFecha = $lsMes . $separathor . $lsDia;
 				break;
 
 			case 'dm':
 				// día - mes
-				$lsFecha = $lsDia . "-" . $lsMes;
+				$lsFecha = $lsDia . $separathor . $lsMes;
 				break;
 
 			case 'da':
 				// día - año
-				$lsFecha = $lsDia . "-" . $lsAno;
+				$lsFecha = $lsDia . $separathor . $lsAno;
 				break;
 
 			case 'dM':
 				// día - año
-				$dia = date("d", strtotime(date("Y") . "-" . $lsMes . "-" . $lsDia));
+				$dia = date("d", strtotime(date("Y") . $separathor . $lsMes . $separathor . $lsDia));
 				setlocale(LC_TIME, "ESP");
-				$mes = strftime("%B", strtotime(date("Y") . "-" . $lsMes . "-" . $lsDia));
+				$mes = strftime("%B", strtotime(date("Y") . $separathor . $lsMes . $separathor . $lsDia));
 				$lsFecha = $dia . " de " . $mes;
 				//$lsFecha =  strtotime($pmFecha);
 				break;
