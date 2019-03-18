@@ -21,14 +21,11 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-	
 	<br />
 
 	<div class="tab-content">	
 
-
 		<div id="pestListado" class="tab-pane fade in active">
-
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
@@ -37,11 +34,12 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-search"></span>
 								</span>
-								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
+								<input type="search" id="ctxBusqueda" name="ctxBusqueda"
 								oninput="fjMostrarLista('<?= $vsVista; ?>');"
-								onkeyup="fjMostrarLista('<?= $vsVista; ?>');" 
-								class="valida_buscar form-control" 
-								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
+								onkeyup="fjMostrarLista('<?= $vsVista; ?>');"
+								class="valida_buscar form-control" data-placement="top"
+								placeholder="Filtro de Busqueda" data-toggle="tooltip"
+								title="Terminos para buscar coincidencias en los registros" />
 							</div>	
 						</div>
 	
@@ -50,9 +48,12 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</span>
-								<input type="number" id="numItems" name="numItems" maxlength="4" 
-								value="10" onkeyup="fjMostrarLista('<?= $vsVista; ?>');" required
-								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
+								<input type="number" id="numItems" name="numItems"
+								maxlength="4" value="10" placeholder="Items"
+								onkeyup="fjMostrarLista('<?= $vsVista; ?>');"
+								class="valida_num_entero form-control" required
+								data-toggle="tooltip" data-placement="top"
+								title="Cantidad de items a mostrar en el listado" />
 							</div>	
 						</div>
 					</div>
@@ -70,8 +71,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>
-
-
 	</div>
 </div>
 
@@ -88,34 +87,57 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
-						
-							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
-									if(isset($_GET["getId"])) 
-										echo $_GET["getId"]; ?>" />
-								<label for="ctxFecha">* Descripción</label>
-								<input id="ctxFecha" class="valida_alfabetico form-control" maxlength="45" name="ctxFecha" type="text" size="20" required value="<?php
-									if(isset($_GET['getFecha']))
-										echo $_GET['getFecha'];
-								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
-							</div>
-							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<input name="numId" id="numId" type="hidden" class="form-control" readonly 
+									value="<?php 
+										if(isset($_GET["getId"])) 
+											echo $_GET["getId"]; ?>" />
+
 								<label for="ctxNombre">* Descripción</label>
-								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
+								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" required value="<?php
 									if(isset($_GET['getNombre']))
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						
 						</div>
-								
+
+						<div class="form-group">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" data-toggle="tooltip" data-placement="left" title="Si repite anualmente el año que se coloque no es relevante, sin embargo debe indicar un año.">
+								<label for="ctxFecha">* Fecha</label>
+								<input type="date" id="ctxFecha" name="ctxFecha"
+									class="form-control"  required
+									value="<?php if(isset($_GET['getFecha']))
+										echo $_GET['getFecha']; ?>"
+									placeholder="Ingrese la Descripción" />
+							</div>
+
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" data-toggle="tooltip" data-placement="right" title="Indica si se repite indefinidamente todos los años">
+								<label>* Repite Anualmente</label>
+
+								<div class="col-lg-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<input type="radio" aria-label="..." id="radRepiteSi" name="radRepite" checked>
+										</span>
+										<input type="text" value="Si" readonly aria-label="..." class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<input type="radio" aria-label="..." id="radRepiteNo" name="radRepite">
+										</span>
+										<input type="text" value="No" readonly aria-label="..." class="form-control">
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<?php
 						include_once("_botones.php");
 					?>
-
 				</div>
 			</div>
 		</div>
@@ -126,9 +148,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar
