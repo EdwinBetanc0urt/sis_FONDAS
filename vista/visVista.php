@@ -17,7 +17,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
@@ -28,7 +28,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 		//include_once("mod_". $_GET["accion"] . ".php");
 	?>
 
-	<div class="tab-content">	
+	<div class="tab-content">
 
 
 		<div id="pestListado" class="tab-pane fade in active">
@@ -92,8 +92,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
-						
-							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
 									if(isset($_GET["getId"])) 
 										echo $_GET["getId"]; ?>" />	
@@ -103,10 +102,12 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						
+						</div>
+
+						<div class="form-group ui-front">
 							<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
 								<label for="ctxUrl">* Url</label>
-								<input id="ctxUrl" class="valida_alfabetico form-control" maxlength="45" name="ctxUrl" type="text" size="20" value="<?php
+								<input id="ctxUrl" class="valida_alfanumerico valor_sin_espacios form-control" maxlength="45" name="ctxUrl" type="text" size="20" value="<?php
 									if(isset($_GET['getUrl']))
 										echo $_GET['getUrl'];
 								?>" placeholder="Ingrese la el icono que tendra (fuente awesome)" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />

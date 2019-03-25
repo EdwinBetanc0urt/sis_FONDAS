@@ -8,31 +8,27 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 
 <div class="panel-heading">
-	<h3 class="panel-title"> 	
+	<h3 class="panel-title">
 		<button id="btnNuevo" class="btn btn-primary" data-toggle="modal" data-target="#VentanaModal" onclick="fjNuevoRegistro();">
 			<span class="glyphicon glyphicon-plus"></span>
 			Nuevo
 		</button>
-		Botons en el menu para las vistas
+		Botones para las vistas en el menú
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-	
 	<br>
 
 	<?php
 		//include_once("mod_". $_GET["accion"] . ".php");
 	?>
 
-	<div class="tab-content">	
-
-
+	<div class="tab-content">
 		<div id="pestListado" class="tab-pane fade in active">
-
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
@@ -74,8 +70,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>
-
-
 	</div>
 </div>
 
@@ -92,7 +86,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
-						
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
 								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
 									if(isset($_GET["getId"])) 
@@ -103,7 +96,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						
+
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
 								<label for="ctxDescripcion">* Descripción</label>
 								<input id="ctxDescripcion" class="valida_alfabetico form-control" maxlength="45" name="ctxDescripcion" type="text" size="20" required value="<?php
@@ -111,7 +104,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getDescripcion'];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						
+
 							<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
 								<label for="ctxIcono">* Icono</label>
 								<input id="ctxIcono" class=" form-control" maxlength="45" name="ctxIcono" type="text" size="20" value="<?php
@@ -119,7 +112,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getIcono'];
 								?>" placeholder="Ingrese la el icono que tendra (fuente awesome)" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						
+
 							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
 								<label for="numPosicion">* Posicion</label>
 								<input id="numPosicion" class="valida_num_entero form-control" maxlength="45" name="numPosicion" type="number" size="20" value="<?php
@@ -128,8 +121,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								?>" data-toggle="tooltip" data-placement="right" title="Num. de posicion en el menu" />
 							</div>
 						</div>
-
-								
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -147,7 +138,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 
 <?php
-
 
 
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))

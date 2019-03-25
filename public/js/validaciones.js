@@ -384,6 +384,11 @@ $(function() {
   });
 
   //Coloca todas las letras en mayúscula
+  $('.valor_sin_espacios').keyup(function() {
+    this.value = this.value.replace(/ /gim, '');
+  });
+
+  //Coloca todas las letras en mayúscula
   $('.valor_minuscula').keyup(function() {
     this.value = this.value.toLowerCase();
   });
