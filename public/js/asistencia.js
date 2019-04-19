@@ -1,7 +1,6 @@
 
 var lsVista = "Asistencia";
 
-
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor = "incluir") {
 	let arrFormulario = $("#form" + lsVista);
@@ -25,15 +24,12 @@ function enviar(pvValor = "incluir") {
 			return; // rompe la función para que el usuario verifique antes de continuar
 		}
 	}
-
-
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if(vbComprobar) {
 		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
-
 
 
 $(function () {
@@ -45,7 +41,6 @@ $(function () {
 	$("#liDetalle").removeClass("active"); //agrega la clase para que se mueva la pestaña a ese lugar
 	$("#pestDetalle").removeClass("in active"); //elimina el atributo de disable
 });
-
 
 
 function fjNuevoRegistro() {
@@ -66,6 +61,8 @@ function fjNuevoRegistro() {
 	$("#form" + lsVista + " #divBotonesC").css("display", "none");
 	*/
 }
+
+
 function fjEditarRegistro() {
 	if($("#Registar")) {
 		$("#Registar").css("display", "none");
@@ -85,7 +82,6 @@ function fjEditarRegistro() {
 }
 
 
-
 function fjSoloDetalle() {
 	// PESTAÑA LISTADO
 	$("#liListado").addClass("disabled"); //agrega la clase disable para que no le de click
@@ -100,9 +96,6 @@ function fjSoloDetalle() {
 	$("#pestDetalle").addClass("in active"); //elimina el atributo de disable
 	
 }
-
-
-
 
 
 function fjCancelar() { 
@@ -124,6 +117,7 @@ function fjCancelar() {
 	$("#form" + lsVista + " #numId").val("");
 	$("#form" + lsVista + " #txaObservacion").val("");
 }
+
 
 function fjSeleccionarRegistro(pvDOM) {
     console.log(pvDOM);
@@ -180,14 +174,12 @@ function fjSeleccionarRegistro(pvDOM) {
 }
 
 
-
 function fjDesplegarCatalogo(){
 	arrDatos = ["", $("#ctxCodigos").val()];
 	fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", arrDatos);
 	$("#VentanaModal").modal('show'); //para boostrap v3.3.7
 	$("#formLista #ctxBusqueda").focus();
 }
-
 
 
 //función para agregar los datos al arreglo
@@ -291,7 +283,7 @@ function fjAgregarDetalle() {
 
 		td1.innerHTML = "<input type='text' class='valida_num_entero form-control' id='detHoraEntrada" + viTrabajador.value + "' name='detHoraEntrada[]' maxlength='4' value='" + vtHoraEntrada.value + "' />";
 
-		td2.innerHTML = "<button type='button' class='btn' onclick='fjQuitarDetalle(this.parentNode, " + viTrabajador.value + ");' value='del' name='delService'>Quitar</button>";
+		td2.innerHTML = "<button type='button' class='btn btn-danger' onclick='fjQuitarDetalle(this.parentNode, " + viTrabajador.value + ");' value='del' name='delService'>Quitar</button>";
 		//limpia los campos de la vista
 		viTrabajador.value = "";
 		vsNombre.value = "";

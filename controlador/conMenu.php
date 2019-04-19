@@ -10,7 +10,7 @@ if ($rstModulo) {
 	while ($arrModulo = $objMenu->getConsultaArreglo($rstModulo)) {
 		?>
 		<li data-toggle="collapse" data-target="#<?= $arrModulo["modulo"] ?>" class="collapsed">
-			<a >
+			<a>
 				<i class="<?= $arrModulo["icono"] ?>"> </i>
 				<?= strtoupper($arrModulo["modulo"]) ?>
 				<span class="arrow"></span>
@@ -23,9 +23,7 @@ if ($rstModulo) {
 				while ($arrVista = $objMenu->getConsultaArreglo($rstVista)) {
 					?>
 					<li onclick="window.location='?form=<?= $arrVista["url"] ?>'">
-						<a> 
-							<?= ucwords($arrVista["vista"]) ?> 
-						</a>
+						<?= ucwords($arrVista["vista"]) ?>
 					</li>
 					<?php
 				}

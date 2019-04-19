@@ -27,23 +27,18 @@
 	        <div class="menu-list">
 	            <ul id="menu-content" class="menu-content collapse out">
 					<li class="active" onclick="window.location='?form=Bienvenida'">
-						<a>
-							<i class="fa fa-dashboard fa-lg"></i> Inicio
-							<i class="fa fa-dashboard fa-lg btn pull-right" style="margin-top:5px"></i>
-						</a>
+						<i class="fa fa-dashboard fa-lg"></i> Inicio
+						<i class="fa fa-dashboard fa-lg btn pull-right" style="margin-top:5px"></i>
 	                </li>
-					<?php 
+					<?php
 						include_once("controlador/conMenu.php");
 					?>
 					<li class="active" onclick='salir()'>
-						<a >
-							<i class="fa fa-sign-out fa-lg"></i> Salir
-							<i class="fa fa-sign-out fa-lg btn pull-right" style="margin-top:5px"></i>
-						</a>
+						<i class="fa fa-sign-out fa-lg"></i> Salir
+						<i class="fa fa-sign-out fa-lg btn pull-right" style="margin-top:5px"></i>
 	                </li>
 	            </ul>
 			</div>
 		</div>
 	</nav>
-  
 </aside>
