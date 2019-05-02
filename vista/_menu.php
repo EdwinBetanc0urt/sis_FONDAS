@@ -9,8 +9,6 @@
 	<!--fin de cintillo-->
 
 	<nav class="navbar navbar-inverse sidebar navbar-fixed-top" role="navigation">
-      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
 		<div class="nav-side-menu">
 	    	<div class="brand">
 				<a class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="Tiempo que perdurara la sesion, pulse aqui para pausar el cronometro" onclick="fjDetenerCronometro();">
