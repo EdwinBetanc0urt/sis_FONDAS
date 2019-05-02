@@ -1,5 +1,5 @@
 
 $(function() {
-    $("#ctxFechaInicio").attr('max', dateClient('d'));
-    $("#ctxFechaFin").attr('max', dateClient('d'));
+    $("#ctxFechaInicio").attr('max', clientDateTime('d'));
+    $("#ctxFechaFin").attr('max', clientDateTime('d'));
 });

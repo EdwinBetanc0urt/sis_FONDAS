@@ -77,11 +77,11 @@ function salir(psRuta = ""){
 }
 
 /**
- * 
+ * Get date and time from client in a object value
  * @param {string} type Type value of return
  * @returns {object|string} 
  */
-function dateClient(type = "") {
+function clientDateTime(type = "") {
 	let months = [
 		{
 			number: "01",
