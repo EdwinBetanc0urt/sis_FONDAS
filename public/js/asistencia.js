@@ -1,20 +1,56 @@
 
 var lsVista = "Asistencia";
 
+$(function () {
+	startTime();
+
+	fjMostrarLista(lsVista);
+
+	// PESTAÑA DETALLE
+	$("#liDetalle").addClass("disabled"); //elimina la clase disable
+	$("#liDetalle a").removeAttr("data-toggle", "tab"); //agrega el atributo de data-toggle
+	$("#liDetalle").removeClass("active"); //agrega la clase para que se mueva la pestaña a ese lugar
+	$("#pestDetalle").removeClass("in active"); //elimina el atributo de disable
+});
+
+function startTime() {
+	let today = new Date();
+	let h = today.getHours();
+	let m = today.getMinutes();
+	let s = today.getSeconds();
+	m = checkTime(m);
+	s = checkTime(s);
+	document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
+	document.getElementById('ctxReloj').value = h + ":" + m + ":" + s;
+	document.getElementById('ctxHoraEntrada').value = h + ":" + m + ":" + s;
+	setTimeout(startTime, 500);
+}
+
+
+function checkTime(i) {
+	if (i < 10) {
+		i = "0" + i
+	};  // add zero in front of numbers < 10
+	return i;
+}
+
+
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor = "incluir") {
 	let arrFormulario = $("#form" + lsVista);
-	let viCodigo = document.getElementById("numId");
-	let vsNombre = document.getElementById("ctxNombre");
+	let vsDetalles = $(".renglon")
+	// let viCodigo = document.getElementById("numId");
+	// let vsNombre = document.getElementById("ctxNombre");
 	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
 
 	//si el cod está vació y el botón pulsado es igual a Registar o Modificar no enviara el formulario
 	if (pvValor === "incluir" || pvValor === "Modificar") {
-		if (vsNombre.value.trim()) {
+		if (vsDetalles.length < 1) {
 			vbComprobar = false;
 			swal({
 				title: '¡Atención!',
-				html: "LA DESCRIPCION ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>",
+				html: 'NO HAY RENGLONES AGREGADOS<br /> No puede estar vacía' +
+					'para <b>' + pvValor.toUpperCase() + '</b >',
 				type: 'error',
 				confirmButtonText: 'Ok',
 				showCloseButton: true
@@ -30,17 +66,6 @@ function enviar(pvValor = "incluir") {
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
-
-
-$(function () {
-	fjMostrarLista(lsVista);
-
-	// PESTAÑA DETALLE
-	$("#liDetalle").addClass("disabled"); //elimina la clase disable
-	$("#liDetalle a").removeAttr("data-toggle", "tab"); //agrega el atributo de data-toggle
-	$("#liDetalle").removeClass("active"); //agrega la clase para que se mueva la pestaña a ese lugar
-	$("#pestDetalle").removeClass("in active"); //elimina el atributo de disable
-});
 
 
 function fjNuevoRegistro() {
@@ -238,7 +263,6 @@ function fjAgregarDetalle() {
 
 	//pasa las validaciones del detalle
 	else {
-
 		let tr = tabla.insertRow(-1); //agrega la columna 
 		let td0 = tr.insertCell(0);	//agrega la celda comenzando con un arreglo 0
 		let td1 = tr.insertCell(1);	
@@ -279,7 +303,7 @@ function fjAgregarDetalle() {
 		//vjDetalles.value =  arrDetalles.toString();
 
 		//en la primera fila muestra el nombre en el html y agrega un campo oculto con el código del articulo para enviar al servidor
-		td0.innerHTML = vsNombre.value + "<input type='hidden' class='form-control' id='detIdTrabajador" + viTrabajador.value + "' name='detIdTrabajador[]' value='" + viTrabajador.value + "' readOnly />";
+		td0.innerHTML = vsNombre.value + "<input type='hidden' class='form-control renglon' id='detIdTrabajador" + viTrabajador.value + "' name='detIdTrabajador[]' value='" + viTrabajador.value + "' readOnly />";
 
 		td1.innerHTML = "<input type='text' class='valida_num_entero form-control' id='detHoraEntrada" + viTrabajador.value + "' name='detHoraEntrada[]' maxlength='4' value='" + vtHoraEntrada.value + "' />";
 
@@ -295,7 +319,6 @@ function fjAgregarDetalle() {
 		fjValidarInner();
 	} // cierre del else si no esta vació
 }
-
 
 
 //función JavaScript Quitar Detalle 
@@ -317,6 +340,7 @@ function fjQuitarDetalle(nodoPadre, piTrabajador) {
 	console.log(arrDetalles);
 	nodoPadre.parentNode.remove(); //quitar los datos de toda la fila
 }
+
 
 function fjSeleccionarTrabajador(pvDOM) {
 	let vtHoraEntrada = document.getElementById('ctxCantidadTrabajador'); //variable JavaScript Cantidad

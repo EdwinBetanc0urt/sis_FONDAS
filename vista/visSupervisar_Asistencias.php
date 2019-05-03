@@ -42,12 +42,17 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 <div class="panel-body">			
 	<ul class="nav nav-tabs" id="myTab">
-		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
+		<li class="active">
+			<a data-toggle="tab" href="#pestAsistencia">Asistencia</a>
+		</li>
+		<li>
+			<a data-toggle="tab" href="#pestInasistencia">Inasistencia</a>
+		</li>
 	</ul>
 	<br>
 
 	<div class="tab-content">
-		<div id="pestListado" class="tab-pane fade in active">
+		<div id="pestAsistencia" class="tab-pane fade in active">
 			<form name="formLista<?= $vsVista ?>" id="formLista<?= $vsVista ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
@@ -88,6 +93,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
+		</div>
+
+		<div id="pestInasistencia" class="tab-pane fade">
+
 		</div>
 	</div>
 </div>

@@ -12,7 +12,6 @@ else{
 }
 
 switch($_POST['operacion']) {
-
 	case "UltimoCodigo":
 		UltimoCodigoAsistencia();
 		break;
@@ -36,7 +35,6 @@ switch($_POST['operacion']) {
 	case "ListaCombo":
 		Combo();
 		break;
-
 }
 
 // Funcion Ultimo Codigo de Parroquia
@@ -264,4 +262,3 @@ function ListaAsistencia() {
 
 
 ?>
-
