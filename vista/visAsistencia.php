@@ -148,14 +148,11 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 											<input type="text" id="ctxNombreTrabajador" maxlength='7' class="form-control" placeholder="Ingrese el Trabajador" />
 										</td>
-										
-
 										<td >
 											<input type="text" id="ctxHoraEntrada" maxlength='7' class="form-control tiempo"  placeholder="Ingrese la hora de entrada" readonly />
 										</td>
-										
 										<td>
-											<button type="button" onclick="fjAgregarDetalle()" class="btn btn-primary" value="add" name="addService">
+											<button type="button" onclick="agregarDetalle()" class="btn btn-primary" value="add" name="addService">
 												<span class="glyphicon glyphicon-plus"></span>
 											</button>
 											<button type="button" onclick="fjDesplegarCatalogo()" class="btn btn-primary" >
@@ -165,9 +162,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										</td>
 									</tr>
 								</thead>
-								
 								<tbody id="tabBodyDetalle" >
-								
 								</tbody>
 							</table>
 						</div>
