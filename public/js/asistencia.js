@@ -306,26 +306,25 @@ function agregarDetalle() {
 
 
 function buscaDetalleRepetido(piCodigo, psDetalle = ".renglon"){
-	let vbRepetido = false;
+	let existe = false;
 	let _elementosDOM = document.querySelectorAll(psDetalle);
-	//console.log(_elementosDOM);
 
 	for (let i = 0; i < _elementosDOM.length; i++){
 		// compara el elemento del arreglo en X posición con el valor
 		// si en X posición encuentra un valor igual
-		if (parseInt(_elementosDOM[i].value.trim()) == parseInt(piCodigo.trim()) ) {
-			vbRepetido = true;
+		if (parseInt(_elementosDOM[i].value.trim()) == parseInt(piCodigo.trim())) {
+			existe = true;
 			break;
 		}
 	}
 
 	//si esta repetido retorna true
-	return vbRepetido;
+	return existe;
 } //cierre de la función
 
 
 /**
- * 
+ * Elimina un nodo del DOM en el HTML según el nivel y para los nodos padres
  * @param {Object} nodo Elemento Dom
  * @param {Number} nivelArriba Nivel del elemento hacia arriba para remover
  */
