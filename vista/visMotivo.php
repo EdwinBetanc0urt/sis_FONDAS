@@ -21,13 +21,12 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-	
 	<br>
 
 	<div class="tab-content">	
 		<div id="pestListado" class="tab-pane fade in active">
 
-			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
+			<form name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
 						<div class="col-xs-10">
@@ -42,7 +41,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
 							</div>	
 						</div>
-	
+
 						<div class="col-xs-2">
 							<div class="input-group">
 								<span class="input-group-addon">
@@ -84,7 +83,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
-						
+
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-8">
 									<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
 									if(isset($_GET["getId"])) 
@@ -95,7 +94,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						
+
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-4">
 								<label for="ctxCantidad_Dias">* Cantidad en Dias</label>
 								<input id="ctxCantidad_Dias" class="valida_alfabetico form-control" maxlength="45" name="ctxCantidad_Dias" type="text" size="20" required value="<?php
@@ -114,18 +113,13 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getTipo_Ausencia']; ?>" />
 							</div>
 
-                            
-							
 						</div>
-
-								
 					</div>
 				</div>
 				<div class="modal-footer">
 					<?php
 						include_once("_botones.php");
 					?>
-
 				</div>
 			</div>
 		</div>
@@ -136,14 +130,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar
 else {
 	header("location: ../controlador/conCerrar.php?getMotivoLogOut=sinlogin");
 }
-
 ?>

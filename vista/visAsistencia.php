@@ -6,31 +6,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "20";
 ?>
 
-<script type="text/javascript" >
-	$(function () {
-		startTime();
-	});
-
-	function startTime() {
-		let today = new Date();
-		let h = today.getHours();
-		let m = today.getMinutes();
-		let s = today.getSeconds();
-		m = checkTime(m);
-		s = checkTime(s);
-		document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
-		document.getElementById('ctxReloj').value = h + ":" + m + ":" + s;
-		document.getElementById('ctxHoraEntrada').value = h + ":" + m + ":" + s;
-		setTimeout(startTime, 500);
-	}
-	function checkTime(i) {
-		if (i < 10) {
-			i = "0" + i
-		};  // add zero in front of numbers < 10
-		return i;
-	}
-</script>
-
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
 		<button id="btnNuevo" class="btn btn-primary" onclick="fjNuevoRegistro();">
@@ -173,14 +148,11 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 											<input type="text" id="ctxNombreTrabajador" maxlength='7' class="form-control" placeholder="Ingrese el Trabajador" />
 										</td>
-										
-
 										<td >
 											<input type="text" id="ctxHoraEntrada" maxlength='7' class="form-control tiempo"  placeholder="Ingrese la hora de entrada" readonly />
 										</td>
-										
 										<td>
-											<button type="button" onclick="fjAgregarDetalle()" class="btn btn-primary" value="add" name="addService">
+											<button type="button" onclick="agregarDetalle()" class="btn btn-primary" value="add" name="addService">
 												<span class="glyphicon glyphicon-plus"></span>
 											</button>
 											<button type="button" onclick="fjDesplegarCatalogo()" class="btn btn-primary" >
@@ -190,9 +162,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										</td>
 									</tr>
 								</thead>
-								
 								<tbody id="tabBodyDetalle" >
-								
 								</tbody>
 							</table>
 						</div>
@@ -203,7 +173,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<center>
 					<div class="col-xs-12">
 						
-						<button class="btn btn-info right" onclick="enviar(this.value);" value="incluir" >
+						<button type="button" class="btn btn-info right" onclick="enviar(this.value);" value="incluir" >
 							Guardar
 						</button>
 						<!--

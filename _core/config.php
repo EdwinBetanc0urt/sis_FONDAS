@@ -20,7 +20,7 @@
 
 	date_default_timezone_set("America/Caracas");
 
-	ini_set('default_charset', 'utf-8');
+	ini_set("default_charset", "utf-8");
 
 	// define el separador de rutas en Windows \ y basados en Unix /
 	defined("DS") OR define("DS", DIRECTORY_SEPARATOR);
@@ -73,8 +73,8 @@
 	ini_set("disable_functions", "ini_set");
 
 	//por defecto PHP/5.6.30 o su versión
-	header('Server: ' . ENTORNO);
-	header('X-Powered-By: EdwinBetanc0urt <EdwinBetanc0urt@outlook.com>, entorno ' . ENTORNO); 
+	header("Server: " . ENTORNO);
+	header("X-Powered-By: EdwinBetanc0urt <EdwinBetanc0urt@outlook.com>, entorno " . ENTORNO); 
 
 	// inicio de sesión
 	if (strlen(session_id()) < 1) {

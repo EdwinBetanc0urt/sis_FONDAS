@@ -75,3 +75,78 @@ function salir(psRuta = ""){
 		}
 	});
 }
+
+/**
+ * Get date and time from client in a object value
+ * @param {string} type Type value of return
+ * @returns {object|string} 
+ */
+function clientDateTime(type = "") {
+	let months = [
+		{
+			number: "01",
+			letter: "Enero"
+		},
+		{
+			number: "02",
+			letter: "Febrero"
+		},
+		{
+			number: "03",
+			letter: "Marzo"
+		},
+		{
+			number: "04",
+			letter: "Abril"
+		},
+		{
+			number: "05",
+			letter: "Mayo"
+		},
+		{
+			number: "06",
+			letter: "Junio"
+		},
+		{
+			number: "07",
+			letter: "Julio"
+		},
+		{
+			number: "08",
+			letter: "Agosto"
+		},
+		{
+			number: "09",
+			letter: "Septiembre"
+		},
+		{
+			number: 10,
+			letter: "Octubre"
+		},
+		{
+			number: 11,
+			letter: "Noviembre"
+		},
+		{
+			number: 12,
+			letter: "Diciembre"
+		}
+	];
+
+    //se obtiene la fecha actual del dispositivo CLIENTE
+	let objFecha = new Date(); //instancia un objeto
+    let datFecha = objFecha.getFullYear() + "-" + months[objFecha.getMonth()].number + "-" + objFecha.getDate();
+    let timHora = objFecha.getHours() + ":" + objFecha.getMinutes() + ":" + objFecha.getSeconds();
+	let dateTime = {
+		date: datFecha,
+		time: timHora
+	};
+
+	if (type.toLowerCase() == "t") {
+		return dateTime.time;
+	}
+	else if (type.toLowerCase() == "d") {
+		return dateTime.date;
+	}
+	return dateTime
+}

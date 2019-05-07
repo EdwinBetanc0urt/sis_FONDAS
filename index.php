@@ -25,7 +25,7 @@
 	error_reporting(E_ALL); // E_ALL muestra todos los errores y  0 los desactiva
 	ini_set("display_errors", "On");
 	date_default_timezone_set("America/Caracas");
-	ini_set('default_charset', 'utf-8');
+	ini_set("default_charset", "utf-8");
 
 	$miurl = "index";
 	if(isset($_GET["accion"]) AND trim($_GET["accion"]) != ""){
@@ -34,17 +34,22 @@
 
 	if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 		isset($_SESSION["sistema"]) AND $_SESSION["sistema"] == "fondas") {
-		require_once("vista/visIntranet.php");
+		require_once("vista" . DS . "visIntranet.php");
 	}
 	else if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 		isset($_SESSION["sistema"]) AND $_SESSION["sistema"] == "fondas") {
-		require_once("vista/vis_Completar.php");
+		require_once("vista" . DS . "vis_Completar.php");
 	}
 	else if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "caducado" AND
 		isset($_SESSION["sistema"]) AND $_SESSION["sistema"] == "fondas") {
-		require_once("vista/vis_ClaveCaducada.php");
+		require_once("vista" . DS . "vis_ClaveCaducada.php");
 	}
 	else {
-		require_once("vista/vis_{$miurl}.php");
+		if (is_file("vista" . DS . "vis_{$miurl}.php")) {
+			require_once("vista" . DS . "vis_{$miurl}.php");
+		}
+		else {
+			require_once("vista" . DS . "vis_index.php");
+		}
 	}
 ?>
