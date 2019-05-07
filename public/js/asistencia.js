@@ -1,42 +1,9 @@
 
 var lsVista = "Asistencia";
 
-
-//funcion.javascript.Enviar (parametro.vista.Valor)
-function enviar(pvValor = "incluir") {
-	let arrFormulario = $("#form" + lsVista);
-	let viCodigo = document.getElementById("numId");
-	let vsNombre = document.getElementById("ctxNombre");
-	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
-
-	//si el cod está vació y el botón pulsado es igual a Registar o Modificar no enviara el formulario
-	if (pvValor === "incluir" || pvValor === "Modificar") {
-		if (vsNombre.value.trim()) {
-			vbComprobar = false;
-			swal({
-				title: '¡Atención!',
-				html: "LA DESCRIPCION ES OBLIGATORIA<br /> No puede estar vacía para <b>" + pvValor.toUpperCase() + "</b>",
-				type: 'error',
-				confirmButtonText: 'Ok',
-				showCloseButton: true
-			}).then((result) => {
-				vsNombre.focus(); //enfoca el cursor en el campo que falta del formulario
-			});
-			return; // rompe la función para que el usuario verifique antes de continuar
-		}
-	}
-
-
-	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
-	if(vbComprobar) {
-		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
-		arrFormulario.submit(); //Envía el formulario
-	}
-}
-
-
-
 $(function () {
+	startTime();
+
 	fjMostrarLista(lsVista);
 
 	// PESTAÑA DETALLE
@@ -46,6 +13,60 @@ $(function () {
 	$("#pestDetalle").removeClass("in active"); //elimina el atributo de disable
 });
 
+
+function startTime() {
+	let today = new Date();
+	let h = today.getHours();
+	let m = today.getMinutes();
+	let s = today.getSeconds();
+	m = checkTime(m);
+	s = checkTime(s);
+	document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
+	document.getElementById('ctxReloj').value = h + ":" + m + ":" + s;
+	document.getElementById('ctxHoraEntrada').value = h + ":" + m + ":" + s;
+	setTimeout(startTime, 500);
+}
+
+
+function checkTime(i) {
+	if (i < 10) {
+		i = "0" + i
+	};  // add zero in front of numbers < 10
+	return i;
+}
+
+
+//funcion.javascript.Enviar (parametro.vista.Valor)
+function enviar(pvValor = "incluir") {
+	let arrFormulario = $("#form" + lsVista);
+	let vsDetalles = $(".renglon")
+	// let viCodigo = document.getElementById("numId");
+	// let vsNombre = document.getElementById("ctxNombre");
+	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
+
+	//si el cod está vació y el botón pulsado es igual a Registar o Modificar no enviara el formulario
+	if (pvValor === "incluir" || pvValor === "Modificar") {
+		if (vsDetalles.length < 1) {
+			vbComprobar = false;
+			swal({
+				title: '¡Atención!',
+				html: 'NO HAY RENGLONES AGREGADOS<br /> No puede estar vacía' +
+					'para <b>' + pvValor.toUpperCase() + '</b >',
+				type: 'error',
+				confirmButtonText: 'Ok',
+				showCloseButton: true
+			}).then((result) => {
+				vsNombre.focus(); //enfoca el cursor en el campo que falta del formulario
+			});
+			return; // rompe la función para que el usuario verifique antes de continuar
+		}
+	}
+	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
+	if(vbComprobar) {
+		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
+		arrFormulario.submit(); //Envía el formulario
+	}
+}
 
 
 function fjNuevoRegistro() {
@@ -66,6 +87,8 @@ function fjNuevoRegistro() {
 	$("#form" + lsVista + " #divBotonesC").css("display", "none");
 	*/
 }
+
+
 function fjEditarRegistro() {
 	if($("#Registar")) {
 		$("#Registar").css("display", "none");
@@ -85,7 +108,6 @@ function fjEditarRegistro() {
 }
 
 
-
 function fjSoloDetalle() {
 	// PESTAÑA LISTADO
 	$("#liListado").addClass("disabled"); //agrega la clase disable para que no le de click
@@ -98,11 +120,7 @@ function fjSoloDetalle() {
 	$("#liDetalle a").attr("data-toggle", "tab"); //agrega el atributo de data-toggle
 	$("#liDetalle").addClass("active"); //agrega la clase para que se mueva la pestaña a ese lugar
 	$("#pestDetalle").addClass("in active"); //elimina el atributo de disable
-	
 }
-
-
-
 
 
 function fjCancelar() { 
@@ -124,6 +142,7 @@ function fjCancelar() {
 	$("#form" + lsVista + " #numId").val("");
 	$("#form" + lsVista + " #txaObservacion").val("");
 }
+
 
 function fjSeleccionarRegistro(pvDOM) {
     console.log(pvDOM);
@@ -180,163 +199,156 @@ function fjSeleccionarRegistro(pvDOM) {
 }
 
 
-
 function fjDesplegarCatalogo(){
 	arrDatos = ["", $("#ctxCodigos").val()];
 	fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", arrDatos);
 	$("#VentanaModal").modal('show'); //para boostrap v3.3.7
-	$("#formLista #ctxBusqueda").focus();
+	$("#formListaTrabajador #ctxBusqueda").focus();
 }
 
 
-
-//función para agregar los datos al arreglo
-function fjAgregarDetalle() {
-	let tabla = document.getElementById("tabBodyDetalle"); //se toma el id de la tabla
-	//let tabla = document.getElementById("tabDetalle").getElementsByTagName("tbody")[0]; //funciona
-	//let tabla = document.getElementById("tabDetalle").getElementById("tabBodyDetalle")[0]; //no funciona
-	let viTrabajador = document.getElementById('numIdTrabajador'); //variable JavaScript Trabajador
-	let vsNombre = document.getElementById('ctxNombreTrabajador'); //se toma el id del objeto
-	let vtHoraEntrada = document.getElementById('ctxHoraEntrada'); //variable JavaScript Cantidad
-	let vjDetalles = document.getElementById('ctxCodigos'); // un hidden que guarda valores mientras se manejan los detalles
-	//let vjObservacion = document.getElementById('ctxObservacionTrabajador').value; //variable JavaScript Observación
-
-	//si el numIdTrabajador está vació no agregara el detalle al formulario
-	if(viTrabajador.value.trim() === "") {
+function agregarDetalle() {
+	if($("#numIdTrabajador").val() == "") {
 		swal({
 			title: '¡Atención!',
-			text: 'El Trabajador no puede estar vació, \n Realice una búsqueda o ingrese su código si lo conoce ',
-			type: 'warning',
-			showCloseButton: true,
-			confirmButtonText: 'Ok'
-		}).then((result) => {
-			//$("#VentanaModalTrabajador").modal('show'); //para boostrap v3.3.7
-			fjDesplegarCatalogo();
-		});
-		return; // rompe la función para que el usuario verifique antes de continuar
-	}
-
-	//si el ctxCantidadTrabajador está vació no agregara el detalle al formulario
-	if(vtHoraEntrada.value.trim() === "") {
-		swal({
-			title: '¡Atención!',
-			text: 'Debe colocar la cantidad que sale del Trabajador',
+			html: 'El Trabajador no puede estar vació para agregar un renglon, ' +
+				'<br> Realice una búsqueda o ingrese su código si lo conoce ',
 			type: 'info',
 			showCloseButton: true,
-			confirmButtonText: 'Ok'
-		}).then((result) => {
-			vtHoraEntrada.focus();
+			confirmButtonText: 'Ok',
+			onClose: () => {
+				fjDesplegarCatalogo();
+			},
+			footer: ' '
 		});
-		return; // rompe la función para que el usuario verifique antes de continuar
+		return;
 	}
 
-	//si el ctxCantidadTrabajador es menor a 1 no agregara el detalle al formulario
-	if(parseInt(vtHoraEntrada.value.trim()) <= 0) {
+	if($("#ctxHoraEntrada").val() == "") {
+		swal({
+			title: '¡Atención!',
+			html: 'Debe colocar la el tiempo de marcaje del Trabajador',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' ',
+			onClose: () => {
+				$("#ctxHoraEntrada").focus();
+			}
+		});
+		return;
+	}
+
+	if (parseInt($("#ctxHoraEntrada").val()) <= 0) {
 		swal({
 			title: '¡Atención!',
 			text: 'La cantidad a ingresar no puede ser menor a 1',
 			type: 'info',
 			showCloseButton: true,
-			confirmButtonText: 'Ok'
-		}).then((result) => {
-			vtHoraEntrada.focus();
+			confirmButtonText: 'Ok',
+			footer: ' ',
+			onClose: () => {
+				$("#ctxHoraEntrada").focus();
+			}
 		});
-		return; // rompe la función para que el usuario verifique antes de continuar
+		return;
 	}
 
-	//pasa las validaciones del detalle
+	//si no encuentra repetidos lo agrega
+	if (!buscaDetalleRepetido($("#numIdTrabajador").val())) {
+		$('#tabDetalle tbody').append(
+			'<tr onclick="//eliminarDetalle(this);" orden="' + $("#numNivel").val() + '">' +
+				'<td>' +
+				 	$("#ctxNombreTrabajador").val().toUpperCase() +
+					'<input type="hidden" name="detIdTrabajador[]" readOnly ' +
+					'id="detIdTrabajador' + $("#numIdTrabajador").val() + '" ' +
+					'value = "' + $("#numIdTrabajador").val() + '" ' +
+					'class= "form-control renglon" /> ' +
+				'</td>' +
+				'<td>' +
+					'<input type="time" name="detHoraEntrada[]" id="detHoraEntrada' +
+					$("#numIdTrabajador").val() + '" value="' + $("#ctxHoraEntrada").val() +
+					'" class="form-control" />' +
+				'</td>' +
+				'<td>' +
+					'<input type="button" id="btnButtonDel" value="Eliminar"'+
+					'class= "btn btn-danger form-control" ' +
+					'onclick="eliminarDetalle(this, 2);" />' +
+				'</td>' +
+			'</tr>'
+		);
+	}
 	else {
-
-		let tr = tabla.insertRow(-1); //agrega la columna 
-		let td0 = tr.insertCell(0);	//agrega la celda comenzando con un arreglo 0
-		let td1 = tr.insertCell(1);	
-		let td2 = tr.insertCell(2);
-		//console.log(vjDetalles.value);
-		arrDetalles = vjDetalles.value.split(','); //crea un arreglo separando cada posición con comas
-		tamArreglo = arrDetalles.length; //mide el tamaño del arreglo para saber el final del ciclo
-		
-		//recorre el arreglo
-		for(var i = 0 ; i < tamArreglo ; i++) {
-			//compara el elemento del arreglo en X posición con el valor del Trabajador
-			if(parseInt(arrDetalles[i]) == viTrabajador.value) {
-				swal({
-					title: '¡Atención!',
-					text: 'Ya se ha agregado el trabajador: ' + vsNombre.value.toUpperCase() + ', y no puede agregarse 2 veces ',
-					type: 'info',
-					showCloseButton: true,
-					confirmButtonText: 'Ok'
-				}).then((result) => {
-					vtHoraEntrada.focus();
-					viTrabajador.value = "";
-					vsNombre.value = "";
-					vtHoraEntrada.value = "";
-					fjDesplegarCatalogo();
-				});
-				return; //rompe el ciclo si encuentra un código igual
+		swal({
+			type: "error",
+			html: 'En esta jornada ya se encuentra agregado el trabajador: <b>' +
+				$("#ctxNombreTrabajador").val().toUpperCase() + '</b>, y no ' +
+				'puede agregarse más de dos (2) veces.',
+			showCloseButton: true,
+			confirmButtonText: 'Ok',
+			footer: ' ',
+			onClose: () => {
+				$("#ctxHoraEntrada").val(null);
+				$("#ctxNombreTrabajador").val(null);
+				$("#numIdTrabajador").val(null);
+				fjDesplegarCatalogo();
 			}
-		} //cierre del for
+		});
+		return;
+	}
 
-		if(tamArreglo == 1 && arrDetalles[0] == 0)
-			vjDetalles.value =  viTrabajador.value; //agrego ese id de articulo al arreglo
-
-		//if(tamArreglo == 0)
-		//	vjDetalles.value =  viTrabajador.value; //agrego ese id de articulo al arreglo
-		else
-			vjDetalles.value +=  ", " + viTrabajador.value; //agrego ese id de articulo al arreglo
-		//arrDetalles.push(23); //agrego ese id de articulo al arreglo
-		//vjDetalles.value =  arrDetalles.toString();
-
-		//en la primera fila muestra el nombre en el html y agrega un campo oculto con el código del articulo para enviar al servidor
-		td0.innerHTML = vsNombre.value + "<input type='hidden' class='form-control' id='detIdTrabajador" + viTrabajador.value + "' name='detIdTrabajador[]' value='" + viTrabajador.value + "' readOnly />";
-
-		td1.innerHTML = "<input type='text' class='valida_num_entero form-control' id='detHoraEntrada" + viTrabajador.value + "' name='detHoraEntrada[]' maxlength='4' value='" + vtHoraEntrada.value + "' />";
-
-		td2.innerHTML = "<button type='button' class='btn' onclick='fjQuitarDetalle(this.parentNode, " + viTrabajador.value + ");' value='del' name='delService'>Quitar</button>";
-		//limpia los campos de la vista
-		viTrabajador.value = "";
-		vsNombre.value = "";
-		vtHoraEntrada.value = "";
-		vsNombre.focus() ;
-
-		console.log(vjDetalles.value);
-		//reasigna validaciones a los innput
-		fjValidarInner();
-	} // cierre del else si no esta vació
-}
+	$("#ctxHoraEntrada").val(null);
+	$("#ctxNombreTrabajador").val(null);
+	$("#numIdTrabajador").val(null);
+	fjValidarInner();
+	// fjLimpiaValores();
+} //cierre de la función
 
 
+function buscaDetalleRepetido(piCodigo, psDetalle = ".renglon"){
+	let existe = false;
+	let _elementosDOM = document.querySelectorAll(psDetalle);
 
-//función JavaScript Quitar Detalle 
-function fjQuitarDetalle(nodoPadre, piTrabajador) {
-	var vjDetalles = document.getElementById('ctxCodigos'); //un hidden que guarda valores mientras se manejan los detalles
-
-	arrDetalles = vjDetalles.value.split(','); //crea un arreglo separando cada posición con comas
-	tamArreglo = arrDetalles.length;  //mide el tamaño del arreglo para saber el final del ciclo
-	//recorre el arreglo
-	for(var i = 0 ; i < tamArreglo ; i++) {
-		//compara el elemento del arreglo en X posición con el valor del Trabajador
-		//si en X posición encuentra un valor igual
-		if(parseInt(arrDetalles[i]) == parseInt(piTrabajador)) {
-			arrDetalles[i]=0; //reasigna el valor a 0, ya que no hay códigos con 0 de los artículos
-			//console.log(arrDetalles[0]);
+	for (let i = 0; i < _elementosDOM.length; i++){
+		// compara el elemento del arreglo en X posición con el valor
+		// si en X posición encuentra un valor igual
+		if (parseInt(_elementosDOM[i].value.trim()) == parseInt(piCodigo.trim())) {
+			existe = true;
+			break;
 		}
-	} //cierre del for*/
-	vjDetalles.value = arrDetalles; //reasigno los valores del arreglo en la vista
-	console.log(arrDetalles);
-	nodoPadre.parentNode.remove(); //quitar los datos de toda la fila
-}
+	}
+
+	//si esta repetido retorna true
+	return existe;
+} //cierre de la función
+
+
+/**
+ * Elimina un nodo del DOM en el HTML según el nivel y para los nodos padres
+ * @param {Object} nodo Elemento Dom
+ * @param {Number} nivelArriba Nivel del elemento hacia arriba para remover
+ */
+function eliminarDetalle(nodo, nivelArriba = 0) {
+	for (let i = 1; i <= nivelArriba; i++) {
+		nodo = nodo.parentNode
+	}
+	nodo.remove();
+} //cierre de la función
+
 
 function fjSeleccionarTrabajador(pvDOM) {
-	let vtHoraEntrada = document.getElementById('ctxCantidadTrabajador'); //variable JavaScript Cantidad
-	console.log(pvDOM);
-	
-	if(jQuery.isFunction(pvDOM.attr))
-		arrFilas = pvDOM.attr('datos_registro').split('|'); //debe ser con jquery porque es recibido como tal con jquery
-
-	if(typeof pvDOM.getAttribute !== 'undefined')
-		arrFilas = pvDOM.getAttribute('datos_registro').split('|'); //debe ser con javascript porque es recibido cdirectamete del DOM
-	
-	console.log(arrFilas);
+	let vtHoraEntrada = document.getElementById('ctxHoraEntrada'); //variable JavaScript Cantidad
+	//debe ser con jquery porque es recibido como tal con jquery
+	if (jQuery.isFunction(pvDOM.attr)) {
+		arrFilas = pvDOM.attr('datos_registro').split('|'); 
+	}
+	//debe ser con javascript porque es recibido cdirectamete del DOM
+	if (typeof pvDOM.getAttribute !== 'undefined') {
+		arrFilas = pvDOM.getAttribute('datos_registro').split('|');
+	}
+	else {
+		return;
+	}
 
 	$("#numIdTrabajador").val(parseInt(arrFilas[2]));
 

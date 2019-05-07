@@ -55,7 +55,6 @@ function UltimoCodigoTrabajador() {
 
 
 function registrar() {
-	echo "<pre>";
 	global $gsClase;
 	$objEstado = new Trabajador();
 	$objEstado->setFormulario($_POST);

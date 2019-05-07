@@ -2,7 +2,6 @@
 var lsVista = "Acceso";
 
 $(function(){
-
 	fjComboGeneral("Tipo_Usuario");
 	fjComboGeneral("Modulo");
 
@@ -24,23 +23,19 @@ $(function(){
 });
 
 
-
 //comprueba si fue seleecionado por lo menos 1 elemento
 function fjComprobarChekcbox() {
 	if($('.chkBotones').is(':checked')) {
 		return true;
 	}
-	else
-		return false;
+	return false;
 }
-
 
 
 function fjEnviar(pvValor) {
 	//se definen las variables locales
 	let arrFormulario = $("#form" + lsVista);
 	let liTipoUsuario = $("#cmbTipo_Usuario");
-	let liModulo = $("#cmbModulo");
 	let vbComprobar = true; // variable booleana Comprobar, para verificar que todo este true o un solo false no envía
 
 	if(fjComprobarChekcbox()) {
@@ -62,15 +57,15 @@ function fjEnviar(pvValor) {
 	else {
 		//alert(" DEBE SELEECIONAR POR LO MENOS UN (1) BOTON \n Para poder " + pvValor + " algun Acceso");
 		swal({
-				title: '¡Atencion!',
-				text: 'Debe seleccionar por lo menos (1) BOTON \n Para poder ASIGNAR ACCESOS',
-				type: 'warning',
-				confirmButtonText: 'Ok'
-			});
+			title: '¡Atencion!',
+			text: 'Debe seleccionar por lo menos (1) BOTON \n Para poder ASIGNAR ACCESOS',
+			type: 'warning',
+			confirmButtonText: 'Ok'
+		});
 		vbComprobar = false;
 		return;
 	}
-	
+
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if(vbComprobar) {
 		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
@@ -81,7 +76,6 @@ function fjEnviar(pvValor) {
 
 //Elimina todos los accesos
 function fjQuitarVista(piVista) {
-	let vbComprobar = true; // variable booleana Comprobar, para verificar que todo este true o un solo false no envía
 	let vsNombreVista = $("#ctxNombreVista" + piVista);
 	let liTipoUsuario = $("#cmbTipo_Usuario");
 	swal({
@@ -95,7 +89,6 @@ function fjQuitarVista(piVista) {
 		showCloseButton: true,
 		cancelButtonText: 'No',
 	}).then((result) => {
-
 		vsRuta = "controlador/conAcceso.php";
 		$.post(vsRuta, { 
 				//variables enviadas (name: valor)
@@ -107,7 +100,6 @@ function fjQuitarVista(piVista) {
 				if(resultado == false)
 					console.log("sin consultas ");
 				else {
-					
 					vjResultado = document.getElementById("divListaAcceso") ; //*/$("#divListaAcceso").val();
 					vjResultado.innerHTML = "";
 					fjListaAcceso();
@@ -127,7 +119,6 @@ function fjQuitarVista(piVista) {
 }
 
 
-
 //selecciona o deselecciona el checkbox con solo tocar la fila
 //para mejor facilidad al hacerlo con pantallas pequeñas
 function fjSeleccionFila(paRegistro) {
@@ -137,10 +128,9 @@ function fjSeleccionFila(paRegistro) {
 		$("#" + viId).attr("checked", false); //deshabilita el campo
 	}
 	else {
-			$("#" + viId).attr("checked", true); //deshabilita el campo
+		$("#" + viId).attr("checked", true); //deshabilita el campo
 	}
 }
-
 
 
 //Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
@@ -168,7 +158,7 @@ function fjListaAcceso(piTipoUsuario = "", piModulo = "") {
 			setModulo: liModulo 
 		},
 		function(resultado) {
-			if(resultado == false)
+			if(! resultado)
 				console.log("sin consultas ");
 			else {
 				vjResultado = document.getElementById("divListaAcceso") ; //*/$("#divListaAcceso").val();
@@ -178,5 +168,3 @@ function fjListaAcceso(piTipoUsuario = "", piModulo = "") {
 		}
 	);
 }
-
-

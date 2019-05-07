@@ -90,7 +90,7 @@
 	<script type="text/javascript" src="public/js/_core.js"></script>
 	<script type="text/javascript" src="public/js/validaciones.js"></script>
 	<script type="text/javascript" src="public/js/intranet.js"></script>
-	<script type="text/javascript" src="<?= "public/js/" . strtolower($form) . ".js"; ?>"></script>
+	<script type="text/javascript" src="<?= "public/js/" . strtolower($form) . ".js" ?>"></script>
 	
 	<!--  Mensajes Emergentes -->
 	<script src="public/js/alertas.js" type="application/javascript"></script>
@@ -101,7 +101,7 @@
 			<script type="application/x-javascript">
 				$(function () {
 					// cuando el documento este listo llama la función fjMensajes que esta en el archivo jsp_Alertas.js
-					fjMensajes("<?= $_GET["msjAlerta"]; ?>");
+					fjMensajes("<?= $_GET["msjAlerta"] ?>");
 					// envía el valor que tiene msjAlerta (sinconsulta, registro, nocambio, etc)
 				});
 			</script>
@@ -126,7 +126,7 @@
 	<script type="text/javascript">
 		//cuando carga la ventana
 		$(function() {
-			fjIniciarCronometro("<?= $_SESSION['tiempo_sesion']; ?>");
+			fjIniciarCronometro("<?= $_SESSION['tiempo_sesion'] ?>");
 
 			$('.fecha_hora').datepicker({
                 format: 'LT'
@@ -164,6 +164,6 @@
 			//alert('El evento funciona!');
 			fjDetenerCronometro();
 
-			fjIniciarCronometro("<?= $_SESSION['tiempo_sesion']; ?>");
+			fjIniciarCronometro("<?= $_SESSION['tiempo_sesion'] ?>");
 		});
 	</script>

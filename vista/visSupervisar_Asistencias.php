@@ -2,38 +2,58 @@
 
 // existe y esta la variable de sesión rol
 if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
-	$vsVista = "Vista";
+	$vsVista = "Boton";
 	$liVista = "10";
 ?>
 
 
 <div class="panel-heading">
-	<h3 class="panel-title"> 	
-		<button id="btnNuevo" class="btn btn-primary" data-toggle="modal" data-target="#VentanaModal" onclick="fjNuevoRegistro();">
-			<span class="glyphicon glyphicon-plus"></span>
-			Nuevo
-		</button>
-		Vistas  de los  Modulos 
+	<h3 class="panel-title"> 
+		Supervision de Asistencias del Departamento 
 	</h3>
+	<br>
+	
+	<div class="row">
+		<div class="form-group">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<label for="ctxDescripcion">Trabajador</label>
+				<input id="ctxDescripcion" class="valida_alfabetico form-control"
+					maxlength="45" name="ctxDescripcion" type="text" required
+					value="<?php
+					if(isset($_GET['getDescripcion']))
+						echo $_GET['getDescripcion'];
+					?>" placeholder="Ingrese la Descripción" />
+			</div>
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+				<label for="ctxFechaInicio">Desde</label>
+				<input id="ctxFechaInicio" class="valida_alfabetico form-control"
+					maxlength="45" name="ctxFechaInicio" type="date" required
+					placeholder="Ingrese la Descripción" />
+			</div>
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+				<label for="ctxFechaFin">Hasta</label>
+				<input id="ctxFechaFin" class="valida_alfabetico form-control"
+					maxlength="45" name="ctxFechaFin" type="date" required
+					placeholder="Ingrese la Descripción" />
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="panel-body">
+<div class="panel-body">			
 	<ul class="nav nav-tabs" id="myTab">
-		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
+		<li class="active">
+			<a data-toggle="tab" href="#pestAsistencia">Asistencia</a>
+		</li>
+		<li>
+			<a data-toggle="tab" href="#pestInasistencia">Inasistencia</a>
+		</li>
 	</ul>
-	
 	<br>
 
-	<?php
-		//include_once("mod_". $_GET["accion"] . ".php");
-	?>
-
 	<div class="tab-content">
-
-
-		<div id="pestListado" class="tab-pane fade in active">
-
-			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
+		<div id="pestAsistencia" class="tab-pane fade in active">
+			<form name="formLista<?= $vsVista ?>" id="formLista<?= $vsVista ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
 						<div class="col-xs-10">
@@ -42,8 +62,8 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 									<span class="glyphicon glyphicon-search"></span>
 								</span>
 								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
-								oninput="fjMostrarLista('<?= $vsVista; ?>');"
-								onkeyup="fjMostrarLista('<?= $vsVista; ?>');" 
+								oninput="fjMostrarLista('<?= $vsVista ?>');"
+								onkeyup="fjMostrarLista('<?= $vsVista ?>');" 
 								class="valida_buscar form-control" 
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
 							</div>	
@@ -55,7 +75,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</span>
 								<input type="number" id="numItems" name="numItems" maxlength="4" 
-								value="10" onkeyup="fjMostrarLista('<?= $vsVista; ?>');" required
+								value="10" onkeyup="fjMostrarLista('<?= $vsVista ?>');" required
 								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
 							</div>	
 						</div>
@@ -75,44 +95,52 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 			</form>
 		</div>
 
+		<div id="pestInasistencia" class="tab-pane fade">
 
+		</div>
 	</div>
 </div>
 
 
 <div id="VentanaModal" class="modal fade modal-primary">
-	<form id="form<?=$vsVista;?>" name="form<?=$vsVista;?>" method="POST" action="controlador/con<?=$vsVista;?>.php" role="form" class="form-horizontal" >
+	<form id="form<?=$vsVista?>" name="form<?=$vsVista?>" method="POST" action="controlador/con<?=$vsVista?>.php" role="form" class="form-horizontal" >
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> X </button>
-					<h2 class="modal-title"><?=$vsVista;?></h2>
+					<h2 class="modal-title"><?=$vsVista?></h2>
 				</div>
 
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
 								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
 									if(isset($_GET["getId"])) 
 										echo $_GET["getId"]; ?>" />	
-								<label for="ctxNombre">* Descripción</label>
+								<label for="ctxNombre">* Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
 									if(isset($_GET['getNombre']))
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						</div>
 
-						<div class="form-group ui-front">
+							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
+								<label for="ctxDescripcion">* Descripción</label>
+								<input id="ctxDescripcion" class="valida_alfabetico form-control" maxlength="45" name="ctxDescripcion" type="text" size="20" required value="<?php
+									if(isset($_GET['getDescripcion']))
+										echo $_GET['getDescripcion'];
+								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+							</div>
+
 							<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
-								<label for="ctxUrl">* Url</label>
-								<input id="ctxUrl" class="valida_alfanumerico valor_sin_espacios form-control" maxlength="45" name="ctxUrl" type="text" size="20" value="<?php
-									if(isset($_GET['getUrl']))
-										echo $_GET['getUrl'];
+								<label for="ctxIcono">* Icono</label>
+								<input id="ctxIcono" class=" form-control" maxlength="45" name="ctxIcono" type="text" size="20" value="<?php
+									if(isset($_GET['getIcono']))
+										echo $_GET['getIcono'];
 								?>" placeholder="Ingrese la el icono que tendra (fuente awesome)" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-						
+
 							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
 								<label for="numPosicion">* Posicion</label>
 								<input id="numPosicion" class="valida_num_entero form-control" maxlength="45" name="numPosicion" type="number" size="20" value="<?php
@@ -120,26 +148,13 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getPosicion'];
 								?>" data-toggle="tooltip" data-placement="right" title="Num. de posicion en el menu" />
 							</div>
-
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<label for="cmbModulo">* Modulo</label>
-								<select id='cmbModulo' name='cmbModulo' class="dinamico form-control select2" data-toggle="tooltip" data-placement="right" title="Estado al cual pertenece el municipio" size="1" style="width: 100%;">
-									<option value="">Selecciona Uno...</option>
-								</select>
-								<input id="hidModulo" type="hidden" value="<?php
-									if(isset($_GET['getModulo']))
-										echo $_GET['getModulo']; ?>" />
-							</div>
 						</div>
-
-								
 					</div>
 				</div>
 				<div class="modal-footer">
 					<?php
 						include_once("_botones.php");
 					?>
-
 				</div>
 			</div>
 		</div>
@@ -150,14 +165,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar
 else {
 	header("location: ../controlador/conCerrar.php?getMotivoLogOut=sinlogin");
 }
-
 ?>

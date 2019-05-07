@@ -1,7 +1,7 @@
 
 var lsVista = "Vacaciones";
 
-$(function () {
+$(function() {
 
 	fjMostrarLista(lsVista);
 	fjMostrarLista(lsVista, "", "", "VacacionesAprobado", "ListaViewAprobado");
