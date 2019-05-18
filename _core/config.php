@@ -47,7 +47,7 @@
 	else {
 		error_reporting(ERRORES);
 		ini_set("display_errors", "On");
-		//ini_set('display_errors', '1');
+		//ini_set("display_errors", "1");
 		ini_set("display_startup_errors", "On");
 	}
 

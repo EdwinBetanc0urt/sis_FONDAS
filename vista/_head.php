@@ -127,35 +127,6 @@
 		//cuando carga la ventana
 		$(function() {
 			fjIniciarCronometro("<?= $_SESSION['tiempo_sesion'] ?>");
-
-			$('.fecha_hora').datepicker({
-                format: 'LT'
-            });
-
-            /*$('.hora_pickatime').pickatime({
-                format: 'h:i A',
-                interval: 30
-            });*/
-
-            $('.hora_pickatime').datetimepicker({
-                format: 'LT',
-				locale: 'es'
-            });
-
-			$('.fecha_hora_datepicker').datetimepicker({
-				format: 'DD-MM-YYYY HH:mm A',
-				locale: 'es'
-			});
-
-
-		    $(".calendario").datetimepicker({
-				//viewMode: 'months',
-				//format: 'DD/MM', 
-				format: 'DD-MM-YYYY', 
-				//disabledHours: false,
-				minDate: moment(),
-				locale: "es"
-		    });
 			//fjHorasServidorCliente();
 		});
 		// mientras este haciendo escribiendo o cambiando algo de la pagina

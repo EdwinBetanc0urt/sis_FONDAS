@@ -4,7 +4,7 @@ var lsVista = "Solicitar_Permiso";
 $(function () {
 	fjMostrarLista(lsVista);
 
-	$("#ctxFechaInicio").on("change, blur, focus, input", function(){
+	$("#ctxFechaInicio").on("dp.change", function () {
     	fjFechaFinal(this.value, $("#cmbMotivo_Permiso").val());
 	});
 	$("#cmbMotivo_Permiso").on("change", function(){
@@ -13,42 +13,35 @@ $(function () {
 
 });
 
-
-
 //Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjFechaFinal(psFechaInicio = "", piMotivo = "") {
 	//abre el archivo controlador y envia por POST
 	vsRuta = "controlador/conSolicitar_Permiso.php";
 	$.post(vsRuta, { 
-			//variables enviadas (name: valor)
 			operacion: "FechaFin",
 			cmbMotivo: parseInt(piMotivo),
 			ctxFechaInicio: psFechaInicio.toString() 
 		},
 		function(resultado) {
-			if(resultado == false)
+			if (!resultado) {
 				console.log("sin consultas ");
-			else {
-				console.log(resultado);
 				$("#form" + lsVista + " #ctxFechaFin").val("");
+			}
+			else {
 				$("#form" + lsVista + " #ctxFechaFin").val(resultado);
 			}
 		}
 	);
 }
 
-
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
-	let viCodigo = $("#form" + lsVista + " #numId");
 	let vsNombre = $("#form" + lsVista + " #ctxNombre");
 	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
 
-
 	//console.log (vsEntrada.value.trim());
-
 	//si el cod está vació y el botón pulsado es igual a Registar o Modificar no enviara el formulario
 	if (vsNombre.val().trim() === "" && (pvValor === "Incluir" || pvValor === "Modificar")) {
 		vbComprobar = false;
@@ -64,15 +57,12 @@ function enviar(pvValor) {
 		return; // rompe la función para que el usuario verifique antes de continuar
 	}
 
-
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if (vbComprobar) {				
 		$("#form" + lsVista + " #operacion").val(pvValor);
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
-
-
 
 function fjNuevoRegistro() {
 	$("#form" + lsVista)[0].reset();
@@ -100,6 +90,7 @@ function fjNuevoRegistro() {
 		$("#Restaurar").css("display", "none");
 	}
 }
+
 function fjEditarRegistro() {
 	if ($("#Registar")) {
 		$("#Registar").css("display", "none");
@@ -117,8 +108,6 @@ function fjEditarRegistro() {
 		$("#Restaurar").css("display", "none");
 	}
 }
-
-
 
 function fjSeleccionarRegistro(pvDOM) {
     console.log(pvDOM);
@@ -183,8 +172,6 @@ function fjSeleccionarRegistro(pvDOM) {
 
     $("#VentanaModal").modal('show'); //para boostrap v3.3.7
 }
-
-
 
 function fjCargarDias(piJornada = ""){
 	if (piJornada != "")
