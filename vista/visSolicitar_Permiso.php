@@ -129,12 +129,16 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaInicio">* Inicio del Permiso</label>
-								<input id="ctxFechaInicio" class="fecha_hora_datepicker form-control calendario" maxlength="45" name="ctxFechaInicio" type="text" size="20" required placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio, especifique la hora exacta" onchange="fjFechaFinal(this.value);" oninput="fjFechaFinal(this.value);" />
+								<input type="text" id="ctxFechaInicio" name="ctxFechaInicio"
+									class="fecha_hora_datepicker form-control"
+									maxlength="45" required placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="bottom"
+									title="Campo Obligatorio, especifique la hora exacta" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaFin">* Reincorporación del Permiso</label>
-								<input id="ctxFechaFin" class="form-control" name="ctxFechaFin" type="text" readonly placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Generado automaticamente" />
+								<input type="text" id="ctxFechaFin" class="form-control" name="ctxFechaFin"
+								readonly placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Generado automaticamente" />
 							</div>
 
 						</div>

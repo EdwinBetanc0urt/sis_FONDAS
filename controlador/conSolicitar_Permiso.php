@@ -47,40 +47,27 @@ function FechaFin() {
 	$objSolicitar_Permiso = new Solicitar_Permiso();
 	$arrTiempo = $objSolicitar_Permiso->getTiempoMotivo(trim($_POST["cmbMotivo"]));
 	if ($arrTiempo) {
-
 		if ($arrTiempo["cantidad_tiempo"] != NULL OR $arrTiempo["cantidad_tiempo"] != "") {
-			//echo $arrTiempo["cantidad_tiempo"] * 60;
 			$hora = date("h:i:s A", strtotime($_POST["ctxFechaInicio"]) + ($arrTiempo["cantidad_tiempo"] * 60));
-			$fecha = $objSolicitar_Permiso->faFechaFormato($_POST["ctxFechaInicio"], "dma", "amd");
+			$fecha = $objSolicitar_Permiso->faFechaFormato($_POST["ctxFechaInicio"], "dma", "dma", "-");
 
-			//var_dump($_POST["ctxFechaInicio"]);
-			//var_dump($arrTiempo["cantidad_dias"]);
 			//$fecha = $objSolicitar_Permiso->faFechaFormato($_POST["ctxFechaInicio"], "dma", "amd");
-			//date("d-m-Y h:i:s A", $_POST["ctxFechaInicio"]);
-			//var_dump($fecha);
 			//$nuevafecha = strtotime("+{$arrTiempo["cantidad_tiempo"]} day", strtotime($fecha)) ;
 			//$nuevafecha = date('Y-d-m h:i:s A', $nuevafecha);
 			echo $fecha . " " . $hora;
 		}
 		elseif($arrTiempo["cantidad_dias"] != NULL OR $arrTiempo["cantidad_dias"] != "") {
-		 
-			//var_dump($_POST["ctxFechaInicio"]);
-			//var_dump($arrTiempo["cantidad_dias"]);
 			$fecha = $objSolicitar_Permiso->faFechaFormato($_POST["ctxFechaInicio"], "dma", "amd");
-			//date("d-m-Y h:i:s A", $_POST["ctxFechaInicio"]);
-			//var_dump($fecha);
 			$nuevafecha = strtotime("+{$arrTiempo["cantidad_dias"]} day", strtotime($fecha)) ;
 			$nuevafecha = date('d-m-Y h:i:s A', $nuevafecha);
 			echo $nuevafecha;
 		}
 		else
 			echo "mutuo";
-		//$objDate1 = new DateTime($strStart);
 	}
 	else {
-		echo "null";
+		echo " ";
 	}
-	
 }
 
 // Funcion Ultimo Codigo de Parroquia
@@ -236,10 +223,10 @@ function ListaSolicitar_Permiso() {
 						<?php 
 						while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 							$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
-							$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
+							$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma", "-");
 
 							$vsHoraF = date("h:i:s A", strtotime($arrRegistro["fecha_fin"]));
-							$vsFechaF = $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma");
+							$vsFechaF = $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma", "-");
 							?>
 							<tr onclick='fjSeleccionarRegistro(this);' data-toggle='tooltip' data-placement='top' title='Doble clic para detallar los datos y realizar alguna operación'
 								datos_registro='Seleccion
@@ -250,8 +237,8 @@ function ListaSolicitar_Permiso() {
 								|<?= ucwords($arrRegistro["fecha_elaboracion"]); ?>
 								|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-								|<?= ucwords($arrRegistro["fecha_inicio"]); ?>
-								|<?= ucwords($arrRegistro["fecha_fin"]); ?>' >
+								|<?= ucwords($vsFechaI . " " . $vsHoraI); ?>
+								|<?= ucwords($vsFechaF . " " . $vsHoraF); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
@@ -267,36 +254,37 @@ function ListaSolicitar_Permiso() {
 					</tbody>
 				</table> 
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>"
+							onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
@@ -315,4 +303,3 @@ function ListaSolicitar_Permiso() {
 
 
 ?>
-

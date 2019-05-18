@@ -14,8 +14,6 @@ $(function() {
 		//.css("width", "100%");
 	}
 
-	//$('.calendario').datetimepicker();
-
 	// función anónima que al cambiar un select asigna el valor al hidden que esta abajo de el
 	//$('select > .dinamico').on('change', function() {
 	$('select.dinamico').on('change', function() {
@@ -37,6 +35,28 @@ $(function() {
 			//console.log(txt);
 		}
 	});
+
+	$('.hora_pickatime').datetimepicker({
+		format: 'LT',
+		locale: 'es'
+		// format: 'h:i A',
+		// interval: 30
+	});
+
+	$(".fecha_pickatime, .calendario").datetimepicker({
+		//viewMode: 'months',
+		//format: 'DD/MM', 
+		format: 'DD-MM-YYYY', 
+		//disabledHours: false,
+		minDate: moment(),
+		locale: "es"
+	});
+
+	$('.fecha_hora_datepicker').datetimepicker({
+		format: 'DD-MM-YYYY HH:mm A',
+		locale: 'es'
+	});
+
 });
 
 
