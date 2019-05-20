@@ -4,16 +4,23 @@
  * Copyright © 2018 EdwinBetanc0urt <EdwinBetanc0urt@outlook.com>
  * All rights reserved.
  */
-
-
 if (typeof jQuery === "undefined") {
     throw new Error("Las consultas y llamadas AJAX requieren jQuery, By EdwinBetanc0urt");
 }
 
-
-
-//Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
-// sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
+/**
+ * funcion javascript Combo General
+ * Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
+ * sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos.
+ * @param {string} psClase elemento php para abrir, ademas del id del elemento
+ * select por defecto donde colocara el resultado.
+ * @param {string} psDependiente elemento select o padre mediante el cual toma el
+ * valor para filtrar los resultados a obtener.
+ * @param {string} psDestino id del elemento select donde colocara los resutltados,
+ * por defecto es el mismo de la clase.
+ * @param {string} psSwitch caso en el switch que desplegara la funcion en el backend.
+ * @author EdwinBetanc0urt
+ */
 function fjComboGeneral(psClase, psDependiente = "", psDestino = "", psSwitch = "ListaCombo") {
     let viDependiente = "";
     // abre el archivo controlador y envía por POST
@@ -51,7 +58,7 @@ function fjComboGeneral(psClase, psDependiente = "", psDestino = "", psSwitch = 
                     .attr("disabled", false); // habilita el campo de estado
             }
         }
- );
+    );
 }
 
 

@@ -2,7 +2,7 @@
 
 // existe y esta la variable de sesión rol
 if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
-	$vsVista = "Boton";
+	$vsVista = "Supervisar_Asistencias";
 	$liVista = "10";
 ?>
 
@@ -12,7 +12,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 		Supervision de Asistencias del Departamento 
 	</h3>
 	<br>
-	
+
 	<div class="row">
 		<div class="form-group">
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -96,7 +96,46 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 		</div>
 
 		<div id="pestInasistencia" class="tab-pane fade">
+			<form name="formListaInasistencia" id="formListaformListaInasistencia" role="form">
+				<div class="row">
+					<div class="form-group" >
+						<div class="col-xs-10">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-search"></span>
+								</span>
+								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
+								oninput="fjMostrarLista('formListaInasistencia', '', '', '', 'listaInasistente');"
+								onkeyup="fjMostrarLista('formListaInasistencia', '', '', '', 'listaInasistente');" 
+								class="valida_buscar form-control" 
+								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
+							</div>	
+						</div>
+	
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-list-alt"></span>
+								</span>
+								<input type="number" id="numItems" name="numItems" maxlength="4" 
+								value="10" onkeyup="fjMostrarLista('formListaInasistencia', '', '', '', 'listaInasistente');" required
+								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
+							</div>	
+						</div>
+					</div>
+				</div>
 
+				<!-- guarda el valor del atributo por donde va a ordenar -->
+				<input type='hidden' name='hidOrden' id='hidOrden' />
+
+				<!-- guarda el valor en la forma de ordenado si ASCendente o DESCendente -->
+				<input type="hidden" id="hidTipoOrden" name="hidTipoOrden" />
+
+				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
+				<input type='hidden' name='subPagina' id='subPagina' />
+								
+				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
+			</form>
 		</div>
 	</div>
 </div>

@@ -1,21 +1,4 @@
 <?php
-
-/** 
- * Agente Usuario, Datos del cliente Web
- *
- * @descripcion: Agente_User - clase PHP para obtener los datos del PC cliente 
- * @author: Edwin Betancourt <EdwinBetanc0urt@hotmail.com> 
- * @author: Diego Chavez <DJChvz18@gmail.com> 
- * @license: GNU GPL v3,  Licencia Pública General de GNU 3.
- * @license: CC BY-SA, Creative  Commons  Atribución  - CompartirIgual (CC BY-SA) 4.0 Internacional.
- * @category Librería.
- * @package: lib_Agente.php.
- * @since: v0.4.
- * @version: 0.5.
- * @Fecha de Modificacion: 02/Abril/2018
- * @Fecha de Creacion: 22/Enero/2017
- **/
-
 /**
 		ESTA LIBRERIA ESTÁ HECHA CON FINES ACADEMICOS, SU DISTRIBUCIÓN ES TOTALMENTE
 	GRATUITA, BAJO LA LICENCIA GNU GPL v3 y CC BY-SA v4 Internacional, CUALQUIER,
@@ -33,10 +16,23 @@
 			* Obtiene el nombre y versión del Sistema Operativo.
 */
 
-
+/** 
+ * Agente Usuario, Datos del cliente Web
+ *
+ * @descripcion: Agente_User - clase PHP para obtener los datos del PC cliente 
+ * @author: Edwin Betancourt <EdwinBetanc0urt@hotmail.com> 
+ * @author: Diego Chavez <DJChvz18@gmail.com> 
+ * @license: GNU GPL v3,  Licencia Pública General de GNU 3.
+ * @license: CC BY-SA, Creative  Commons  Atribución  - CompartirIgual (CC BY-SA) 4.0 Internacional.
+ * @category Librería.
+ * @package: lib_Agente.php.
+ * @since: v0.4.
+ * @version: 0.5.
+ * @Fecha de Modificacion: 02/Abril/2018
+ * @Fecha de Creacion: 22/Enero/2017
+ **/
 class clsAgente
 {
-		
 
 	//opera debe estar de primero ya que contiene variantes de chrome y safari
 	public $arrNavegadores = array(
@@ -123,7 +119,7 @@ class clsAgente
 		'SunOS' => 'sunos',
 		'Symbian' => 'symbian',
 		'webOS' => 'webos'
-	);//Falta CHROME OS
+	); //Falta CHROME OS
 
 
 
@@ -169,22 +165,19 @@ class clsAgente
 		if (strpos($this->atrAgente_U, 'win') !== FALSE) {
 			$arrSO = $this->arrOS_MS; //arreglo Sistema Operativo = arreglo Miscrosoft
 		}
-
 		//Apple
-		elseif (strpos($this->atrAgente_U, 'ip') !== FALSE || strpos($this->atrAgente_U, 'mac') !== FALSE)
+		elseif (strpos($this->atrAgente_U, 'ip') !== FALSE || strpos($this->atrAgente_U, 'mac') !== FALSE) {
 		//elseif (strpos($this->atrAgente_U, 'mac') !== FALSE)
 			$arrSO = $this->arrOS_Apple; //arreglo Sistema Operativo = arreglo Apple
-
+		}
 		//Otras Plataformas
-		else
+		else {
 			$arrSO = $this->arrOS_Otros; //arreglo Sistema Operativo = arreglo Otros
+		}
 
 		foreach($arrSO as $arrSistemas => $patron) {
-			//var_dump($patron);
-			//var_dump($arrSistemas);
-			//if (eregi($patron, $this->atrAgente_U))
+			//if (eregi($patron, $this->atrAgente_U)) {
 			if (preg_match("/".$patron."/i", $this->atrAgente_U, $arrCoincidencia)) {
-				//var_dump($arrCoincidencia);
 				return $arrSistemas;
 			}
 		}
@@ -273,12 +266,11 @@ class clsAgente
 		$vsConocido = array('Version', $vsNavegadorCorto, 'other');
 		$vsPatron = '#(?<browser>' . join('|', $vsConocido) .
 		')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-		
 	
 		if (!preg_match_all($vsPatron, $this->atrAgente_U, $arrCoincidencia)) {
 			//no tenemos ningún número coincidente
 			//genera el arreglo $arrCoincidencia
-			continue;
+			// continue;
 		}
 	
 		// ver cuántos tenemos
@@ -290,7 +282,6 @@ class clsAgente
 			if (strripos($this->atrAgente_U, "Version") < strripos($this->atrAgente_U, $vsNavegadorCorto)) {
 				$version = $arrCoincidencia['version'][0];
 			}
-
 			else {
 				$version = $arrCoincidencia['version'][1];
 			}
@@ -391,7 +382,6 @@ class clsAgente
 				}
 			}
 		}
-
 		else {
 			$client_ip =
 				(!empty($_SERVER['REMOTE_ADDR'])) ?

@@ -1,8 +1,11 @@
 
-//función javascript Mensajes, utilizado por las operaciones Incluir, Consultar, Modificar,
-// Eliminar y Restaurar de las maestras, ademas de acciones del login
-function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que contiene los valores
-
+/**
+ * función javascript Mensajes, utilizado por las operaciones Incluir, Consultar,
+ * Modificar, Eliminar y Restaurar de las maestras, ademas de acciones del login.
+ * @param {string} pvValorUrl parámetro de la vista que contiene los valores
+ * @author EdwinBetanc0urt
+ */
+function fjMensajes(pvValorUrl) {
     var colorFondo = "#e1e1e1";
 
     //si la búsqueda de la palabra noeliminousados en la cadena pvValorUrl no da error
@@ -37,9 +40,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
         });
     }
 
-
     switch(pvValorUrl) {
-
         /*
         default:
             alert("Instituto Venezolano de Seguros Sociales <br />");
@@ -57,7 +58,6 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-            
         // si se solicita una pagina en construcción
         case "claveerrada":
             swal({
@@ -68,8 +68,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
                 confirmButtonText: 'Ok'
             });
             break;
-			
-			
+
         // si se solicita una pagina en construcción
         case "mantenimiento":
             swal({
@@ -81,18 +80,20 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-            // si se solicita una pagina en construcción
+        // si se solicita una pagina en construcción
         case "accesoprohibido":
             swal({
                 title: '¡Cuidado!',
-                html: 'Hubo un intento de acceso a secciones restringidas, si continua tratando de acceder a dichas secciones sin los privilegios adecuados sera BLOQUEADO.',
+                html: 'Hubo un intento de acceso a secciones restringidas, si ' +
+                    'continua tratando de acceder a dichas secciones sin los ' +
+                    'privilegios adecuados sera BLOQUEADO.',
                 type: 'warning',
                 showCloseButton: true,
                 confirmButtonText: 'Ok'
             });
             break;
 
-            // si se CONSULTA la tabla en la base de datos
+        // si se CONSULTA la tabla en la base de datos
         case "sinconsulta":
             swal({
                 title: '¡Ops!',
@@ -102,7 +103,6 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
                 confirmButtonText: 'Ok'
             });
             break;
-
 
         // si se REGISTRA en la base de datos una transaccion
         case "guardo":
@@ -126,7 +126,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-            // si se REGISTRA en la base de datos
+        // si se REGISTRA en la base de datos
         case "registro":
             swal({
                 title: '¡Hecho!',
@@ -158,12 +158,11 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-
         case "pasado":
             swal({
                 title: '¡Atención!',
-                html: 'El Periodo a Gestionar se encuentra fuera del Rango valido, verifique e intentelo nuevamente.',
+                html: 'El Periodo a Gestionar se encuentra fuera del Rango ' +
+                    'valido, verifique e intentelo nuevamente.',
                 type: 'warning',
                 showCloseButton: true,
                 confirmButtonText: 'Ok'
@@ -172,7 +171,8 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
         case "verificar":
             swal({
                 title: '¡Atención!',
-                html: 'No se ha podido Registrar el Periodo, por favor verifique la fecha de Inicio y Final.',
+                html: 'No se ha podido Registrar el Periodo, por favor verifique ' +
+                    'la fecha de Inicio y Final.',
                 type: 'warning',
                 showCloseButton: true,
                 confirmButtonText: 'Ok'
@@ -277,7 +277,6 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
         case "noaprobado":
-            //alert("El registro no fue aprobado.");
             swal({
                 title: '¡Procesado!',
                 html: 'El registro no fue aprobado.',
@@ -287,7 +286,6 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
         case "rechazado":
-            //alert("El registro no fue aprobado.");
             swal({
                 title: '¡Procesado!',
                 html: 'Solicitud Rechazada.',
@@ -307,7 +305,6 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
         case "noespera":
-            //alert("El registro no fue agregado a espera.");
             swal({
                 title: '¡No Agregado!',
                 html: 'El registro no fue agregado a espera.',
@@ -317,8 +314,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-            // si se MODIFICA en la base de datos
+        // si se MODIFICA en la base de datos
         case "nocambio":
             swal({
                 title: '¡Atención!',
@@ -350,9 +346,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-
-            // si se ELIMINA en la base de datos
+        // si se ELIMINA en la base de datos
         case "elimino":
             swal({
                 title: '¡Hecho!',
@@ -377,9 +371,6 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
                 vjRegistros=pvValorUrl.substring(15); //toma los caracteres a partir de la posición 15 (los números del URL)
                 alert("No puede ser eliminado, ya ha sido usado en: <br />   "+vjRegistros+" Registro(s)");
                 break;*/
-
-
-
             // si se RESTAURA en la base de datos
         case "restauro":
             swal({
@@ -402,7 +393,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-            // si se Desbloquea un usuario en la base de datos
+        // si se Desbloquea un usuario en la base de datos
         case "desbloqueo":
             swal({
                 title: '¡Hecho!',
@@ -424,11 +415,12 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-            //viene del ctr_AsignarRol.php cuando usuario con menos acceso intenta cambiar rol a un superior
+        // viene del ctr_AsignarRol.php cuando usuario con menos acceso intenta cambiar rol a un superior
         case "rolmayor":
             swal({
                 title: '¡Atención!',
-                html: 'Sin cambios,<br /> debes tener un rol igual o mayor para cambiar el rol de este usuario..',
+                html: 'Sin cambios,<br /> debes tener un rol igual o mayor para ' +
+                    'cambiar el rol de este usuario..',
                 type: 'info',
                 showCloseButton: true,
                 background: colorFondo,
@@ -436,8 +428,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-            // viene del ctr_CambiarClave y ctr_RecuperarClave
+        // viene del ctr_CambiarClave y ctr_RecuperarClave
         case "respuestaincorrecta":
             swal({
                 title: '¡Incorrecto!',
@@ -449,8 +440,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-            // mensaje de ctr_RecuperarClave, exitoso
+        // mensaje de ctr_RecuperarClave, exitoso
         case "clavecambio":
             swal({
                 title: '¡Hecho!',
@@ -472,11 +462,12 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-            //mensaje de ctr_Login.php
+        // mensaje de ctr_Login.php
         case "logindeshabilitado":
             swal({
                 title: '¡Atención!',
-                html: 'Usuario inhabilitado... <br /> Contacte con usuario con privilegios para habilitar su Usuario.',
+                html: 'Usuario inhabilitado... <br /> Contacte con usuario con ' +
+                    'privilegios para habilitar su Usuario.',
                 type: 'info',
                 showCloseButton: true,
                 background: colorFondo,
@@ -484,13 +475,13 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-            //mensaje ce ctr_Login.php si responde mal la contraseña
+        // mensaje ce ctr_Login.php si responde mal la contraseña
         case "claveousaurio":
             swal({
                 title: '¡Atención!',
                 type: 'error',
-                html: 'USUARIO O CONTRASEÑA INCORRECTA...<br /> Por favor verifique e intente nuevamente.',
+                html: 'USUARIO O CONTRASEÑA INCORRECTA...<br /> Por favor ' +
+                    'verifique e intente nuevamente.',
                 showCloseButton: true,
                 //background: colorFondo,
                 confirmButtonText: 'Ok'
@@ -506,8 +497,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             document.getElementById("pswClave").value = ""; //blanquea la contraseña*/
             break;
 
-
-            //mensaje ce ctr_Login.php si responde mal la contraseña
+        // mensaje ce ctr_Login.php si responde mal la contraseña
         case "bloqueo_intentos":
             swal({
                 title: '¡Atención!',
@@ -521,8 +511,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             document.getElementById("pswClave").value = ""; //blanquea la contraseña*/
             break;
 
-
-            //mensaje ce ctr_Login.php si responde mal la contraseña
+        // mensaje ce ctr_Login.php si responde mal la contraseña
         case "usuariobloqueado":
             swal({
                 title: '¡Atención!',
@@ -536,8 +525,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             document.getElementById("pswClave").value = ""; //blanquea la contraseña*/
             break;
 
-
-            //mensaje de ctr_Login de ctr_RecuperarClave al no encontrar usuario
+        // mensaje de ctr_Login de ctr_RecuperarClave al no encontrar usuario
         case "nousuario":
             swal({
                 title: '¡Atención!',
@@ -549,12 +537,12 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-            //mensaje de ctr_Login si hay una sesión abierta
+        // mensaje de ctr_Login si hay una sesión abierta
         case "enlinea":
             swal({
                 title: '¡Atención!',
-                html: 'USUARIO EN LINEA (ONLINE). <br /> No puede tener abierta mas de 1 vez las misma sesión del mismo usuario.',
+                html: 'USUARIO EN LINEA (ONLINE). <br /> No puede tener abierta ' +
+                    'mas de 1 vez las misma sesión del mismo usuario.',
                 type: 'info',
                 showCloseButton: true,
                 background: colorFondo,
@@ -565,7 +553,8 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
         case "tiempoexpirado":
             swal({
                 title: '¡Atención!',
-                html: 'TIEMPO DE SESION EXPIRADO. <br /> el usuario supero su máximo de tiempo inactivo.',
+                html: 'TIEMPO DE SESION EXPIRADO. <br /> el usuario supero su ' +
+                    'máximo de tiempo inactivo.',
                 type: 'info',
                 showCloseButton: true,
                 background: colorFondo,
@@ -584,8 +573,7 @@ function fjMensajes(pvValorUrl) { //parámetro de la vista (msjMensaje) que cont
             });
             break;
 
-
-            //mensaje de ctr_AccesoRol al eliminar todos los accesos de un rol
+        // mensaje de ctr_AccesoRol al eliminar todos los accesos de un rol
         case "quitoacceso":
             swal({
                 title: '¡Atención!',

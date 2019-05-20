@@ -31,7 +31,6 @@ if(is_file("public" . DS . "lib_Agente.php")){
 	require_once("public" . DS . "lib_Agente.php");
 }
 else{
-	$ruta = "../";
 	require_once(".." . DS . "public" . DS . "lib_Agente.php");
 }
 

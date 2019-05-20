@@ -72,7 +72,6 @@ function fjMayus(pvValor) {
 
 //No permite la opción de copiar, pegar y cortar en el porta papeles, usado en las contraseñas
 function fjNocopiar() {
-    //alert("¡Atención! No se permite COPIAR en este campo.");
     swal({
         title: '¡Atención!',
         type: 'error',
@@ -87,7 +86,6 @@ function fjNocopiar() {
 }
 
 function fjNoCortar() {
-    //alert("¡Atención! No se permite CORTAR en este campo.");
     swal({
         title: '¡Atención!',
         type: 'error',
@@ -102,7 +100,6 @@ function fjNoCortar() {
 }
 
 function fjNoPegar() {
-    //alert("¡Atención! No se permite PEGAR en este campo.");
     swal({
         title: '¡Atención!',
         type: 'error',
@@ -113,9 +110,10 @@ function fjNoPegar() {
     }).then((result) => {
         return false;
     });
-    return false;}
+    return false;
+}
 
-function fjMenuContextual() {
+function disableMenuContextual() {
     swal({
         title: '¡Atención!',
         html: "Por seguridad no se permite el <b>Menú Contextual</b> en esta sección.",
@@ -128,7 +126,6 @@ function fjMenuContextual() {
     });
     return false;
 }
-
 
 //valida la edad minima con formato de fecha (yyyy/mm/dd)
 function fjEdadMinima(psFechaNacimiento, piMinimo = 18) {

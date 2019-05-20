@@ -1,12 +1,13 @@
 
-
 var lsVista = "Municipio";
 
+$(function () {
+	fjMostrarLista(lsVista);
+});
 
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
-	let viCodigo = document.getElementById("numId");
 	let vsNombre = document.getElementById("ctxNombre");
 	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
 
@@ -25,24 +26,12 @@ function enviar(pvValor) {
 		return; // rompe la función para que el usuario verifique antes de continuar
 	}
 
-
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if(vbComprobar) {
 		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
-
-
-
-$(function () {
-
-	fjMostrarLista(lsVista);
-
-});
-
-
-
 
 function fjNuevoRegistro() {
 	$("#form" + lsVista)[0].reset();
@@ -51,50 +40,38 @@ function fjNuevoRegistro() {
 	if($("#Registrar")) {
 		$("#Registrar").css("display", "");
 	}
-
 	if($("#Modificar")) {
 		$("#Modificar").css("display", "none");
 	}
-
 	if($("#Borrar")) {
 		$("#Borrar").css("display", "none");
 	}
-
 	if($("#Restaurar")) {
 		$("#Restaurar").css("display", "none");
 	}
 }
+
 function fjEditarRegistro() {
 	if($("#Registrar")) {
 		$("#Registrar").css("display", "none");
 	}
-
 	if($("#Modificar")) {
 		$("#Modificar").css("display", "");
 	}
-
 	if($("#Borrar")) {
 		$("#Borrar").css("display", "");
 	}
-
 	if($("#Restaurar")) {
 		$("#Restaurar").css("display", "none");
 	}
 }
 
-
-
-
 function fjSeleccionarRegistro(pvDOM) {
-    console.log(pvDOM);
-    
     if(jQuery.isFunction(pvDOM.attr))
         arrFilas = pvDOM.attr('datos_registro').split('|'); //debe ser con jquery porque es recibido como tal con jquery
 
     if(typeof pvDOM.getAttribute !== 'undefined')
         arrFilas = pvDOM.getAttribute('datos_registro').split('|'); //debe ser con javascript porque es recibido cdirectamete del DOM
-    
-    console.log(arrFilas);
 
     $("#btnHabilitar").attr('disabled', false);
 
@@ -134,6 +111,5 @@ function fjSeleccionarRegistro(pvDOM) {
 		if($("#Restaurar"))
 			$("#Restaurar").css("display", "");
     }
-
     $("#VentanaModal").modal('show'); //para boostrap v3.3.7
 }
