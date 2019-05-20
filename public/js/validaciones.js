@@ -72,7 +72,6 @@ function fjMayus(pvValor) {
 
 //No permite la opción de copiar, pegar y cortar en el porta papeles, usado en las contraseñas
 function fjNocopiar() {
-    //alert("¡Atención! No se permite COPIAR en este campo.");
     swal({
         title: '¡Atención!',
         type: 'error',
@@ -87,7 +86,6 @@ function fjNocopiar() {
 }
 
 function fjNoCortar() {
-    //alert("¡Atención! No se permite CORTAR en este campo.");
     swal({
         title: '¡Atención!',
         type: 'error',
@@ -102,7 +100,6 @@ function fjNoCortar() {
 }
 
 function fjNoPegar() {
-    //alert("¡Atención! No se permite PEGAR en este campo.");
     swal({
         title: '¡Atención!',
         type: 'error',
@@ -113,9 +110,10 @@ function fjNoPegar() {
     }).then((result) => {
         return false;
     });
-    return false;}
+    return false;
+}
 
-function fjMenuContextual() {
+function disableMenuContextual() {
     swal({
         title: '¡Atención!',
         html: "Por seguridad no se permite el <b>Menú Contextual</b> en esta sección.",
@@ -128,7 +126,6 @@ function fjMenuContextual() {
     });
     return false;
 }
-
 
 //valida la edad minima con formato de fecha (yyyy/mm/dd)
 function fjEdadMinima(psFechaNacimiento, piMinimo = 18) {
@@ -518,7 +515,7 @@ $(function() {
     }
   });
 
-    // validaciones para NUMEROS DECIMALES
+  // validaciones para NUMEROS DECIMALES
   $('.valida_num_moneda').keyup(function() {
     //this.value = this.value.replace(/^\$(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))\.\d{2}$/g, '');
     this.value = this.value.replace(/^\$(\d{1,3})\.\d{2}$/g, '');
@@ -586,7 +583,104 @@ $(function() {
       this.value = this.value.substr(0, tam - 1);
     }
   });
-
-  /****** FIN DE VALIRDACIONES USADAS EN MAESTEROS***************/
-
 });
+
+/**
+ * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
+ * @param string dateSend, cadena de la fecha a convertir
+ * @param string inputFormat, formato en el que se envió la fecha
+ * @param string outputFormat, formato en el que se retornara la fecha
+ * @return string dateReturn, fecha a convertida en el formato indicado
+ */
+function fechaFormato(dateSend = '', inputFormat = "amd", outputFormat = "dma", separathor = '/') {
+  let dateReturn, day, month, year;
+
+  if (dateSend.trim() == '') {
+    dateSend = new Date(); //instancia un objeto
+  	day = zeroPad(dateSend.getDate()); // día del mes, 01 a 31
+  	month = zeroPad(dateSend.getMonth() + 1); // mes del año en números, 01 a 12
+  	year = dateSend.getFullYear(); // año en cuatro dígitos, 2016
+  }
+  else {
+    switch (inputFormat) {
+      default:
+      case 'dma':
+        day = dateSend.substring(0, 2);
+        month = dateSend.substring(3, 2);
+        year = dateSend.substring(6, 4);
+        break;
+
+      case 'amd':
+        day = dateSend.substring(8, 2);
+        month = dateSend.substring(5, 2);
+        year = dateSend.substring(0, 4);
+        break;
+
+      case 'mda':
+        day = dateSend.substring(3, 2);
+        month = dateSend.substring(0, 2);
+        year = dateSend.substring(6, 4);
+        break;
+    }
+  }
+
+  switch (outputFormat) {
+    default:
+    case 'amd':
+      // año - mes - día
+      dateReturn = year + separathor + month + separathor + day;
+      break;
+
+    case 'dma':
+      // día - mes - año
+      dateReturn = day + separathor + month + separathor + year;
+      break;
+
+    case 'mda':
+      // mes - día - año
+      dateReturn = month + separathor + day + separathor + year;
+      break;
+
+    case 'am':
+      // año - mes
+      dateReturn = year + separathor + month;
+      break;
+
+    case 'ad':
+      // año - día
+      dateReturn = year + separathor + day;
+      break;
+
+    case 'ma':
+      // mes - año
+      dateReturn = month + separathor + year;
+      break;
+
+    case 'md':
+      // mes - día
+      dateReturn = month + separathor + day;
+      break;
+
+    case 'dm':
+      // día - mes
+      dateReturn = day + separathor + month;
+      break;
+
+    case 'da':
+      // día - año
+      dateReturn = day + separathor + year;
+      break;
+  }
+  return dateReturn;
+} // cierre de la función
+
+/**
+ * zero pad
+ * @param {number} number
+ * @param {number} pad
+ * @returns {string}
+ */
+function zeroPad(number, pad = 2) {
+  var zero = Number(pad) - number.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join('0') + number;
+}

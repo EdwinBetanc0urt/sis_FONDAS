@@ -30,7 +30,7 @@ if (isset($_SESSION["sesion"])) {
 		<?php
 	}	
 }
-else{
+else {
 	header('HTTP/1.0 403 Denegado');
 	header("Content-Type: text/html; charset=utf-8");
 	

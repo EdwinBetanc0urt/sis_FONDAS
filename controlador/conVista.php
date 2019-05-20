@@ -225,36 +225,36 @@ function ListaVista() {
 					</tbody>
 				</table> 
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
@@ -273,4 +273,3 @@ function ListaVista() {
 
 
 ?>
-

@@ -10,11 +10,7 @@ $(function () {
 	$("#cmbMotivo_Permiso").on("change", function(){
     	fjFechaFinal($("#ctxFechaInicio").val(), this.value);
 	});
-
 });
-
-
-
 
 function fjAprobar(piPermiso = "") {
 	//abre el archivo controlador y envia por POST
@@ -50,7 +46,6 @@ function fjAprobar(piPermiso = "") {
 	});
 }
 
-
 function fjRechazar(piPermiso = "") {
 	//abre el archivo controlador y envia por POST
 	vsRuta = "controlador/conPermiso.php";
@@ -84,7 +79,6 @@ function fjRechazar(piPermiso = "") {
 		}
 	});
 }
-
 
 function fjActualizarListas() {
 	fjMostrarLista(lsVista);

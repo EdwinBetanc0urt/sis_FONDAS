@@ -48,8 +48,6 @@ switch($_POST['operacion']) {
 		break;
 }
 
-
-
 //funcion.control.Registrar
 function fcAgregarAcceso() {	
 	global $gsIndex; // variable global que contiene la ubicación del header
@@ -61,40 +59,29 @@ function fcAgregarAcceso() {
 		header($gsIndex . "&msjAlerta=registro"); 
 	else
 		header($gsIndex . "&msjAlerta=noregistro"); 
-	//var_dump($objeto->fmInsertar());
-
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
 //funcion.control.Modificar
 function fcModificarAccesos() {	
-	//echo "<pre>";
 	global $gsIndex; // variable global que contiene la ubicación del header
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Acceso(); //nuevo objeto o clase Accesos
-	//var_dump($_POST["chkBoton"]);
 	$objeto->setFormulario($_POST); //recibe los valores de la vista y los sanea
 	$objeto->setBotones($_POST["chkBoton"]); //recibe los valores de la vista y los sanea
-
 	$objeto->fmEliminar();
 	if ($objeto->fmInsertar()) {
 		header($gsIndex . "&msjAlerta=cambio"); 
 	}
 	else
 		header($gsIndex . "&msjAlerta=nocambio");
-	//*/
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
 //funcion.control.Modificar
 function fcEliminarVista() {	
-	echo "<pre>";
 	global $gsIndex; // variable global que contiene la ubicación del header
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Acceso(); //nuevo objeto o clase Accesos
@@ -112,44 +99,30 @@ function fcEliminarVista() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
 //funcion.control.Registrar
 function fcEliminarAcceso() {	
 	global $gsIndex; // variable global que contiene la ubicación del header
-	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Acceso(); //nuevo objeto o clase Accesos
 	$objeto->setFormulario($_POST); //recibe los valores de la vista y los sanea
 	//envía a la vista, con mensaje de la consulta
-	//var_dump($objeto->fmEliminar());
 	if ($objeto->fmEliminar())
 		header($gsIndex . "&getTipo_Usuario=" . $_POST["numTipo_Usuario"] . "&msjAlerta=quitoacceso"); 
 	else
 		header($gsIndex . "&getTipo_Usuario=" . $_POST["numTipo_Usuario"] . "&msjAlerta=nocambio"); 
-	//var_dump($_POST);
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
-
 function fcListaAcceso() {
-
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Acceso;  //instancia la clase
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
-	
 	$objeto->atrId_Tipo_U = $_POST["setTipoUsuario"];
 	$objeto->atrId_Modulo = $_POST["setModulo"];
-
-
 	$rstRecordSet = $objeto->ListarVistas();
-
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
 		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
-
 		$arrVistaSi = array();
 		$rstRecordSetAcceso = $objeto ->ListarAcceso();
 		if ($rstRecordSetAcceso) {
@@ -161,7 +134,6 @@ function fcListaAcceso() {
 			$objeto->faLiberarConsulta($rstRecordSetAcceso);
 			unset($arrConsultaVista);
 		}
-		//var_dump($_POST);
 		?>
 		<div class='table-responsive'>
 			<br>
@@ -182,7 +154,6 @@ function fcListaAcceso() {
 				<tbody>
 		<?php
 
-		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
 		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)){	
  			?>		
 				<tr >
@@ -206,7 +177,7 @@ function fcListaAcceso() {
 									title='Quitar el acceso total a esta pagina' onClick='fjQuitarVista(<?= $arrRegistro["idvista"]; ?>)' >
 									<span class="fa fa-ban " aria-hidden="true"></span>
 								</button>
-						<?php
+								<?php
 							}
 							else {
 								?>
@@ -239,11 +210,7 @@ function fcListaAcceso() {
 	}
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
-	
 } //cierre de la función
-
-
-
 
 
 function fcListaBotonSi($piVista = "") {
@@ -272,7 +239,6 @@ function fcListaBotonSi($piVista = "") {
 		}
 
 		$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
-
 		?>
 			<div class='table-responsiveEEE'>
 				<br>
@@ -325,15 +291,4 @@ function fcListaBotonSi($piVista = "") {
 	
 } //cierre de la función
 
-
-
-
-/*
-//destruye lo enviado
-if (isset($_POST))
-	unset($_POST); 
-
-if (isset($_GET))
-	unset($_GET);
-*/
 ?>

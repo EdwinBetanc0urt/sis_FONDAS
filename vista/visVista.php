@@ -19,9 +19,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 <div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
-		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
+		<li class="active">
+			<a data-toggle="tab" href="#pestListado">Listado</a>
+		</li>
 	</ul>
-	
 	<br>
 
 	<?php
@@ -29,10 +30,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	?>
 
 	<div class="tab-content">
-
-
 		<div id="pestListado" class="tab-pane fade in active">
-
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
@@ -74,8 +72,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>
-
-
 	</div>
 </div>
 
@@ -123,16 +119,14 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label for="cmbModulo">* Modulo</label>
-								<select id='cmbModulo' name='cmbModulo' class="dinamico form-control select2" data-toggle="tooltip" data-placement="right" title="Estado al cual pertenece el municipio" size="1" style="width: 100%;">
+								<select id='cmbModulo' name='cmbModulo' class="dinamico form-control select2" data-toggle="tooltip" data-placement="right" title="Estado al cual pertenece el municipio" size="1">
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidModulo" type="hidden" value="<?php
 									if(isset($_GET['getModulo']))
 										echo $_GET['getModulo']; ?>" />
 							</div>
-						</div>
-
-								
+						</div>	
 					</div>
 				</div>
 				<div class="modal-footer">

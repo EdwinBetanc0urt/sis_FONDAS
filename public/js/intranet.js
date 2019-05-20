@@ -1,16 +1,3 @@
-$(function() {
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-    $(".select2, .combo_buscar, .select_dinamico, .dinamico ").select2({
-        language: "es", 
-        theme: "bootstrap"
-    });
-    
-    //$('.calendario').datetimepicker();
-});
-
-
 
 // Genera el alfabeto en options dentro del select que se le pase como parametro
 // en el parametro va como cadena el id del select a insertar options
@@ -25,8 +12,6 @@ function fjAlfabetoCombo(pdCombo) {
         $("#"+ pdCombo).append(domLetraActual);
     }
 }
-
-
 
 //funcion javascript Salir, utilizado por el botón de OFF del menú
 function fjSalir(psMotivo = "sesioncerrada", psForzado = "no") {
@@ -60,8 +45,6 @@ function fjSalir(psMotivo = "sesioncerrada", psForzado = "no") {
         window.location.href = "controlador/conCerrar.php?getMotivoLogOut=" + psMotivo;
     }
 }
-
-
 
 // Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
@@ -97,10 +80,8 @@ function fjComboGeneral(psClase, psDependiente = "", psDestino = "") {
                 // console.log(resultado);
             }
         }
- );
+    );
 }
-
-
 
 $(function() {
     //funcion anonima que al cambiar un select asigna el valor al hidden que esta abajo de el
@@ -125,9 +106,6 @@ $(function() {
     });
 });
 
-
-
-
 function fjUltimoID(pvObjeto, psDestino = "") {
     //abre el archivo controlador y envia por POST en name codPais con el valor del id cmbPais
     vsURL = "controlador/con" + pvObjeto + ".php";
@@ -148,16 +126,12 @@ function fjUltimoID(pvObjeto, psDestino = "") {
                 $("#form" + pvObjeto + " #numId").val(parseInt(resultado)); //habilita el campo de estado 
             }
         }
- );
+    );
 }
-
-
 
 function fjDetenerCronometro() {
     clearInterval(cronometro);
 }
-
-
 
 /**
  * @param integer piTiempo, Variable de sesion Inactivo maximo, configurado por el usuario para el tiempo de inactividad que pasara antes de cerrar la sesion
@@ -213,10 +187,8 @@ function fjIniciarCronometro(piTiempoUsuario = 600) {
             contador_s--;
             segundos--;
         }, 1000 //velocidad de conteo 1000 = segundos
- );
+    );
 }
-
-
 
 function fjTiempoSesion() {
     swal({
@@ -245,8 +217,6 @@ function fjTiempoSesion() {
         fjCambiarTiempo(result.value);
     });
 }
-
-
 
 //Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
@@ -280,13 +250,10 @@ function fjCambiarTiempo(piTiempo = 600) {
                 console.log(resultado);
             }
         }
- );
+    );
 }
 
-
-
 /**
- * @param string psModulo, la carpeta del modulo que abrirá
  * @param string psClase, indica el controlador de la clase que abrira dentro del modulo anterior
  * @param integer piPagina, envía el atributo de la subpagina que imprimira de la paginacion
  * @param string psOrden, envía el atributo en que realizara el ordenado
@@ -364,11 +331,8 @@ function fjMostrarLista(psClase, piPagina = "", psOrden = "", psDestino = "", ps
                 }
             }
         }
- );
+    );
 }
-
-
-
 
 function startTime2() {
     var today = new Date();
@@ -381,8 +345,9 @@ function startTime2() {
     var t = setTimeout(
         startTime()
      , 500
- );
+    );
 }
+
 function checkTime2(i) {
     if (i < 10) {
         i = "0" + i

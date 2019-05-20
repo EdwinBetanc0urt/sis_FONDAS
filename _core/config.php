@@ -1,5 +1,4 @@
 <?php
-
 	/**
 	 * Configuración global del proyecto, define las constantes del sistema,
 	 * separadores de rutas según el sistema operativo, configuraciones de php
@@ -10,10 +9,10 @@
 	 * @link https://creativecommons.org/licenses/by-sa/4.0/
 	 */
 
+	ini_set("expose_php", "off"); //Expone al mundo que PHP está instalado en el servidor
+
 	// controla si el parser debería reconocer las etiquetas < ? ... ? >, además de < ?php ... ? >
 	ini_set("short_open_tag", "on");
-
-	ini_set("expose_php", "off"); //Expone al mundo que PHP está instalado en el servidor
 
 	// Localización español
 	setlocale(LC_ALL, "es_VE.UTF-8", "es_VE", "spanish");
@@ -47,17 +46,17 @@
 	else {
 		error_reporting(ERRORES);
 		ini_set("display_errors", "On");
-		//ini_set('display_errors', '1');
+		//ini_set("display_errors", "1");
 		ini_set("display_startup_errors", "On");
 	}
 
 	// indica al navegador que no exponga la cookie a las secuencias de comandos
 	// del lado del cliente, como JavaScript
-	ini_set("session.cookie_httponly", 1);
+	// ini_set("session.cookie_httponly", 1);
 
 	// solo utilice cookies para las sesiones y no permita el paso de ID de sesión
 	// como un parámetro GET
-	ini_set("session.use_only_cookies", 1);
+	// ini_set("session.use_only_cookies", 1);
 
 	ini_set("output_buffering", "On");
 
@@ -68,7 +67,7 @@
 	ini_set(
 		"disable_functions", "curl_exec, curl_multi_exec, diskfreespace, " .
 		"disk_free_space, exec, leak, passthru, parse_ini_file, popen, proc_open, " .
-		"set_time_limit, shell_exec, show_sourcephpinfo, system, tmpfile"
+		"set_time_limit, shell_exec, show_source, phpinfo, system, tmpfile"
 	);
 	ini_set("disable_functions", "ini_set");
 

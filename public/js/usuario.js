@@ -1,7 +1,18 @@
 
-
 var lsVista = "Usuario";
 
+$(function () {
+	fjMostrarLista(lsVista);
+
+	//cuando se hace un cambio en el combo del estado se cargan las ciudades
+	$("#cmbDepartamento").change(function() {
+		$("#cmbCargo").attr("disabled", false);
+		$("#cmbCargo").val(""); //deselecciona el campo del combo
+		$("#hidCargo").val(""); //blanquea el campo del hidden
+		//fjCargarMunicipio();
+		fjComboGeneral("Cargo", "Departamento");
+	});
+});
 
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor) {
@@ -34,24 +45,6 @@ function enviar(pvValor) {
 	}
 }
 
-
-
-$(function () {
-	fjMostrarLista(lsVista);
-
-	//cuando se hace un cambio en el combo del estado se cargan las ciudades
-	$("#cmbDepartamento").change(function() {
-		$("#cmbCargo").attr("disabled", false);
-		$("#cmbCargo").val(""); //deselecciona el campo del combo
-		$("#hidCargo").val(""); //blanquea el campo del hidden
-		//fjCargarMunicipio();
-		fjComboGeneral("Cargo", "Departamento");
-	});
-});
-
-
-
-
 function fjNuevoRegistro() {
 	$("#form" + lsVista)[0].reset();
 	fjUltimoID(lsVista);
@@ -77,6 +70,7 @@ function fjNuevoRegistro() {
 		$("#Restaurar").css("display", "none");
 	}
 }
+
 function fjEditarRegistro() {
 	if ($("#Registrar")) {
 		$("#Registrar").css("display", "none");
@@ -95,19 +89,13 @@ function fjEditarRegistro() {
 	}
 }
 
-
-
 function fjSeleccionarRegistro(pvDOM) {
-    console.log(pvDOM);
-    
     if (jQuery.isFunction(pvDOM.attr))
         arrFilas = pvDOM.attr('datos_registro').split('|'); //debe ser con jquery porque es recibido como tal con jquery
 
     if (typeof pvDOM.getAttribute !== 'undefined')
         arrFilas = pvDOM.getAttribute('datos_registro').split('|'); //debe ser con javascript porque es recibido cdirectamete del DOM
     
-    console.log(arrFilas);
-
     $("#btnHabilitar").attr('disabled', false);
 
     $("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
@@ -147,8 +135,6 @@ function fjSeleccionarRegistro(pvDOM) {
     $("#VentanaModal").modal('show'); //para boostrap v3.3.7
 }
 
-
-
 function bloquear(piId) {
 	swal({
 		title: '¡Atención!',
@@ -180,8 +166,6 @@ function desbloquear(piId) {
 		}
 	});
 }
-
-
 
 function enviousuario(piId, psEstatus = "Desbloqueo") {
     vsRuta = "controlador/con" + lsVista + ".php";
