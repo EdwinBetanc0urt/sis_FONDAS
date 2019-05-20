@@ -22,7 +22,6 @@ $(function(){
 	$("#cmbTipo_Usuario").select2("open") ;
 });
 
-
 //comprueba si fue seleecionado por lo menos 1 elemento
 function fjComprobarChekcbox() {
 	if($('.chkBotones').is(':checked')) {
@@ -30,7 +29,6 @@ function fjComprobarChekcbox() {
 	}
 	return false;
 }
-
 
 function fjEnviar(pvValor) {
 	//se definen las variables locales
@@ -72,7 +70,6 @@ function fjEnviar(pvValor) {
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
-
 
 //Elimina todos los accesos
 function fjQuitarVista(piVista) {
@@ -118,7 +115,6 @@ function fjQuitarVista(piVista) {
 	});
 }
 
-
 //selecciona o deselecciona el checkbox con solo tocar la fila
 //para mejor facilidad al hacerlo con pantallas pequeñas
 function fjSeleccionFila(paRegistro) {
@@ -131,7 +127,6 @@ function fjSeleccionFila(paRegistro) {
 		$("#" + viId).attr("checked", true); //deshabilita el campo
 	}
 }
-
 
 //Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos

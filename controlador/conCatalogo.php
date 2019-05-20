@@ -12,27 +12,21 @@ else{
 }
 
 switch($_POST['operacion']) {
-
 	case "UltimoCodigo":
 		UltimoCodigoCatalogo();
 		break;
-
 	case "Registrar":
 		registrar();
 		break;
-
 	case "Modificar":
 		cambiar();
 		break;
-		
 	case "Eliminar":
 		borrar();
 		break;
-
 	case "ListaVista":
 		lista();
 		break;
-
 	case "ListaCombo":
 		Combo();
 		break;
@@ -49,7 +43,6 @@ function UltimoCodigoCatalogo() {
 	echo $arrCodigo[0]+1; //imprime el arreglo en la posicion cero y agrega 1
 }
 
-
 function registrar() {
 	global $gsClase;
 	$objCatalogo = new Catalogo();
@@ -60,19 +53,15 @@ function registrar() {
 		header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con mensaje de la consulta
 }
 
-
-
 function cambiar() {
 	global $gsClase;
 	$objCatalogo = new Catalogo();
 	$objCatalogo->setFormulario($_POST);
-	if ($objEstado->modificar()) //si el fmInsertar es verdadero, realiza las sentencias
+	if ($objCatalogo->modificar()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}.php?msjAlerta=cambio"); //envía a la vista, con mensaje de la consulta
 	else
 		header("Location: ../?form=_{$gsClase}.php?msjAlerta=nocambio"); //envía a la vista, con 
 }
-
-
 
 function borrar() {
 	global $gsClase;
@@ -84,22 +73,15 @@ function borrar() {
 		header("Location: ../?form={$gsClase}.php?msjAlerta=noelimino"); //envía a la vista, con 
 }
 
-
-
-
 function lista() {
 	global $gsClase;
 	$objeto = new Catalogo; //instancia la clase
 	// se le asignan la cantidad de items a mostrar, si no se define toma el valor por defecto
 	$rstRecordSet = $objeto->Listar();
-
 	if ($rstRecordSet) {
-		//$arrRegistro = $objeto->fCambiarAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
-		//var_dump($rstRecordSet);
 		while($row = $objeto->getConsultaAsociativo($rstRecordSet)) {
 			$data[] = $row;
 		}
-
 		$results = [
 			"sEcho" => 1,
 			"iTotalRecords" => count($data),
@@ -109,11 +91,9 @@ function lista() {
 
 		header("Content-Type: application/json; charset=utf-8");
 		echo json_encode($results);
-
 		//si el total de registros es mayor al numero de items es que muestra debajo de la lista
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		header("Content-Type: text/html; charset=utf-8");
 		echo "<br> <b>¡ No se ha encontrado ningún elemento, <a href='&getOpcion=Registrar#VentanaModal'>por favor registre una {$gsClase}!</a></b> <br><br>";
@@ -121,8 +101,6 @@ function lista() {
 	//$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
 } //cierre de la función
-
-
 
 function Combo() {
     if (isset($_POST["hidCodigo"]))
@@ -160,13 +138,11 @@ function Combo() {
     unset($objeto); //destruye el objeto creado
 }
 
-
 function Autocompletar() {
 	$objeto = new Catalogo();
 	$vsBuqueda = htmlentities(trim (strtoupper($_REQUEST["setBuscar"])));
 	$arrRetorno = array();
 	$rstRecordSet = $objeto->Listar($vsBuqueda);
-
 	if ($rstRecordSet) {
 		$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
 		do {
@@ -175,7 +151,6 @@ function Autocompletar() {
 		}
 		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) ;
 	}
-
 	//modifica encabezado http a json, para ayudar a los navegadores a manejar tu respuesta con naturalidad	
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -184,16 +159,4 @@ function Autocompletar() {
 	echo json_encode($arrRetorno);
 }
 
-
-
-
-
-
-
-
-
-
-
-
 ?>
-

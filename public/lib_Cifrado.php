@@ -1,122 +1,147 @@
 <?php
 
 /** 
- * Encritar y Desencriptar Valores
+ * Cifrar y Descifrar Valores
  *
- * @descripcion: Encriptador - clase PHP para cifrar y desifrar datos 
+ * @descripcion: Clase PHP para cifrar y descifrar datos 
  * @author: Edwin Betancourt <EdwinBetanc0urt@outlook.com> 
  * @license: GNU GPL v3,  Licencia Pública General de GNU 3.
  * @license: CC BY-SA, Creative  Commons  Atribución  - CompartirIgual (CC BY-SA) 4.0 Internacional.
  * @category Librería 
  * @package: lib_Cifrado.php 
  * @since: v0.3
- * @version: 0.8
- * @Fecha de Modificacion: 02/Abril/2017
- * @Fecha de Creacion: 15/Marzo/2016
+ * @version: 0.9
+ * @Fecha de Modificación: 29/Julio/2018
+ * @Fecha de Creación: 15/Marzo/2016
+
+		Este programa es software libre, su uso, redistribución, y/o modificación
+	debe ser bajo los términos de las licencias indicadas, la GNU Licencia Pública
+	General (GPL) publicada por la Fundación de Software Libre(FSF) de la versión
+	3 o cualquier versión posterior y la Creative Commons Atribución - Compartir
+	Igual (CC BY-SA) de la versión 4.0 Internacional o cualquier versión posterior.
+
+		Este software esta creado con propósitos generales que sean requeridos,
+	siempre que este sujeto a las licencias indicadas, pero SIN NINGUNA GARANTÍA
+	Y/O RESPONSABILIDAD que recaiga a los creadores, autores y/o desarrolladores,
+	incluso sin la garantía implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN
+	PROPÓSITO PARTICULAR. Cualquier MODIFICACIÓN, ADAPTACIÓN Y/O MEJORA	que se haga
+	a partir de este código debe ser notificada y enviada a la fuente, comunidad
+	o repositorio de donde fue obtenida, y/o a sus AUTORES.
  **/
 
-
 /**
-		ESTA LIBRERIA ESTÁ HECHA CON FINES ACADEMICOS, SU DISTRIBUCIÓN ES TOTALMENTE
-	GRATUITA, BAJO LA LICENCIA GNU GPL v3 y CC BY-SA v4 Internacional, CUALQUIER,
-	ADAPTACIÓN MODIFICACIÓN Y/O MEJORA QUE SE HAGA APARTIR DE ESTE CODIGO DEBE SER 
-	NOTIFICADA Y ENVIADA A LA FUENTE, COMUNIDAD O REPOSITORIO DE LA CUAL FUE OBTENIDA
-	Y/O A SUS CREADORES:
-		* Edwin Betancourt 	EdwinBetanc0urt@hotmail.com
-
-		Características:
-			* Encripta un texto utilizando un algoritmo en combinación con una key privada.
-			* Desencripta un texto utilizando un algoritmo siempre que el key privada con
-			  el que se encripto sea el mismo.
+	Características:
+		* Cifra un texto utilizando un algoritmo en combinación con una clave privada.
+		* Descifra un texto utilizando un algoritmo siempre que el clave privada con
+		  el que se cifró sea el mismo.
 */
 
 
 
-// Archivo obligatorio que a su vez hace un llamado a una key privada
-//require_once("../../modelo/general/cls_Conexion.php");
-
-class clsCifrado /*extends clsConexion */
+class clsCifrado
 {
 
-	private $atrKey; //atributo.Key privada
+	/**
+	 * @desc nombre del usuario de la base de datos
+	 * @var str $atrServidor
+	 * @access private
+	 */
+	const csMETODO = "AES-256-CBC";
+
+	/**
+	 * @desc nombre del usuario de la base de datos
+	 * @var str $atrServidor
+	 * @access private
+	 */
+	const csHASH = "sha512";
+
+	/**
+	 * @desc nombre del usuario de la base de datos
+	 * @var str $atrServidor
+	 * @access private
+	 */
+	const csKEY = "*informatica$";
+
+	/**
+	 * @desc nombre del usuario de la base de datos
+	 * @var str $atrTexto
+	 * @access protected
+	 */
 	protected $atrTexto; //atributo.Texto.Encriptado
-	const csKEY = "informatica";
+
+	/**
+	 * @desc nombre del usuario de la base de datos
+	 * @var str $atrKey
+	 * @access public
+	 */
+	static private $atrKey;
+
 
 
 	/**
-	 * //constructor de la clase
+	 * constructor de la clase
+	 *
 	 * @param string $psTexto, contiene la cadena de texto
-	 * @param string $psKey, contiene la llave o key para encriptado de esa clave
+	 * @param string $psKey, contiene la llave o clave para encriptado de esa clave
 	 */
 	function __construct($psTexto = "", $psKey = "")
 	{
-		//llamado al constructor padre, parametro de tipo de privilegio
-		//que incluye el archivo con el hash de encriptado
-		//$this->clsConexion(2); 
-
 		$this->atrTexto = trim($psTexto); //elimina espacios al comienzo y final
 
-		//debe usarse para desencriptar la misma llave con la que se encripto ese texto
-		if ($psKey != "")
-			$this->atrKey = trim($psKey); //asigna llave maestra de codificacion enviada
-		//si no se indica el constructor se debe asignar una llave maestra o key privada a atrKey
-		else {
-			//$this->atrKey = parent::faLLaveMaestra(); //asigna llave maestra de codificacion predeterminada
-			$this->atrKey = self::flKeyPrivada(); //asigna llave maestra de codificacion predeterminada
+		//debe usarse para descifrar la misma llave con la que se cifro ese texto
+		if ($psKey != ""){
+			self::$atrKey = trim($psKey); //asigna llave maestra de codificación enviada
 		}
-	} //cierre del constructor
+
+		//si no se indica el constructor se debe asignar una llave maestra o clave privada a atrKey
+		else {
+			//$this->atrKey = parent::faLLaveMaestra(); //asigna llave maestra de codificación predeterminada
+			self::$atrKey = self::csKEY; //asigna llave maestra de codificación predeterminada
+		}
+	} //cierre de la función constructor
 
 
 
 	/**
-	 * @return string $vsKey, contiene el texto que asigna al atributo $this->atrKey la llave de enciptacion/desencriptacion
+	 * Para un inicio de vector fácil, MD5 salto de nuevo
+	 *
+	 * @return string $vsVectorInicio
 	 */
-	private function flKeyPrivada() 
+	static function _getIv()
 	{
-		//Archivo hace un llamado a una key privada
-		$vsKey = "informatica";
-		return $vsKey;
-	}
+		//tamaño del vector de inicio
+		$ivlen = openssl_cipher_iv_length(self::csMETODO);
 
-
-
-	/**
-	 * Asigna el parametro al atributo Texto, $atrTexto
-	 * @param string $psTexto, contiene el texto que asigna al atributo
-	 */
-	public function setDato($psTexto)
-	{
-		$this->atrTexto = trim($psTexto); //asigna el valor del parametro al atriburo de texto desencriptado
-	}
-
-
-
-	/**
-	 * funcion libreria Encriptar
-	 * Asigna el parametro al atributo TextoE
-	 * @param string, $psTexto
-	 * @return string, convierte el texto enviado y lo encripta, utilizando la llave privada
-	 */
-	public function flEncriptar($psTexto)
-	{
-		$this->atrTexto = trim($psTexto); //elimina espacios al comienzo y final
-		$texto_encriptado = base64_encode(
-			mcrypt_encrypt(
-				MCRYPT_RIJNDAEL_256,
-				md5(
-					$this->atrKey
-				),
-				$this->atrTexto,
-				MCRYPT_MODE_CBC,
-				md5(
-					md5(
-						$this->atrKey
-					)
-				)
-			)
+		$vsVectorInicio = substr(
+			md5(self::getSalto()),
+			0,
+			$ivlen
 		);
-		return $texto_encriptado; //Devuelve el $texto encriptado
-	}
+
+		return $vsVectorInicio;
+	} //cierre de la función
+
+
+
+	/**
+	 * Obtiene el salto del hash como clave
+	 *
+	 * @return string $vsKey
+	 */
+	static function getSalto()
+	{
+		if (self::$atrKey == "" OR self::$atrKey == NULL) {
+			self::$atrKey = self::csKEY;
+		}
+		
+		$vsKey = hash(
+			self::csHASH, 
+			self::$atrKey
+		);
+
+		return $vsKey;
+	} //cierre de la función
+
 
 
 	/**
@@ -128,139 +153,109 @@ class clsCifrado /*extends clsConexion */
 	 */
 	static function getCifrar($psTexto)
 	{
-		$Texto = trim($psTexto); //elimina espacios al comienzo y final
-		$vsTextCifrado = base64_encode(
-			mcrypt_encrypt(
-				MCRYPT_RIJNDAEL_256,
-				md5(
-					self::csKEY
-				),
-				$Texto,
-				MCRYPT_MODE_CBC,
-				md5(
-					md5(
-						self::csKEY
-					)
-				)
-			)
+		$vsTextCifrado = openssl_encrypt(
+			$psTexto,
+			self::csMETODO, 
+			self::getSalto(), 
+			OPENSSL_RAW_DATA, 
+			self::_getIv()
 		);
-		return $vsTextCifrado; //Devuelve el $texto encriptado
+
+		//codifica con base 64 el texto cifrado
+		$vsTextCifrado = base64_encode($vsTextCifrado);
+
+		return $vsTextCifrado;
 	} //cierre de la función
- 
+
+
 
 	/**
-	 * función estática Cifrar Asigna el parámetro al atributo TextoE convierte
-	 * el texto enviado y lo encripta, utilizando la llave privada
+	 * función librería Encriptar Asigna el parámetro al atributo TextoE
 	 *
 	 * @param string, $psTexto
-	 * @return string $vsTextoCifrado
+	 * @return string, convierte el texto enviado y lo encripta, utilizando la llave privada
+	 */
+	public function _getCifrar($psTexto = "")
+	{
+		if ($psTexto == ""){
+			$psTexto = $this->atrTexto;
+		}
+
+		return self::getCifrar($psTexto);
+	} //cierre de la función
+
+
+
+	/**
+	 * función librería Descifrar Asigna el parámetro al atributo TextoE
+	 *
+	 * @param string, $psTexto 
+	 * @return string, convierte el texto enviado y lo descifra, usando el algoritmo de encriptado al inverso
 	 */
 	static function getDescifrar($psTexto)
 	{
-		$Texto = trim($psTexto); //elimina espacios al comienzo y final
-		$vsTextDescifrado = rtrim(
-			mcrypt_decrypt(
-				MCRYPT_RIJNDAEL_256,
-				md5(
-					self::csKEY
-				),
-				base64_decode(
-					$Texto
-				),
-				MCRYPT_MODE_CBC,
-				md5(
-					md5(
-						self::csKEY
-					)
-				)
-			),
-			"\0"
-		);
-		return $vsTextDescifrado;  //Devuelve el $texto desencriptado
+		//descodifica el texto cifrado de base 64.
+		$vsTextDescifrado = base64_decode($psTexto, TRUE);
 
-		//var_dump(self::flKeyPrivada());
-		$Texto = trim($psTexto); //elimina espacios al comienzo y final
-		$vsTextCifrado = base64_encode(
-			mcrypt_encrypt(
-				MCRYPT_RIJNDAEL_256,
-				md5(
-					self::csKEY
-				),
-				$Texto,
-				MCRYPT_MODE_CBC,
-				md5(
-					md5(
-						self::csKEY
-					)
-				)
-			)
+		//descifra el texto
+		$vsTextDescifrado = openssl_decrypt(
+			$vsTextDescifrado, 
+			self::csMETODO, 
+			self::getSalto(), 
+			OPENSSL_RAW_DATA,
+			self::_getIv()
 		);
-		return $vsTextCifrado; //Devuelve el $texto encriptado
+
+		//recorta los espacios en blanco desde el final.
+		$vsTextDescifrado = rtrim(
+			$vsTextDescifrado,
+			'\0'
+		);
+
+		return $vsTextDescifrado;
 	} //cierre de la función
 
 
+
 	/**
-	 * funcion libreria Desencriptar 
-	 * Asigna el parametro al atributo TextoE
+	 * función librería Descifrar Asigna el parámetro al atributo TextoE
+	 *
 	 * @param string, $psTexto 
-	 * @return string, convierte el texto enviado y lo desencripta, usando el algoritmo de encriptado al inverso
+	 * @return string, convierte el texto enviado y lo Descifra, usando el algoritmo de encriptado al inverso
 	 */
-	public function flDesencriptar($psTexto)
+	public function _getDescifrar($psTexto = "")
 	{
-		$this->atrTexto = trim($psTexto); //elimina espacios al comienzo y final
-		$texto_desencriptado = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($this->atrKey), base64_decode($this->atrTexto), MCRYPT_MODE_CBC, md5(md5($this->atrKey))), "\0");
-		return $texto_desencriptado;  //Devuelve el $texto desencriptado
-	}
+		if ($psTexto == ""){
+			$psTexto = $this->atrTexto;
+		}
+
+		return self::getDescifrar($psTexto);
+	} //cierre de la función
 
 
-	/**
-	 * Asigna el parametro al atributo TextoE
-	 * @return string, convierte el texto encriptado a uno desencriptado
-	 */
-	public function getDesencriptado()
-	{
-		return $this->flDesencriptar($this->atrTexto); //devuelve el valor desencriptado
-	}
-
-
-	/**
-	 * Asigna el parametro al atributo TextoE
-	 * @return string, convierte el texto desencriptado a uno encriptado
-	 */
-	public function getEncriptado()
-	{
-		return $this->flEncriptar($this->atrTexto); //devuelve el valor encriptado
-	}
 
 } //cierre de la clase
 
 
 
-define('METHOD','AES-256-CBC');
-define('SECRET_KEY','$CARLOS@2016');
-define('SECRET_IV','101712');
-class SED
-{
-	public static function encryption($string)
-	{
-		$output=FALSE;
-		$key=hash('sha256', SECRET_KEY);
-		$iv=substr(hash('sha256', SECRET_IV), 0, 16);
-		$output=openssl_encrypt($string, METHOD, $key, 0, $iv);
-		$output=base64_encode($output);
-		return $output;
-	} //cierre de la funcion
+/*
 
-	public static function decryption($string)
-	{
-		$key=hash('sha256', SECRET_KEY);
-		$iv=substr(hash('sha256', SECRET_IV), 0, 16);
-		$output=openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
-		return $output;
-	} //cierre de la funcion
-
-} //cierre de la calse
+//EJEMPLOS DE USOS
 
 
+//1 - usando los métodos estáticos
+$texto = "Texto que se quiere cifrar.";
+echo clsCifrado::getDescifrar($texto);
+//la salida seria algo como: JZw86xAyru8We++0Lp2jQvbJdNHLNidztfZ3T5rt1G8=
+
+//echo "<hr>";
+
+//2 - instanciando la clase
+$texto2 = "JZw86xAyru8We++0Lp2jQvbJdNHLNidztfZ3T5rt1G8=";
+$objCifrado = new clsCifrado($texto2);
+echo $objCifrado->_getDescifrar();
+//la salida seria algo como: Texto que se quiere cifrar.
+
+//*/
 
 ?>

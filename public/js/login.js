@@ -1,5 +1,4 @@
 
-
 $(function(){
 	$('#btn_recargar').click(function(){
 		document.location.reload();
@@ -30,14 +29,12 @@ $(function(){
 		fjNoPegar();
 	});
 
-	/*$("body").on('contextmenu', function(e){
+	$("body").on('contextmenu', function(e){
 		e.preventDefault();
-		fjMenuContextual();
+		disableMenuContextual();
 	});
-	*/
 });
 
-/*
 //desactiva la tecla F12
 document.onkeydown = function(evento) {
 	//console.log(evento);
@@ -47,7 +44,6 @@ document.onkeydown = function(evento) {
 		return false;
 	}
 }
-*/
 
 //Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
@@ -67,7 +63,6 @@ function CargarCaptcha() {
 		}
 	);
 }
-
 
 function f_Submit(){
 	var user=document.getElementById("usuario");
@@ -114,7 +109,6 @@ function f_Submit(){
 		});
 		return false;
 	}
-
 	else if(copia.value != captcha.value){
 		swal({
 			title: '¡Atención!',
@@ -128,20 +122,14 @@ function f_Submit(){
 		});
 		return false;
 	}
-
 }
-
 
 function desplegar() {
 	$("#formRecuperarClave")[0].reset();
-
 	fjComboGeneral("Pregunta");
-
 	fjComboGeneral("Pregunta", "", "Pregunta2");
-
 	$("#formRecuperarClave #ctxUsuario").focus();
 }
-
 
 //Función para recuperar la contraseña
 function enviar(pvValor) {
@@ -169,7 +157,6 @@ function enviar(pvValor) {
 			});
 			return vbComprobar;
 		}
-
 		if (vsPregunta.val().trim() == "" || vsPregunta2.val().trim() == "") {
 			vbComprobar = false;
 			swal({
@@ -189,7 +176,6 @@ function enviar(pvValor) {
 			});
 			return vbComprobar;
 		}
-
 		if (vsRespuesta.val().trim() == "" || vsRespuesta2.val() == "") {
 			vbComprobar = false;
 			swal({
@@ -209,7 +195,6 @@ function enviar(pvValor) {
 			});
 			return vbComprobar;
 		}
-
 		if (vsClave.val().trim() == "") {
 			vbComprobar = false;
 			swal({
@@ -244,12 +229,10 @@ function enviar(pvValor) {
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if (vbComprobar) {
 		$("#formRecuperarClave #operacion").val(pvValor); //valor.vista.Opcion del hidden
-		console.log($(arrFormulario + " #operacion"));
 		$("#formRecuperarClave").submit(); //Envía el formulario
 		//arrFormulario.submit(); //Envía el formulario
 	}
 } // cierre de la función enviar
-
 
 // función.javascript.Enviar (parámetro.vista.Valor)
 function valida_clave (pvValor) {
@@ -272,7 +255,6 @@ function valida_clave (pvValor) {
 		vjClave.focus(); // enfoca el cursor en el campo que falta del formulario
 		return vbComprobar; // rompe la función para que el usuario verifique antes de continuar
 	}
-
 	if (vsClave.val().trim().length <= 4) {
 		vbComprobar = false;
 		swal({
@@ -301,7 +283,6 @@ function valida_clave (pvValor) {
 		});
 		return vbComprobar;
 	}
-
 	if (vsClave2.val().trim() === "") {
 		vbComprobar = false;
 		swal({
@@ -316,7 +297,6 @@ function valida_clave (pvValor) {
 		});
 		return vbComprobar; // rompe la función para que el usuario verifique antes de continuar
 	}
-
 	if (vsClave.val().trim() != vsClave2.val().trim()) {
 		vbComprobar = false;
 		swal({
