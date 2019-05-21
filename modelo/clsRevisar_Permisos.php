@@ -6,7 +6,8 @@ class Revisar_Permisos extends clsConexion {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
 		
 		$this->atrTabla = "tpermiso";
@@ -21,10 +22,8 @@ class Revisar_Permisos extends clsConexion {
 		$this->atrFormulario = array();
 	}
 
-
-
-	function Aprobar() {
-		session_start();
+	function Aprobar()
+	{
 		$sql = "
 			UPDATE {$this->atrTabla}
 			set
@@ -35,14 +34,15 @@ class Revisar_Permisos extends clsConexion {
 			where
 				{$this->atrId} = '{$this->atrFormulario["idpermiso"]}'";
 		//echo "$sql";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
 	}
 
-	function Rechazar() {
+	function Rechazar()
+	{
 		$sql = "
 			UPDATE {$this->atrTabla}
 			set
@@ -53,17 +53,16 @@ class Revisar_Permisos extends clsConexion {
 			where
 				{$this->atrId} = '{$this->atrFormulario["idpermiso"]}'";
 
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
 	}
 
-
-
 	//funcion.nivel.Listar
-	function getTiempoMotivo($piMotivo = "") {
+	function getTiempoMotivo($piMotivo = "")
+	{
 		$sql = "
 			SELECT cantidad_tiempo, cantidad_dias
 			FROM  tmotivo_permiso
@@ -81,9 +80,9 @@ class Revisar_Permisos extends clsConexion {
 			return false;
 	}
 
-
 	//funcion.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
@@ -101,14 +100,13 @@ class Revisar_Permisos extends clsConexion {
 			return false;
 	}
 
-
-
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar)
+	{		
 		$sql = "
 			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
 			FROM $this->atrTabla AS Perm
@@ -140,13 +138,13 @@ class Revisar_Permisos extends clsConexion {
 			return false;
 	}
 
-
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexRevisado($psBuscar) {		
+	function fmListarIndexRevisado($psBuscar)
+	{		
 		$sql = "
 			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
 			FROM $this->atrTabla AS Perm
@@ -177,12 +175,14 @@ class Revisar_Permisos extends clsConexion {
 		else
 			return false;
 	}
+
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexRechazado($psBuscar) {		
+	function fmListarIndexRechazado($psBuscar)
+	{		
 		$sql = "
 			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
 			FROM $this->atrTabla AS Perm
@@ -213,8 +213,6 @@ class Revisar_Permisos extends clsConexion {
 		else
 			return false;
 	}
-
-
 
 }
 

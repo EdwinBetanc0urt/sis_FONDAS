@@ -27,7 +27,7 @@ class Cargo extends clsConexion {
 				'{$this->atrFormulario["ctxDescripcion"]}',
 				'{$this->atrFormulario["cmbDepartamento"]}'
 			); ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -44,7 +44,7 @@ class Cargo extends clsConexion {
 				iddepartamento = '{$this->atrFormulario["cmbDepartamento"]}'
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -77,7 +77,7 @@ class Cargo extends clsConexion {
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

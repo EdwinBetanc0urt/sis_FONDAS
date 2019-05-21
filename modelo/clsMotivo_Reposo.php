@@ -26,7 +26,7 @@ class motivo_reposo extends clsConexion {
 				'{$this->atrFormulario["ctxNombre"]}',
                 '{$this->atrFormulario["ctxCantidad_Dias"]}' 
 			); ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -42,7 +42,7 @@ class motivo_reposo extends clsConexion {
                 cantidad_dias = '{$this->atrFormulario["ctxCantidad_Dias"]}'                  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -75,7 +75,7 @@ class motivo_reposo extends clsConexion {
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

@@ -72,9 +72,7 @@ class RecuperarClave extends clsConexion {
 
 	function fmRecuperarClave() {
 		parent::faTransaccionInicio();
-		$objCifrado = new clsCifrado();
-		$crypClave = $objCifrado->flEncriptar($this->atrFormulario["pswClave"]);
-		unset($objCifrado);
+		$crypClave = clsCifrado::getCifrar($this->atrFormulario["pswClave"]);
 
 		$sql = "SELECT MAX(idhistorial) AS clave_max
 				FROM thistorial_clave 
@@ -86,13 +84,13 @@ class RecuperarClave extends clsConexion {
 				WHERE
 					id_usuario = '{$this->atrId}' AND
 					idhistorial = '{$arrClaveMax["clave_max"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) { //verifica si se ejecuto bien
 			$sql = "INSERT INTO thistorial_clave
 						(clave, estatus, id_usuario)
 					VALUES
 						('{$crypClave}', 1, '{$this->atrId}') ; ";
-			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+			$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 			if (parent::faVerificar($tupla)) { //verifica si se ejecuto bien
 				parent::faTransaccionFin();
 				return $tupla;
@@ -183,8 +181,6 @@ class RecuperarClave extends clsConexion {
 		else
 			return $sql;
 	}
-
-
 
 	//funcion que selecciona el rango de claves para comparar y que no sean repetidas de forma seguida
 	//se debe crear un objeto ya que el usuario de conexion de esta clase no tiene acceso a la tabla de configuracion

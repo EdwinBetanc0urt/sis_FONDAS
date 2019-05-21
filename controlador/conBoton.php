@@ -12,31 +12,24 @@ else{
 }
 
 switch($_POST['operacion']) {
-
 	case "UltimoCodigo":
 		UltimoCodigoBoton();
 		break;
-
 	case "Registrar":
 		registrar();
 		break;
-
 	case "Modificar":
 		cambiar();
 		break;
-		
 	case "Borrar":
 		borrar();
 		break;
-
 	case "ListaView":
 		ListaBoton();
 		break;
-
 	case "ListaCombo":
 		Combo();
 		break;
-
 }
 
 // Funcion Ultimo Codigo de Parroquia
@@ -46,7 +39,6 @@ function UltimoCodigoBoton() {
 	$arrCodigo = $objBoton->UltimoCodigo(); //obtiene el arreglo con el codigo
 	echo $arrCodigo[0] + 1; //imprime el arreglo en la posicion cero y agrega 1
 }
-
 
 function registrar() {
 	global $gsClase;
@@ -71,8 +63,6 @@ function registrar() {
 	}
 }
 
-
-
 function cambiar() {
 	global $gsClase;
 	$objBoton = new Boton();
@@ -84,8 +74,6 @@ function cambiar() {
 		header("Location: ../?form={$gsClase}&msjAlerta=nocambio"); //envía a la vista, con */
 }
 
-
-
 function borrar() {
 	global $gsClase;
 	$objBoton = new Boton();
@@ -95,8 +83,6 @@ function borrar() {
 	else
 		header("Location: ../?form={$gsClase}&msjAlerta=noelimino"); //envía a la vista, con 
 }
-
-
 
 function Combo() {
     if (isset($_POST["hidCodigo"]))
@@ -133,8 +119,6 @@ function Combo() {
     }
     unset($objeto); //destruye el objeto creado
 }
-
-
 
 function ListaBoton() {
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
@@ -201,7 +185,7 @@ function ListaBoton() {
 							|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
 							|<?= $arrRegistro["descripcion"]; ?>
 							|<?= $arrRegistro["icono"]; ?>
-							|<?= $arrRegistro["posicion"]; ?>' >
+							|<?= $arrRegistro["orden"]; ?>' >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 							<td> <?= $arrRegistro[$objeto->atrId]; ?> </td>
@@ -259,7 +243,4 @@ function ListaBoton() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
 ?>
-

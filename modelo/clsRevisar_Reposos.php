@@ -35,7 +35,7 @@ class Revisar_Reposos extends clsConexion {
 			where
 				{$this->atrId} = '{$this->atrFormulario["idreposo"]}'";
 		//echo "$sql";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -53,7 +53,7 @@ class Revisar_Reposos extends clsConexion {
 			where
 				{$this->atrId} = '{$this->atrFormulario["idreposo"]}'";
 
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

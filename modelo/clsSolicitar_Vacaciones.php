@@ -65,7 +65,7 @@ class Solicitar_Vacaciones extends clsConexion
 					'{$value["anno"]}',
 					'{$value["dias"]}'
 				); ";
-			$tupla = parent::faEjecutar($sql); // Ejecuta la sentencia sql
+			$tupla = parent::faEjecutar($sql, false); // Ejecuta la sentencia sql
 			// verifica si se ejecuto bien
 			if (! parent::faVerificar($tupla)) {
 				$liError = $liError + 1;
@@ -87,7 +87,7 @@ class Solicitar_Vacaciones extends clsConexion
 				coddepartamento='{$this->departamento}'
 			where
 				codnivel='{$this->codigo}'";
-		$tupla = parent::faEjecutar($sql); // Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); // Ejecuta la sentencia sql
 		if (parent::faVerificar()) // verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -135,7 +135,7 @@ class Solicitar_Vacaciones extends clsConexion
 			DELETE FROM {$this->atrTabla}
 			WHERE
 				codnivel = '{$this->codigo}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

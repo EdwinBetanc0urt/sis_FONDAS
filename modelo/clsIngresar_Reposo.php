@@ -22,8 +22,8 @@ class Ingresar_Reposo extends clsConexion {
 	}
 
 
-	function Incluir() {
-		//echo $this->atrFormulario["ctxFechaInicio"];
+	function Incluir()
+	{
 		$vsHoraI = date("H:i:s", strtotime($this->atrFormulario["ctxFechaInicio"]));
 		$vsFechaI = parent::faFechaFormato($this->atrFormulario["ctxFechaInicio"], "dma", "amd");
 		$vsTiempoI = $vsFechaI . " " . $vsHoraI;
@@ -43,8 +43,7 @@ class Ingresar_Reposo extends clsConexion {
 				'{$vsTiempoI}',
 				'{$vsTiempoF}'
 			); ";
-		//echo "<pre> $sql";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -52,7 +51,8 @@ class Ingresar_Reposo extends clsConexion {
 	}
 
 
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
@@ -61,7 +61,7 @@ class Ingresar_Reposo extends clsConexion {
 				 
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -92,7 +92,7 @@ class Ingresar_Reposo extends clsConexion {
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
