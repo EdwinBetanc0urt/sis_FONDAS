@@ -131,7 +131,7 @@ class clsConexion {
 	protected function faEjecutarBitacora($pmSQL) {
 		$sentenciaIicial = $this->faEjecutar($pmSQL, true);
 		if ($sentenciaIicial) {
-			$usuario = $_SESSION['id_usuario'];
+			$usuario = $_SESSION['id_usuario'] || null;
 			$operacion = "";
 			if (strripos($pmSQL, "INSERT")) {
 				$operacion = "Incluir";
@@ -142,13 +142,14 @@ class clsConexion {
 			if (strripos($pmSQL, "DELETE")) {
 				$operacion = "Borrar";
 			}
-
-			$sql = 'INSERT INTO tauditoria(
+			// $pmSQL = mysqli_real_escape_string($this->atrConexion, $pmSQL);
+			$sql = "INSERT INTO tauditoria(
 					idusuario, operacion, sql_data, fecha
 				)
-				VALUES("' . $usuario . '", "' . $operacion . '", "' . $pmSQL . '", CURRENT_TIMESTAMP())';
-			return mysqli_query($this->atrConexion, $sql); // se ejecuta el query
+				VALUES('$usuario', '$operacion', '" . addslashes(trim($pmSQL)) ."', CURRENT_TIMESTAMP())";
+			$sentenciaIicial = mysqli_query($this->atrConexion, $sql); // se ejecuta el query
 		}
+
 		return $sentenciaIicial;
 	} // cierre de la función
 
