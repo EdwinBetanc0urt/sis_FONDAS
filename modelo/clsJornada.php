@@ -47,7 +47,7 @@ class Jornada extends clsConexion {
 						tdetalle_jornada (idjornada, iddia_semana)
 					VALUES
 						({$viId}, {$value});";
-				$tupla = parent::faEjecutar($sql);
+				$tupla = parent::faEjecutar($sql, false);
 				if (! parent::faVerificar()) {
 					$liContError = $liContError + 1;
 				}
@@ -83,13 +83,13 @@ class Jornada extends clsConexion {
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		echo "$sql";
 		$liContError = 0;
-		$tupla = parent::faEjecutar($sql);
+		$tupla = parent::faEjecutar($sql, false);
 		if (parent::faVerificar()) {
 			$sql = "
 				DELETE FROM tdetalle_jornada
 				WHERE
 					{$this->atrId} = '{$this->atrFormulario["numId"]}'";
-			$tupla = parent::faEjecutar($sql);
+			$tupla = parent::faEjecutar($sql, false);
 			if (parent::faVerificar()) {
 				foreach($this->atrFormulario["chkDia"] as $key => $value) {
 					$sql = "
@@ -97,7 +97,7 @@ class Jornada extends clsConexion {
 							tdetalle_jornada (idjornada, iddia_semana)
 						VALUES
 							({$this->atrFormulario["numId"]}, {$value});";
-					$tupla = parent::faEjecutar($sql);
+					$tupla = parent::faEjecutar($sql, false);
 					if (! parent::faVerificar()) {
 						$liContError = $liContError + 1;
 					}
@@ -119,9 +119,8 @@ class Jornada extends clsConexion {
 		}
 	}
 
-
-
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
@@ -146,7 +145,7 @@ class Jornada extends clsConexion {
 				{$this->atrEstatus} = 'inactivo'
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

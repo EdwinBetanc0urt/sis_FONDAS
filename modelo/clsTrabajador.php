@@ -83,7 +83,7 @@ class Trabajador extends Persona {
 					'{$this->atrFormulario["cmbCargo"]}',
 					'{$piIdPersona}'  
 				); ";
-			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+			$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 			if (parent::faVerificar()) //verifica si se ejecuto bien
 				return $tupla;
 			else
@@ -115,19 +115,17 @@ class Trabajador extends Persona {
 		else
 			return false;
 	}
+
 	//funcion.modelo.Insertar
 	function fmInsertarClave($piIdUsuario) {
-
-		$objCifrado = new clsCifrado(); //instancia el objeto de cifrado
 		//nacionalidad, guion, documento. Ejemplo. V-12345678
-		$clave_encriptada = $objCifrado->flEncriptar($this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"]);
-		unset($objCifrado);
+		$clave_encriptada = clsCifrado::getCifrar($this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"]);
 
 		$sql = "INSERT INTO thistorial_clave
 					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
 					('{$clave_encriptada}',  CURRENT_DATE, 'temporal', '{$piIdUsuario}') ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
@@ -135,14 +133,11 @@ class Trabajador extends Persona {
 			return false;
 	}
 
-
-
 	function Modificar() {
 		$sql = "
 			SELECT idpersona FROM ttrabajador 
 				WHERE idtrabajador = '{$this->atrFormulario["numId"]}' ";
 		$liIdPersona =  parent::getConsultaArreglo(parent::faEjecutar($sql));
-
 
 		$cambios = 0;
 		$sql = "
@@ -152,10 +147,9 @@ class Trabajador extends Persona {
 				idcargo = '{$this->atrFormulario["cmbCargo"]}' 
 			WHERE 
 				{$this->atrId} =  '{$this->atrFormulario["numId"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			$cambios = $cambios + 1;
-	
 
 		$sql = "
 			UPDATE tusuario 
@@ -163,10 +157,9 @@ class Trabajador extends Persona {
 				idtipo_usuario = '{$this->atrFormulario["cmbTipo_Usuario"]}' 
 			WHERE 
 				id_usuario = {$liIdPersona["idpersona"]} ;  ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			$cambios = $cambios + 1;
-
 
 		$sql = "
 			UPDATE tpersonas
@@ -178,7 +171,7 @@ class Trabajador extends Persona {
 				nacionalidad = '{$this->atrFormulario["cmbNacionalidad"]}' 
 			WHERE 
 				idpersona = {$liIdPersona["idpersona"]} ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			$cambios = $cambios + 1;
 
@@ -188,8 +181,6 @@ class Trabajador extends Persona {
 		else
 			return false;
 	}
-
-
 
 	function consultar() {
 		$sql = "
@@ -208,14 +199,12 @@ class Trabajador extends Persona {
 			return false;
 	}
 
-
-
 	function Eliminar()	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

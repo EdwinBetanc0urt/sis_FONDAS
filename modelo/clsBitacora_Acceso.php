@@ -52,7 +52,7 @@ class Bitacora_Acceso extends Persona {
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
 		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
 		else

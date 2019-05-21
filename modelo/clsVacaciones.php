@@ -31,7 +31,7 @@ class Vacaciones extends clsConexion {
 			INSERT INTO {$this->atrTabla} (nombre)
 			values
 				('{$this->atrFormulario["ctxNombre"]}'); ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -47,7 +47,7 @@ class Vacaciones extends clsConexion {
 			where
 				idvacacion='{$this->atrFormulario["idvacaciones"]}'";
 				echo "$sql";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -61,7 +61,7 @@ class Vacaciones extends clsConexion {
 			where
 				idvacacion='{$this->atrFormulario["idvacaciones"]}'";
 				echo "$sql";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -91,7 +91,7 @@ class Vacaciones extends clsConexion {
 			delete from {$this->atrTabla}
 			where
 				codnivel = '{$this->codigo}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -294,8 +294,6 @@ class Vacaciones extends clsConexion {
 			return false;
 	}
 
-
-
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
@@ -323,9 +321,6 @@ class Vacaciones extends clsConexion {
 		else
 			return false;
 	}
-
-
-
 
 	//función.modelo.Listar Reporte
 	//devuelve la consulta con los parametros de rango y ordenado que se le indiquen

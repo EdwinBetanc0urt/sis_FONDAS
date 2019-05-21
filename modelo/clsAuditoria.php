@@ -6,7 +6,8 @@ class Auditoria extends Persona {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
 		
 		$this->atrTabla = "tauditoria";
@@ -18,17 +19,15 @@ class Auditoria extends Persona {
 		$this->atrFormulario = array();
 	}
 
-
-
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
-		$sql = "
-        SELECT * FROM `tauditoria`  "; //selecciona todo de la tabla
-		
+	function fmListarIndex($psBuscar)
+	{		
+		$sql = "SELECT * FROM tauditoria  "; //selecciona todo de la tabla
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
@@ -46,6 +45,5 @@ class Auditoria extends Persona {
 	}
 
 }
-
 
 ?>

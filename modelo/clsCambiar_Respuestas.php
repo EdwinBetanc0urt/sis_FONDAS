@@ -85,7 +85,7 @@ class CambiarRespuestas extends clsConexion {
 						('{$this->atrFormulario["ctxRespuesta" . $i]}',
 						'{$_SESSION["id_usuario"]}',
 						'" . $this->atrFormulario["cmbPregunta" . $i] . "') ; ";
-			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+			$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 			if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 				continue; //continua el ciclo for
 			else

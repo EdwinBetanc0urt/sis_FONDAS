@@ -56,14 +56,14 @@ class CambiarClave extends clsConexion {
 			WHERE
 				id_usuario = '{$idUsuario}' AND
 				idhistorial = '{$this->getClaveMax($idUsuario)}' ; ";
-		parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 
 		$sql = "
 			INSERT INTO thistorial_clave
 				(clave, estatus, id_usuario)
 			VALUES
 				('{$crypClave}', 'activo', '{$idUsuario}') ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) { //verifica si se ejecuto bien
 			parent::faTransaccionFin();
 			return $tupla;

@@ -66,7 +66,6 @@ class Completar extends clsConexion {
 
 	//funcion.modelo.Insertar
 	function CambiarUsuario($piIdPersona) {
-
 		$sql = "
 			UPDATE tusuario 
 			SET
@@ -83,14 +82,11 @@ class Completar extends clsConexion {
 		else
 			return false;
 	}
+
 	//funcion.modelo.Insertar
 	function InsertarClave($piIdUsuario) {
-
-		$objCifrado = new clsCifrado(); //instancia el objeto de cifrado
 		//nacionalidad, guion, documento. Ejemplo. V-12345678
-		$clave_encriptada = $objCifrado->flEncriptar($this->atrFormulario["pswClave"]);
-		unset($objCifrado);
-
+		$clave_encriptada = clsCifrado::getCifrar($this->atrFormulario["pswClave"]);
 		$sql = "INSERT INTO thistorial_clave
 					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
@@ -103,8 +99,6 @@ class Completar extends clsConexion {
 		else
 			return false;
 	}
-
-
 
 	//funcion.modelo.Insertar
 	function InsertarRespuestas() {

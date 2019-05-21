@@ -34,7 +34,7 @@ class Parroquia extends clsConexion {
 				(nombre, idmunicipio) 
 			values 
 				('{$this->atrFormulario["ctxNombre"]}', '{$this->atrFormulario["cmbMunicipio"]}'); ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -50,7 +50,7 @@ class Parroquia extends clsConexion {
 				idmunicipio = '{$this->atrFormulario["cmbMunicipio"]}'
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -83,7 +83,7 @@ class Parroquia extends clsConexion {
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

@@ -24,7 +24,7 @@ class Estado extends clsConexion {
 			VALUES (
 				'{$this->atrFormulario["ctxNombre"]}'
 			); ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -39,7 +39,7 @@ class Estado extends clsConexion {
 				{$this->atrNombre} = '{$this->atrFormulario["ctxNombre"]}' 
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -72,7 +72,7 @@ class Estado extends clsConexion {
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else

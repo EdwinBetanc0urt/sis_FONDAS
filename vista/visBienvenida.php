@@ -1,12 +1,11 @@
 <?php
 	/*
 	include_once("public/lib_Cifrado.php");
-	$objCifrado = new clsCifrado(); //instancia la clase de Cifrado
 	$texto = "26273412";
-	$ENCRIPTADO = $objCifrado->flEncriptar($texto);
+	$ENCRIPTADO = clsCifrado::getCifrar($texto);
 	var_dump($ENCRIPTADO);
 	echo "<hr>";
-	$desencriptado = $objCifrado->flDesencriptar($ENCRIPTADO);
+	$desencriptado = clsCifrado::getDescifrar($ENCRIPTADO);
 	var_dump($desencriptado);
 	// */
 ?>
@@ -18,7 +17,7 @@
 	include_once("modelo/clsUsuario.php");
 
 	$objUsuario = new Usuario();
-	
+
 	//var_dump($_SESSION);
 	?> 
 
