@@ -60,7 +60,6 @@ class clsConexion {
 		$this->atrConexion = $this->faConectar(); // atributo de Conexión o link
 	} // cierre de la función constructor
 
-
 	/**
 	 * función abstracta Conectar, mysqli conecta SMDB y BD
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
@@ -91,7 +90,6 @@ class clsConexion {
 		}
 	} // cierre de la función
 
-
 	/**
 	 * función abstracta Desconectar, cierra la conexión actual
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
@@ -110,7 +108,6 @@ class clsConexion {
 		}
 	} // cierre de la función
 
-
 	/**
 	 * función abstracta Liberar Consulta, libera de la memoria del servidor los
  	 * resultados obtenidos
@@ -121,30 +118,40 @@ class clsConexion {
 		mysqli_free_result($pmConsulta);
 	} // cierre de la función
 
-
 	// función abstracta Ejecutar, ejecuta cualquier operación en la base de datos
 	// parámetro del modelo SQL
-	protected function faEjecutar($pmSQL) {
+	protected function faEjecutar($pmSQL, $consulta = true) {
 		//$this->faConectar();
-		return mysqli_query($this->atrConexion, $pmSQL); // se ejecuta el query
-	} // cierre de la función
-	protected function faEjecutar2($pmSQL, $pmConsulta=false) {
-		if (! $pmConsulta) {
-			faEjecutar3($pmSQL);
+		if ($consulta) {
+			return mysqli_query($this->atrConexion, $pmSQL); // se ejecuta el query
 		}
-		//$this->faConectar();
-		return mysqli_query($this->atrConexion, $pmSQL); // se ejecuta el query
+		return $this->faEjecutarBitacora($pmSQL);
 	} // cierre de la función
-	protected function faEjecutar3($pmSQL){
-		$Usuario = $_SESSION['id'];
-		$sql2="INSERT INTO tAuditoria(
-				usuario, operacion, fecha_insertado
-			)
-			VALUES('{$Usuario}', '{$pmSQL}', CURRENT_TIMESTAMP())";
-		//var_dump($sql2);
-		return mysqli_query($this->atrConexion, $sql2); // se ejecuta el query
-	}
 
+	protected function faEjecutarBitacora($pmSQL) {
+		$sentenciaIicial = $this->faEjecutar($pmSQL, true);
+		if ($sentenciaIicial) {
+			$usuario = $_SESSION['id_usuario'] || null;
+			$operacion = "";
+			if (strripos($pmSQL, "INSERT")) {
+				$operacion = "Incluir";
+			}
+			if (strripos($pmSQL, "UPDATE")) {
+				$operacion = "Modificar";
+			}
+			if (strripos($pmSQL, "DELETE")) {
+				$operacion = "Borrar";
+			}
+			// $pmSQL = mysqli_real_escape_string($this->atrConexion, $pmSQL);
+			$sql = "INSERT INTO tauditoria(
+					idusuario, operacion, sql_data, fecha
+				)
+				VALUES('$usuario', '$operacion', '" . addslashes(trim($pmSQL)) ."', CURRENT_TIMESTAMP())";
+			$sentenciaIicial = mysqli_query($this->atrConexion, $sql); // se ejecuta el query
+		}
+
+		return $sentenciaIicial;
+	} // cierre de la función
 
 	// función abstracta Verificar, verifica si las operaciones Inc,Con,Mod,Eli se ejecutan bien
 	protected function faVerificar($RecordSet = "") {
@@ -154,7 +161,6 @@ class clsConexion {
 		else
 			return false; // retorna falso si no se afecto ninguna columna
 	} // cierre de la función
-
 
 	/**
 	 * función que envía y sanea los datos del controlador al constructor en
@@ -215,7 +221,6 @@ class clsConexion {
 		return $arrFormulario;
 	} // cierre de la función
 
-
 	/**
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
@@ -227,8 +232,6 @@ class clsConexion {
 		$this->faLiberarConsulta($tupla); // libera de la memoria el resultado asociado a la consulta
 		return $arreglo; // sino encuentra nada devuelve un cero
 	}
-
-
 
 	/*****************************************************************************
 						FUNCIONES RELACIONADAS A CONSULTAS
@@ -244,7 +247,6 @@ class clsConexion {
 		return mysqli_fetch_array($pmRecordSet);
 	} // cierre de la función
 
-
 	/**
 	 * función que devuelve los datos de una consulta en arreglo
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
@@ -253,7 +255,6 @@ class clsConexion {
 	public function getConsultaNumerico($pmRecordSet) {
 		return mysqli_fetch_row($pmRecordSet);
 	} // cierre de la función
-
 
 	/**
 	 * función que devuelve los datos de una consulta en arreglo
@@ -265,7 +266,6 @@ class clsConexion {
 		return mysqli_fetch_assoc($pmRecordSet);
 	} // cierre de la función
 
-
 	/**
 	 * función que devuelve los datos de una consulta en objeto
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
@@ -276,7 +276,6 @@ class clsConexion {
 		return mysqli_fetch_object($pmRecordSet);
 	} // cierre de la función
 
-
 	/**
 	 * función que devuelve los el numero de columnas de una consulta
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
@@ -286,7 +285,6 @@ class clsConexion {
 	public function getCuentaColumnas($pmRecordSet) {
 		return mysqli_fetch_lengths($pmRecordSet);
 	} // cierre de la función
-
 
 	/**
 	 * función que devuelve los datos de una consulta en arreglo
@@ -299,12 +297,9 @@ class clsConexion {
 		return mysqli_num_rows($pmRecordSet);
 	} // cierre de la función
 
-
-
 	/*****************************************************************************
 						FUNCIONES RELACIONADAS A TRANSACCIONES
 	*****************************************************************************/
-
 
 	/**
 	 * función abstracta Ultimo ID, funciona solo para las clave primaria INT y

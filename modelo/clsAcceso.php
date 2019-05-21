@@ -125,7 +125,7 @@ class Acceso extends clsConexion {
 						(idtipo_usuario, idboton, idvista ) 
 					VALUES 
 						('{$this->atrFormulario["cmbTipo_Usuario"]}', '{$value}', '{$lkey}') ; ";
-				$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+				$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 				if (!parent::faVerificar($tupla)) //verifica si se ejecuto bien
 					$liCont = $liCont + 1;
 			}
@@ -158,7 +158,7 @@ class Acceso extends clsConexion {
 				WHERE
 					M.idmodulo = '{$this->atrFormulario["cmbModulo"]}' AND
 					A.idtipo_usuario = '{$this->atrFormulario["cmbTipo_Usuario"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
@@ -175,7 +175,7 @@ class Acceso extends clsConexion {
 			WHERE
 				idvista = '{$this->atrFormulario["setVista"]}' AND 
 				idtipo_usuario = '{$this->atrFormulario["setTipoUsuario"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		echo $sql;
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo

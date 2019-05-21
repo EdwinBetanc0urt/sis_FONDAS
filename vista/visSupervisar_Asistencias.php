@@ -17,8 +17,8 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 		<div class="form-group">
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				<label for="ctxDescripcion">Trabajador</label>
-				<input id="ctxDescripcion" class="valida_alfabetico form-control"
-					maxlength="45" name="ctxDescripcion" type="text" required
+				<input type="text" id="ctxDescripcion" name="ctxDescripcion"
+					class="valida_alfabetico form-control" maxlength="45" required
 					value="<?php
 					if(isset($_GET['getDescripcion']))
 						echo $_GET['getDescripcion'];
@@ -111,7 +111,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
 							</div>	
 						</div>
-	
+
 						<div class="col-xs-2">
 							<div class="input-group">
 								<span class="input-group-addon">
@@ -133,7 +133,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
 				<input type='hidden' name='subPagina' id='subPagina' />
-								
+
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>

@@ -11,17 +11,11 @@ else{
 	require_once("{$ruta}modelo/cls{$gsClase}.php");
 }
 
-
-
-
-echo "<pre>";
-$objCifrado = new clsCifrado();
-
 $objeto = new CambiarRespuestas;
 $objeto->setFormulario($_POST);
 
 $rstClave = $objeto->fmConsultarClave();
-$crypClave = $objCifrado->flEncriptar($_POST["pswClave"]);
+$crypClave = clsCifrado::getCifrar($_POST["pswClave"]);
 $arrClave = $objeto->getConsultaAsociativo($rstClave);
 
 if ($crypClave == $arrClave["clave"]) {
@@ -40,18 +34,7 @@ else {
 }
 
 $objeto->faLiberarConsulta($rstClave); //libera de la memoria el resultado asociado a la consulta
-
-//var_dump($objeto->CambiarClave());
-
-
-unset($objCifrado); //destruye el objeto
 $objeto->faDesconectar(); //cierra la conexión
 unset($objeto); //destruye el objeto*/
 
-
-
-
-
-
 ?>
-

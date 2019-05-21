@@ -13,22 +13,22 @@ class Login extends clsConexion {
 		$this->atrClave = "";
 	}
 
-
 	//función para recibir y sanear los datos del controlador
 	//Usado por el controlador del Login
-	function setUsuario($pcUsuario) {
+	function setUsuario($pcUsuario)
+	{
 		$this->atrUsuario = htmlentities(trim(strtolower($pcUsuario)));
 	}
 
-
 	//función para recibir y sanear los datos del controlador
 	//Usado por el controlador del Login
-	function setClave($pcClave) {
+	function setClave($pcClave)
+	{
 		$this->atrClave = htmlentities(trim(strtolower($pcClave)));
 	}
 
-
-	function Bitacora($piId_Usuario) {
+	function Bitacora($piId_Usuario)
+	{
 		$id = false;
 		$objAgente = new clsAgente();
 		$arrNavegador = $objAgente->getNavegador();
@@ -45,19 +45,17 @@ class Login extends clsConexion {
 					'{$piId_Usuario}'
 				) ; ";
 		unset($objAgente);
-		//var_dump($sql);
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		//verifica si se ejecuto exitosamente la sentencia
 		if (parent::faVerificar($tupla))
 			return $tupla; //retorna el id de la sesión
 		else
-			return false; //*/
+			return false;
 	} //cierre de la función
 
-
-
 	//funcion.modelo.Consultar
-	function ConsultarUsuario() {
+	function ConsultarUsuario()
+	{
 		$sql = "SELECT * FROM tusuario
 				WHERE usuario = '{$this->atrUsuario}'
 				LIMIT 1 ; ";
@@ -72,9 +70,9 @@ class Login extends clsConexion {
 			return false;
 	}
 
-
 	//funcion.modelo.Consultar
-	function ConsultarClave($pcId) {
+	function ConsultarClave($pcId)
+	{
 		$sql = "SELECT * FROM thistorial_clave
 				WHERE
 					id_usuario = '{$pcId}'
@@ -91,12 +89,12 @@ class Login extends clsConexion {
 			return false;
 	}
 
-
 	/**
 	 * Busca los datos de una persona
 	 * @param integer $piId_Persona, clave foránea en usuario que debe ser igual a la clave principal en persona
 	 */
-	function fmConsultarPersona($piId_Persona) {
+	function fmConsultarPersona($piId_Persona)
+	{
 		$sql = "SELECT  P.*, U.idtipo_usuario
 			FROM vpersona AS P
 
@@ -117,8 +115,8 @@ class Login extends clsConexion {
 			return false;
 	}
 
-
-	function fmContadorIntentos() {
+	function fmContadorIntentos()
+	{
 		$sql = "SELECT intento_fallido
 			FROM tusuario
 			WHERE usuario = '{$this->atrUsuario}'
@@ -133,8 +131,8 @@ class Login extends clsConexion {
 			return 3;
 	}
 
-
-	function fmIntentoErroneo()	{
+	function fmIntentoErroneo()
+	{
 		$sql = "
 			UPDATE
 				tusuario
@@ -142,15 +140,15 @@ class Login extends clsConexion {
 				intento_fallido = intento_fallido + 1
 			WHERE
 				usuario = '{$this->atrUsuario}' ; ";
-		$tupla = parent::faEjecutar($sql);
+		$tupla = parent::faEjecutar($sql, false);
 		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
 	}
 
-
-	function fmReiniciaIntento() {
+	function fmReiniciaIntento()
+	{
 		$sql = "
 			UPDATE
 				tusuario
@@ -158,15 +156,15 @@ class Login extends clsConexion {
 				intento_fallido = 0
 			WHERE
 				usuario = '{$this->atrUsuario}' ; ";
-		$tupla = parent::faEjecutar($sql);
+		$tupla = parent::faEjecutar($sql, false);
 		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
 	}
 
-
-	function fmBloqueoUsuario() {
+	function fmBloqueoUsuario()
+	{
 		$sql = "
 			UPDATE
 				tusuario
@@ -174,17 +172,17 @@ class Login extends clsConexion {
 				estatus = '0'
 			WHERE
 				usuario = '{$this->atrUsuario}' ; ";
-		$tupla = parent::faEjecutar($sql);
+		$tupla = parent::faEjecutar($sql, false);
 		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
 			return false;
 	}
 
-
 	// se debe crear un método ya que el usuario de conexión de esta clase no 
 	// tiene acceso a la tabla de configuración
-	function getDiasCaducidad()	{
+	function getDiasCaducidad()
+	{
 		$sql = "
 			SELECT dias_vence_clave
 			FROM tconfiguracion
@@ -202,19 +200,18 @@ class Login extends clsConexion {
 			return 91; // retorna un valor por defecto
 	} // cierre de la función
 
-
-	public function traer_codigo(){
+	public function traer_codigo()
+	{
 		return parent::ejecutar("SELECT MAX(id_usuario) AS id_usuario  FROM tusuario");
 	}
 
-
-
-	public function traer_codigos(){
+	public function traer_codigos()
+	{
 		return parent::ejecutar("SELECT MAX(idhistorial) AS idhistorial  FROM thistorial_clave");
 	}
 
-
- 	public function historial($id){
+	 public function historial($id)
+	 {
  		return parent::ejecutar('SELECT idhistorial, id_usuario,DATE_FORMAT(ultima_actividad,  "%d-%m-%Y %h:%i:%S") AS fecha FROM  thistorial_clave WHERE
  			idhistorial='.$id.' ORDER BY ultima_actividad DESC LIMIT 0,5');
 	}

@@ -10,7 +10,7 @@ $(function() {
                 .attr('min', this.value);
         });
 
-    $("#ctxFechaFin").attr('max', clientDateTime('d'))
+    $("#ctxFechaFin").attr('max', clientDateTime('d'));
 	fjMostrarLista(lsVista);
 	fjMostrarLista(lsVista, '', '', '', 'listaInasistente');
 });

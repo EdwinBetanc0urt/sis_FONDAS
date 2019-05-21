@@ -2,14 +2,13 @@
 
 include_once('clsPersona.php');
 
-session_start();
-
 class Mi_Perfil extends Persona {
 
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
 		
 		$this->atrTabla = "tpersonas";
@@ -20,9 +19,8 @@ class Mi_Perfil extends Persona {
 		$this->atrFormulario = array();
 	}
 
-
-
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			UPDATE 
 				{$this->atrTabla} 
@@ -41,16 +39,15 @@ class Mi_Perfil extends Persona {
 				idparroquia = '{$this->atrFormulario["cmbParroquia"]}'
 			WHERE
 				idpersona = '{$_SESSION["idpersona"]}'; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
 			return false;
 	}
 
-
-
-	function consultar() {		
+	function consultar()
+	{		
 		$sql = "
 			SELECT * FROM vpersona
 			WHERE 
@@ -64,6 +61,5 @@ class Mi_Perfil extends Persona {
 	}
 
 }
-
 
 ?>

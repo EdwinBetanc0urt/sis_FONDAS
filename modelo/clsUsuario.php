@@ -88,7 +88,7 @@ class Usuario extends Persona {
 					'{$this->atrFormulario["cmbCargo"]}',
 					'{$piIdPersona}'  
 				); ";
-			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+			$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 			if (parent::faVerificar()) //verifica si se ejecuto bien
 				return $tupla;
 			else
@@ -120,27 +120,21 @@ class Usuario extends Persona {
 			return false;
 	}
 
-
 	//funcion.modelo.Insertar
 	function fmInsertarClave($piIdUsuario) {
-
-		$objCifrado = new clsCifrado(); //instancia el objeto de cifrado
 		//nacionalidad, guion, documento. Ejemplo. V-12345678
-		$clave_encriptada = $objCifrado->flEncriptar($this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"]);
-		unset($objCifrado);
+		$clave_encriptada = clsCifrado::getCifrar($this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"]);
 
 		$sql = "INSERT INTO thistorial_clave
 					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
 					('{$clave_encriptada}',  CURRENT_DATE, '3', '{$piIdUsuario}') ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
 		else
 			return false;
 	}
-
 
 	function Modificar() {
 		$sql = "
@@ -149,7 +143,7 @@ class Usuario extends Persona {
 				{$this->atrNombre} = '{$this->atrFormulario["ctxNombre"]}' 
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -164,7 +158,7 @@ class Usuario extends Persona {
 				estatus = 'activo' 
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numUsuario"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -179,7 +173,7 @@ class Usuario extends Persona {
 				estatus = 'bloqueado' 
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numUsuario"]}' ; ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
@@ -228,7 +222,7 @@ class Usuario extends Persona {
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
-		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
 		else
