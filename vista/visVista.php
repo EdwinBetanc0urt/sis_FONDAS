@@ -3,9 +3,8 @@
 // existe y esta la variable de sesión rol
 if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Vista";
-	$liVista = "10";
+	$liVista = "11";
 ?>
-
 
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
@@ -24,10 +23,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 		</li>
 	</ul>
 	<br>
-
-	<?php
-		//include_once("mod_". $_GET["accion"] . ".php");
-	?>
 
 	<div class="tab-content">
 		<div id="pestListado" class="tab-pane fade in active">

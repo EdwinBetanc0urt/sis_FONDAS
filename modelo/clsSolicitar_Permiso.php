@@ -6,24 +6,22 @@ class Solicitar_Permiso extends clsConexion {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
-		
 		$this->atrTabla = "tpermiso";
 		$this->atrId = "idpermiso";
         $this->atrNombre = "justificativo";
         $this->atrTipo_Permiso = "";
 		$this->atrMotivo = "";
 		$this->atrCantidad_Dias = "";
-
 		$this->atrEstatus = "estatus";
-		
 		$this->atrFormulario = array();
 	}
 
 
-	function Incluir() {
-		echo $this->atrFormulario["ctxFechaInicio"];
+	function Incluir()
+	{
 		$vsHoraI = date("H:i:s", strtotime($this->atrFormulario["ctxFechaInicio"]));
 		$vsFechaI = parent::faFechaFormato($this->atrFormulario["ctxFechaInicio"], "dma", "amd");
 		$vsTiempoI = $vsFechaI . " " . $vsHoraI;
@@ -43,7 +41,6 @@ class Solicitar_Permiso extends clsConexion {
 				'{$vsTiempoI}',
 				'{$vsTiempoF}'
 			); ";
-
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
@@ -51,14 +48,13 @@ class Solicitar_Permiso extends clsConexion {
 			return false;
 	}
 
-
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
 				{$this->atrNombre} = '{$this->atrFormulario["ctxObservacion"]}',
 				idtrabajador = '{$this->atrFormulario["ctxDescripcion"]}',
-				 
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
@@ -68,9 +64,8 @@ class Solicitar_Permiso extends clsConexion {
 			return false;
 	}
 
-
-
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
@@ -87,9 +82,8 @@ class Solicitar_Permiso extends clsConexion {
 			return false;
 	}
 
-
-
-	function Eliminar()	{
+	function Eliminar()
+	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
@@ -101,11 +95,9 @@ class Solicitar_Permiso extends clsConexion {
 			return false;
 	}
 
-
-
-
 	//funcion.nivel.Listar
-	function getTiempoMotivo($piMotivo = "") {
+	function getTiempoMotivo($piMotivo = "")
+	{
 		$sql = "
 			SELECT cantidad_tiempo, cantidad_dias
 			FROM  tmotivo_permiso
@@ -123,9 +115,9 @@ class Solicitar_Permiso extends clsConexion {
 			return false;
 	}
 
-
 	//funcion.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
@@ -143,15 +135,13 @@ class Solicitar_Permiso extends clsConexion {
 			return false;
 	}
 
-
-
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
-		session_start();
+	function fmListarIndex($psBuscar)
+	{		
 		$sql = "
 			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
 			FROM $this->atrTabla AS Perm
@@ -184,6 +174,5 @@ class Solicitar_Permiso extends clsConexion {
 	}
 
 }
-
 
 ?>

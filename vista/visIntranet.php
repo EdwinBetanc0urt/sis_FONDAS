@@ -1,18 +1,14 @@
 <?php
-
-
 if (isset($_SESSION) && $_SESSION["sesion"] = "sistema") {
 
 	$form="Bienvenida";
 	if(isset($_GET["form"])){
 		$form = $_GET["form"];
 	}
-
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 	<?php
 		$ruta = "";
@@ -25,19 +21,14 @@ if (isset($_SESSION) && $_SESSION["sesion"] = "sistema") {
 		}
 	?>
 </head>
-
 <body class="fond_perfil" >
 	<header>
-
-
-
 		<?php
 
 			include_once("_menu.php");
 			//include("_botones.php");
 		?>
 	</header>
-
 
 	<!--contenido de la pagina-->
 	<div class="main" style="margin-top:20px;">
@@ -56,17 +47,12 @@ if (isset($_SESSION) && $_SESSION["sesion"] = "sistema") {
 
 		</div>
 	</div>
-
 </body>
 </html>
-
 <?php
-
 }
 else {
-
 	header("Content-Type: text/html; charset=utf-8");
-
 	$ruta = "";
 	if(is_file("controlador/conCerrar.php")){
 		header("Location: controlador/conCerrar.php?getMotivoLogOut=AccesoIndevido");

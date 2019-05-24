@@ -6,7 +6,8 @@ class Login extends clsConexion {
 	public $id_usuario, $idpersona, $usuario, $clave, $pre1, $resp1, $pre2, $resp2;
 	public $tipo, $idhistorial;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
 		$this->atrId = "";
 		$this->atrUsuario = ""; //alias o login
@@ -29,7 +30,6 @@ class Login extends clsConexion {
 
 	function Bitacora($piId_Usuario)
 	{
-		$id = false;
 		$objAgente = new clsAgente();
 		$arrNavegador = $objAgente->getNavegador();
 		$NavegadorWeb = $arrNavegador['navegador_version'];
@@ -45,7 +45,7 @@ class Login extends clsConexion {
 					'{$piId_Usuario}'
 				) ; ";
 		unset($objAgente);
-		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto exitosamente la sentencia
 		if (parent::faVerificar($tupla))
 			return $tupla; //retorna el id de la sesión
@@ -199,16 +199,6 @@ class Login extends clsConexion {
 		else
 			return 91; // retorna un valor por defecto
 	} // cierre de la función
-
-	public function traer_codigo()
-	{
-		return parent::ejecutar("SELECT MAX(id_usuario) AS id_usuario  FROM tusuario");
-	}
-
-	public function traer_codigos()
-	{
-		return parent::ejecutar("SELECT MAX(idhistorial) AS idhistorial  FROM thistorial_clave");
-	}
 
 	 public function historial($id)
 	 {

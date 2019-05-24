@@ -6,7 +6,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "24";
 ?>
 
-
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
 		<button id="btnNuevo" class="btn btn-primary" data-toggle="modal" data-target="#VentanaModal" onclick="fjNuevoRegistro();">
@@ -21,12 +20,9 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-	
 	<br>
 
 	<div class="tab-content">	
-
-	
 		<div id="pestListado" class="tab-pane fade in active">
 
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
@@ -86,7 +82,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
-
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-12">
 								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
 									if(isset($_GET["getId"])) 
@@ -100,21 +95,18 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 						
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label for="ctxCantidad_Dias">* Cantidad dias</label>
-								<input id="ctxCantidad_Dias" class="valida_alfabetico form-control" maxlength="45" name="ctxCantidad_Dias" type="text" size="20" required value="<?php
+								<input id="ctxCantidad_Dias" class="valida_numerico form-control" maxlength="45" name="ctxCantidad_Dias" type="text" size="20" required value="<?php
 									if(isset($_GET['getCantidad_Dias']))
 										echo $_GET['getCantidad_Dias'];
 								?>" placeholder="Ingrese cantidad en dias" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
 						</div>
-
-								
 					</div>
 				</div>
 				<div class="modal-footer">
 					<?php
 						include_once("_botones.php");
 					?>
-
 				</div>
 			</div>
 		</div>
@@ -123,10 +115,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</form>
 </div>
 
-
 <?php
-
-
 
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 

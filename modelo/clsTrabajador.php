@@ -6,29 +6,29 @@ class Trabajador extends Persona {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
-		
 		$this->atrTabla = "ttrabajador";
 		$this->atrId = "idtrabajador";
 		$this->atrNombre = "nombre";
 		$this->atrEstatus = "estatus";
-		
 		$this->atrExcluidos = "" ; //excluidos de la lista ya que fueron agregados a la grilla
 		$this->atrFormulario = array();
 	}
 
 	//funcion.modelo.Insertar
-	function Incluir() {
-
+	function Incluir()
+	{
 		parent::faTransaccionInicio();
 		$vsId = NULL ;
-		$arrPersona = parent::ConsultarPersona($this->atrFormulario["cmbNacionalidad"], $this->atrFormulario["numCi"]);
+		$arrPersona = parent::ConsultarPersona(
+			$this->atrFormulario["cmbNacionalidad"], $this->atrFormulario["numCi"]
+		);
 		if ($arrPersona) {
 			$vsId = $arrPersona["idpersona"];
 		}
 		else {
-
 			$sql = "
 				INSERT INTO tpersonas
 					(nacionalidad, cedula, nombre, apellido, tel_mov, correo) 
@@ -55,85 +55,72 @@ class Trabajador extends Persona {
 				parent::faTransaccionDeshace();
 				return false; //envia el id para insertar el usuario
 			}
-			else {
-				parent::faTransaccionDeshace();
-				return false; //envia el id para insertar el usuario
-			}
-		}
-		else {
 			parent::faTransaccionDeshace();
-			return false;
+			return false; //envia el id para insertar el usuario
 		}
+		parent::faTransaccionDeshace();
+		return false;
 	}
 
 	//funcion.modelo.Insertar
-	function InsertarTrabajador($piIdPersona) {
+	function InsertarTrabajador($piIdPersona)
+	{
 		$vsId = NULL ;
-
 		$arrUsuario = $this->BuscarTrabajador($this->atrFormulario["numCi"]);
 		if ($arrUsuario) {
 			return "ya existe un tranajador";
 		}
-		else {
-			$sql = "
-				INSERT INTO {$this->atrTabla} 
-					(fecha_ingreso, idcargo, idpersona) 
-				VALUES (
-					'{$this->atrFormulario["datFechaIngreso"]}',
-					'{$this->atrFormulario["cmbCargo"]}',
-					'{$piIdPersona}'  
-				); ";
-			$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-			if (parent::faVerificar()) //verifica si se ejecuto bien
-				return $tupla;
-			else
-				return false;
-		}
+		$sql = "
+			INSERT INTO {$this->atrTabla} 
+				(fecha_ingreso, idcargo, idpersona) 
+			VALUES (
+				'{$this->atrFormulario["datFechaIngreso"]}',
+				'{$this->atrFormulario["cmbCargo"]}',
+				'{$piIdPersona}'  
+			); ";
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
+		return $tupla;
 	}
 
 	//funcion.modelo.Insertar
-	function InsertarUsuario($piIdPersona) {
+	function InsertarUsuario($piIdPersona)
+	{
 		$vsId = NULL ;
-
 		$arrUsuario = $this->BuscarUsuario($this->atrFormulario["numCi"]);
 		if ($arrUsuario) {
 			return "ya existe un usuario";
 		}
-		else {
-			$sql = "
-				INSERT INTO tusuario 
-					(usuario, idpersona, idtipo_usuario, estatus)
-				VALUES
-					('{$this->atrFormulario["numCi"]}', 
-					'{$piIdPersona}',
-					'{$this->atrFormulario["cmbTipo_Usuario"]}',
-					'completar') ; ";
-			$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 
-		}
+		$sql = "
+			INSERT INTO tusuario 
+				(usuario, idpersona, idtipo_usuario, estatus)
+			VALUES
+				('{$this->atrFormulario["numCi"]}', 
+				'{$piIdPersona}',
+				'{$this->atrFormulario["cmbTipo_Usuario"]}',
+				'completar') ; ";
+		$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 
 		if ($vsId > 0) //verifica si se ejecuto bien
 			return $this->fmInsertarClave($vsId); //envia el id para insertar la clave
-		else
-			return false;
+		return false;
 	}
 
 	//funcion.modelo.Insertar
-	function fmInsertarClave($piIdUsuario) {
+	function fmInsertarClave($piIdUsuario)
+	{
 		//nacionalidad, guion, documento. Ejemplo. V-12345678
-		$clave_encriptada = clsCifrado::getCifrar($this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"]);
-
+		$clave_encriptada = clsCifrado::getCifrar(
+			$this->atrFormulario["cmbNacionalidad"] . "-" . $this->atrFormulario["numCi"]
+		);
 		$sql = "INSERT INTO thistorial_clave
 					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
 					('{$clave_encriptada}',  CURRENT_DATE, 'temporal', '{$piIdUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-
-		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
-			return $tupla; //envia el arreglo
-		else
-			return false;
+		return $tupla; //envia el arreglo
 	}
 
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			SELECT idpersona FROM ttrabajador 
 				WHERE idtrabajador = '{$this->atrFormulario["numId"]}' ";
@@ -175,14 +162,13 @@ class Trabajador extends Persona {
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			$cambios = $cambios + 1;
 
-
 		if ($cambios >= 1) //verifica si se ejecuto bien
-			return tru;
-		else
-			return false;
+			return true;
+		return false;
 	}
 
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
@@ -195,11 +181,11 @@ class Trabajador extends Persona {
 			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
-	function Eliminar()	{
+	function Eliminar()
+	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
@@ -207,14 +193,12 @@ class Trabajador extends Persona {
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
-
-
 	//funcion.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  vpersona "; //selecciona todo el contenido de la tabla
@@ -228,14 +212,12 @@ class Trabajador extends Persona {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
-		else
-			return false;
+		return false;
 	}
 
-
-
 	//funcion.nivel.Listar
-	function ListarTrabajadorDepartamento($psBuscar = "") {
+	function ListarTrabajadorDepartamento($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  vpersona "; //selecciona todo el contenido de la tabla
@@ -248,18 +230,17 @@ class Trabajador extends Persona {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
-		else
-			return false;
+		return false;
 	}
 
-
-
   	/** 
-	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
+	 * función modelo Listar Parámetros, consulta en la base de datos según el
+	 * termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar)
+	{		
 		$sql = "
 			SELECT * FROM vpersona 
 			 "; //selecciona todo de la tabla
@@ -276,17 +257,17 @@ class Trabajador extends Persona {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
-		else
-			return false;
+		return false;
 	}  	
 
-
 	/** 
-	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
+	 * función modelo Listar Parámetros, consulta en la base de datos según el
+	 * termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function ListarCatalogo($psBuscar) {		
+	function ListarCatalogo($psBuscar)
+	{		
 		$sql = "
 			SELECT * FROM vpersona 
 			 "; //selecciona todo de la tabla
@@ -306,11 +287,9 @@ class Trabajador extends Persona {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
 }
-
 
 ?>

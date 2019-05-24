@@ -6,7 +6,8 @@ class Bitacora_Acceso extends Persona {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
 		
 		$this->atrTabla = "tbitacora";
@@ -17,14 +18,13 @@ class Bitacora_Acceso extends Persona {
 		$this->atrFormulario = array();
 	}
 
-
-
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar)
+	{		
 		$sql = "
 			SELECT B.*, U.id_usuario, U.usuario, T.idtipo_usuario, T.nombre AS tipo_usuario,
 				P.nombre, P.apellido, P.nacionalidad
@@ -52,7 +52,7 @@ class Bitacora_Acceso extends Persona {
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
 		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 
-		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
 		else
@@ -60,6 +60,5 @@ class Bitacora_Acceso extends Persona {
 	}
 
 }
-
 
 ?>

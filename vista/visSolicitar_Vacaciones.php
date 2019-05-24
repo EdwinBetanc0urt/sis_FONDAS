@@ -3,7 +3,7 @@
 // existe y esta la variable de sesión rol
 if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Solicitar_Vacaciones";
-	$liVista = "10";
+	$liVista = "32";
 ?>
 
 <div class="panel-heading">
