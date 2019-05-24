@@ -3,9 +3,8 @@
 // existe y esta la variable de sesión rol
 if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Municipio";
-	$liVista = "10";
+	$liVista = "5";
 ?>
-
 
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
@@ -21,16 +20,9 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-	
 	<br>
 
-	<?php
-		//include_once("mod_". $_GET["accion"] . ".php");
-	?>
-
 	<div class="tab-content">	
-
-
 		<div id="pestListado" class="tab-pane fade in active">
 
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">

@@ -8,7 +8,7 @@ if (strlen(session_id()) < 1) {
 if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 	isset($_SESSION["sistema"]) AND $_SESSION["sistema"] == "fondas") {
 	$vsVista = "Cambiar_Clave";
-	$liVista = "71";
+	$liVista = "27";
 ?>
 
 <div class="panel-heading">

@@ -6,7 +6,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "9";
 ?>
 
-
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
 		<button id="btnNuevo" class="btn btn-primary" data-toggle="modal" data-target="#VentanaModal" onclick="fjNuevoRegistro();">

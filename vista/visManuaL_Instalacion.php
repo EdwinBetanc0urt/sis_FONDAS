@@ -2,12 +2,10 @@
 
 // existe y esta la variable de sesión rol
 if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
-	$vsVista = "ManualUsuario";
-	$liVista = "10";
+	$vsVista = "ManualInstalacion";
+	$liVista = "18";
 ?>
 
-
-			
 <section class="formulario">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -15,16 +13,11 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 		</div>
 		<div class="panel-body" align="center">			
 			<iframe src="public/manuales/ManualInstalacion.pdf" style="width:700px; height:600px;" frameborder="0"> </iframe>
-			
 		</div>
 	</div>
 </section>
 
-
-
 <?php
-
-
 
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 

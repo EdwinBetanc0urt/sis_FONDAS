@@ -6,7 +6,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "21";
 ?>
 
-
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
 		<button id="btnNuevo" class="btn btn-primary" data-toggle="modal" data-target="#VentanaModal" onclick="fjNuevoRegistro();">
@@ -21,7 +20,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-
 	<br>
 	<div class="tab-content">	
 		<div id="pestListado" class="tab-pane fade in active">

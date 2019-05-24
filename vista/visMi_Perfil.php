@@ -3,9 +3,8 @@
 // existe y esta la variable de sesión rol
 if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$vsVista = "Mi_Perfil";
-	$liVista = "71";
+	$liVista = "29";
 ?>
-
 
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
@@ -17,12 +16,9 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Datos Personales</a></li>
 	</ul>
-	
 	<br>
 
-	<div class="tab-content">	
-
-
+	<div class="tab-content">
 		<div id="pestListado" class="tab-pane fade in active">
 			<form id="form<?=$vsVista;?>" name="form<?=$vsVista;?>" method="POST" action="controlador/con<?=$vsVista;?>.php" role="form" class="form-horizontal" >
 				<div class="row">
@@ -154,15 +150,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 			</form>
 		</div>
 
-
 	</div>
 </div>
 
-
-
 <?php
-
-
 
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
