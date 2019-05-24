@@ -21,13 +21,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-	
 	<br>
 
-	<div class="tab-content">	
-
+	<div class="tab-content">
 		<div id="pestListado" class="tab-pane fade in active">
-
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
@@ -171,7 +168,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getJornada']; ?>" />
 							</div>
 
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" id="divDepartamento">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="divDepartamento">
 								<label for="cmbDepartamento">* Departamento</label>
 								<select id='cmbDepartamento' name='cmbDepartamento' class="dinamico form-control select2" required data-toggle="tooltip" data-placement="right" title="Departamento" size="1" style="width: 100%;">
 									<option value="">Seleccione una opción..</option>
@@ -181,7 +178,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getDepartamento']; ?>" />
 							</div>
 
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" id="divCargo">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="divCargo">
 								<label for="cmbCargo">* Cargo</label>
 								<select id='cmbCargo' name='cmbCargo' class="dinamico form-control select2" required data-toggle="tooltip" data-placement="right" title="Cargo" size="1" style="width: 100%;">
 									<option value="">Seleccione una opción..</option>

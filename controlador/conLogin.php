@@ -14,7 +14,6 @@ else{
 	require_once("{$ruta}modelo/clsLogin.php");
 }
 
-
 if (isset($_POST["operacion"]) AND $_POST["operacion"] == "ReCaptcha") {
 	codigo_captcha();
 }

@@ -196,9 +196,7 @@ function ListaTrabajador() {
 		//tambien idica de la forma en que listara ASC o DESC
 		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
-
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
-
 	$rstRecordSet = $objeto->fmListarIndex(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
 	header("Content-Type: text/html; charset=utf-8");
@@ -291,7 +289,6 @@ function ListaTrabajador() {
 						<?php
 					}
 					?>
-
 					<li>
 						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&raquo;</span>

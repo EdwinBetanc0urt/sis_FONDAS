@@ -233,7 +233,7 @@ function ListaSolicitar_Permiso() {
 								|<?= $arrRegistro[$objeto->atrEstatus]; ?>
 								|<?= $arrRegistro[$objeto->atrId]; ?>
 								|<?= ucwords($arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]); ?>
-								|<?= ucwords($arrRegistro["trabajador_fk"]); ?>
+								|<?= ucwords($arrRegistro["idtrabajador"]); ?>
 								|<?= ucwords($arrRegistro["fecha_elaboracion"]); ?>
 								|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>

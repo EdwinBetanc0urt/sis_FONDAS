@@ -22,7 +22,7 @@ class Motivo_Permiso extends clsConexion {
 
 	function Incluir() {
 		$sql = "
-			INSERT INTO {$this->atrTabla} ({$this->atrNombre}, descripcion) 
+			INSERT INTO {$this->atrTabla} ({$this->atrNombre}, cantidad_dias, cantidad_tiempo) 
 			VALUES (
 				'{$this->atrFormulario["ctxNombre"]}',
                 '{$this->atrFormulario["ctxCantidad_Dias"]}',

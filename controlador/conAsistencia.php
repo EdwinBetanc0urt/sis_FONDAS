@@ -188,7 +188,7 @@ function ListaAsistencia() {
 						|<?= $arrRegistro[$objeto->atrEstatus]; ?>
 						|<?= $arrRegistro[$objeto->atrId]; ?>
 						|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-						|<?= ucwords($arrRegistro["descripcion"]); ?>
+						|<?= ucwords($arrRegistro["departamento"]); ?>
 						|<?= ucwords($arrRegistro["iddepartamento"]); ?>
 						|<?= ucwords($arrRegistro["departamento"]); ?>' >
 							<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->

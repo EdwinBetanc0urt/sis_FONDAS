@@ -6,22 +6,21 @@ class motivo_reposo extends clsConexion {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
-		
 		$this->atrTabla = "tmotivo_reposo";
 		$this->atrId = "idmotivo_reposo";
         $this->atrNombre = "nombre";
         $this->atrCantidad_Dias= "cantidad_dias";
 		$this->atrEstatus = "estatus";
-		
 		$this->atrFormulario = array();
 	}
 
-
-	function Incluir() {
+	function Incluir()
+	{
 		$sql = "
-			INSERT INTO {$this->atrTabla} ({$this->atrNombre}, descripcion) 
+			INSERT INTO {$this->atrTabla} ({$this->atrNombre}, cantidad_dias) 
 			VALUES (
 				'{$this->atrFormulario["ctxNombre"]}',
                 '{$this->atrFormulario["ctxCantidad_Dias"]}' 
@@ -29,12 +28,11 @@ class motivo_reposo extends clsConexion {
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
-
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
@@ -45,13 +43,11 @@ class motivo_reposo extends clsConexion {
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
-
-
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
@@ -64,13 +60,11 @@ class motivo_reposo extends clsConexion {
 			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
-
-
-	function Eliminar()	{
+	function Eliminar()
+	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
@@ -78,14 +72,12 @@ class motivo_reposo extends clsConexion {
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
-
-
 	//funcion.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
@@ -99,18 +91,16 @@ class motivo_reposo extends clsConexion {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
-		else
-			return false;
+		return false;
 	}
-
-
 
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar)
+	{		
 		$sql = "
 			SELECT * 
 			FROM $this->atrTabla
@@ -133,11 +123,9 @@ class motivo_reposo extends clsConexion {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
 }
-
 
 ?>

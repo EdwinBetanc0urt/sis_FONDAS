@@ -63,8 +63,8 @@ function registrar() {
 			"&msjAlerta=duplicado&getOpcion=" . $_POST["operacion"] .
 			"&getId=" . $arreglo[$objeto->atrId] .
 			"&getNombre=" . $arreglo[$objeto->atrNombre] .
-            "&getCantidad_Dias=" . $arreglo["Cantidad_Dias"] .
-            "&getCantidad_Tiempo=" . $arreglo["Cantidad_Tiempo"] .
+            "&getCantidad_Dias=" . $arreglo["cantidad_Dias"] .
+            "&getCantidad_Tiempo=" . $arreglo["cantidad_Tiempo"] .
 			"&getEstatus=" . $arreglo[$objeto->atrEstatus]);  
 	} //cierre del condicional si el RecordSet es verdadero
 	else {
@@ -81,7 +81,6 @@ function cambiar() {
 	global $gsClase;
 	$objMotivo_Permiso = new Motivo_Permiso();
 	$objMotivo_Permiso->setFormulario($_POST);
-	//var_dump($objMotivo_Permiso->Modificar());/*
 	if ($objMotivo_Permiso->Modificar()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}&msjAlerta=cambio"); //envía a la vista, con mensaje de la consulta
 	else
@@ -225,36 +224,36 @@ function ListaMotivo_Permiso() {
 					</tbody>
 				</table> 
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
@@ -270,7 +269,4 @@ function ListaMotivo_Permiso() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
 ?>
-

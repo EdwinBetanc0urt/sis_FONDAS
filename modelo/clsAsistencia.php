@@ -6,22 +6,19 @@ class Asistencia extends clsConexion {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
-		
 		$this->atrTabla = "tasistencia";
 		$this->atrId = "idasistencia";
 		$this->atrNombre = "nombre";
 		$this->atrEstatus = "estatus";
-		
 		$this->atrDepartamento = "";
 		$this->atrFormulario = array();
 	}
 
-
-
-	function Incluir() {
-		session_start();
+	function Incluir()
+	{
 		parent::faTransaccionInicio();
 		$sql = "
 			INSERT INTO {$this->atrTabla} 
@@ -31,9 +28,7 @@ class Asistencia extends clsConexion {
 				CURRENT_TIMESTAMP
 			); ";
 		echo "$sql";
-		$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 
-		//$this->IncluirDetalle($vsId); /*
-		
+		$vsId = parent::faUltimoId($sql); //ejecuta la sentencia y obtiene el ID 		
 		//verifica si se ejecuto bien
 		if ($vsId > 0) {
 			//verifica si se ejecuto bien
@@ -41,23 +36,18 @@ class Asistencia extends clsConexion {
 				parent::faTransaccionFin();
 				return true; //envia el id para insertar el usuario
 			}
-			else {
-				parent::faTransaccionDeshace();
-				return false; //envia el id para insertar el usuario
-			}
-		}
-		else {
 			parent::faTransaccionDeshace();
-			return false;
+			return false; //envia el id para insertar el usuario
 		}
-		//*/parent::faTransaccionDeshace();
+		parent::faTransaccionDeshace();
+		return false;
 	}
 
-	function IncluirDetalle($piId ="") {
+	function IncluirDetalle($piId ="")
+	{
 		$liError = 0;
 		$liContador = 0;
 		foreach ($this->atrFormulario["detIdTrabajador"] as $key => $value) {
-				
 			$sql = "
 				INSERT INTO tdetalle_asistencia 
 					(idasistencia, idtrabajador, hora_entrada)
@@ -66,7 +56,6 @@ class Asistencia extends clsConexion {
 					'{$value}',
 					'{$this->atrFormulario["detHoraEntrada"][$liContador]}'
 				); ";
-			//echo "$sql";
 			$liContador = $liContador + 1;
 			$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 			if (! parent::faVerificar()) //verifica si se ejecuto bien
@@ -75,12 +64,11 @@ class Asistencia extends clsConexion {
 		}
 		if ($liError == 0) //verifica si se ejecuto bien
 			return true;
-		else
-			return false;
+		return false;
 	}
 
-
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
@@ -92,13 +80,11 @@ class Asistencia extends clsConexion {
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
-
-
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
@@ -111,13 +97,11 @@ class Asistencia extends clsConexion {
 			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
-
-
-	function Eliminar()	{
+	function Eliminar()
+	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
@@ -125,14 +109,12 @@ class Asistencia extends clsConexion {
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		if (parent::faVerificar()) //verifica si se ejecuto bien
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
-
-
 	//funcion.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} 
@@ -142,18 +124,16 @@ class Asistencia extends clsConexion {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
 			return $tupla; //envia el arreglo
-		else
-			return false;
+		return false;
 	}
-
-
 
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar)
+	{		
 		$sql = "
 			SELECT Per.*, A.*
 			FROM $this->atrTabla AS A
@@ -166,7 +146,6 @@ class Asistencia extends clsConexion {
 				(A.{$this->atrId} LIKE '%{$psBuscar}%' 
 				OR Per.nombre LIKE '%{$psBuscar}%' 
 				OR Per.apellido LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
-
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
@@ -179,8 +158,7 @@ class Asistencia extends clsConexion {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
-		else
-			return false;
+		return false;
 	}
 
 }
