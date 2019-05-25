@@ -18,15 +18,13 @@
 	<link rel="stylesheet" type="text/css" href="public/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="public/select2/dist/css/select2.min.css" />
 	<link rel="stylesheet" type="text/css" href="public/select2/dist/css/select2-bootstrap.min.css" />
+	<link rel="stylesheet" href="public/bootstrap-datetimepicker_Eonasdan/css/bootstrap-datetimepicker.min.css" />
 
 	<link rel="stylesheet" href="public/jquery/jquery-ui/jquery-ui.min.css" />
 	<script type="text/javascript" src="public/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="public/jquery/jquery-ui/jquery-ui.min.js"></script>
 
 	<link rel="stylesheet" href="public/sweetalert2/sweetalert2.min.css" />
-
-	<link rel="stylesheet" href="public/bootstrap-datetimepicker_Eonasdan/css/bootstrap-datetimepicker.min.css" />
-
 
 	<script type="text/javascript" src="public/moment/min/moment.min.js">
 		//! moment.js
