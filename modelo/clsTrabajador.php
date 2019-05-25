@@ -51,12 +51,6 @@ class Trabajador extends Persona {
 				parent::faTransaccionFin();
 				return true; //envia el id para insertar el usuario
 			}
-			elseif (is_string($estatus) || is_string($estatus2)) {
-				parent::faTransaccionDeshace();
-				return false; //envia el id para insertar el usuario
-			}
-			parent::faTransaccionDeshace();
-			return false; //envia el id para insertar el usuario
 		}
 		parent::faTransaccionDeshace();
 		return false;

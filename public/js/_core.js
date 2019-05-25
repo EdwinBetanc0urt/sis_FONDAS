@@ -33,26 +33,29 @@ $(function () {
 		}
 	});
 
-	$('.hora_pickatime').datetimepicker({
-		format: 'LT',
-		locale: 'es'
-		// format: 'h:i A',
-		// interval: 30
-	});
+	// inicia la función para los picker de las fechas y el tiempo
+	if ($.isFunction($.fn.datetimepicker)) {
+		$('.hora_pickatime').datetimepicker({
+			format: 'LT',
+			locale: 'es'
+			// format: 'h:i A',
+			// interval: 30
+		});
 
-	$(".fecha_pickatime, .calendario").datetimepicker({
-		//viewMode: 'months',
-		//format: 'DD/MM', 
-		format: 'DD-MM-YYYY', 
-		//disabledHours: false,
-		minDate: moment(),
-		locale: "es"
-	});
+		$(".fecha_pickatime, .calendario").datetimepicker({
+			//viewMode: 'months',
+			//format: 'DD/MM', 
+			format: 'DD-MM-YYYY', 
+			//disabledHours: false,
+			minDate: moment(),
+			locale: "es"
+		});
 
-	$('.fecha_hora_datepicker').datetimepicker({
-		format: 'DD-MM-YYYY HH:mm A',
-		locale: 'es'
-	});
+		$('.fecha_hora_datepicker').datetimepicker({
+			format: 'DD-MM-YYYY HH:mm A',
+			locale: 'es'
+		});
+	}
 });
 
 function mymenu() {

@@ -114,24 +114,29 @@ class clsConexion {
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object $pmConsulta, tupla o recordset (solo con SELECT)
 	 */
-	public function faLiberarConsulta($pmConsulta) {
+	public function faLiberarConsulta($pmConsulta)
+	{
 		mysqli_free_result($pmConsulta);
 	} // cierre de la función
 
 	// función abstracta Ejecutar, ejecuta cualquier operación en la base de datos
 	// parámetro del modelo SQL
-	protected function faEjecutar($pmSQL, $consulta = true) {
-		//$this->faConectar();
+	protected function faEjecutar($pmSQL, $consulta = true)
+	{
 		if ($consulta) {
 			return mysqli_query($this->atrConexion, $pmSQL); // se ejecuta el query
 		}
 		return $this->faEjecutarBitacora($pmSQL);
 	} // cierre de la función
 
-	protected function faEjecutarBitacora($pmSQL) {
+	protected function faEjecutarBitacora($pmSQL)
+	{
 		$sentenciaIicial = $this->faEjecutar($pmSQL, true);
 		if ($sentenciaIicial) {
-			$usuario = $_SESSION['id_usuario'] || null;
+			$usuario = null;
+			if (isset($_SESSION['id_usuario']))
+				$usuario = $_SESSION['id_usuario'];
+
 			$operacion = "";
 			if (strripos($pmSQL, "INSERT")) {
 				$operacion = "Incluir";
@@ -154,12 +159,12 @@ class clsConexion {
 	} // cierre de la función
 
 	// función abstracta Verificar, verifica si las operaciones Inc,Con,Mod,Eli se ejecutan bien
-	protected function faVerificar($RecordSet = "") {
+	protected function faVerificar($RecordSet = "")
+	{
 		// si las columnas afectadas son mayores a cero, es decir 1 o mas
 		if (mysqli_affected_rows($this->atrConexion) > 0)
 			return true; //retorna verdadero
-		else
-			return false; // retorna falso si no se afecto ninguna columna
+		return false; // retorna falso si no se afecto ninguna columna
 	} // cierre de la función
 
 	/**

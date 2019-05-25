@@ -137,7 +137,6 @@ function listaVista() {
 						<?php
 					}
 					?>
-
 					<li>
 						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<span aria-hidden="true">&raquo;</span>
@@ -148,7 +147,6 @@ function listaVista() {
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
