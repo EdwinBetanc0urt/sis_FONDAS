@@ -6,32 +6,21 @@ class Ingresar_Reposo extends clsConexion {
 	//atributos de paginación
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
-		parent::__construct(); //instancia al constructor padre
-		
+	function __construct()
+	{
+		parent::__construct(); //instancia al constructor padre	
 		$this->atrTabla = "treposo";
 		$this->atrId = "idreposo";
-        $this->atrNombre = "justificativo";
+        $this->atrNombre = "justificacitvo";
         $this->atrTipo_Reposo = "";
 		$this->atrMotivo = "";
 		$this->atrCantidad_Dias = "";
-
 		$this->atrEstatus = "estatus";
-		
 		$this->atrFormulario = array();
 	}
 
-
 	function Incluir()
 	{
-		$vsHoraI = date("H:i:s", strtotime($this->atrFormulario["ctxFechaInicio"]));
-		$vsFechaI = parent::faFechaFormato($this->atrFormulario["ctxFechaInicio"], "dma", "amd");
-		$vsTiempoI = $vsFechaI . " " . $vsHoraI;
-
-		$vsHoraF = date("H:i:s", strtotime($this->atrFormulario["ctxFechaFin"]));
-		$vsFechaF = parent::faFechaFormato($this->atrFormulario["ctxFechaFin"], "dma", "amd");
-		$vsTiempoF = $vsFechaF . " " . $vsHoraF;
-
 		$sql = "
 			INSERT INTO {$this->atrTabla}
 				({$this->atrNombre}, idtrabajador, idmotivo_reposo, 
@@ -40,16 +29,12 @@ class Ingresar_Reposo extends clsConexion {
 				'{$this->atrFormulario["ctxObservacion"]}',
 				'{$this->atrFormulario["numIdTrabajador"]}',
 				'{$this->atrFormulario["cmbMotivo_Reposo"]}',
-				'{$vsTiempoI}',
-				'{$vsTiempoF}'
+				'{$this->atrFormulario["ctxFechaInicio"]}',
+				'{$this->atrFormulario["ctxFechaFin"]}'
 			); ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
-
 
 	function Modificar()
 	{
@@ -62,14 +47,11 @@ class Ingresar_Reposo extends clsConexion {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
-
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
@@ -77,31 +59,27 @@ class Ingresar_Reposo extends clsConexion {
 				{$this->atrNombre} = '{$this->atrFormulario["ctxObservacion"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if (parent::faVerificar()) {
+		if ($tupla) {
 			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
 			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
-
-	function Eliminar()	{
+	function Eliminar()
+	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
-
 	//funcion.nivel.Listar
-	function getTiempoMotivo($piMotivo = "") {
+	function getTiempoMotivo($piMotivo = "")
+	{
 		$sql = "
 			SELECT cantidad_tiempo, cantidad_dias
 			FROM  tmotivo_reposo
@@ -110,18 +88,17 @@ class Ingresar_Reposo extends clsConexion {
 			LIMIT 1;";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if (parent::faVerificar($tupla)) {
+		if ($tupla) {
 			$arrConsulta = parent::getConsultaArreglo($tupla);
 			parent::faLiberarConsulta($tupla);
 			return $arrConsulta; //envia el arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
-
 	//funcion.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
@@ -133,12 +110,8 @@ class Ingresar_Reposo extends clsConexion {
 					{$this->atrId} LIKE '%{$psBuscar}%' ;";
 		}
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
-			return $tupla; //envia el arreglo
-		else
-			return false;
+		return $tupla; //envia el arreglo
 	}
-
 
 	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el
@@ -146,7 +119,8 @@ class Ingresar_Reposo extends clsConexion {
 	 * @param string parámetro control Búsqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {
+	function fmListarIndex($psBuscar)
+	{
 		$sql = "
 			SELECT Perm.*, P.*, M.nombre AS motivo_reposo
 			FROM $this->atrTabla AS Perm
@@ -171,13 +145,9 @@ class Ingresar_Reposo extends clsConexion {
 		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
 }
-
 
 ?>

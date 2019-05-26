@@ -5,15 +5,15 @@ $(function () {
 	fjMostrarLista(lsVista);
 
 	$("#ctxFechaInicio").on("change blur focus input", function(){
+		$("#ctxFechaFin")
+			.val(null)
+			.attr('min', this.value);
     	fjFechaFinal(this.value, $("#cmbMotivo_Reposo").val());
 	});
 	$("#cmbMotivo_Reposo").on("change", function(){
     	fjFechaFinal($("#ctxFechaInicio").val(), this.value);
 	});
-
 });
-
-
 
 //Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
@@ -27,17 +27,19 @@ function fjFechaFinal(psFechaInicio = "", piMotivo = "") {
 			ctxFechaInicio: psFechaInicio.toString() 
 		},
 		function(resultado) {
-			if(resultado == false)
-				console.log("sin consultas ");
-			else {
-				console.log(resultado);
-				$("#form" + lsVista + " #ctxFechaFin").val("");
-				$("#form" + lsVista + " #ctxFechaFin").val(resultado);
+			if (resultado) {
+				$("#form" + lsVista + " #ctxFechaFin")
+					.attr('readonly', true)				
+					.val(resultado);
+				if (resultado.trim() == 'mutuo') {
+					$("#form" + lsVista + " #ctxFechaFin")
+						.attr('readonly', false)
+						.val("");
+				}
 			}
 		}
 	);
 }
-
 
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor) {
@@ -72,8 +74,6 @@ function enviar(pvValor) {
 	}
 }
 
-
-
 function fjNuevoRegistro() {
 	$("#form" + lsVista)[0].reset();
 	fjUltimoID(lsVista);
@@ -100,6 +100,7 @@ function fjNuevoRegistro() {
 		$("#Restaurar").css("display", "none");
 	}
 }
+
 function fjEditarRegistro() {
 	if ($("#Registar")) {
 		$("#Registar").css("display", "none");
@@ -117,8 +118,6 @@ function fjEditarRegistro() {
 		$("#Restaurar").css("display", "none");
 	}
 }
-
-
 
 function fjSeleccionarRegistro(pvDOM) {
     console.log(pvDOM);
@@ -184,8 +183,6 @@ function fjSeleccionarRegistro(pvDOM) {
     $("#VentanaModal").modal('show'); //para boostrap v3.3.7
 }
 
-
-
 function fjCargarDias(piJornada = ""){
 	if (piJornada != "")
 		$("#numId").val(piJornada);
@@ -202,5 +199,5 @@ function fjCargarDias(piJornada = ""){
                 console.log(resultado);
             }
         }
- );
+	);
 }

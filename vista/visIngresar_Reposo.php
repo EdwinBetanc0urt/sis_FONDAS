@@ -20,7 +20,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
-	
 	<br>
 	<div class="tab-content">	
 		<div id="pestListado" class="tab-pane fade in active">
@@ -67,7 +66,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 		</div>
 	</div>
 </div>
-
 
 
 <div id="VentanaModal" class="modal fade modal-primary">
@@ -129,17 +127,19 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaInicio">* Inicio del Reposo</label>
-								<input id="ctxFechaInicio" class="fecha_hora_datepicker form-control calendario" maxlength="45" 
-									name="ctxFechaInicio" type="text" size="20" required placeholder="Ingrese la Descripción" 
+								<input id="ctxFechaInicio" class="form-control" maxlength="45" 
+									name="ctxFechaInicio" type="date" size="20" required placeholder="Ingrese la Descripción" 
 									data-toggle="tooltip" data-placement="bottom" title="Campo Obligatorio, especifique la hora exacta" 
 									onchange="fjFechaFinal(this.value, $('#cmbMotivo_Reposo').val());" oninput="fjFechaFinal(this.value, $('#cmbMotivo_Reposo').val());" />
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaFin">* Reincorporación del Reposo</label>
-								<input id="ctxFechaFin" class="form-control" name="ctxFechaFin" type="text" readonly placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Generado automaticamente" />
+								<input type="date" id="ctxFechaFin" name="ctxFechaFin"
+									class="form-control fecha_datepicker" readonly placeholder="Ingrese la Descripción"
+									data-toggle="tooltip" data-placement="right"
+									title="Generado automaticamente" />
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -156,11 +156,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</form>
 </div>
 
-
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar

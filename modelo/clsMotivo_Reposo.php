@@ -26,9 +26,7 @@ class motivo_reposo extends clsConexion {
                 '{$this->atrFormulario["ctxCantidad_Dias"]}' 
 			); ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		return false;
+		return $tupla;
 	}
 
 	function Modificar()
@@ -41,9 +39,7 @@ class motivo_reposo extends clsConexion {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		return false;
+		return $tupla;
 	}
 
 	function consultar()
@@ -70,9 +66,7 @@ class motivo_reposo extends clsConexion {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		return false;
+		return $tupla;
 	}
 
 	//funcion.nivel.Listar
@@ -89,9 +83,7 @@ class motivo_reposo extends clsConexion {
 					{$this->atrId} LIKE '%{$psBuscar}%' ;";
 		}
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
-			return $tupla; //envia el arreglo
-		return false;
+		return $tupla; //envia el arreglo
 	}
 
   	/** 
@@ -121,9 +113,7 @@ class motivo_reposo extends clsConexion {
 		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		return false;
+		return $tupla;
 	}
 
 }

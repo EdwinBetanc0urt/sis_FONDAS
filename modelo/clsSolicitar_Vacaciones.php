@@ -11,13 +11,10 @@ class Solicitar_Vacaciones extends clsConexion
 	function __construct()
 	{
 		parent::__construct(); // instancia al constructor padre
-
 		$this->atrTabla = "tvacacion";
 		$this->atrId = "idvacacion";
-
 		$this->atrFormulario = array();
 	}
-
 
 	function Incluir()
 	{
@@ -41,15 +38,9 @@ class Solicitar_Vacaciones extends clsConexion
 				parent::faTransaccionFin();
 				return true; // envía el id para insertar el usuario
 			}
-			else {
-				parent::faTransaccionDeshace();
-				return false; // envía el id para insertar el usuario
-			}
 		}
-		else {
-			parent::faTransaccionDeshace();
-			return false;
-		}
+		parent::faTransaccionDeshace();
+		return false;
 	}
 
 
@@ -67,14 +58,13 @@ class Solicitar_Vacaciones extends clsConexion
 				); ";
 			$tupla = parent::faEjecutar($sql, false); // Ejecuta la sentencia sql
 			// verifica si se ejecuto bien
-			if (! parent::faVerificar($tupla)) {
+			if (! $tupla) {
 				$liError = $liError + 1;
 			}
 		}
 		if ($liError == 0)
 			return true;
-		else
-			return false;
+		return false;
 	}
 
 
@@ -88,12 +78,8 @@ class Solicitar_Vacaciones extends clsConexion
 			where
 				codnivel='{$this->codigo}'";
 		$tupla = parent::faEjecutar($sql, false); // Ejecuta la sentencia sql
-		if (parent::faVerificar()) // verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
-
 
 	function consultar()
 	{
@@ -107,10 +93,8 @@ class Solicitar_Vacaciones extends clsConexion
 			parent::faLiberarConsulta($tupla); // libera de la memoria el resultado asociado a la consulta
 			return $arreglo; // retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
-
 
 	function getFechaIngreso($psIdTrabajador)
 	{
@@ -124,10 +108,8 @@ class Solicitar_Vacaciones extends clsConexion
 			parent::faLiberarConsulta($tupla); // libera de la memoria el resultado asociado a la consulta
 			return $arreglo[0]; // retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
-
 
 	function eliminar()
 	{
@@ -136,12 +118,8 @@ class Solicitar_Vacaciones extends clsConexion
 			WHERE
 				codnivel = '{$this->codigo}' ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
-
 
 	// función.nivel.Listar
 	function Listar($psBuscar = "")
@@ -156,12 +134,8 @@ class Solicitar_Vacaciones extends clsConexion
 					nombre LIKE '%{$psBuscar}%' ";
 		}
 		$tupla = parent::faEjecutar($sql); // Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla)) // verifica si se ejecuto bien
-			return $tupla; // envía el arreglo
-		else
-			return false;
+		return $tupla; // envía el arreglo
 	}
-
 
 	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el
@@ -196,10 +170,8 @@ class Solicitar_Vacaciones extends clsConexion
 			parent::faLiberarConsulta($tupla	); // libera de la memoria el resultado asociado a la consulta
 			return $arrRetorno; // retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return array();
+		return array();
 	}
-
 
 	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el
@@ -230,12 +202,8 @@ class Solicitar_Vacaciones extends clsConexion
 		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
 		
 		$tupla = parent::faEjecutar($sql); // Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
-
 
 }
 
