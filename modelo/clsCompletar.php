@@ -39,8 +39,7 @@ class Completar extends clsConexion {
 				idpersona = '{$_SESSION["idpersona"]}'; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if ($tupla) { 
-			//verifica si se ejecuto bien
-			if ($this->CambiarUsuario($_SESSION["idpersona"])){
+			if ($this->CambiarUsuario()) {
 				parent::faTransaccionFin();
 				return true; //envia el id para insertar el usuario
 			}
@@ -50,7 +49,7 @@ class Completar extends clsConexion {
 	}
 
 	//funcion.modelo.Insertar
-	function CambiarUsuario($piIdPersona)
+	function CambiarUsuario()
 	{
 		$sql = "
 			UPDATE tusuario 
@@ -70,7 +69,6 @@ class Completar extends clsConexion {
 	//funcion.modelo.Insertar
 	function InsertarClave($piIdUsuario)
 	{
-		//nacionalidad, guion, documento. Ejemplo. V-12345678
 		$clave_encriptada = clsCifrado::getCifrar($this->atrFormulario["pswClave"]);
 		$sql = "INSERT INTO thistorial_clave
 					(clave, fecha_creacion, estatus, id_usuario)
@@ -86,7 +84,6 @@ class Completar extends clsConexion {
 	//funcion.modelo.Insertar
 	function InsertarRespuestas()
 	{
-		//$respuesta_encriptada = "" ;
 		$liError = 0 ;
 		//ciclo del 1 al 5 que son los name que exiten en la vista (ctxRespuesta1-5 y cmbPregunta1-5)
 		for ($i = 1 ; $i <= 2 ; $i++) {
@@ -100,7 +97,7 @@ class Completar extends clsConexion {
 						'{$_SESSION["id_usuario"]}',
 						'" . $this->atrFormulario["cmbPregunta" . $i] . "') ; ";
 			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-			if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
+			if ($tupla) //verifica si se ejecuto bien
 				continue; //continua el ciclo for
 			else
 				$liError = $liError + 1;

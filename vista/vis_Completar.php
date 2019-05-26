@@ -49,44 +49,50 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 			</div>
 
 			<div class="panel-body">
-				<form id="formCompletarRegistro" name="formCompletarRegistro" method="POST"
-					action="controlador/conCompletar.php" role="form" class="form-horizontal">
+				<form id="formCompletarRegistro" name="formCompletarRegistro"
+					method="POST" action="controlador/conCompletar.php" role="form"
+					class="form-horizontal" autocomplete="off">
 					<div class="row">
 
 						<div class="form-group ui-front">
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="ctxNombre">* Primer Nombre</label>
-								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45"
-									name="ctxNombre" type="text" required value="<?php
+								<input type="text" id="ctxNombre" name="ctxNombre"
+									class="valida_alfabetico form-control"
+									maxlength="45" required data-toggle="tooltip"
+									value="<?php
 									if(isset($_SESSION['nombre']))
 										echo $_SESSION['nombre'];
-									?>" placeholder="Ingrese la Descripción" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
+									?>" placeholder="Ingrese la Descripción"
+									data-placement="right"
+									title="Campo Obligatorio" />
 							</div>
 
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="ctxNombre2">Segundo Nombre</label>
-								<input id="ctxNombre2" class="valida_alfabetico form-control"
-									maxlength="45" name="ctxNombre2" type="text"
+								<input type="text" id="ctxNombre2" name="ctxNombre2"
+									class="valida_alfabetico form-control" maxlength="45"
 									placeholder="Ingrese la Nombre" data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="ctxApellido">* Primer Apellido</label>
-								<input id="ctxApellido" class="valida_alfabetico form-control"
-									maxlength="45" name="ctxApellido" type="text" required
+								<input type="text" id="ctxApellido" name="ctxApellido"
+									class="valida_alfabetico form-control" required
+									maxlength="45" data-toggle="tooltip"
 									value="<?php
 									if(isset($_SESSION['apellido']))
 										echo $_SESSION['apellido'];
-									?>" placeholder="Ingrese la Apellido" data-toggle="tooltip"
-									data-placement="right" title="Campo Obligatorio" />
+									?>" placeholder="Ingrese la Apellido"
+									data-placement="right"
+									title="Campo Obligatorio" />
 							</div>
 
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="ctxApellido2">Segundo Apellido</label>
-								<input id="ctxApellido2" class="valida_alfabetico form-control"
-									maxlength="45" name="ctxApellido2" type="text"
+								<input type="text" id="ctxApellido2" name="ctxApellido2"
+									class="valida_alfabetico form-control" maxlength="45"
 									placeholder="Ingrese la Apellido" data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -95,9 +101,10 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 						<div class="form-group ui-front">
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="cmbSexo">* Sexo</label>
-								<select id='cmbSexo' name='cmbSexo' class="dinamico form-control select2"
+								<select id='cmbSexo' name='cmbSexo' required
+									class="dinamico form-control select2" size="1"
 									data-toggle="tooltip" data-placement="right"
-									title="Estado al cual pertenece el municipio" size="1">
+									title="Estado al cual pertenece el municipio">
 									<option value="">Selecciona Uno...</option>
 									<option value="m">Masculino</option>
 									<option value="f">Femenino </option>
@@ -110,7 +117,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="cmbEdoCivil">* Estado Civil</label>
-								<select id='cmbEdoCivil' name='cmbEdoCivil'
+								<select id='cmbEdoCivil' name='cmbEdoCivil' required
 									class="dinamico form-control select2" size="1"
 									data-toggle="tooltip" data-placement="right"
 									title="EdoCivil al cual pertenece el municipio">
@@ -125,56 +132,62 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="datFechaNac">* Fecha de Nacimiento</label>
-								<input id="datFechaNac" class="valida_alfabetico form-control"
-									maxlength="45" name="datFechaNac" type="date" required
-									placeholder="Ingrese la Fecha de Nacimiento" data-toggle="tooltip"
+								<input type="date" id="datFechaNac" name="datFechaNac"
+									class="valida_alfabetico form-control" required
+									maxlength="45" placeholder="Ingrese la Fecha de Nacimiento"
+									data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="ctxCorreo">* Correo</label>
-								<input id="ctxCorreo" class="valida_correo form-control"
-									maxlength="45" name="ctxCorreo" type="text" required
+								<label for="ctxCorreo">Correo</label>
+								<input type="text" id="ctxCorreo" name="ctxCorreo"
+									class="valida_correo form-control"
+									maxlength="45" data-toggle="tooltip"
 									value="<?php
 									if(isset($_SESSION['correo']))
 										echo $_SESSION['correo'];
-									?>" placeholder="Ingrese el Correo" data-toggle="tooltip"
+									?>" placeholder="Ingrese el Correo"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 						</div>
 
+						<div class="form-group ui-front">
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
 								<label for="numTelefono">* Teléfono Móvil</label>
-								<input id="numTelefono" name="numTelefono"
-									class="valida_numerico form-control"
-									maxlength="45"type="text" required value="<?php
+								<input type="text" id="numTelefono" name="numTelefono"
+									class="valida_numerico form-control" required
+									value="<?php
 									if(isset($_SESSION['tel_mov']))
 										echo $_SESSION['tel_mov'];
-									?>" placeholder="Ingrese el Telefono Movil" data-toggle="tooltip"
+									?>" placeholder="Ingrese el Telefono Movil"
+									maxlength="45" data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 
 							<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-								<label for="numTelefono2">* Teléfono Fijo</label>
-								<input id="numTelefono2" class="valida_numerico form-control"
-									maxlength="45" name="numTelefono2" type="text"
+								<label for="numTelefono2">Teléfono Fijo</label>
+								<input type="text" id="numTelefono2" name="numTelefono2"
+									class="valida_numerico form-control" maxlength="45"
 									placeholder="Ingrese el Telefono Fijo" data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								<label for="ctxDireccion">* Dirección</label>
-								<input id="ctxDireccion" class="valida_alfabetico form-control"
-									maxlength="45" name="ctxDireccion" type="text" required
-									placeholder="Ingrese la Dirección" data-toggle="tooltip"
+								<input type="text" id="ctxDireccion" name="ctxDireccion"
+									class="valida_alfabetico form-control"
+									maxlength="45" required data-toggle="tooltip"
+									placeholder="Ingrese la Dirección"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
 
 							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
 								<label for="cmbEstado">* Estado</label>
-								<select id='cmbEstado' data-placement="right"
-									class="dinamico form-control select2" data-toggle="tooltip"
-									title="Estado al cual pertenece el municipio" size="1">
+								<select id="cmbEstado" size="1" required
+									data-placement="right" data-toggle="tooltip"
+									class="dinamico form-control select2"
+									title="Estado al cual pertenece el municipio">
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidEstado" type="hidden" />
@@ -184,7 +197,8 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 								<label for="cmbMunicipio">* Municipio</label>
 								<select id='cmbMunicipio' data-toggle="tooltip"
 									class="dinamico form-control select2" size="1"
-									data-placement="right" title="Estado al cual pertenece el municipio">
+									data-placement="right" required
+									title="Estado al cual pertenece el municipio">
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidMunicipio" type="hidden" />
@@ -195,7 +209,8 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 								<select id='cmbParroquia' name='cmbParroquia'
 									class="dinamico form-control select2" size="1"
 									data-toggle="tooltip" data-placement="right"
-									title="Estado al cual pertenece el municipio">
+									title="Estado al cual pertenece el municipio"
+									required>
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidParroquia" type="hidden" />
@@ -203,9 +218,11 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="cmbPregunta1">* Pregunta 1</label>
-								<select id='cmbPregunta1' name='cmbPregunta1' data-placement="right"
-									class="dinamico form-control select2" data-toggle="tooltip"
-									title="Seleccione una opción" size="1">
+								<select id='cmbPregunta1' name='cmbPregunta1'
+									data-placement="right" data-toggle="tooltip"
+									class="dinamico form-control select2"
+									title="Seleccione una opción" size="1"
+									required>
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidPregunta1" type="hidden" />
@@ -213,9 +230,10 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxRespuesta1">* Respuesta 1</label>
-								<input id="ctxRespuesta1" class=" form-control" maxlength="45"
-									name="ctxRespuesta1" type="text" required data-toggle="tooltip"
-									placeholder="Ingrese la primera respuesta" data-placement="right"
+								<input type="text" id="ctxRespuesta1" name="ctxRespuesta1"
+									class=" form-control" maxlength="45" required
+									 data-toggle="tooltip" data-placement="right"
+									placeholder="Ingrese la primera respuesta"
 									title="Campo Obligatorio" />
 							</div>
 						</div>
@@ -223,9 +241,11 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 						<div class="form-group ui-front">
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="cmbPregunta2">* Pregunta 2</label>
-								<select id='cmbPregunta2' name='cmbPregunta2' data-placement="right"
-									class="dinamico form-control select2" data-toggle="tooltip"
-									title="Selecciona una opción" size="1">
+								<select id='cmbPregunta2' name='cmbPregunta2'
+									data-placement="right" data-toggle="tooltip"
+									class="dinamico form-control select2"
+									title="Selecciona una opción" size="1"
+									required>
 									<option value="">Selecciona Uno...</option>
 								</select>
 								<input id="hidPregunta2" type="hidden" />
@@ -233,8 +253,8 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxRespuesta2">* Respuesta 2</label>
-								<input id="ctxRespuesta2" class=" form-control" maxlength="45"
-									name="ctxRespuesta2" type="text" required
+								<input type="text" id="ctxRespuesta2" name="ctxRespuesta2"
+									class="form-control" maxlength="45" required
 									placeholder="Ingrese la segunda respuesta" data-toggle="tooltip"
 									data-placement="right" title="Campo Obligatorio" />
 							</div>
@@ -269,21 +289,22 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "completar" AND
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="pswClave2">* Confirmar Clave Nueva</label>
-								<input id="pswClave2" name="pswClave2" type="password"
+								<input type="password" id="pswClave2" maxlength="45"
 									class="form-control confirm-password valida_clave" 
-									maxlength="45" required placeholder="Confirme la clave"
+									required placeholder="Confirme la clave"
 									data-placement="right" title="Campo Obligatorio" 
 									ata-toggle="tooltip" />
 							</div>
 
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<center>
-									<button id="btnGuardar" name='iniciar' value="Guardar" onclick="enviar(this.value);"
+									<button type="button" id="btnGuardar"
+										value="Guardar" onclick="enviar();"
 										style="background:#37474F; color:#fff; width:200px; height:40px;">
 										Guardar
 									</button>
-									<button id="btnSalir" onclick="salir();"
-										style="background:#37474F; color:#fff; width:200px; height:40px;"	>
+									<button type="button" id="btnSalir" onclick="salir();"
+										style="background:#37474F; color:#fff; width:200px; height:40px;">
 										Cancelar
 									</button>
 								</center>

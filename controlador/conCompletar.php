@@ -11,33 +11,22 @@ else{
 	require_once("{$ruta}modelo/cls{$gsClase}.php");
 }
 
-
-
 switch($_POST["operacion"]) {
-
 	case "Guardar":
 		Cambiar();
 		break;
-
 }
 
-
 function Cambiar() {
-	echo "<pre>";
 	global $gsClase;
 	$objCompletar = new Completar();
 	$objCompletar->setFormulario($_POST);
-	//$objCompletar->actualizar();
-	if ($objCompletar->actualizar()) //si el fmInsertar es verdadero, realiza las sentencias
-		header("Location: ../?form={$gsClase}&msjAlerta=datoscompletos"); //envía a la vista, con mensaje de la consulta
+	if ($objCompletar->actualizar()) {
+		require("{$ruta}controlador/conCerrar.php&getMotivoLogOut=datoscompletos");
+		//header("Location: ../?form={$gsClase}&msjAlerta=datoscompletos"); //envía a la vista, con mensaje de la consulta
+	}
 	else
 		header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con mensaje de la consulta*/
-
 }
 
-
-
-
-
 ?>
-

@@ -104,7 +104,6 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 </div>
 
 <?php
-
 } //cierra el condicional de sesión
 
 //no esta logueado y trata de entrar sin autenticar

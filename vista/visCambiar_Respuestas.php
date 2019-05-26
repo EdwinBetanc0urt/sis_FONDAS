@@ -6,7 +6,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "28";
 ?>
 
-
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
 		Cambiar clave de acceso
@@ -88,12 +87,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</div>
 </div>
 
-
-
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar

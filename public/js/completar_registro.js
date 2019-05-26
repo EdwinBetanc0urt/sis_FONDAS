@@ -31,125 +31,261 @@ $(function() {
 	fjComboGeneral("Pregunta", "", "Pregunta2");
 });
 
-
 // Función para recuperar la contraseña
-function enviar(pvValor) {
+function enviar() {
 	let arrFormulario = "#formCompletarRegistro";
-	let vsUsuario = $(arrFormulario + " #ctxUsuario");
-	let vsFecha = $(arrFormulario + " #datFechaNac");
-	let vsPregunta = $(arrFormulario + " #cmbPregunta");
+	let nombre = $(arrFormulario + " #ctxNombre");
+	let apellido = $(arrFormulario + " #ctxApellido");
+	let sexo = $(arrFormulario + " #cmbSexo");
+	let estadoCivil = $(arrFormulario + " #cmbEdoCivil");
+	let fecha = $(arrFormulario + " #datFechaNac");
+	let celular = $(arrFormulario + " #numTelefono");
+	let direccion = $(arrFormulario + " #ctxDireccion");
+	let estado = $(arrFormulario + " #cmbEstado");
+	let municipio = $(arrFormulario + " #cmbMunicipio");
+	let parroquia = $(arrFormulario + " #cmbParroquia");
+	let vsPregunta = $(arrFormulario + " #cmbPregunta1");
 	let vsPregunta2 = $(arrFormulario + " #cmbPregunta2");
+	let vsRespuesta = $(arrFormulario + " #ctxRespuesta1");
+	let vsRespuesta2 = $(arrFormulario + " #ctxRespuesta2");
 	let vsClave = $(arrFormulario + " #pswClave");
 	let vsClave2 = $(arrFormulario + " #pswClave2");
-	let vsRespuesta = $(arrFormulario + " #ctxRespuesta");
-	let vsRespuesta2 = $(arrFormulario + " #ctxRespuesta2");
 	let vbComprobar = true; //variable javascript Comprobar, verificar que todo este true o un solo false no envía
 
-	if (pvValor === "recuperar") {
-		//si el Usuario está VACIO
-		if (vsUsuario.val() == "") {
-			vbComprobar = false;
-			swal({
-				title: '¡Atención!',
-				text: 'EL USUARIO ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
-				type: 'info',
-				showCloseButton: true,
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				vsUsuario.focus();
-			});
-			return vbComprobar;
-		}
-
-		//la funcion tiene 2 parametros, Fecha de Nacimineto es obligatorio y fecha minima de edad (17 por defecto)
-		let arrEdad = fjEdadMinima(vsFecha.value); //devuelve un arreglo con 2 valores
-		// la posicion 0 con una cadena "menor" o "mayor", y la posicion 1 con la edad
-		//console.log(arrEdad + " arreglo de edad ");
-
-		if (arrEdad[2] == "menor") {
-			vbComprobar = false;
-			swal({
-					title: '¡Atención!',
-					html: 'LA EDAD INTRODUCIDA (' + arrEdad[0] + '), ES MENOR A LA ' +
-						'PERMITIDA <br /> Por favor introduzca una edad minima (' +
-						arrEdad[1] + ') valida para ' + pvValor.toUpperCase(),
-					type: 'info',
-					confirmButtonText: 'Ok'
-			}).then((result) => {
-				vsFecha.focus();
-			});
-			return vbComprobar; //rompe la función para que el usuario verifique antes de continuar
-		}
-
-		//si la respuesta está vacía
-		if (vsPregunta.val() == "") {
-			vbComprobar = false;
-			swal({
-				title: '¡Atención!',
-				html: 'DEBE SELECCIONAR LA PREGUNTA DE SEGURIDAD <br /> De la cual ' +
-					'usted previamente registro ',
-				type: 'info',
-				showCloseButton: true,
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				vsPregunta.focus();
-			});
-			return vbComprobar;
-		}
-		//si la respuesta está vacía
-		if (vsRespuesta.val() == "") {
-			vbComprobar = false;
-			swal({
-				title: '¡Atención!',
-				html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
-					'la respuesta correcta ',
-				type: 'info',
-				showCloseButton: true,
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				vsRespuesta.focus();
-			});
-			return vbComprobar;
-		}
-
-		//si la respuesta está vacía
-		if (vsPregunta2.val() == "") {
-			vbComprobar = false;
-			swal({
-				title: '¡Atención!',
-				html: 'DEBE SELECCIONAR LA PREGUNTA DE SEGURIDAD <br /> De la cual ' +
-					'usted previamente registro ',
-				type: 'info',
-				showCloseButton: true,
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				vsPregunta2.focus();
-			});
-			return vbComprobar;
-		}
-		//si la respuesta está vacía
-		if (vsRespuesta2.val() == "") {
-			vbComprobar = false;
-			swal({
-				title: '¡Atención!',
-				html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
-					'la respuesta correcta ',
-				type: 'info',
-				showCloseButton: true,
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				vsRespuesta2.focus();
-			});
-			return vbComprobar;
-		}
-
-		vbComprobar = validarClave();
+	//si el Usuario está VACIO
+	if (nombre.val().trim() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'EL NOMBRE ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			nombre.focus();
+		});
+		return vbComprobar;
 	}
+
+	//si el Usuario está VACIO
+	if (apellido.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'EL APELLIDO ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			apellido.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si el Usuario está VACIO
+	if (sexo.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'EL SEXO ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			sexo.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si el Usuario está VACIO
+	if (estadoCivil.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'EL ESTADO CIVIL ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			estadoCivil.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si el Usuario está VACIO
+	if (fecha.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'LA FECHA DE NACIMIENTO ES OBLIGATORIA, NO PUEDE ESTAR VACIA',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			fecha.focus();
+		});
+		return vbComprobar;
+	}
+	//la funcion tiene 2 parametros, Fecha de Nacimineto es obligatorio y fecha minima de edad (17 por defecto)
+	let arrEdad = fjEdadMinima(fecha.val()); //devuelve un arreglo con 2 valores
+	if (arrEdad[2] == "menor") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			html: 'LA EDAD INTRODUCIDA (' + arrEdad[0] + '), ES MENOR A LA ' +
+				'PERMITIDA <br /> Por favor introduzca una edad minima (' +
+				arrEdad[1] + ') valida.',
+			type: 'info',
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			fecha.focus();
+		});
+		return vbComprobar; //rompe la función para que el usuario verifique antes de continuar
+	}
+
+	//si el Usuario está VACIO
+	if (celular.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'EL CELULAR ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			celular.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si el Usuario está VACIO
+	if (direccion.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'LA DIRECCION ES OBLIGATORIA, NO PUEDE ESTAR VACIA',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			direccion.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si el Usuario está VACIO
+	if (estado.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'EL ESTADO ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			estado.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si el Usuario está VACIO
+	if (municipio.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'EL MUNICIPIO ES OBLIGATORIO, NO PUEDE ESTAR VACIO',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			municipio.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si el Usuario está VACIO
+	if (parroquia.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			text: 'LA PARROQUIA ES OBLIGATORIA, NO PUEDE ESTAR VACIA',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			parroquia.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si la respuesta está vacía
+	if (vsPregunta.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			html: 'DEBE SELECCIONAR LA PREGUNTA DE SEGURIDAD <br /> De la cual ' +
+				'usted previamente registro ',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			vsPregunta.focus();
+		});
+		return vbComprobar;
+	}
+	//si la respuesta está vacía
+	if (vsRespuesta.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
+				'la respuesta correcta ',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			vsRespuesta.focus();
+		});
+		return vbComprobar;
+	}
+
+	//si la respuesta está vacía
+	if (vsPregunta2.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			html: 'DEBE SELECCIONAR LA PREGUNTA DE SEGURIDAD <br /> De la cual ' +
+				'usted previamente registro ',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			vsPregunta2.focus();
+		});
+		return vbComprobar;
+	}
+	//si la respuesta está vacía
+	if (vsRespuesta2.val() == "") {
+		vbComprobar = false;
+		swal({
+			title: '¡Atención!',
+			html: 'LA RESPUESTA ES OBLIGATORIA <br> Por su seguridad debe colocar ' +
+				'la respuesta correcta ',
+			type: 'info',
+			showCloseButton: true,
+			confirmButtonText: 'Ok'
+		}).then((result) => {
+			vsRespuesta2.focus();
+		});
+		return vbComprobar;
+	}
+
+	vbComprobar = validarClave();
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if (vbComprobar) {
-		$("#formCompletarRegistro #operacion").val(pvValor); //valor.vista.Opcion del hidden
+		$("#formCompletarRegistro #operacion").val('Guardar'); //valor.vista.Opcion del hidden
 		//console.log($(arrFormulario + " #operacion"));
-		arrFormulario.submit(); //Envía el formulario
+		$(arrFormulario).submit(); //Envía el formulario
 	}
 }
