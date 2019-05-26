@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Clase para la conexión hacia el servidor de base de datos y métodos para la
  * consulta de los datos, y métodos globales para uso de las clases extendidas.
@@ -41,7 +40,6 @@ else{
 	require_once(".." . DS . "public" . DS . "lib_Cifrado.php");
 }
 
-
 // Clase Abstracta para acceder al SMBD utilizando mysqli procedimental
 class clsConexion {
 
@@ -52,7 +50,8 @@ class clsConexion {
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param string $psPrivilegio que dependiendo el privilegio usa el usuario para la conexión
 	 */
-	protected function __construct($psPrivilegio = "") {
+	protected function __construct($psPrivilegio = "")
+	{
 		$this->atrServidor = HOST; // atributo Servidor
 		$this->atrUsuario = USER; // atributo Usuario
 		$this->atrClave = PASSWORD; // atributo Clave
@@ -64,7 +63,8 @@ class clsConexion {
 	 * función abstracta Conectar, mysqli conecta SMDB y BD
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
-	private function faConectar() {
+	private function faConectar()
+	{
 		$vbConexion = mysqli_connect(
 			$this->atrServidor,
 			$this->atrUsuario,
@@ -96,9 +96,9 @@ class clsConexion {
 	 * @param link, o enlace de conexión (tomado directamente del constructor)
 	 * @return boolean, Dependiendo si se cerro o no la conexión actual con el servidor
 	 */
-	public function faDesconectar() {
+	public function faDesconectar()
+	{
 		if (mysqli_close($this->atrConexion)) {
-			//echo "<br><br><hr> <b>¡Base de Datos cerrada con exito!</b> <br><br> ";
 			return true;
 		}
 		else {
@@ -114,24 +114,29 @@ class clsConexion {
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 * @param object $pmConsulta, tupla o recordset (solo con SELECT)
 	 */
-	public function faLiberarConsulta($pmConsulta) {
+	public function faLiberarConsulta($pmConsulta)
+	{
 		mysqli_free_result($pmConsulta);
 	} // cierre de la función
 
 	// función abstracta Ejecutar, ejecuta cualquier operación en la base de datos
 	// parámetro del modelo SQL
-	protected function faEjecutar($pmSQL, $consulta = true) {
-		//$this->faConectar();
+	protected function faEjecutar($pmSQL, $consulta = true)
+	{
 		if ($consulta) {
 			return mysqli_query($this->atrConexion, $pmSQL); // se ejecuta el query
 		}
 		return $this->faEjecutarBitacora($pmSQL);
 	} // cierre de la función
 
-	protected function faEjecutarBitacora($pmSQL) {
+	protected function faEjecutarBitacora($pmSQL)
+	{
 		$sentenciaIicial = $this->faEjecutar($pmSQL, true);
 		if ($sentenciaIicial) {
-			$usuario = $_SESSION['id_usuario'] || null;
+			$usuario = null;
+			if (isset($_SESSION['id_usuario']))
+				$usuario = $_SESSION['id_usuario'];
+
 			$operacion = "";
 			if (strripos($pmSQL, "INSERT")) {
 				$operacion = "Incluir";
@@ -154,12 +159,12 @@ class clsConexion {
 	} // cierre de la función
 
 	// función abstracta Verificar, verifica si las operaciones Inc,Con,Mod,Eli se ejecutan bien
-	protected function faVerificar($RecordSet = "") {
+	protected function faVerificar($RecordSet = "")
+	{
 		// si las columnas afectadas son mayores a cero, es decir 1 o mas
 		if (mysqli_affected_rows($this->atrConexion) > 0)
 			return true; //retorna verdadero
-		else
-			return false; // retorna falso si no se afecto ninguna columna
+		return false; // retorna falso si no se afecto ninguna columna
 	} // cierre de la función
 
 	/**
@@ -171,7 +176,8 @@ class clsConexion {
 	 * @return array $this->atrFormulario, arreglo agregado al constructor con
 	 * todos los valores y quitando las primeras 3 letras de la clave
 	 */
-	public function setFormulario($pcForm) {
+	public function setFormulario($pcForm)
+	{
 		foreach ($pcForm as $clave => $valor) {
 			$clave_new = $clave ;
 
@@ -203,7 +209,8 @@ class clsConexion {
 			}
 		}
 	} // cierre de la función
-	public function sanearSubFormulario($pcForm) {
+	public function sanearSubFormulario($pcForm)
+	{
 		$arrFormulario = array();
 		foreach ($pcForm as $clave => $valor) {
 			$clave_new = $clave ;
@@ -224,7 +231,8 @@ class clsConexion {
 	/**
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
-	public function UltimoCodigo() {
+	public function UltimoCodigo()
+	{
 		$sql= "SELECT MAX({$this->atrId}) AS id
 				FROM {$this->atrTabla}  ; ";
 		$tupla = $this->faEjecutar($sql); // Ejecuta la sentencia sql
@@ -243,7 +251,8 @@ class clsConexion {
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return array asociativos por nombre de indice y asociados por numero (o posición) de indice
 	 */
-	public function getConsultaArreglo($pmRecordSet) {
+	public function getConsultaArreglo($pmRecordSet)
+	{
 		return mysqli_fetch_array($pmRecordSet);
 	} // cierre de la función
 
@@ -252,7 +261,8 @@ class clsConexion {
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return array asociativos por por numero (o posición) de indice
 	 */
-	public function getConsultaNumerico($pmRecordSet) {
+	public function getConsultaNumerico($pmRecordSet)
+	{
 		return mysqli_fetch_row($pmRecordSet);
 	} // cierre de la función
 
@@ -262,7 +272,8 @@ class clsConexion {
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return array asociativos por nombre de indice
 	 */
-	public function getConsultaAsociativo($pmRecordSet) {
+	public function getConsultaAsociativo($pmRecordSet)
+	{
 		return mysqli_fetch_assoc($pmRecordSet);
 	} // cierre de la función
 
@@ -272,7 +283,8 @@ class clsConexion {
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return object, el parámetro convertido en un objeto (accede solamente al nombre del campo)
 	 */
-	public function faCambiarObjeto($pmRecordSet) {
+	public function faCambiarObjeto($pmRecordSet)
+	{
 		return mysqli_fetch_object($pmRecordSet);
 	} // cierre de la función
 
@@ -282,7 +294,8 @@ class clsConexion {
 	 * @param object sql, $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return object sql integer, devuelve el numero total de filas en esa consulta
 	 */
-	public function getCuentaColumnas($pmRecordSet) {
+	public function getCuentaColumnas($pmRecordSet)
+	{
 		return mysqli_fetch_lengths($pmRecordSet);
 	} // cierre de la función
 
@@ -293,7 +306,8 @@ class clsConexion {
 	 * @param object $pmRecordSet, tupla o recordset (que fue obtenida mediante un SELECT)
 	 * @return object el numero total de filas en esa consulta del parámetro enviado
 	 */
-	public function getNumeroFilas($pmRecordSet) {
+	public function getNumeroFilas($pmRecordSet)
+	{
 		return mysqli_num_rows($pmRecordSet);
 	} // cierre de la función
 
@@ -308,50 +322,50 @@ class clsConexion {
 	 * @param string $pmSQL, Consulta del insert a extraer el numero de insersion
 	 * @return integer del numero de insersion, si es 0 no se inserto nada
 	 */
-	public function faUltimoId($pmSql) {
+	public function faUltimoId($pmSql)
+	{
 		$this->faEjecutar($pmSql); // se ejecuta el query
 		return mysqli_insert_id($this->atrConexion);  //obtiene el ultimo id, e inserta 1+
 	} // cierre de la función
 
-
 	// función abstracta Ultimo ID, funciona solo para las clave primaria INT y
 	// autoincrementables parámetro modelo SQL
-	public function faUltimoId2($pmSql) {
+	public function faUltimoId2($pmSql)
+	{
 		$pmSql .= " SELECT @@identity AS id ; ";
 		$RecordSet = $this->faEjecutar($pmSql);
 		//return mysqli_fetch_array($RecordSet); // se ejecuta el query
 		return $pmSql; // se ejecuta el query
 	} // cierre de la función
 
-
 	/**
 	 * función abstracta Transacción Inicio, indica el comienzo de la transacción
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
-	public function faTransaccionInicio() {
+	public function faTransaccionInicio()
+	{
 		$this->faEjecutar("START TRANSACTION;");
 		//$this->fmEjecutar("BEGIN");
 	} // cierre de la función
-
 
 	/**
 	 * funcion abstracta Transacción Fin, indica que la transacción culmino
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
-	public function faTransaccionFin() {
+	public function faTransaccionFin()
+	{
 		$this->faEjecutar("COMMIT;");
 	} // cierre de la función
-
 
 	/**
 	 * función abstracta Transacción Deshace. devuelve al estado anterior del
 	 * inicio de la transacción cada cambio hecho
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
 	 */
-	public function faTransaccionDeshace() {
+	public function faTransaccionDeshace()
+	{
 		$this->faEjecutar("ROLLBACK;");
 	} // cierre de la función
-
 
 	/**
 	 * @author Edwin Betancourt <EdwinBetanc0urt@outlook.com>
@@ -363,25 +377,10 @@ class clsConexion {
 	public function faFechaFormato($pmFecha = "", $pmFormatoE = "amd", $pmFormatoR = "dma", $separathor = '/'
 	) {
 		if ($pmFecha == "") {
-			$lsActual = date("Y" . $separathor . "m" . $separathor . "d"); //fecha actual php para servidor
-			//$lsActual="NOW()"; //fecha actual SQL para servidor
-
-			$lsDiaSemanaN = date("N"); // día de la semana en números, 1 (lunes) a 7 (domingo)
-			$lsDiaSemanaC = date("D"); // día de la semana en letras cortas, Mon a Sun
-			$lsDiaSemanaL = date("l"); // día de la semana en letras largas, Sunday a Saturday
-
 			$lsDia = date("d"); // día del mes, 01 a 31
-			$lsDiaS = date("j"); // día del mes sin ceros delate, 1 a 31
-
 			$lsMes = date("m"); // mes del año en números, 01 a 12
-			$lsMesS = date("n"); // mes del año en números sin ceros, 1 a 12
-			$lsMesC = date("M"); // mes del año en letras, Jan a Dec
-			$lsMesL = date("F"); // mes del año en letras, January a December
-
-			$lsAnoC = date("y"); // dos últimos dígitos del año, 16
 			$lsAno = date("Y"); // año en cuatro dígitos, 2016
 		}
-
 		else {
 			switch ($pmFormatoE) {
 				default:
@@ -390,13 +389,11 @@ class clsConexion {
 					$lsMes = substr($pmFecha, 3, 2);
 					$lsAno = substr($pmFecha, 6, 4);
 					break;
-
 				case 'amd':
 					$lsDia = substr($pmFecha, 8, 2);
 					$lsMes = substr($pmFecha, 5, 2);
 					$lsAno = substr($pmFecha, 0, 4);
 					break;
-
 				case 'mda':
 					$lsDia = substr($pmFecha, 3, 2);
 					$lsMes = substr($pmFecha, 0, 2);
@@ -411,48 +408,38 @@ class clsConexion {
 				// año - mes - día
 				$lsFecha = $lsAno . $separathor . $lsMes . $separathor . $lsDia;
 				break;
-
 			case 'dma':
 				// día - mes - año
 				$lsFecha = $lsDia . $separathor . $lsMes . $separathor . $lsAno;
 				break;
-
 			case 'mda':
 				// mes - día - año
 				$lsFecha = $lsMes . $separathor . $lsDia . $separathor . $lsAno;
 				break;
-
-
 			case 'am':
 				// año - mes
 				$lsFecha = $lsAno . $separathor . $lsMes;
 				break;
-
 			case 'ad':
 				// año - día
 				$lsFecha = $lsAno . $separathor . $lsDia;
 				break;
-
 			case 'ma':
 				// mes - año
 				$lsFecha = $lsMes . $separathor . $lsAno;
 				break;
-
 			case 'md':
 				// mes - día
 				$lsFecha = $lsMes . $separathor . $lsDia;
 				break;
-
 			case 'dm':
 				// día - mes
 				$lsFecha = $lsDia . $separathor . $lsMes;
 				break;
-
 			case 'da':
 				// día - año
 				$lsFecha = $lsDia . $separathor . $lsAno;
 				break;
-
 			case 'dM':
 				// día - año
 				$dia = date("d", strtotime(date("Y") . $separathor . $lsMes . $separathor . $lsDia));
@@ -461,18 +448,14 @@ class clsConexion {
 				$lsFecha = $dia . " de " . $mes;
 				//$lsFecha =  strtotime($pmFecha);
 				break;
-
 		}
 		return $lsFecha;
 	} // cierre de la función
 
 } // cierre de la clase
 
-
-
 // Clase para imprimir en la consola del navegador
 class console {
-
 	// función estática se accede de la forma console::log($mensaje);
 	public static function log($psMensaje = "PHP consola", $psTipo = "log") {
 		echo '
@@ -480,8 +463,6 @@ class console {
 				console.' . $psTipo . '("' . json_encode($psMensaje) . '");
 			</script>';
 	} // cierre de la función
-
 } // cierre de la clase
-
 
 ?>

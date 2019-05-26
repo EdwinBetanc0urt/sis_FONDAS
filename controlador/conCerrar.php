@@ -7,10 +7,6 @@ if (strlen(session_id()) < 1) {
 
 // existe y esta la variable de sesión
 if (isset($_SESSION["sesion"])) {
-	//include_once('../modelo/clsUsuario.php');
-	//$mitusuario= new Usuario(); 
-	//$mitusuario->Salir_control($_SESSION['idusuario']);
-
 	unset($_SESSION);
 	session_unset(); //liera la sesion iniciada
 	session_destroy(); // destruye la sesión  

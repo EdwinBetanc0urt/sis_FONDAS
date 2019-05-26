@@ -10,76 +10,47 @@ else{
 	$ruta = "../";
 	require_once("{$ruta}modelo/cls{$gsClase}.php");
 }
-switch($_POST['operacion']) {
 
+switch($_POST['operacion']) {
 	case "UltimoCodigo":
 		UltimoCodigoIngresar_Reposo();
 		break;
-
 	case "Registrar":
 		registrar();
 		break;
-
 	case "Modificar":
 		cambiar();
 		break;
-		
 	case "Borrar":
 		borrar();
 		break;
-
 	case "ListaView":
 		ListaIngresar_Reposo();
 		break;
-
 	case "ListaCombo":
 		Combo();
 		break;
 	case 'FechaFin':
 		FechaFin();
 		break;
-
 }
 
 function FechaFin() {
-	//print_r($_POST);
 	$objIngresar_Reposo = new Ingresar_Reposo();
 	$arrTiempo = $objIngresar_Reposo->getTiempoMotivo(trim($_POST["cmbMotivo"]));
 	if ($arrTiempo) {
-
-		if ($arrTiempo["cantidad_tiempo"] != NULL OR $arrTiempo["cantidad_tiempo"] != "") {
-			//echo $arrTiempo["cantidad_tiempo"] * 60;
-			$hora = date("h:i:s A", strtotime($_POST["ctxFechaInicio"]) + ($arrTiempo["cantidad_tiempo"] * 60));
-			$fecha = $objIngresar_Reposo->faFechaFormato($_POST["ctxFechaInicio"], "dma", "amd");
-
-			//var_dump($_POST["ctxFechaInicio"]);
-			//var_dump($arrTiempo["cantidad_dias"]);
-			//$fecha = $objIngresar_Reposo->faFechaFormato($_POST["ctxFechaInicio"], "dma", "amd");
-			//date("d-m-Y h:i:s A", $_POST["ctxFechaInicio"]);
-			//var_dump($fecha);
-			//$nuevafecha = strtotime("+{$arrTiempo["cantidad_tiempo"]} day", strtotime($fecha)) ;
-			//$nuevafecha = date('Y-d-m h:i:s A', $nuevafecha);
-			echo $fecha . " " . $hora;
-		}
-		elseif($arrTiempo["cantidad_dias"] != NULL OR $arrTiempo["cantidad_dias"] != "") {
-		 
-			//var_dump($_POST["ctxFechaInicio"]);
-			//var_dump($arrTiempo["cantidad_dias"]);
-			$fecha = $objIngresar_Reposo->faFechaFormato($_POST["ctxFechaInicio"], "dma", "amd");
-			//date("d-m-Y h:i:s A", $_POST["ctxFechaInicio"]);
-			//var_dump($fecha);
+		if ($arrTiempo["cantidad_dias"] != NULL AND $arrTiempo["cantidad_dias"] != "") {
+			$fecha = $objIngresar_Reposo->faFechaFormato($_POST["ctxFechaInicio"], "amd", "amd");
 			$nuevafecha = strtotime("+{$arrTiempo["cantidad_dias"]} day", strtotime($fecha)) ;
-			$nuevafecha = date('d-m-Y h:i:s A', $nuevafecha);
+			$nuevafecha = date('Y-m-d', $nuevafecha);
 			echo $nuevafecha;
 		}
 		else
 			echo "mutuo";
-		//$objDate1 = new DateTime($strStart);
 	}
 	else {
-		echo "null";
+		echo "mutuo";
 	}
-	
 }
 
 // Funcion Ultimo Codigo de Parroquia
@@ -248,14 +219,14 @@ function ListaIngresar_Reposo() {
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
 								|<?= ucwords($arrRegistro["descripcion"]); ?>
 								|<?= ucwords($arrRegistro["idmotivo"]); ?>
-								|<?= ucwords($arrRegistro["Motivo"]); ?>
-								|<?= ucwords($arrRegistro["idtipo_ausencia"]); ?>
-								|<?= ucwords($arrRegistro["Tipo_Reposo"]); ?>' >
+								|<?= ucwords($arrRegistro["motivo"]); ?>
+								|<?= ucwords($arrRegistro["idmotivo_reposo"]); ?>
+								|<?= ucwords($arrRegistro["motivo_reposo"]); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
 								<td> <?= $arrRegistro[$objeto->atrNombre]; ?> </td>
-								<td> <?= $arrRegistro["idmotivo_permiso"] . " - " . $arrRegistro["motivo_permiso"]; ?> </td>
+								<td> <?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
 								<td> <?= $arrRegistro["condicion"]; ?> </td>
@@ -314,4 +285,3 @@ function ListaIngresar_Reposo() {
 
 
 ?>
-

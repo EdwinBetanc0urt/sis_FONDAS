@@ -18,15 +18,13 @@
 	<link rel="stylesheet" type="text/css" href="public/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="public/select2/dist/css/select2.min.css" />
 	<link rel="stylesheet" type="text/css" href="public/select2/dist/css/select2-bootstrap.min.css" />
+	<link rel="stylesheet" href="public/bootstrap-datetimepicker_Eonasdan/css/bootstrap-datetimepicker.min.css" />
 
 	<link rel="stylesheet" href="public/jquery/jquery-ui/jquery-ui.min.css" />
 	<script type="text/javascript" src="public/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="public/jquery/jquery-ui/jquery-ui.min.js"></script>
 
 	<link rel="stylesheet" href="public/sweetalert2/sweetalert2.min.css" />
-
-	<link rel="stylesheet" href="public/bootstrap-datetimepicker_Eonasdan/css/bootstrap-datetimepicker.min.css" />
-
 
 	<script type="text/javascript" src="public/moment/min/moment.min.js">
 		//! moment.js
@@ -46,28 +44,6 @@
 	</script>
 
 	<script type="text/javascript" src="public/bootstrap-datetimepicker_Eonasdan/js/bootstrap-datetimepicker.min.js"></script>
-
-	<script type="text/javascript" src="public/pickadate/compressed/picker.js">
-		/*!
-		 * pickadate.js v3.5.6, 2015/04/20
-		 * By Amsul, http://amsul.ca
-		 * Hosted on http://amsul.github.io/pickadate.js
-		 * Licensed under MIT
-		 */
-	</script>
-	<script type="text/javascript" src="public/pickadate/compressed/picker.date.js">
-		/*!
-		 * Date picker for pickadate.js v3.5.6
-		 * http://amsul.github.io/pickadate.js/date.htm
-		 */
-	</script>
-	<script type="text/javascript" src="public/pickadate/compressed/picker.time.js">
-		/*!
-		 * Time picker for pickadate.js v3.5.6
-		 * http://amsul.github.io/pickadate.js/time.htm
-		 */
-	</script>
-	<script type="text/javascript" src="public/pickadate/compressed/translations/es_ES.js"></script>
 
 	<script type="text/javascript" src="public/select2/dist/js/select2.min.js">
 		/*!

@@ -6,7 +6,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "16";
 ?>
 
-
 <div class="panel-heading">
 	<h3 class="panel-title"> 	
 		Usuarios del sistema
@@ -228,11 +227,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</form>
 </div>
 
-
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar

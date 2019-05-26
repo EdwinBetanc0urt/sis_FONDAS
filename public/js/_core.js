@@ -33,6 +33,7 @@ $(function () {
 		}
 	});
 
+	// inicia la función para los picker de las fechas y el tiempo
 	$('.hora_pickatime').datetimepicker({
 		format: 'LT',
 		locale: 'es'

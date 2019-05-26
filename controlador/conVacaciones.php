@@ -123,28 +123,28 @@ function ListaVacaciones() {
 				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
 					<thead>
 						<tr class='info'>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
+							<th datos_orden_metodo="asc">
 								Cedula <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
+							<th datos_orden_metoo="asc">
 								Trabajador <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrNombre; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrNombre; ?>")' >
+							<th datos_orden_metodo="asc">
 								Periodo <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc">
 								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc">
 								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc">
 								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc">
 								Condicion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
+							<th datos_orden_metodo="asc">
 								Accion  <span class='glyphicon glyphicon-sort'></span>
 							</th>
 						</tr>
@@ -792,4 +792,3 @@ function ListaVacacionesRechazadas() {
 
 
 ?>
-

@@ -3,40 +3,18 @@
 include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsVacaciones.php");
 include_once( "../public/lib_Vacaciones.php");
- 
-echo "<pre>";
+
 $objVacaciones = new Vacaciones();
 $objVacaciones->setFormulario($_POST);
 
-$arrConsulta = $objVacaciones->fmListarReporte2( $_GET["vacacicon"] );
-$vsPeriodos = $objVacaciones->getPeriodoUsado( $arrConsulta["idvacacion"]);
-
+$arrConsulta = $objVacaciones->fmListarReporte2($_GET["vacacicon"]);
+$vsPeriodos = $objVacaciones->getPeriodoUsado($arrConsulta["idvacacion"]);
 
 $objLibVacaciones = new vacacion($arrConsulta["fecha_ingreso"]);
-$antiguedad = $objLibVacaciones->getAntiguedad();
+$antiguedad = $objLibVacaciones->getAntiguedad($arrConsulta["fecha_ingreso"]);
 $liCantidadDias = $objLibVacaciones->getCantidadDias($arrConsulta["fecha_inicio"], $arrConsulta["fecha_fin"]);
-
-/*
-$arrConsulta = $objVacaciones->fmListarReporte( $_GET["vacacicon"]);
-$cedula= $arrConsulta["cedula"];
-$nombre= $arrConsulta["nombre"] . " " . $arrConsulta["apellido"];
-$departamento= $arrConsulta["departamento"];
-$supervisor= "Juan Suarez";
-$jefeRh= "Victor Mijica";
-$motivo= "Capacitacion ";
-$condicion= $arrConsulta["condicion"];
-$justificativo= "documento adjunto del permiso";
-$tiempo= $arrConsulta["cantidad_dias"];
-$cargo= "Administarcion de area legal";
-$fechaIngreso= date("d/m/Y ");
-$antiguedad="2";
-$fechaI=date("d/m/Y ");
-$fechaF=date("d/m/Y ");
-*/
 $solicitado= date("d/m/Y");
 $mpdf = new mPDF('utf-8', 'A4-L');
- 
- 
 
 // Write some HTML code:
 $vsHtml = "
@@ -48,7 +26,6 @@ $vsHtml = "
             background:#fff;
             //border:5px solid #ccc;
         }
- 
         .opcion {
             display:inline-table;
             border:px solid #ccc;
@@ -57,7 +34,6 @@ $vsHtml = "
             width:100px;
             margin:3px;
         }
- 
         .opcion1 {
             display:inline-table;
             //border:5px solid #ccc;
@@ -72,7 +48,6 @@ $vsHtml = "
         table, td, th {
             border: 1px solid black;
         }
- 
     </style>
  
     <div class=''>
@@ -84,42 +59,39 @@ $vsHtml = "
         </div>
         <div class='opcion1'>
             <table id='table'>
-                 
                 <tr>
                     <td colspan='2'><h4>Apellidos y Nombres:</h4>{$arrConsulta["apellido"]} {$arrConsulta["nombre"]} </td>
                     <td> <h4> C.I.:</h4> {$arrConsulta["nacionalidad"]} - {$arrConsulta["cedula"]}</td>
                 </tr>
                 <tr>
                     <td colspan='3'>
-                    <table id='table' >
-                    <tr>
-                        <td style='width:352px;' align='center' > <h4>Dependencia Adscripcion  </h4> </td>
-                        <td style='width:352px;' align='center'> <h4> Estado </h4> </td>
-                        <td style='width:352px;' align='center'> <h4> Departamento </h4> </td>
-                    </tr>
-                    <tr>
-                        <td align='center'>  Acarigua</td>
-                        <td  align='center'>  {$arrConsulta["estado"]} </td>
-                        <td align='center'> {$arrConsulta["departamento"]}  </td>
-                    </tr>
-                    <tr>
-                    <td style='width:352px; ' align='center' > <h4> Funciones </h4> </td>
-                        <td style='width:352px; ' align='center' > <h4>Fecha de Ingreso  </h4> </td>
-                        <td style='width:352px;' align='center'> <h4> Antiguedad</h4> </td>
-                    </tr>
-                    <tr>
-                        <td align='center'> {$arrConsulta["cargo"]}  </td>
-                        <td align='center'> {$arrConsulta["fecha_ingreso"]} </td>
-                        <td align='center'>  {$antiguedad} año(s) </td>
-                    </tr>                 
-                    </table>                    
+                        <table id='table' >
+                            <tr>
+                                <td style='width:352px;' align='center' > <h4>Dependencia Adscripcion  </h4> </td>
+                                <td style='width:352px;' align='center'> <h4> Estado </h4> </td>
+                                <td style='width:352px;' align='center'> <h4> Departamento </h4> </td>
+                            </tr>
+                            <tr>
+                                <td align='center'>  Acarigua</td>
+                                <td  align='center'>  {$arrConsulta["estado"]} </td>
+                                <td align='center'> {$arrConsulta["departamento"]}  </td>
+                            </tr>
+                            <tr>
+                            <td style='width:352px; ' align='center' > <h4> Funciones </h4> </td>
+                                <td style='width:352px; ' align='center' > <h4>Fecha de Ingreso  </h4> </td>
+                                <td style='width:352px;' align='center'> <h4> Antiguedad</h4> </td>
+                            </tr>
+                            <tr>
+                                <td align='center'> {$arrConsulta["cargo"]}  </td>
+                                <td align='center'> {$arrConsulta["fecha_ingreso"]} </td>
+                                <td align='center'>  {$antiguedad} año(s) </td>
+                            </tr>                 
+                        </table>
                     </td>      
                 </tr>
-
                 <tr>
                     <td colspan='3'> 
                         <table id='table' >
-                            
                             <tr>
                                 <td  style='width:352px;' align='center'> <h4> Periodo </h4>  </td>
                                 <td style='width:352px;' align='center'> <h4> Vencimiento </h4> </td>
@@ -131,8 +103,6 @@ $vsHtml = "
                                 <td align='center'> {$arrConsulta["cantidad_dias"]} </td>
                             </tr>
                         </table>
-                     
-                     
                     </td>
                 </tr>
                 <tr>
@@ -152,7 +122,7 @@ $vsHtml = "
                             </tr>
                             <tr>
                                 <td style='width:211px;' align='center'> {$arrConsulta["cantidad_dias"]} </td>
-                                <td style='width:211px;' align='center'>  {$vsPeriodos} </td>
+                                <td style='width:211px;' align='center'> {$vsPeriodos} </td>
                                 <td style='width:211px;' align='center'> {$arrConsulta["fecha_inicio"]}  </td>
                                 <td style='width:211px;' align='center'> {$arrConsulta["fecha_fin"]} </td>
                                 <td style='width:211px;' align='center'> </td>
@@ -172,23 +142,23 @@ $vsHtml = "
                             <tr>
                                 <td align='center'> CARLOS PINEDA </td>
                                 <td align='center'>Coordinador Región-Portuguesa </td>
-                                <td> </td>
-                                <td>  </td>
-                                <td style='height:60px;' >  </td>
+                                <td></td>
+                                <td></td>
+                                <td style='height:60px;'></td>
                             </tr>
                             <tr>
                             <tr>
-                                <td align='center' > <h4>Procesado Por </h4> </td>
+                                <td align='center'> <h4>Procesado Por </h4> </td>
                                 <td align='center'> <h4>Fecha   </h4> </td>
                                 <td align='center'> <h4> Recivido por </h4> </td>
                                 <td align='center'> <h4> Aprobado por</h4> </td>
-                                <td  align='center'> <h4> Sello </h4> </td>
+                                <td align='center'> <h4> Sello </h4> </td>
                             </tr>
                             <tr>
                                 <td> </td>
                                 <td> </td>
                                 <td> </td>
-                                <td>  </td>
+                                <td> </td>
                                 <td style='height:60px;' >  </td>
                             </tr>
                         </table>
@@ -211,3 +181,5 @@ $mpdf->WriteHTML( $vsHtml);
 
 // Output a PDF file directly to the browser
 $mpdf->Output();
+
+?>

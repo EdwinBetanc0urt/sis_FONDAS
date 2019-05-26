@@ -6,7 +6,8 @@ class Motivo_Permiso extends clsConexion {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
 		
 		$this->atrTabla = "tmotivo_permiso";
@@ -19,8 +20,8 @@ class Motivo_Permiso extends clsConexion {
 		$this->atrFormulario = array();
 	}
 
-
-	function Incluir() {
+	function Incluir()
+	{
 		$sql = "
 			INSERT INTO {$this->atrTabla} ({$this->atrNombre}, cantidad_dias, cantidad_tiempo) 
 			VALUES (
@@ -29,14 +30,11 @@ class Motivo_Permiso extends clsConexion {
                 '{$this->atrFormulario["ctxCantidad_Tiempo"]}' 
 			); ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
-
-	function Modificar() {
+	function Modificar()
+	{
 		$sql = "
 			UPDATE {$this->atrTabla}  
 			SET 
@@ -46,15 +44,11 @@ class Motivo_Permiso extends clsConexion {
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
-
-
-	function consultar() {
+	function consultar()
+	{
 		$sql = "
 			SELECT * FROM {$this->atrTabla}  
 			WHERE 
@@ -62,33 +56,27 @@ class Motivo_Permiso extends clsConexion {
 				{$this->atrNombre} = '{$this->atrFormulario["ctxNombre"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien
-		if (parent::faVerificar()) {
+		if ($tupla) {
 			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
 			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
 			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
-
-
-	function Eliminar()	{
+	function Eliminar()
+	{
 		$sql = "
 			DELETE FROM {$this->atrTabla}  
 			WHERE 
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
-
-
 	//funcion.nivel.Listar
-	function Listar($psBuscar = "") {
+	function Listar($psBuscar = "")
+	{
 		$sql = "
 			SELECT * 
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
@@ -100,20 +88,16 @@ class Motivo_Permiso extends clsConexion {
 					{$this->atrId} LIKE '%{$psBuscar}%' ;";
 		}
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
-			return $tupla; //envia el arreglo
-		else
-			return false;
+		return $tupla;
 	}
-
-
 
   	/** 
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar)
+	{		
 		$sql = "
 			SELECT * 
 			FROM $this->atrTabla
@@ -130,18 +114,13 @@ class Motivo_Permiso extends clsConexion {
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
 }
-
 
 ?>

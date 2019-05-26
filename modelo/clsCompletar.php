@@ -1,7 +1,4 @@
 <?php
-
-session_start();
-
 include_once('clsConexion.php');
 
 class Completar extends clsConexion {
@@ -9,19 +6,17 @@ class Completar extends clsConexion {
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct(); //instancia al constructor padre
-	
 		$this->atrTabla = "tpersonas";
 		$this->atrDepartamento = "";
 		$this->atrFormulario = array();
 	}
 
-
-
 	//funcion.modelo.Insertar
-	function actualizar() {
-
+	function actualizar()
+	{
 		parent::faTransaccionInicio();
 		$sql = "
 			UPDATE 
@@ -42,30 +37,20 @@ class Completar extends clsConexion {
 				estatus = 'activo'
 			WHERE
 				idpersona = '{$_SESSION["idpersona"]}'; ";
-
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		echo($sql);
-		if (parent::faVerificar()) { 
-			echo "si persona";
-			//verifica si se ejecuto bien
-			if ($this->CambiarUsuario($_SESSION["idpersona"])){
+		if ($tupla) { 
+			if ($this->CambiarUsuario()) {
 				parent::faTransaccionFin();
 				return true; //envia el id para insertar el usuario
 			}
-			else {
-				parent::faTransaccionDeshace();
-				return false; //envia el id para insertar el usuario
-			}
 		}
-		else {
-			echo "no persona";
-			parent::faTransaccionDeshace();
-			return false;
-		}
+		parent::faTransaccionDeshace();
+		return false;
 	}
 
 	//funcion.modelo.Insertar
-	function CambiarUsuario($piIdPersona) {
+	function CambiarUsuario()
+	{
 		$sql = "
 			UPDATE tusuario 
 			SET
@@ -75,41 +60,36 @@ class Completar extends clsConexion {
 			WHERE
 				id_usuario = '{$_SESSION["id_usuario"]}' ";	
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla)) {
-			echo "SI usuario";
+		if ($tupla) {
 			return $this->InsertarClave($_SESSION["id_usuario"]); 
 		}
-		else
-			return false;
+		return false;
 	}
 
 	//funcion.modelo.Insertar
-	function InsertarClave($piIdUsuario) {
-		//nacionalidad, guion, documento. Ejemplo. V-12345678
+	function InsertarClave($piIdUsuario)
+	{
 		$clave_encriptada = clsCifrado::getCifrar($this->atrFormulario["pswClave"]);
 		$sql = "INSERT INTO thistorial_clave
 					(clave, fecha_creacion, estatus, id_usuario)
 				VALUES
 					('{$clave_encriptada}',  CURRENT_DATE, 'activo', '{$piIdUsuario}') ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla)) {
-			echo "si clave";
+		if ($tupla) {
 			return $this->InsertarRespuestas($_SESSION["id_usuario"]); //envia el arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
 	//funcion.modelo.Insertar
-	function InsertarRespuestas() {
-		//$respuesta_encriptada = "" ;
+	function InsertarRespuestas()
+	{
 		$liError = 0 ;
-		//$objCifrado = new clsCifrado(); //instancia el objeto de cifrado
-		
 		//ciclo del 1 al 5 que son los name que exiten en la vista (ctxRespuesta1-5 y cmbPregunta1-5)
 		for ($i = 1 ; $i <= 2 ; $i++) {
-
-			//$respuesta_encriptada = $objCifrado->flEncriptar($this->atrFormulario["ctxRespuesta" . $i]);
+			//$respuesta_encriptada = clsCifrado::getCifrar(
+			//	$this->atrFormulario["ctxRespuesta" . $i]
+			//);
 			$sql = "INSERT INTO trespuesta
 						(nombre, id_usuario, idpregunta)
 					VALUES
@@ -117,22 +97,17 @@ class Completar extends clsConexion {
 						'{$_SESSION["id_usuario"]}',
 						'" . $this->atrFormulario["cmbPregunta" . $i] . "') ; ";
 			$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-			if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
+			if ($tupla) //verifica si se ejecuto bien
 				continue; //continua el ciclo for
 			else
 				$liError = $liError + 1;
 		}
-		//unset($objCifrado); //destruye el objeto de creado
 		if ($liError == 0) {
-			echo "si pregunta";
 			return true;
 		}
-		else
-			return false;
+		return false;
 	}
 
-
 }
-
 
 ?>
