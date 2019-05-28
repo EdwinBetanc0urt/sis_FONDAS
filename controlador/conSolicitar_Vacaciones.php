@@ -1,10 +1,5 @@
 <?php
 
-// inicio de sesión
-if (strlen(session_id()) < 1) {
-	session_start();
-}
-
 $gsClase = "Solicitar_Vacaciones";
 
 $ruta = "";
@@ -23,9 +18,7 @@ else{
 	require_once("{$ruta}public/lib_Vacaciones.php");
 }
 
-
 switch($_POST['operacion']) {
-
 	case "Registrar":
 		registrar();
 		break;
@@ -35,7 +28,6 @@ switch($_POST['operacion']) {
 	case "Borrar":
 		borrar();
 		break;
-
 	case "ListaView":
 		ListaSolicitar_Vacaciones();
 		break;
@@ -45,7 +37,6 @@ switch($_POST['operacion']) {
 	case "ListaPeriodo":
 		listarPeriodos();
 		break;
-
 	case 'Antiguedad':
 		echo vacacion::getAntiguedad($_SESSION["fecha_ingreso"]);
 		break;
@@ -70,7 +61,6 @@ function FechaFin()
 	echo $resultado;
 }
 
-
 function CalcularDias()
 {
 	$resultado = vacacion::getDetalleDiasVacacionesPeriodo(
@@ -80,7 +70,6 @@ function CalcularDias()
 	echo $resultado["dias_vacaciones"];
 }
 
-
 function FechaIngreso()
 {
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
@@ -88,7 +77,6 @@ function FechaIngreso()
 	$resultado = vacacion::getFechaFormato($lsFechaIngreso, "amd", "dma");
 	echo $resultado;
 }
-
 
 function registrar()
 {
@@ -105,7 +93,6 @@ function registrar()
 		trim($arrVacaciones["dias_vacaciones"] - 1)
 	);
 	*/
-
 	$_POST["ctxFechaFin"] = vacacion::getFechaFormato($_POST["ctxFechaFin"], "dma", "amd");
 
 	$envio= array(
@@ -115,7 +102,6 @@ function registrar()
 		"cantidad_periodos" => count(explode("-", $_POST["cmbPeriodo"])),
 		"vacaciones" => $arrVacaciones
 	);
-
 	$objSolicitar_Vacaciones->setFormulario($envio);
 
 	if ($objSolicitar_Vacaciones->Incluir()) //si el fmInsertar es verdadero, realiza las sentencias
@@ -123,7 +109,6 @@ function registrar()
 	else
 		header("Location: ../?form={$gsClase}&msjAlerta=registro"); //envía a la vista, con */
 }
-
 
 function listarPeriodos()
 {
@@ -157,19 +142,16 @@ function listarPeriodos()
 	}
 }
 
-
 function cambiar()
 {
 	global $gsClase;
 	$objSolicitar_Vacaciones = new Solicitar_Vacaciones();
 	$objSolicitar_Vacaciones->setFormulario($_POST);
-	//var_dump($objSolicitar_Vacaciones->Modificar());/*
 	if ($objSolicitar_Vacaciones->Modificar()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}&msjAlerta=cambio"); //envía a la vista, con mensaje de la consulta
 	else
 		header("Location: ../?form={$gsClase}&msjAlerta=nocambio"); //envía a la vista, con */
 }
-
 
 function Combo()
 {
@@ -225,7 +207,6 @@ function ListaSolicitar_Vacaciones()
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-	
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina'])));
 	}
@@ -240,96 +221,111 @@ function ListaSolicitar_Vacaciones()
 	}
 
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
-
 	$rstRecordSet = $objeto->fmListarIndex(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
-		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
-			<div class='table-responsive'>
-				<br><br>
-				<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
-					<thead>
-						<tr class='info'>
-							<th datos_orden_metodo="asc">
-								Periodo <span class='glyphicon glyphicon-sort'></span>
-							</th>
-							<th datos_orden_metodo="asc">
-								Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
-							</th>
-							<th datos_orden_metodo="asc">
-								Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
-							</th>
-							<th datos_orden_metodo="asc">
-								Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
-							</th>
-							<th datos_orden_metodo="asc">
-								Condicion  <span class='glyphicon glyphicon-sort'></span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
+		<div class='table-responsive'>
+			<br><br>
+			<table border='0' valign='center' class='table table-striped text-center table-hover' id="tabLista<?= $gsClase; ?>">
+				<thead>
+					<tr class='info'>
+						<th datos_orden_metodo="asc">
+							Periodo <span class='glyphicon glyphicon-sort'></span>
+						</th>
+						<th datos_orden_metodo="asc">
+							Cant. Dias  <span class='glyphicon glyphicon-sort'></span>
+						</th>
+						<th datos_orden_metodo="asc">
+							Fecha Incio  <span class='glyphicon glyphicon-sort'></span>
+						</th>
+						<th datos_orden_metodo="asc">
+							Fecha Fin  <span class='glyphicon glyphicon-sort'></span>
+						</th>
+						<th datos_orden_metodo="asc">
+							Condicion  <span class='glyphicon glyphicon-sort'></span>
+						</th>
+						<th datos_orden_metodo="asc">
+							Accion  <span class='glyphicon glyphicon-sort'></span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
 		<?php 
 		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 			?>
-						<tr onclick='fjSeleccionarRegistro(this);' data-toggle='tooltip'
-							data-placement='top'
-							title='Doble clic para detallar los datos y realizar alguna operación'
-							datos_registro='Seleccion
-							|<?= $arrRegistro["condicion"]; ?>
-							|<?= $arrRegistro[$objeto->atrId]; ?>
-							|<?= $arrRegistro["periodo_usado"]; ?>
-							|<?= $arrRegistro["fecha_inicio"] ?>
-							|<?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?>
-							|<?= $arrRegistro["cant_dias_periodo"]; ?>' >
-								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
-							<td> <?= $arrRegistro["periodo_usado"]; ?> </td>
-							<td> <?= $arrRegistro["cant_dias_periodo"]; ?> </td>
-							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?> </td>
-							<td> <?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?> </td>
-							<td> <?= $arrRegistro["condicion"]; ?> </td>
-						</tr>
+					<tr  data-toggle='tooltip'
+						data-placement='top'
+						title='Doble clic para detallar los datos y realizar alguna operación'
+						datos_registro='Seleccion
+						|<?= $arrRegistro["condicion"]; ?>
+						|<?= $arrRegistro[$objeto->atrId]; ?>
+						|<?= $arrRegistro["periodo_usado"]; ?>
+						|<?= $arrRegistro["fecha_inicio"] ?>
+						|<?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?>
+						|<?= $arrRegistro["cant_dias_periodo"]; ?>' >
+							<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
+						<td onclick='fjSeleccionarRegistro(this.parentNode);'>
+							<?= $arrRegistro["periodo_usado"]; ?>
+						</td>
+						<td onclick='fjSeleccionarRegistro(this.parentNode);'>
+								<?= $arrRegistro["cant_dias_periodo"]; ?>
+						</td>
+						<td onclick='fjSeleccionarRegistro(this.parentNode);'>
+							<?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?>
+						</td>
+						<td onclick='fjSeleccionarRegistro(this.parentNode);'>
+							<?= $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma"); ?>
+						</td>
+						<td onclick='fjSeleccionarRegistro(this.parentNode);'>
+							<?= $arrRegistro["condicion"]; ?>
+						</td>
+						<td>
+							<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idvacacion"] ?>)">
+								Ver
+							</button>
+						</td>
+					</tr>
 			<?php
 		}
 		?>
-					</tbody>
-				</table> 
-			</div>
-			<nav aria-label="Page navigation">
-				<ul class="pagination">
-					<li>
-						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-							<span aria-hidden="true">&laquo;</span>
+				</tbody>
+			</table> 
+		</div>
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				<li>
+					<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<?php
+				for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+					if ($i == $vpPaginaActual)
+						$Activo = "active";
+					else
+						$Activo = "";
+					?>
+					<li class="<?= $Activo; ?> ">
+						<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<?= $i; ?>
 						</a>
 					</li>
 					<?php
-					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-						if ($i == $vpPaginaActual)
-							$Activo = "active";
-						else
-							$Activo = "";
-						?>
-						<li class="<?= $Activo; ?> ">
-							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<?= $i; ?>
-							</a>
-						</li>
-						<?php
-					}
-					?>
+				}
+				?>
 
-					<li>
-						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-							<span aria-hidden="true">&raquo;</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
+				<li>
+					<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
@@ -340,6 +336,5 @@ function ListaSolicitar_Vacaciones()
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
 } //cierre de la función
-
 
 ?>

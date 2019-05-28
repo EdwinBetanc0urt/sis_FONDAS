@@ -173,6 +173,35 @@ class Solicitar_Permiso extends clsConexion {
 			return false;
 	}
 
+	/** 
+	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
+	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
+	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
+	 */
+	function fmListarReporte2($identificacion) {		
+		$sql = "
+			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
+			FROM $this->atrTabla AS Perm
+
+			INNER JOIN vpersona AS P
+				ON Perm.idtrabajador = P.idtrabajador
+
+			INNER JOIN tmotivo_permiso AS M
+				ON M.idmotivo_permiso = Perm.idmotivo_permiso
+
+			WHERE
+				Perm.idpermiso = '{$identificacion}')
+			LIMIT 1 "; 
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla)){
+			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
+			parent::faLiberarConsulta($tupla); //libera de la memoria el resultado asociado a la consulta
+			return $arreglo; //retorna los datos obtenidos de la bd en un arreglo
+		}
+		else
+			return false;
+	}
+
 }
 
 ?>

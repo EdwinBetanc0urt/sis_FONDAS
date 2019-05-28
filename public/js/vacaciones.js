@@ -2,21 +2,16 @@
 var lsVista = "Vacaciones";
 
 $(function() {
-
 	fjMostrarLista(lsVista);
 	fjMostrarLista(lsVista, "", "", "VacacionesAprobado", "ListaViewAprobado");
 	fjMostrarLista(lsVista, "", "", "VacacionesEnCurso", "ListaViewEnCurso");
 	fjMostrarLista(lsVista, "", "", "VacacionesCulminado", "ListaViewCulminado");
 	fjMostrarLista(lsVista, "", "", "VacacionesRechazado", "ListaViewRechazado");
-
 });
-
-
 
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
-	let viCodigo = document.getElementById("numId");
 	let vsNombre = document.getElementById("ctxNombre");
 	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
 
@@ -35,15 +30,12 @@ function enviar(pvValor) {
 		return; // rompe la función para que el usuario verifique antes de continuar
 	}
 
-
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if(vbComprobar) {
 		document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
 		arrFormulario.submit(); //Envía el formulario
 	}
 }
-
-
 
 function fjNuevoRegistro() {
 	$("#form" + lsVista)[0].reset();
@@ -65,6 +57,7 @@ function fjNuevoRegistro() {
 		$("#Restaurar").css("display", "none");
 	}
 }
+
 function fjEditarRegistro() {
 	if($("#Registrar")) {
 		$("#Registrar").css("display", "none");
@@ -83,20 +76,12 @@ function fjEditarRegistro() {
 	}
 }
 
-
-
-
-
 function fjSeleccionarRegistro(pvDOM) {
-    console.log(pvDOM);
-    
     if(jQuery.isFunction(pvDOM.attr))
         arrFilas = pvDOM.attr('datos_registro').split('|'); //debe ser con jquery porque es recibido como tal con jquery
 
     if(typeof pvDOM.getAttribute !== 'undefined')
         arrFilas = pvDOM.getAttribute('datos_registro').split('|'); //debe ser con javascript porque es recibido cdirectamete del DOM
-    
-    console.log(arrFilas);
 
     $("#btnHabilitar").attr('disabled', false);
 
@@ -141,7 +126,6 @@ function fjSeleccionarRegistro(pvDOM) {
     $("#VentanaModal").modal('show'); //para boostrap v3.3.7
 }
 
-
 //Cada combo debe llevar un hidden con su mismo nombre para hacer facil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjListaPeriodos(PiTrabajador = "", psFecha = "") {
@@ -178,8 +162,6 @@ function fjListaPeriodos(PiTrabajador = "", psFecha = "") {
 	);
 }
 
-
-
 function fjAprobar(piVacaciones = "") {
 	//abre el archivo controlador y envia por POST
 	vsRuta = "controlador/conVacaciones.php";
@@ -215,7 +197,6 @@ function fjAprobar(piVacaciones = "") {
 	});
 }
 
-
 function fjRechazar(piVacaciones = "") {
 	//abre el archivo controlador y envia por POST
 	vsRuta = "controlador/conVacaciones.php";
@@ -248,25 +229,14 @@ function fjRechazar(piVacaciones = "") {
 			);
 		}
 	});
-
-
 }
 
-
-
-
-
-
 function fjVerVacacion(piVacacion, piAncho = 700, piAlto = 800) {
-
 	var vjUrl="pdf/repSolicitud_Vacaciones.php?vacacicon="+piVacacion; //Maestra seleccionada
-
 	var posicion_x=(screen.width/2)-(piAncho/2); //posicion horizontal en la pantalla
 	var posicion_y=(screen.height/2)-(piAlto/2); //posicion vertical en la pantalla
-
 	//document.getElementById("vvOpcion").value = pvValor; //valor.vista.Opcion del hidden
 	//Crea una ventana donde muestra todos los listar de las diversas maestras
 	window.open(vjUrl,'Listado de Accesos', 'width='+parseInt(piAncho),  'height='+parseInt(piAlto), 'left='+posicion_x,'top='+posicion_y, 'directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=yes');
 	//if (window.focus) {newwindow.focus()}
-
 }

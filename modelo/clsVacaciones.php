@@ -311,7 +311,6 @@ class Vacaciones extends clsConexion {
 			WHERE
 				V.idvacacion = '{$piVacacion}' 
 			LIMIT 1 "; 
-		echo "$sql";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)){
 			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo

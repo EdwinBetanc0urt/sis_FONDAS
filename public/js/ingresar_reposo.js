@@ -44,7 +44,6 @@ function fjFechaFinal(psFechaInicio = "", piMotivo = "") {
 //funcion.javascript.Enviar (parametro.vista.Valor)
 function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
-	let viCodigo = $("#form" + lsVista + " #numId");
 	let vsNombre = $("#form" + lsVista + " #ctxNombre");
 	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
 
@@ -186,4 +185,14 @@ function fjCargarDias(piJornada = ""){
             }
         }
 	);
+}
+
+function verReporte(idRegistro, piAncho = 700, piAlto = 800) {
+	var vjUrl="pdf/repReposo.php?id=" + idRegistro; //Maestra seleccionada
+	var posicion_x=(screen.width/2)-(piAncho/2); //posicion horizontal en la pantalla
+	var posicion_y=(screen.height/2)-(piAlto/2); //posicion vertical en la pantalla
+	//document.getElementById("vvOpcion").value = pvValor; //valor.vista.Opcion del hidden
+	//Crea una ventana donde muestra todos los listar de las diversas maestras
+	window.open(vjUrl,'Listado de Accesos', 'width='+parseInt(piAncho),  'height='+parseInt(piAlto), 'left='+posicion_x,'top='+posicion_y, 'directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=yes');
+	//if (window.focus) {newwindow.focus()}
 }
