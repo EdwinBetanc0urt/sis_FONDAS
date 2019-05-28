@@ -66,7 +66,6 @@ $(function () {
 //funcion.javascript.Enviar (parámetro.vista.Valor)
 function enviar(pvValor) {
 	let arrFormulario = $("#form" + lsVista);
-	var viCodigo = document.getElementById("numId");
 	var vsFechaIngreso = document.getElementById("ctxFechaIngreso");
 	var Periodo = $("#form" + lsVista + " #cmbPeriodo");
 	var vsFechaInicio = $("#form" + lsVista + " #ctxFechaInicio");
@@ -74,7 +73,6 @@ function enviar(pvValor) {
 
 	// verificar el formulario al Registrar o Modificar
 	if (pvValor === "Registrar" || pvValor === "Modificar") {
-		
 		if (vsFechaIngreso.value.trim() === "") {
 			vbComprobar = false;
 			swal({
@@ -102,7 +100,6 @@ function enviar(pvValor) {
 			}).then((result) => {
 				Periodo.focus(); // enfoca el cursor en el campo que falta del formulario
 			});
-
 			return; // rompe la función verificar antes de continuar
 		}
 		if (vsFechaInicio.val().trim() === "") {
@@ -119,7 +116,6 @@ function enviar(pvValor) {
 			});
 			return; // rompe la función verificar antes de continuar
 		}
-
 	} // cierre del condicional si es boton Modificar o Incluir
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
@@ -129,7 +125,6 @@ function enviar(pvValor) {
 	}
 }
 
-
 function fjNuevoRegistro() {
 	$("#form" + lsVista)[0].reset();
 	fjListaPeriodos();
@@ -137,27 +132,22 @@ function fjNuevoRegistro() {
 	if ($("#Registrar")) {
 		$("#Registrar").css("display", "");
 	}
-
 	if ($("#Modificar")) {
 		$("#Modificar").css("display", "none");
 	}
-
 	if ($("#Borrar")) {
 		$("#Borrar").css("display", "none");
 	}
-
 	if ($("#Restaurar")) {
 		$("#Restaurar").css("display", "none");
 	}
 	fjAntiguedad();
 }
 
-
 function fjEditarRegistro() {
 	if ($("#Registrar")) {
 		$("#Registrar").css("display", "none");
 	}
-
 	if ($("#Modificar")) {
 		$("#Modificar").css("display", "");
 	}
@@ -165,7 +155,6 @@ function fjEditarRegistro() {
 	if ($("#Borrar")) {
 		$("#Borrar").css("display", "");
 	}
-
 	if ($("#Restaurar")) {
 		$("#Restaurar").css("display", "none");
 	}
@@ -179,7 +168,6 @@ function fjSeleccionarRegistro(pvDOM) {
 	// debe ser con javascript porque es recibido directamente del DOM
 	if (typeof pvDOM.getAttribute !== 'undefined')
 		arrFilas = pvDOM.getAttribute('datos_registro').split('|'); 
-	// console.log(arrFilas);
 
 	$("#btnHabilitar").attr('disabled', false);
 
@@ -232,10 +220,8 @@ function fjSeleccionarRegistro(pvDOM) {
 		if ($("#Restaurar"))
 			$("#Restaurar").css("display", "none");
 	}
-
 	$("#VentanaModal").modal('show'); //para bootstrap v3.3.7
 }
-
 
 // Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
@@ -261,7 +247,6 @@ function fjListaPeriodos() {
 	);
 }
 
-
 // Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
 function fjCalculaDias(paPeriodos = "") {
@@ -283,7 +268,6 @@ function fjCalculaDias(paPeriodos = "") {
 		}
 	);
 }
-
 
 // Cada combo debe llevar un hidden con su mismo nombre para hacer fácil las consultas
 // sea con combos anidados y con GET, para no hacer ciclos que recorran arreglos
@@ -346,7 +330,6 @@ function fjFechaFinal() {
 	);
 }
 
-
 function fjAntiguedad() {
 	// abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
@@ -366,4 +349,14 @@ function fjAntiguedad() {
 			}
 		}
 	);
+}
+
+function fjVerVacacion(piVacacion, piAncho = 700, piAlto = 800) {
+	var vjUrl="pdf/repSolicitud_Vacaciones.php?vacacicon="+piVacacion; //Maestra seleccionada
+	var posicion_x=(screen.width/2)-(piAncho/2); //posicion horizontal en la pantalla
+	var posicion_y=(screen.height/2)-(piAlto/2); //posicion vertical en la pantalla
+	//document.getElementById("vvOpcion").value = pvValor; //valor.vista.Opcion del hidden
+	//Crea una ventana donde muestra todos los listar de las diversas maestras
+	window.open(vjUrl,'Listado de Accesos', 'width='+parseInt(piAncho),  'height='+parseInt(piAlto), 'left='+posicion_x,'top='+posicion_y, 'directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=yes');
+	//if (window.focus) {newwindow.focus()}
 }

@@ -51,7 +51,7 @@ $vsHtml = "
     </style>
  
     <div class=''>
-        <img src='../public/img/logofondas.png'  style='width:100%'>
+        <img src='../public/img/logofondas.png' style='width:100%'>
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>

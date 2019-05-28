@@ -1,13 +1,11 @@
 <?php
 
 include_once( "../public/mpdf/mpdf.php");
-include_once("../modelo/clsPermiso.php");
+include_once("../modelo/clsReposo.php");
 
 echo "<pre>";
-$objPermiso = new Permiso();
+$objPermiso = new Reposo();
 $arrRegistro = $objPermiso->listarReporteUnitario($_GET["id"]);
-echo "<hr>";
-//exit;
 
 $cantidad_dias = 0;
 if ($arrRegistro["cantidad_dias"] != NULL) {
@@ -61,7 +59,7 @@ $mpdf->WriteHTML("
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>Solicitud de Permiso </h2>  
+            <h2>REPOSO</h2>  
         </div>
         <div class='opcion1'>
             <table id='table' >
