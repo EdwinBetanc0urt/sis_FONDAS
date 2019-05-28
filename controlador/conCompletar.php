@@ -18,12 +18,11 @@ switch($_POST["operacion"]) {
 }
 
 function Cambiar() {
-	global $gsClase;
+	global $gsClase, $ruta;
 	$objCompletar = new Completar();
 	$objCompletar->setFormulario($_POST);
 	if ($objCompletar->actualizar()) {
-		require("{$ruta}controlador/conCerrar.php&getMotivoLogOut=datoscompletos");
-		//header("Location: ../?form={$gsClase}&msjAlerta=datoscompletos"); //envía a la vista, con mensaje de la consulta
+		header("Location: {$ruta}controlador/conCerrar.php?getMotivoLogOut=datoscompletos");
 	}
 	else
 		header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con mensaje de la consulta*/

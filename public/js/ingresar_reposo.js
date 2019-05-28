@@ -48,9 +48,6 @@ function enviar(pvValor) {
 	let vsNombre = $("#form" + lsVista + " #ctxNombre");
 	let vbComprobar = true; // variable javascript Comprobar, para verificar que todo este true o un solo false no envía
 
-
-	//console.log (vsEntrada.value.trim());
-
 	//si el cod está vació y el botón pulsado es igual a Registar o Modificar no enviara el formulario
 	if (vsNombre.val().trim() === "" && (pvValor === "Incluir" || pvValor === "Modificar")) {
 		vbComprobar = false;
@@ -65,7 +62,6 @@ function enviar(pvValor) {
 		});
 		return; // rompe la función para que el usuario verifique antes de continuar
 	}
-
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if (vbComprobar) {				
@@ -87,15 +83,12 @@ function fjNuevoRegistro() {
 	if ($("#Registar")) {
 		$("#Registar").css("display", "");
 	}
-
 	if ($("#Modificar")) {
 		$("#Modificar").css("display", "none");
 	}
-
 	if ($("#Borrar")) {
 		$("#Borrar").css("display", "none");
 	}
-
 	if ($("#Restaurar")) {
 		$("#Restaurar").css("display", "none");
 	}
@@ -105,30 +98,23 @@ function fjEditarRegistro() {
 	if ($("#Registar")) {
 		$("#Registar").css("display", "none");
 	}
-
 	if ($("#Modificar")) {
 		$("#Modificar").css("display", "");
 	}
-
 	if ($("#Borrar")) {
 		$("#Borrar").css("display", "");
 	}
-
 	if ($("#Restaurar")) {
 		$("#Restaurar").css("display", "none");
 	}
 }
 
-function fjSeleccionarRegistro(pvDOM) {
-    console.log(pvDOM);
-    
+function fjSeleccionarRegistro(pvDOM) {    
     if (jQuery.isFunction(pvDOM.attr))
         arrFilas = pvDOM.attr('datos_registro').split('|'); //debe ser con jquery porque es recibido como tal con jquery
 
     if (typeof pvDOM.getAttribute !== 'undefined')
         arrFilas = pvDOM.getAttribute('datos_registro').split('|'); //debe ser con javascript porque es recibido cdirectamete del DOM
-
-    console.log(arrFilas);
 
     $("#btnHabilitar").attr('disabled', false);
 
