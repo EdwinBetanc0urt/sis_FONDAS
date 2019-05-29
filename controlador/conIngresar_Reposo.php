@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $gsClase = "Ingresar_Reposo";
 
@@ -40,8 +40,10 @@ function FechaFin() {
 	$arrTiempo = $objIngresar_Reposo->getTiempoMotivo(trim($_POST["cmbMotivo"]));
 	if ($arrTiempo) {
 		if ($arrTiempo["cantidad_dias"] != NULL AND $arrTiempo["cantidad_dias"] != "") {
-			$fecha = $objIngresar_Reposo->faFechaFormato($_POST["ctxFechaInicio"], "amd", "amd");
-			$nuevafecha = strtotime("+{$arrTiempo["cantidad_dias"]} day", strtotime($fecha)) ;
+			$nuevafecha = strtotime(
+				"+{$arrTiempo["cantidad_dias"]} day",
+				strtotime($_POST["ctxFechaInicio"])
+			);
 			$nuevafecha = date('Y-m-d', $nuevafecha);
 			echo $nuevafecha;
 		}
@@ -89,7 +91,7 @@ function borrar() {
 	if ($objIngresar_Reposo->Eliminar()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}&msjAlerta=elimino"); //envía a la vista, con mensaje de la consulta
 	else
-		header("Location: ../?form={$gsClase}&msjAlerta=noelimino"); //envía a la vista, con 
+		header("Location: ../?form={$gsClase}&msjAlerta=noelimino"); //envía a la vista, con
 }
 
 function Combo() {
@@ -105,16 +107,16 @@ function Combo() {
     if ($rstRecordSet) {
         $arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
         do {
-            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId])) 
+            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId]))
                 $lsSeleccionado = "selected='selected'";
             else
                 $lsSeleccionado = "";
             ?>
-            <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> > 
-                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?> 
+            <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> >
+                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?>
             </option>
             <?php
-        } 
+        }
         while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet));
     }
     //si no existe una consulta
@@ -184,11 +186,11 @@ function ListaIngresar_Reposo() {
 						<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 							Estatus  <span class='glyphicon glyphicon-sort'></span>
 						</th>
-						
+
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
+					<?php
 					while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 						$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
 						$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
@@ -216,7 +218,7 @@ function ListaIngresar_Reposo() {
 								<?= $arrRegistro[$objeto->atrNombre]; ?>
 							</td>
 							<td onclick='fjSeleccionarRegistro(this.parentNode);'>
-								<?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_permiso"]; ?>
+								<?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?>
 							</td>
 							<td onclick='fjSeleccionarRegistro(this.parentNode);'>
 								<?= $vsFechaI . " " . $vsHoraI; ?>
@@ -234,7 +236,7 @@ function ListaIngresar_Reposo() {
 					}
 					?>
 				</tbody>
-			</table> 
+			</table>
 		</div>
 		<nav aria-label="Page navigation">
 			<ul class="pagination">
@@ -272,7 +274,7 @@ function ListaIngresar_Reposo() {
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}

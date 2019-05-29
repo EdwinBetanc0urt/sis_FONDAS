@@ -8,10 +8,10 @@ class Ingresar_Reposo extends clsConexion {
 
 	function __construct()
 	{
-		parent::__construct(); //instancia al constructor padre	
+		parent::__construct(); //instancia al constructor padre
 		$this->atrTabla = "treposo";
 		$this->atrId = "idreposo";
-        $this->atrNombre = "justificacitvo";
+        $this->atrNombre = "justificativo";
         $this->atrTipo_Reposo = "";
 		$this->atrMotivo = "";
 		$this->atrCantidad_Dias = "";
@@ -23,8 +23,8 @@ class Ingresar_Reposo extends clsConexion {
 	{
 		$sql = "
 			INSERT INTO {$this->atrTabla}
-				({$this->atrNombre}, idtrabajador, idmotivo_reposo, 
-				fecha_inicio, fecha_fin) 
+				({$this->atrNombre}, idtrabajador, idmotivo_reposo,
+				fecha_inicio, fecha_fin)
 			VALUES (
 				'{$this->atrFormulario["ctxObservacion"]}',
 				'{$this->atrFormulario["numIdTrabajador"]}',
@@ -39,12 +39,12 @@ class Ingresar_Reposo extends clsConexion {
 	function Modificar()
 	{
 		$sql = "
-			UPDATE {$this->atrTabla}  
-			SET 
+			UPDATE {$this->atrTabla}
+			SET
 				{$this->atrNombre} = '{$this->atrFormulario["ctxObservacion"]}',
 				idtrabajador = '{$this->atrFormulario["ctxDescripcion"]}',
-				 
-			WHERE 
+
+			WHERE
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ; ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		return $tupla;
@@ -53,8 +53,8 @@ class Ingresar_Reposo extends clsConexion {
 	function consultar()
 	{
 		$sql = "
-			SELECT * FROM {$this->atrTabla}  
-			WHERE 
+			SELECT * FROM {$this->atrTabla}
+			WHERE
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' OR
 				{$this->atrNombre} = '{$this->atrFormulario["ctxObservacion"]}' ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -70,8 +70,8 @@ class Ingresar_Reposo extends clsConexion {
 	function Eliminar()
 	{
 		$sql = "
-			DELETE FROM {$this->atrTabla}  
-			WHERE 
+			DELETE FROM {$this->atrTabla}
+			WHERE
 				{$this->atrId} = '{$this->atrFormulario["numId"]}' ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		return $tupla;
@@ -100,7 +100,7 @@ class Ingresar_Reposo extends clsConexion {
 	function Listar($psBuscar = "")
 	{
 		$sql = "
-			SELECT * 
+			SELECT *
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
 
 		if ($psBuscar != "") {
@@ -134,16 +134,16 @@ class Ingresar_Reposo extends clsConexion {
 			WHERE
 				Perm.estatus = 'activo' AND
 				(Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		return $tupla;
 	}
