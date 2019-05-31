@@ -2,7 +2,7 @@
 include_once('clsConexion.php');
 
 class Vacaciones extends clsConexion {
-	
+
 	//atributos de paginacion
 	public $atrItems, $atrTotalRegistros, $atrPaginaInicio, $atrPaginaActual, $atrPaginaFinal, $atrOrden, $atrTipoOrden ;
 
@@ -119,32 +119,32 @@ class Vacaciones extends clsConexion {
 	}
 
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndex($psBuscar) {		
+	function fmListarIndex($psBuscar) {
 		$sql = "
-			SELECT 
+			SELECT
 				V.*, P.*
-			FROM tvacacion AS V 
+			FROM tvacacion AS V
 
-			INNER JOIN vpersona AS P 
-				ON P.idtrabajador = V.idtrabajador 
+			INNER JOIN vpersona AS P
+				ON P.idtrabajador = V.idtrabajador
 
 			WHERE
 				V.condicion = 'solicitado' "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
@@ -153,34 +153,34 @@ class Vacaciones extends clsConexion {
 	}
 
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexAprobado($psBuscar) {		
+	function fmListarIndexAprobado($psBuscar) {
 		$sql = "
-			SELECT 
+			SELECT
 				V.*, P.*
-			FROM tvacacion AS V 
+			FROM tvacacion AS V
 
-			INNER JOIN vpersona AS P 
-				ON P.idtrabajador = V.idtrabajador 
+			INNER JOIN vpersona AS P
+				ON P.idtrabajador = V.idtrabajador
 
 			WHERE
 				V.condicion = 'aprobado' AND
 				V.fecha_inicio > DATE_FORMAT(NOW(),'%Y-%m-%d') AND
 				V.fecha_fin > DATE_FORMAT(NOW(),'%Y-%m-%d') "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
@@ -189,19 +189,19 @@ class Vacaciones extends clsConexion {
 	}
 
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexEnCurso($psBuscar) {		
+	function fmListarIndexEnCurso($psBuscar) {
 		$sql = "
-			SELECT 
+			SELECT
 				V.*, P.*
-			FROM tvacacion AS V 
+			FROM tvacacion AS V
 
-			INNER JOIN vpersona AS P 
-				ON P.idtrabajador = V.idtrabajador 
+			INNER JOIN vpersona AS P
+				ON P.idtrabajador = V.idtrabajador
 
 			WHERE
 				V.condicion = 'aprobado' AND
@@ -213,10 +213,10 @@ class Vacaciones extends clsConexion {
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
@@ -225,34 +225,34 @@ class Vacaciones extends clsConexion {
 	}
 
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexCulminado($psBuscar) {		
+	function fmListarIndexCulminado($psBuscar) {
 		$sql = "
-			SELECT 
+			SELECT
 				V.*, P.*
-			FROM tvacacion AS V 
+			FROM tvacacion AS V
 
-			INNER JOIN vpersona AS P 
-				ON P.idtrabajador = V.idtrabajador 
+			INNER JOIN vpersona AS P
+				ON P.idtrabajador = V.idtrabajador
 
 			WHERE
 				V.condicion = 'aprobado' AND
 				V.fecha_inicio < DATE_FORMAT(NOW(),'%Y-%m-%d') AND
 				V.fecha_fin < DATE_FORMAT(NOW(),'%Y-%m-%d') "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
@@ -261,32 +261,32 @@ class Vacaciones extends clsConexion {
 	}
 
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarIndexRechazado($psBuscar) {		
+	function fmListarIndexRechazado($psBuscar) {
 		$sql = "
-			SELECT 
+			SELECT
 				V.*, P.*
-			FROM tvacacion AS V 
+			FROM tvacacion AS V
 
-			INNER JOIN vpersona AS P 
-				ON P.idtrabajador = V.idtrabajador 
+			INNER JOIN vpersona AS P
+				ON P.idtrabajador = V.idtrabajador
 
 			WHERE
 				V.condicion = 'rechazado' "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
@@ -294,23 +294,23 @@ class Vacaciones extends clsConexion {
 			return false;
 	}
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
-	function fmListarReporte2($piVacacion) {		
+	function fmListarReporte2($piVacacion) {
 		$sql = "
-			SELECT 
+			SELECT
 				V.*, P.*
-			FROM tvacacion AS V 
+			FROM tvacacion AS V
 
-			INNER JOIN vpersona AS P 
-				ON P.idtrabajador = V.idtrabajador 
+			INNER JOIN vpersona AS P
+				ON P.idtrabajador = V.idtrabajador
 
 			WHERE
-				V.idvacacion = '{$piVacacion}' 
-			LIMIT 1 "; 
+				V.idvacacion = '{$piVacacion}'
+			LIMIT 1 ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla)){
 			$arreglo = parent::getConsultaArreglo($tupla); //convierte el RecordSet en un arreglo
@@ -323,14 +323,15 @@ class Vacaciones extends clsConexion {
 
 	//función.modelo.Listar Reporte
 	//devuelve la consulta con los parametros de rango y ordenado que se le indiquen
-	function fmListarReporte($piVacacion = "") {		
+	function fmListarReporte($piVacacion = "") {
 		$arrFormulario = $this->atrFormulario;
-		$sql = "
-			SELECT 
-				V.*, P.*
-			FROM tvacacion AS V 
 
-			INNER JOIN vpersona AS P 
+		$sql = "
+			SELECT
+				V.*, V.condicion AS condicion_vacacion, P.*
+			FROM tvacacion AS V
+
+			INNER JOIN vpersona AS P
 				ON P.idtrabajador = V.idtrabajador "; //selecciona todo de la tabla
 
 		$sqlTipoRango = " "; //selecciona solo lo que esta dentro del rango
@@ -345,25 +346,23 @@ class Vacaciones extends clsConexion {
 
 				case 'trabajador': //no esta imprimiendo el final
 					$sql .= " WHERE {$sqlTipoRango}
-						cedula = '{$arrFormulario["cmbTrabajador"]}' ";
+						V.idtrabajador = '{$arrFormulario["cmbTrabajador"]}' ";
 					#dentro SELECT * FROM cedula WHERE (id_rol >= '3' AND id_rol <= '5')
 					#fuera SELECT * FROM cedula WHERE NOT (id_rol >= '3' AND id_rol <= '5')
 					break;
-					
+
 				case 'condicion':
 					$sql .= "
-						WHERE 
-						condicion $sqlTipoRango IN
+						WHERE
+						V.condicion $sqlTipoRango IN
 						('{$arrFormulario["cmbCondicion"]}')	 ";
 					break;
-					
+
 				case 'fecha':
-					$arrFormulario["ctxFechaInicio"] = parent::faFechaFormato($arrFormulario["ctxFechaInicio"], "dma", "amd");
-					$arrFormulario["ctxFechaFinal"] = parent::faFechaFormato($arrFormulario["ctxFechaFinal"], "dma", "amd");
-					$sql .= " 
-						WHERE 
+					$sql .= "
+						WHERE
 						(fecha_inicio $sqlTipoRango BETWEEN
-						'{$arrFormulario["ctxFechaInicio"]}' 
+						'{$arrFormulario["ctxFechaInicio"]}'
 						AND '{$arrFormulario["ctxFechaFinal"]}') ";
 					break;
 			}
@@ -373,16 +372,8 @@ class Vacaciones extends clsConexion {
 		if (array_key_exists("cmbOrden", $arrFormulario))
 			$sql .= " ORDER BY {$arrFormulario['cmbOrden']} {$arrFormulario['radOrden']} ";
 
-		var_dump($sql);
-
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-
-		// var_dump($tupla);
-
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	} //cierre de la funcion
 
 
@@ -390,9 +381,9 @@ class Vacaciones extends clsConexion {
 	function getPeriodoUsado($piVacacion) {
 		$sql = "
 			SELECT GROUP_CONCAT(periodo_usado) AS periodos
-	 		FROM tdetalle_vacacion 
+	 		FROM tdetalle_vacacion
 	 		WHERE idvacacion = {$piVacacion}
-	 		GROUP BY idvacacion 
+	 		GROUP BY idvacacion
 	 		LIMIT 1";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		//verifica si se ejecuto bien

@@ -43,10 +43,10 @@ $(function () {
 
 	$(".fecha_pickatime, .calendario").datetimepicker({
 		//viewMode: 'months',
-		//format: 'DD/MM', 
-		format: 'DD-MM-YYYY', 
+		//format: 'DD/MM',
+		format: 'DD-MM-YYYY',
 		//disabledHours: false,
-		minDate: moment(),
+		//minDate: moment(),
 		locale: "es"
 	});
 

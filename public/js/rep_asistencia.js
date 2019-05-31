@@ -1,5 +1,5 @@
 
-lsVista = "Rep_Vacaciones";
+lsVista = "Rep_Asistencia";
 
 //al cargar el documento
 $(function() {
@@ -8,42 +8,38 @@ $(function() {
     fjComboGeneral("Trabajador");
 
     fjSinRango();
- 
+
     //todos los registros
-    $("#radRangoTipoT").click(function () {  
+    $("#radRangoTipoT").click(function () {
         fjSinRango();
     });
     //rango fuera o dentro
-    $("#radRangoTipoD, #radRangoTipoF ").click(function () {    
+    $("#radRangoTipoD, #radRangoTipoF ").click(function () {
         fjConRango();
     });
- 
-    $("#radRangoTrabajador").click(function () {     
+
+    $("#radRangoTrabajador").click(function () {
         fjRangoTrabajador();
     });
 
-    $("#radRangoEstatus").click(function () {    
+    $("#radRangoEstatus").click(function () {
         fjRangoEstatus();
     });
 
-    $("#radRangoFecha").click(function () {    
+    $("#radRangoFecha").click(function () {
         fjRangoFecha();
     });
- 
+
     //se retrasa el desabilitado mientras carga de la base de datos
     setTimeout(
         function () {
             $("#cmbTrabajador").attr('disabled', true);
         },
         1000
-  );
+    );
 });
 
-
-
-
-function enviar(ps = "") {
-    // alert("sdasdasdas");
+function enviar(psOpcion) {
     let arrFormulario = $("#form" + lsVista);
     var vsEstatus = document.getElementById("cmbCondicion");
     var viTrabajador = document.getElementById("cmbTrabajador");
@@ -65,7 +61,6 @@ function enviar(ps = "") {
             return;
         }
     }
-
 
     if(document.getElementById("radRangoTrabajador").checked == true) {
         if(viTrabajador.value.trim() == "") {
@@ -111,16 +106,11 @@ function enviar(ps = "") {
             return;
         }
     }
-
+    $('#operacion').val(psOpcion);
     arrFormulario.submit(); //Envía el formulario
-    // alert(vsModulo);
-    // alert(lsVista);
 }
 
-
-
 //FUNCIONES PARA LAS VISTAS QUE TIENEN SOLO ID, NONBRE, ESTATUS
-
 function fjSinRango() {
     //$('input:radio[name=radRangoTipo]:checked').val();
 
@@ -168,7 +158,6 @@ function fjRangoEstatus() {
     $("#ctxFechaFinal").attr('disabled', true);
 }
 
-
 function fjRangoFecha() {
     //$('input:radio[name=radRango]:checked').val();
     // $("#radRangoEstatus").prop('checked', true);
@@ -180,5 +169,3 @@ function fjRangoFecha() {
     $("#ctxFechaInicio").attr('disabled', false);
     $("#ctxFechaFinal").attr('disabled', false);
 }
-
-

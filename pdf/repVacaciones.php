@@ -4,19 +4,11 @@ include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsVacaciones.php");
 include_once( "../public/lib_Vacaciones.php");
 
-echo "<pre>";
 $objVacaciones = new Vacaciones();
 $objVacaciones->setFormulario($_POST);
-var_dump( $_POST);
-echo "<hr>";
-
 $rstConsulta = $objVacaciones->fmListarReporte();
-
-var_dump($rstConsulta);
-
+$lFecha = date("d-m-Y");
 $mpdf = new mPDF('utf-8', 'A4-L');
-
-
 
 // Write some HTML code:
 $vsHtml = "
@@ -59,8 +51,7 @@ $vsHtml = "
     </div>
     <div class='opciones'>
         <div style='width:100%; text-align: center;'>
-            <h3>Reporte de Vacaciones  </h3>
-            $lFecha
+            <h3>Reporte de Vacaciones - {$lFecha}</h3>
         </div>
         <div class='opcion1'>
             <table id='table1'>
@@ -73,40 +64,43 @@ $vsHtml = "
                 </tr>
 
                 <tr>
-                    
+
                     <td>Cédula</td>
                     <td style='width:270px;'>Nombre y Apellido</td>
                     <td>Periodo</td>
                     <td>Dias</td>
                 </tr>";
-
-        while ($arrConsulta = $objVacaciones->getConsultaAsociativo($rstConsulta) ) {
-            $vsPeriodos = $objVacaciones->getPeriodoUsado($arrConsulta["idvacacion"]);
-            $vsHtml .= " 
-                <tr>
-                    <td>1</td>
-                    <td> {$arrConsulta["nacionalidad"]} - {$arrConsulta["cedula"]} </td>
-                    <td> {$arrConsulta["nombre"]} {$arrConsulta["apellido"]} </td>
-                    <td> {$vsPeriodos} </td>
-                    <td> {$arrConsulta["cantidad_dias"]} </td>
-                    <td> {$arrConsulta["condicion"]} </td>
-                    <td> {$arrConsulta["observacion"]} </td>
-                </tr>";
+        if ($rstConsulta) {
+            while ($arrConsulta = $objVacaciones->getConsultaAsociativo($rstConsulta) ) {
+                $vsPeriodos = $objVacaciones->getPeriodoUsado($arrConsulta["idvacacion"]);
+                $vsHtml .= "
+                    <tr>
+                        <td>1</td>
+                        <td> {$arrConsulta["nacionalidad"]} - {$arrConsulta["cedula"]} </td>
+                        <td> {$arrConsulta["nombre"]} {$arrConsulta["apellido"]} </td>
+                        <td> {$vsPeriodos} </td>
+                        <td> {$arrConsulta["cantidad_dias"]} </td>
+                        <td> {$arrConsulta["condicion_vacacion"]} </td>
+                        <td> {$arrConsulta["observacion"]} </td>
+                    </tr>";
+            }
         }
 
 $vsHtml .= "
             </table>
         </div>
-        
+
     </div>
     <hr>
     <div class=''>
         Fondo de Desarrollo Agrario Socialista FONDAS
         Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
         Municipio Paez  Edo. Portuguesa,Republica Bolivariana de Venezuela.
-        Telefono: (0255-00000) 
+        Telefono: (0255-00000)
     </div>
 ";
+
+$mpdf->SetHTMLFooter('<div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>');
 
 $mpdf->WriteHTML($vsHtml);
 
