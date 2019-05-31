@@ -15,46 +15,43 @@ $mpdf = new mPDF('utf-8', 'A4-L');
 
 // Write some HTML code:
 $mpdf->WriteHTML("
-<style>
-.opciones {
-    overflow:hidden;
-    text-align: center;
-    margin:auto;
-    background:#fff;
-    //border:5px solid #ccc;
-}
-
-.opcion {
-    display:inline-table;
-    border:px solid #ccc;
-    padding:15px;
-    height:100px;
-    width:100px;
-    margin:3px;
-}
-
-.opcion1 {
-    display:inline-table;
-    //border:5px solid #ccc;
-    padding:15px;
-    height:100px;
-    width:100%;
-    margin:3px;
-}
-#table {
-    border-collapse: collapse;
-}
-table, td, th {
-    border: 1px solid black;
-}
-</style>
-
-    <div class=''>
+    <style>
+        .opciones {
+            overflow:hidden;
+            text-align: center;
+            margin:auto;
+            background:#fff;
+            //border:5px solid #ccc;
+        }
+        .opcion {
+            display:inline-table;
+            border:px solid #ccc;
+            padding:15px;
+            height:100px;
+            width:100px;
+            margin:3px;
+        }
+        .opcion1 {
+            display:inline-table;
+            //border:5px solid #ccc;
+            padding:15px;
+            height:100px;
+            width:100%;
+            margin:3px;
+        }
+        #table {
+            border-collapse: collapse;
+        }
+        table, td, th {
+            border: 1px solid black;
+        }
+    </style>
+    <div>
         <img src='../public/img/logofondas.png'  style='width:100%'>
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>Ausencias </h2> $fechaI -- $fechaF </h2> 
+            <h2>Ausencias </h2> $fechaI -- $fechaF </h2>
         </div>
         <div class='opcion1'>
             <table id='table' >
@@ -82,14 +79,14 @@ table, td, th {
                 </tr>
             </table>
         </div>
-        
+
     </div>
     <hr>
     <div class=''>
         Fondo de Desarrollo Agrario Socialista FONDAS
         Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
         Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
-        Telefono: (0255-00000) 
+        Telefono: (0255-00000)
     </div>
 ");
 
