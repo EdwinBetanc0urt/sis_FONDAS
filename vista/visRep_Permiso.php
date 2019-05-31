@@ -144,7 +144,9 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 									</div>
 									<div class="col-xs-8">
 										<select name='cmbCondicion' id='cmbCondicion' class="form-control" style="width: 100%">
-											<option value="aprobado" selected="selected"> Aprobado </option>
+											<option value="solicitado" selected="selected"> Solicitado </option>
+											<option value="revisado"> Revisado </option>
+											<option value="aprobado"> Aprobado </option>
 											<option value="rechazado"> Rechazado </option>
 										</select>
 				    				</div>

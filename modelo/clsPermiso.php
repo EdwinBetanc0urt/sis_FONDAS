@@ -274,8 +274,8 @@ class Permiso extends clsConexion {
 				ON Perm.idtrabajador = P.idtrabajador
 
 			WHERE
-				(fecha_inicio BETWEEN '{$arrFormulario["ctxFechaInicio"]}' AND
-				'{$arrFormulario["ctxFechaFinal"]}') "; //selecciona todo de la tabla
+				(fecha_inicio >= '{$arrFormulario["ctxFechaInicio"]} 00:00:00' AND
+				fecha_inicio <=  '{$arrFormulario["ctxFechaFinal"]} 00:00:00') "; //selecciona todo de la tabla
 
 		$sqlTipoRango = " "; //selecciona solo lo que esta dentro del rango
 		if (array_key_exists("radRangoTipo", $arrFormulario)) {
@@ -296,7 +296,7 @@ class Permiso extends clsConexion {
 
 				case 'condicion':
 					$sql .= "AND
-						Perm.condicion_permiso $sqlTipoRango IN
+						Perm.condicion $sqlTipoRango IN
 						('{$arrFormulario["cmbCondicion"]}')	 ";
 					break;
 			}
