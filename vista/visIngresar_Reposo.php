@@ -16,12 +16,12 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
 	<br>
-	<div class="tab-content">	
+	<div class="tab-content">
 		<div id="pestListado" class="tab-pane fade in active">
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
 				<div class="row">
@@ -31,23 +31,23 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-search"></span>
 								</span>
-								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
+								<input type="search" id="ctxBusqueda" name="ctxBusqueda"
 								oninput="fjMostrarLista('<?= $vsVista; ?>');"
-								onkeyup="fjMostrarLista('<?= $vsVista; ?>');" 
-								class="valida_buscar form-control" 
+								onkeyup="fjMostrarLista('<?= $vsVista; ?>');"
+								class="valida_buscar form-control"
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
-							</div>	
+							</div>
 						</div>
-	
+
 						<div class="col-xs-2">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</span>
-								<input type="number" id="numItems" name="numItems" maxlength="4" 
+								<input type="number" id="numItems" name="numItems" maxlength="4"
 								value="10" onkeyup="fjMostrarLista('<?= $vsVista; ?>');" required
 								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
-							</div>	
+							</div>
 						</div>
 					</div>
 				</div>
@@ -60,7 +60,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
 				<input type='hidden' name='subPagina' id='subPagina' />
-								
+
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>
@@ -82,15 +82,15 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 						<div class="form-group">
 
 							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-								<input name="numId" id="numId" type="hidden" readonly onkeypress="return false" value="<?php 
-									if(isset($_GET["getId"])) 
+								<input name="numId" id="numId" type="hidden" readonly onkeypress="return false" value="<?php
+									if(isset($_GET["getId"]))
 										echo $_GET["getId"]; ?>" />
 
 								<label for="ctxNombre">* Solicitante</label>
 								<input id="ctxNombre" class="form-control" maxlength="45" type="text" size="20" readonly value="<?php
 									echo $_SESSION["nacionalidad"] . "-" . $_SESSION["cedula"] . ", " . $_SESSION["nombre"] . " " . $_SESSION["apellido"];
 								?>" placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Generado automaticamente" />
-	
+
 								<input name="numIdTrabajador" id="numIdTrabajador" type="hidden" readonly onkeypress="return false" value="<?= $_SESSION["idtrabajador"]; ?>" />
 							</div>
 
@@ -98,7 +98,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<label for="ctxFechaElaboracion">* Fecha de Elaboracion</label>
 								<input id="ctxFechaElaboracion" class="form-control" name="ctxFechaElaboracion" type="text" readonly placeholder="Ingrese la Descripción" data-toggle="tooltip" data-placement="right" title="Generado automaticamente" value="<?= date("d-m-Y h:m");?>" />
 							</div>
-							
+
 							<!--
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="supervisor">Supervisor</label>
@@ -127,16 +127,19 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaInicio">* Inicio del Reposo</label>
-								<input id="ctxFechaInicio" class="form-control" maxlength="45" 
-									name="ctxFechaInicio" type="date" size="20" required placeholder="Ingrese la Descripción" 
-									data-toggle="tooltip" data-placement="bottom" title="Campo Obligatorio, especifique la hora exacta" 
-									onchange="fjFechaFinal(this.value, $('#cmbMotivo_Reposo').val());" oninput="fjFechaFinal(this.value, $('#cmbMotivo_Reposo').val());" />
+								<input id="ctxFechaInicio" class="form-control" maxlength="45"
+									name="ctxFechaInicio" type="date" required
+									placeholder="Ingrese la Descripción"
+									data-toggle="tooltip" data-placement="bottom"
+									title="Campo Obligatorio, especifique la hora exacta"
+									/>
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<label for="ctxFechaFin">* Reincorporación del Reposo</label>
 								<input type="date" id="ctxFechaFin" name="ctxFechaFin"
-									class="form-control fecha_datepicker" readonly placeholder="Ingrese la Descripción"
+									class="form-control fecha_datepicker" readonly
+									placeholder="Ingrese la Descripción"
 									data-toggle="tooltip" data-placement="right"
 									title="Generado automaticamente" />
 							</div>

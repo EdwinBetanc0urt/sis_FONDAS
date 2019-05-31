@@ -3,7 +3,6 @@
 include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsReposo.php");
 
-echo "<pre>";
 $objPermiso = new Reposo();
 $arrRegistro = $objPermiso->listarReporteUnitario($_GET["id"]);
 
@@ -18,7 +17,7 @@ $jefeRh= "Victor Mijica";
 $condicion= "Aprobado";
 $clase= "remunerado";
 
-$mpdf = new mPDF('c', 'A4');
+$mpdf = new mPDF('utf-8', 'A4');
 
 // Write some HTML code:
 $mpdf->WriteHTML("
@@ -59,11 +58,11 @@ $mpdf->WriteHTML("
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>REPOSO</h2>  
+            <h2>REPOSO</h2>
         </div>
         <div class='opcion1'>
             <table id='table' >
-                <tr>   
+                <tr>
                     <td colspan='2' align='center' style='width:450px; height:50px;'> <h4>Datos de Trabajador</h4></td>
                 </tr>
                 <tr>
@@ -120,14 +119,14 @@ $mpdf->WriteHTML("
                 </tr>
             </table>
         </div>
-        
+
     </div>
     <hr>
     <div class=''>
         Fondo de Desarrollo Agrario Socialista FONDAS
         Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
-        Municipio Paez  Edo. Portuguesa,Rep�blica Bolivariana de Venezuela.
-        Telefono: (0255-00000) 
+        Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
+        Telefono: (0255-00000)
     </div>
 ");
 
