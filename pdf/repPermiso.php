@@ -6,16 +6,23 @@ include_once("../modelo/clsPermiso.php");
 $objPermiso = new Permiso();
 $arrRegistro = $objPermiso->listarReporteUnitario($_GET["id"]);
 
-$cantidad_dias = 0;
+$cantidad_dias = "";
 if ($arrRegistro["cantidad_dias"] != NULL) {
-    $cantidad_dias = $arrRegistro["cantidad_dias"];
+    $cantidad_dias = $arrRegistro["cantidad_dias"] . " dia(s)";
 }
 
-$departamento= "Finanzas";
-$supervisor= "Juan Suarez";
-$jefeRh= "Victor Mijica";
-$condicion= "Aprobado";
-$clase= "remunerado";
+$cantidad_minutos = "";
+if ($arrRegistro["cantidad_tiempo"] != NULL) {
+	$horas = floor($arrRegistro["cantidad_tiempo"] / 3600);
+    $minutos = floor(($arrRegistro["cantidad_tiempo"] - ($horas * 3600)) / 60);
+    $cantidad_minutos = "{$horas}:{$minutos} hora(s)";
+}
+
+if ($cantidad_dias != "") {
+    $separador = ", ";
+}
+
+$lFecha = date("d-m-Y");
 
 $mpdf = new mPDF('utf-8', 'A4');
 
@@ -53,12 +60,12 @@ $mpdf->WriteHTML("
         }
     </style>
 
-    <div class=''>
+    <div>
         <img src='../public/img/logofondas.png' style='width:100%'>
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>Solicitud de Permiso </h2>
+            <h2>Solicitud de Permiso - {$lFecha}</h2>
         </div>
         <div class='opcion1'>
             <table id='table' >
@@ -74,23 +81,20 @@ $mpdf->WriteHTML("
                     "</td>
                 </tr>
                 <tr>
-                    <td colspan='2'> DEPENDENCIA DE ADSCRIPCION: $departamento</td>
-                </tr>
-                <tr>
-                    <td colspan='2'> JEFE DE DEPARTAMENTO: $supervisor</td>
+                    <td colspan='2'> DEPENDENCIA DE ADSCRIPCION: {$arrRegistro["departamento"]}</td>
                 </tr>
                 <tr>
                     <td colspan='2'> MOTIVO DEL PERMISO: {$arrRegistro["motivo_permiso"]} </td>
                 </tr>
                 <tr>
-                    <td>CONDICION: $condicion</td>
+                    <td>CONDICION: {$arrRegistro["condicion_permiso"]}</td>
                     <td>COMPROBANTE: {$arrRegistro["justificativo"]}</td>
                 </tr>
                 <tr>
                     <td colspan='2'>
-                        <table id='table' >
+                        <table id='table' align='center'>
                             <tr>
-                                <td style='width:215px;' align='center' > <h4>CLASE DE PERMISO </h4> </td>
+                                <td style='width:215px;'  > <h4>CLASE DE PERMISO </h4> </td>
                                 <td style='width:215px;' align='center'> <h4> DURACION </h4> </td>
                                 <td style='width:215px;' align='center'> <h4> TIEMPO </h4> </td>
                             </tr>
@@ -101,34 +105,52 @@ $mpdf->WriteHTML("
                                     . $objPermiso->faFechaFormato($arrRegistro["fecha_fin"]) .
                                 "</td>
                                 <td>"
-                                    . $cantidad_dias .
-                                " dia(s)</td>
+                                    . $cantidad_dias . $separador . $cantidad_minutos .
+                                "</td>
                             </tr>
                             <tr>
                                 <td align='center'> <h4> SOLICITANTE </h4>  </td>
                                 <td align='center'> <h4> SUPERVISOR </h4> </td>
                                 <td align='center'> <h4> OFICINA R.R.H.H. </h4>  </td>
                             </tr>
-                            <tr>
-                                <td style='height:60px;' >  </td>
-                                <td>  </td>
-                                <td>  </td>
+                            <tr align='center'>
+                                <td align='center'>
+                                    <br><br><br>
+                                    <hr>
+                                    {$arrRegistro["nombre"]} {$arrRegistro["apellido"]} <br>
+                                    {$arrRegistro["nacionalidad"]}-{$arrRegistro["cedula"]}
+                                </td>
+                                <td align='center'>
+                                    <br><br><br>
+                                    <hr>
+                                    {$arrRegistro["nombre_jefe"]} {$arrRegistro["apellido_jefe"]} <br>
+                                    {$arrRegistro["nacionalidad_jefe"]}-{$arrRegistro["cedula_jefe"]}
+                                </td>
+                                <td align='center'>
+                                    <br><br><br>
+                                    <hr>
+                                    {$arrRegistro["nombre_rh"]} {$arrRegistro["apellido_rh"]} <br>
+                                    {$arrRegistro["nacionalidad_rh"]}-{$arrRegistro["cedula_rh"]}
+                                </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
             </table>
         </div>
-
     </div>
+");
+
+$mpdf->SetHTMLFooter('
     <hr>
-    <div class=''>
+    <div>
         Fondo de Desarrollo Agrario Socialista FONDAS
         Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
         Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
         Telefono: (0255-00000)
     </div>
-");
+    <div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>
+');
 
 // Output a PDF file directly to the browser
 $mpdf->Output();

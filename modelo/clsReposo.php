@@ -40,7 +40,7 @@ class Reposo extends clsConexion {
 				ON Perm.idtrabajador_jefe = J.idtrabajador
 
 			LEFT JOIN vpersona AS RH
-				ON Perm.idtrabajador_rrhh	= RH.idtrabajador
+				ON Perm.idtrabajador_rrhh = RH.idtrabajador
 
 			INNER JOIN tmotivo_reposo AS M
 				ON M.idmotivo_reposo = Perm.idmotivo_reposo
