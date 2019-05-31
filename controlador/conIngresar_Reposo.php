@@ -192,11 +192,8 @@ function ListaIngresar_Reposo() {
 				<tbody>
 					<?php
 					while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
-						$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
 						$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
-
-						$vsHoraF = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
-						$vsFechaF = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
+						$vsFechaF = $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma");
 						?>
 						<tr data-toggle='tooltip' data-placement='top' title='Doble clic para detallar los datos y realizar alguna operación'
 							datos_registro='Seleccion
@@ -205,10 +202,10 @@ function ListaIngresar_Reposo() {
 							|<?= ucwords($arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]); ?>
 							|<?= ucwords($arrRegistro["idtrabajador"]); ?>
 							|<?= ucwords($arrRegistro["fecha_elaboracion"]); ?>
-							|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
+							|<?= ucwords($arrRegistro["idmotivo_reposo"]); ?>
 							|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-							|<?= ucwords($vsFechaI . " " . $vsHoraI); ?>
-							|<?= ucwords($vsFechaF . " " . $vsHoraF); ?>' >
+							|<?= ucwords($arrRegistro["fecha_inicio"]); ?>
+							|<?= ucwords($arrRegistro["fecha_fin"]); ?>' >
 								<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 							<td onclick='fjSeleccionarRegistro(this.parentNode);'>
@@ -221,10 +218,10 @@ function ListaIngresar_Reposo() {
 								<?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?>
 							</td>
 							<td onclick='fjSeleccionarRegistro(this.parentNode);'>
-								<?= $vsFechaI . " " . $vsHoraI; ?>
+								<?= $vsFechaI ?>
 							</td>
 							<td onclick='fjSeleccionarRegistro(this.parentNode);'>
-								<?= $vsFechaF . " " . $vsHoraF; ?>
+								<?= $vsFechaF ?>
 							</td>
 							<td>
 								<button type="button" class="btn" onclick='verReporte(<?= $arrRegistro[$objeto->atrId] ?>)'>

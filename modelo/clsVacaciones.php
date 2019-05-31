@@ -323,7 +323,8 @@ class Vacaciones extends clsConexion {
 
 	//función.modelo.Listar Reporte
 	//devuelve la consulta con los parametros de rango y ordenado que se le indiquen
-	function fmListarReporte($piVacacion = "") {
+	function fmListarReporte($piVacacion = "")
+	{
 		$arrFormulario = $this->atrFormulario;
 
 		$sql = "
@@ -375,8 +376,6 @@ class Vacaciones extends clsConexion {
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		return $tupla;
 	} //cierre de la funcion
-
-
 
 	function getPeriodoUsado($piVacacion) {
 		$sql = "

@@ -1,20 +1,25 @@
 <?php
 
+include_once( "../public/mpdf/mpdf.php");
+include_once("../modelo/clsPermiso.php");
+
+$objPermiso = new Permiso();
+$objPermiso->setFormulario($_POST);
+$fechaI = $objPermiso->faFechaFormato($_POST["ctxFechaInicio"]);
+$fechaF = $objPermiso->faFechaFormato($_POST["ctxFechaFinal"]);
+
+$rstConsulta = $objPermiso->listarReporte();
+
 $cedula= 84603098;
 $nombre= 'River Henry Mayta Escobar';
-$fechaI= date(" h:m a");
-$fechaF= date(" h:m a");
 $motivo= date(" h:m a");
 $cantidadD= date(" h:m a");
-$estatus= 'llego tarde ';
-$fechaI=date("d/m/Y ");
-$fechaF=date("d/m/Y ");
-include_once( "mpdf.php");
 
 $mpdf = new mPDF('utf-8', 'A4-L');
 
 // Write some HTML code:
-$mpdf->WriteHTML("
+$vsHtml = "";
+$vsHtml .= "
     <style>
         .opciones {
             overflow:hidden;
@@ -51,7 +56,7 @@ $mpdf->WriteHTML("
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>Ausencias </h2> $fechaI -- $fechaF </h2>
+            <h2>Permisos </h2> $fechaI - $fechaF </h2>
         </div>
         <div class='opcion1'>
             <table id='table' >
@@ -65,30 +70,66 @@ $mpdf->WriteHTML("
                     <td style='width:;' align='center'><h4>Duración</h4></td>
                     <td style='width:;' align='center'><h4>Estatus</h4></td>
                     <td style='width:;' align='center'><h4>Observacion</h4></td>
-                </tr>
+                </tr>";
+
+        if ($rstConsulta) {
+            while ($arrConsulta = $objPermiso->getConsultaAsociativo($rstConsulta) ) {
+                $cantidad_dias = "";
+                if ($arrConsulta["cantidad_dias"] != NULL) {
+                    $cantidad_dias = $arrConsulta["cantidad_dias"] . " dia(s)";
+                }
+
+                $cantidad_minutos = "";
+                if ($arrConsulta["cantidad_tiempo"] != NULL) {
+                    $horas = floor($arrConsulta["cantidad_tiempo"] / 3600);
+                    $minutos = floor(($arrConsulta["cantidad_tiempo"] - ($horas * 3600)) / 60);
+                    $cantidad_minutos = "{$horas}:{$minutos} hora(s)";
+                }
+                $separador = "";
+                if ($cantidad_dias != "") {
+                    $separador = ", ";
+                }
+
+                $vsHtml .= "
                 <tr>
-                    <td>1</td>
-                    <td>$cedula</td>
-                    <td>$nombre</td>
-                    <td>$fechaI</td>
-                    <td>$fechaI</td>
-                    <td>Capacitacion en el exterior</td>
-                    <td>5 dias</td>
-                    <td>de permiso</td>
-                    <td>presento todo los repaldos necesario para el permiso</td>
-                </tr>
+                    <td> {$arrConsulta["idpermiso"]} </td>
+                    <td> {$arrConsulta["nacionalidad"]} - {$arrConsulta["cedula"]} </td>
+                    <td> {$arrConsulta["nombre"]} {$arrConsulta["apellido"]} </td>
+                    <td> " . $objPermiso->faFechaFormato($arrConsulta["fecha_inicio"]) . "</td>
+                    <td> " . $objPermiso->faFechaFormato($arrConsulta["fecha_fin"]) . "</td>
+                    <td> {$arrConsulta["motivo_permiso"]} </td>
+
+                    <td> {$cantidad_dias} {$separador} {$cantidad_minutos} </td>
+                    <td> {$arrConsulta["condicion_permiso"]} </td>
+                    <td> {$arrConsulta["observacion"]} </td>
+                </tr>";
+            }
+        }
+        else {
+            $vsHtml .= "
+            <tr>
+                <td> SIN REGISTROS </td>
+            </tr>";
+        }
+
+$vsHtml .= "
             </table>
         </div>
-
     </div>
+";
+
+$mpdf->SetHTMLFooter('
     <hr>
-    <div class=''>
+    <div>
         Fondo de Desarrollo Agrario Socialista FONDAS
         Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
         Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
         Telefono: (0255-00000)
     </div>
-");
+    <div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>
+');
+
+$mpdf->WriteHTML($vsHtml);
 
 // Output a PDF file directly to the browser
 $mpdf->Output();

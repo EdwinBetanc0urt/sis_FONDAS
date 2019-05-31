@@ -256,6 +256,59 @@ class Permiso extends clsConexion {
 			return false;
 	}
 
+	//función.modelo.Listar Reporte
+	//devuelve la consulta con los parametros de rango y ordenado que se le indiquen
+	function listarReporte()
+	{
+		$arrFormulario = $this->atrFormulario;
+
+		$sql = "SELECT
+				P.*, Perm.*, Perm.condicion AS condicion_permiso, M.nombre AS
+				motivo_permiso, M.cantidad_dias, M.cantidad_tiempo
+			FROM tpermiso AS Perm
+
+			INNER JOIN tmotivo_permiso AS M
+				ON M.idmotivo_permiso = Perm.idmotivo_permiso
+
+			INNER JOIN vpersona AS P
+				ON Perm.idtrabajador = P.idtrabajador
+
+			WHERE
+				(fecha_inicio BETWEEN '{$arrFormulario["ctxFechaInicio"]}' AND
+				'{$arrFormulario["ctxFechaFinal"]}') "; //selecciona todo de la tabla
+
+		$sqlTipoRango = " "; //selecciona solo lo que esta dentro del rango
+		if (array_key_exists("radRangoTipo", $arrFormulario)) {
+			if ($arrFormulario['radRangoTipo'] == "fuera")
+				$sqlTipoRango = " NOT "; //selecciona solo lo que esta fuera del rango
+		}
+
+		//define el rango a mostrar
+		if (array_key_exists("radRango", $arrFormulario)) {
+			switch ($arrFormulario['radRango']) {
+
+				case 'trabajador': //no esta imprimiendo el final
+					$sql .= " AND {$sqlTipoRango}
+						Perm.idtrabajador = '{$arrFormulario["cmbTrabajador"]}' ";
+					#dentro SELECT * FROM cedula WHERE (id_rol >= '3' AND id_rol <= '5')
+					#fuera SELECT * FROM cedula WHERE NOT (id_rol >= '3' AND id_rol <= '5')
+					break;
+
+				case 'condicion':
+					$sql .= "AND
+						Perm.condicion_permiso $sqlTipoRango IN
+						('{$arrFormulario["cmbCondicion"]}')	 ";
+					break;
+			}
+		}
+		//define el atributo en que se ordena y de que forma
+		if (array_key_exists("cmbOrden", $arrFormulario))
+			$sql .= " ORDER BY {$arrFormulario['cmbOrden']} {$arrFormulario['radOrden']} ";
+
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		return $tupla;
+	} //cierre de la funcion
+
 }
 
 ?>

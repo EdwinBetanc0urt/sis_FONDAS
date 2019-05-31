@@ -17,7 +17,7 @@ if ($arrRegistro["cantidad_tiempo"] != NULL) {
     $minutos = floor(($arrRegistro["cantidad_tiempo"] - ($horas * 3600)) / 60);
     $cantidad_minutos = "{$horas}:{$minutos} hora(s)";
 }
-
+$separador = "";
 if ($cantidad_dias != "") {
     $separador = ", ";
 }

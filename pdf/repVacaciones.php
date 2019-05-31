@@ -89,18 +89,19 @@ $vsHtml = "
 $vsHtml .= "
             </table>
         </div>
-
-    </div>
-    <hr>
-    <div class=''>
-        Fondo de Desarrollo Agrario Socialista FONDAS
-        Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
-        Municipio Paez  Edo. Portuguesa,Republica Bolivariana de Venezuela.
-        Telefono: (0255-00000)
     </div>
 ";
 
-$mpdf->SetHTMLFooter('<div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>');
+$mpdf->SetHTMLFooter('
+    <hr>
+    <div>
+        Fondo de Desarrollo Agrario Socialista FONDAS
+        Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
+        Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
+        Telefono: (0255-00000)
+    </div>
+    <div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>
+');
 
 $mpdf->WriteHTML($vsHtml);
 
