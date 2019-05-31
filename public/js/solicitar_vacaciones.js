@@ -4,6 +4,14 @@ var lsVista = "Solicitar_Vacaciones";
 $(function () {
 	fjMostrarLista(lsVista);
 
+    $("#ctxFechaInicio")
+        .attr('min', clientDateTime('d'))
+        .on('change', function() {
+            $("#ctxFechaFinal")
+                .val(null)
+                .attr('min', this.value);
+        });
+
 	$("#ctxFechaInicio").on("change", function() {
 		if ($("#numDiasHabiles").val() != "" && parseInt($("#numDiasHabiles").val()) != 0) {
 			fjFechaFinal();
@@ -167,19 +175,19 @@ function fjSeleccionarRegistro(pvDOM) {
 		arrFilas = pvDOM.attr('datos_registro').split('|');
 	// debe ser con javascript porque es recibido directamente del DOM
 	if (typeof pvDOM.getAttribute !== 'undefined')
-		arrFilas = pvDOM.getAttribute('datos_registro').split('|'); 
+		arrFilas = pvDOM.getAttribute('datos_registro').split('|');
 
 	$("#btnHabilitar").attr('disabled', false);
 
 	$("#form" + lsVista + " #hidEstatus").val(arrFilas[1].trim());
 	$("#form" + lsVista + " #numId").val(parseInt(arrFilas[2].trim()));
-	
+
 	$("#form" + lsVista + " #cmbPeriodo")
 		.prop('length', 1)
 		.append(
-			'<option value="' + arrFilas[3].trim() + '">' + 
+			'<option value="' + arrFilas[3].trim() + '">' +
 				arrFilas[3].trim() +
-			'</option>' 
+			'</option>'
 		) // agrega los nuevos option al select
 		.val(arrFilas[3].trim())
 		// .attr('disabled', true)
@@ -229,7 +237,7 @@ function fjListaPeriodos() {
 	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post(vsRuta, { 
+	$.post(vsRuta, {
 			operacion: "ListaPeriodo"
 		},
 		function(resultado) {
@@ -253,7 +261,7 @@ function fjCalculaDias(paPeriodos = "") {
 	//abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post(vsRuta, { 
+	$.post(vsRuta, {
 			operacion: "CalculaDias",
 			radPeriodo: paPeriodos
 		},
@@ -313,10 +321,10 @@ function fjFechaFinal() {
 	// abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post(vsRuta, { 
+	$.post(vsRuta, {
 			operacion: "FechaFin",
 			numDiasHabiles: parseInt($("#form" + lsVista + " #numDiasHabiles").val()),
-			ctxFechaInicio: $("#form" + lsVista + " #ctxFechaInicio").val().toString() 
+			ctxFechaInicio: $("#form" + lsVista + " #ctxFechaInicio").val().toString()
 		},
 		function(resultado) {
 			if(resultado == false)
@@ -334,7 +342,7 @@ function fjAntiguedad() {
 	// abre el archivo controlador y envía por POST
 	vsRuta = "controlador/conSolicitar_Vacaciones.php";
 
-	$.post(vsRuta, { 
+	$.post(vsRuta, {
 			// variables enviadas (name: valor)
 			operacion: "Antiguedad",
 		},

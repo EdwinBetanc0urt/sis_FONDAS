@@ -3,6 +3,15 @@ lsVista = "Rep_Permiso";
 
 //al cargar el documento
 $(function() {
+    $("#ctxFechaInicio")
+        .attr('max', clientDateTime('d'))
+        .on('change', function() {
+            $("#ctxFechaFinal")
+                .val(null)
+                .attr('min', this.value);
+        });
+    $("#ctxFechaFinal").attr('max', clientDateTime('d'));
+
     //funcion en jsc_Reporte que genera los option en los select de la A a la Z
     //para los rangos de reporte desde letra inicial hasta letra incial
     fjComboGeneral("Trabajador");

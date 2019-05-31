@@ -4,6 +4,14 @@ var lsVista = "Ingresar_Reposo";
 $(function () {
 	fjMostrarLista(lsVista);
 
+	$("#ctxFechaInicio")
+		.attr('max', clientDateTime('d'))
+		.on('change', function() {
+			$("#ctxFechaFinal")
+				.val(null)
+				.attr('min', this.value);
+		});
+
 	$("#ctxFechaInicio").on("change blur focus input", function(){
 		$("#ctxFechaFin")
 			.val(null)
