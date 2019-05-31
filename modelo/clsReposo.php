@@ -11,8 +11,8 @@ class Reposo extends clsConexion {
 		parent::__construct(); //instancia al constructor padre
 		$this->atrTabla = "treposo";
 		$this->atrId = "idreposo";
-        $this->atrNombre = "justificacitvo";
-        $this->atrTipo_Permiso = "";
+        $this->atrNombre = "justificativo";
+        $this->atrTipo_Reposo = "";
 		$this->atrMotivo = "";
 		$this->atrCantidad_Dias = "";
 		$this->atrEstatus = "estatus";
@@ -26,24 +26,32 @@ class Reposo extends clsConexion {
 	 */
 	function listarReporteUnitario($identificacion)
 	{
-		$sql = "
-			SELECT Perm.*, M.nombre AS motivo_reposo, P.*,
-			J.nacionalidad AS nacionalidad_jefe, J.cedula AS cedula_jefe, J.nombre as nombre_jefe, J.apellido as apellido_jefe,
-			RH.nacionalidad AS nacionalidad_rh, RH.cedula AS cedula_rh, RH.nombre as nombre_rh, RH.apellido as apellido_rh
+		$sql = "SELECT
+				P.*, Perm.*, Perm.condicion AS condicion_reposo, M.nombre AS
+				motivo_reposo, M.cantidad_dias, M.cantidad_tiempo,
+				RH.nacionalidad AS nacionalidad_rh, RH.cedula AS cedula_rh,
+				RH.nombre as nombre_rh, RH.apellido as apellido_rh,
+				J.nacionalidad AS nacionalidad_jefe, J.cedula AS cedula_jefe,
+				J.nombre as nombre_jefe, J.apellido as apellido_jefe
+			FROM treposo AS Perm
 
-			FROM {$this->atrTabla} AS Perm
+			INNER JOIN tmotivo_reposo AS M
+				ON M.idmotivo_reposo = Perm.idmotivo_reposo
 
 			INNER JOIN vpersona AS P
 				ON Perm.idtrabajador = P.idtrabajador
 
+			INNER JOIN tdepartamento AS D
+				ON D.iddepartamento = P.iddepartamento
+
 			LEFT JOIN vpersona AS J
-				ON Perm.idtrabajador_jefe = J.idtrabajador
+				ON D.idtrabajador = J.idtrabajador
+
+			LEFT JOIN tdepartamento AS DRH
+				ON DRH.iddepartamento = 1
 
 			LEFT JOIN vpersona AS RH
-				ON Perm.idtrabajador_rrhh	= RH.idtrabajador
-
-			INNER JOIN tmotivo_reposo AS M
-				ON M.idmotivo_reposo = Perm.idmotivo_reposo
+				ON DRH.idtrabajador = RH.idtrabajador
 
 			WHERE
 				{$this->atrId} = '{$identificacion}'

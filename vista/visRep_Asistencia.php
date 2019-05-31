@@ -6,44 +6,28 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "34";
 ?>
 
-<script type="text/javascript">
-    $(function () {
-
-	    $(".calendario").datepicker({
-			//viewMode: 'months',
-			//format: 'DD/MM', 
-			format: 'dd-mm-yyyy', 
-			//disabledHours: false,
-			language: "es"
-	    });
-    });
-</script>
-
 <div class="panel-heading">
-	<h3 class="panel-title"> 	
+	<h3 class="panel-title">
 		Reporte de Vacaciones
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestReporte">Reporte</a></li>
 	</ul>
 	<br>
 
-	<div class="tab-content">	
-
+	<div class="tab-content">
 		<div id="pestReporte" class="tab-pane fade in active">
-
 			<form name="form<?= $vsVista; ?>" id="form<?= $vsVista; ?>" action="pdf/RepVacaciones.php" role="form" method="POST" target="_blank" >
-
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">Metodo de Ordenado</h3>
 					</div>
 					<div class="panel-body">
 						<div class="row">
-								
+
 							<div class="form-group" >
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="cmbOrden">Ordenar Por</label>
@@ -83,7 +67,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 					<div class="panel-heading">
 						<h3 class="panel-title">Rangos a Mostrar</h3>
 					</div>
-					<div class="panel-body">			
+					<div class="panel-body">
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -114,7 +98,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 						</div>
 
 						<br><br>
-						
+
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -141,7 +125,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 						</div>
 
 						<br><br>
-						
+
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -172,7 +156,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 						</div>
 
 						<br><br>
-						
+
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -200,10 +184,11 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 					</div>
 				</div>
 
-				<center>		
+				<center>
 					<?php
 						include_once("_botones.php");
 					?>
+					<input type="hidden" name="operacion" id="operacion" />
 				</center>
 			</form>
 		</div>

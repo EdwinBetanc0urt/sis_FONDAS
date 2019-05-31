@@ -3,18 +3,15 @@
 include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsReposo.php");
 
-$objPermiso = new Reposo();
-$arrRegistro = $objPermiso->listarReporteUnitario($_GET["id"]);
+$objReposo = new Reposo();
+$arrRegistro = $objReposo->listarReporteUnitario($_GET["id"]);
 
 $cantidad_dias = 0;
 if ($arrRegistro["cantidad_dias"] != NULL) {
     $cantidad_dias = $arrRegistro["cantidad_dias"];
 }
 
-$departamento= "Finanzas";
-$supervisor= "Juan Suarez";
-$jefeRh= "Victor Mijica";
-$condicion= "Aprobado";
+$lFecha = date("d-m-Y");
 $clase= "remunerado";
 
 $mpdf = new mPDF('utf-8', 'A4');
@@ -53,12 +50,12 @@ $mpdf->WriteHTML("
         }
     </style>
 
-    <div class=''>
+    <div>
         <img src='../public/img/logofondas.png' style='width:100%'>
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>REPOSO</h2>
+            <h2>REPOSO - {$lFecha}</h2>
         </div>
         <div class='opcion1'>
             <table id='table' >
@@ -74,17 +71,14 @@ $mpdf->WriteHTML("
                     "</td>
                 </tr>
                 <tr>
-                    <td colspan='2'> DEPENDENCIA DE ADSCRIPCION: $departamento</td>
+                    <td colspan='2'> DEPENDENCIA DE ADSCRIPCION: {$arrRegistro["departamento"]}</td>
                 </tr>
                 <tr>
-                    <td colspan='2'> JEFE DE DEPARTAMENTO: $supervisor</td>
+                    <td colspan='2'> MOTIVO DEL PERMISO: {$arrRegistro["motivo_reposo"]} </td>
                 </tr>
                 <tr>
-                    <td colspan='2'> MOTIVO DEL PERMISO: {$arrRegistro["motivo_permiso"]} </td>
-                </tr>
-                <tr>
-                    <td>CONDICION: $condicion</td>
-                    <td>COMPROBANTE: {$arrRegistro["justificativo"]}</td>
+                <td>CONDICION: {$arrRegistro["condicion_reposo"]}</td>
+                <td>COMPROBANTE: {$arrRegistro["justificativo"]}</td>
                 </tr>
                 <tr>
                     <td colspan='2'>
@@ -97,8 +91,8 @@ $mpdf->WriteHTML("
                             <tr>
                                 <td>  remunerado<input name='' id='' type='checkbox'> No remunerado<input name='' id='' type='checkbox'> </td>
                                 <td>"
-                                    . $objPermiso->faFechaFormato($arrRegistro["fecha_inicio"]) . " - "
-                                    . $objPermiso->faFechaFormato($arrRegistro["fecha_fin"]) .
+                                    . $objReposo->faFechaFormato($arrRegistro["fecha_inicio"]) . " - "
+                                    . $objReposo->faFechaFormato($arrRegistro["fecha_fin"]) .
                                 "</td>
                                 <td>"
                                     . $cantidad_dias .
@@ -109,26 +103,44 @@ $mpdf->WriteHTML("
                                 <td align='center'> <h4> SUPERVISOR </h4> </td>
                                 <td align='center'> <h4> OFICINA R.R.H.H. </h4>  </td>
                             </tr>
-                            <tr>
-                                <td style='height:60px;' >  </td>
-                                <td>  </td>
-                                <td>  </td>
+                            <tr align='center'>
+                                <td align='center'>
+                                    <br><br><br>
+                                    <hr>
+                                    {$arrRegistro["nombre"]} {$arrRegistro["apellido"]} <br>
+                                    {$arrRegistro["nacionalidad"]}-{$arrRegistro["cedula"]}
+                                </td>
+                                <td align='center'>
+                                    <br><br><br>
+                                    <hr>
+                                    {$arrRegistro["nombre_jefe"]} {$arrRegistro["apellido_jefe"]} <br>
+                                    {$arrRegistro["nacionalidad_jefe"]}-{$arrRegistro["cedula_jefe"]}
+                                </td>
+                                <td align='center'>
+                                    <br><br><br>
+                                    <hr>
+                                    {$arrRegistro["nombre_rh"]} {$arrRegistro["apellido_rh"]} <br>
+                                    {$arrRegistro["nacionalidad_rh"]}-{$arrRegistro["cedula_rh"]}
+                                </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
             </table>
         </div>
-
     </div>
+");
+
+$mpdf->SetHTMLFooter('
     <hr>
-    <div class=''>
+    <div>
         Fondo de Desarrollo Agrario Socialista FONDAS
         Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
         Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
         Telefono: (0255-00000)
     </div>
-");
+    <div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>
+');
 
 // Output a PDF file directly to the browser
 $mpdf->Output();

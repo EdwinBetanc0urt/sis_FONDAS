@@ -4,23 +4,22 @@ include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsPermiso.php");
 
 $objPermiso = new Permiso();
-$arrRegistro = $objPermiso->listarReporteUnitario($_GET["id"]);
+$objPermiso->setFormulario($_POST);
+$fechaI = $objPermiso->faFechaFormato($_POST["ctxFechaInicio"]);
+$fechaF = $objPermiso->faFechaFormato($_POST["ctxFechaFinal"]);
 
-$cantidad_dias = 0;
-if ($arrRegistro["cantidad_dias"] != NULL) {
-    $cantidad_dias = $arrRegistro["cantidad_dias"];
-}
+$rstConsulta = $objPermiso->listarReporte();
 
-$departamento= "Finanzas";
-$supervisor= "Juan Suarez";
-$jefeRh= "Victor Mijica";
-$condicion= "Aprobado";
-$clase= "remunerado";
+$cedula= 84603098;
+$nombre= 'River Henry Mayta Escobar';
+$motivo= date(" h:m a");
+$cantidadD= date(" h:m a");
 
-$mpdf = new mPDF('utf-8', 'A4');
+$mpdf = new mPDF('utf-8', 'A4-L');
 
 // Write some HTML code:
-$mpdf->WriteHTML("
+$vsHtml = "";
+$vsHtml .= "
     <style>
         .opciones {
             overflow:hidden;
@@ -52,84 +51,85 @@ $mpdf->WriteHTML("
             border: 1px solid black;
         }
     </style>
-
-    <div class=''>
-        <img src='../public/img/logofondas.png' style='width:100%'>
+    <div>
+        <img src='../public/img/logofondas.png'  style='width:100%'>
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>Solicitud de Permiso </h2>
+            <h2>Permisos </h2> $fechaI - $fechaF </h2>
         </div>
         <div class='opcion1'>
             <table id='table' >
                 <tr>
-                    <td colspan='2' align='center' style='width:450px; height:50px;'> <h4>Datos de Trabajador</h4></td>
-                </tr>
+                    <td align='center'><h4>N°</h4></td>
+                    <td style='width:;' align='center'><h4>Cedula</h4></td>
+                    <td style='width:;' align='center'><h4>Trabajador</h4></td>
+                    <td style='width:;' align='center'><h4>Fecha Inicio</h4></td>
+                    <td style='width:;' align='center'><h4>Fecha fin</h4></td>
+                    <td style='width:;' align='center'><h4>Motivo</h4></td>
+                    <td style='width:;' align='center'><h4>Duración</h4></td>
+                    <td style='width:;' align='center'><h4>Estatus</h4></td>
+                    <td style='width:;' align='center'><h4>Observacion</h4></td>
+                </tr>";
+
+        if ($rstConsulta) {
+            while ($arrConsulta = $objPermiso->getConsultaAsociativo($rstConsulta) ) {
+                $cantidad_dias = "";
+                if ($arrConsulta["cantidad_dias"] != NULL) {
+                    $cantidad_dias = $arrConsulta["cantidad_dias"] . " dia(s)";
+                }
+
+                $cantidad_minutos = "";
+                if ($arrConsulta["cantidad_tiempo"] != NULL) {
+                    $horas = floor($arrConsulta["cantidad_tiempo"] / 3600);
+                    $minutos = floor(($arrConsulta["cantidad_tiempo"] - ($horas * 3600)) / 60);
+                    $cantidad_minutos = "{$horas}:{$minutos} hora(s)";
+                }
+                $separador = "";
+                if ($cantidad_dias != "") {
+                    $separador = ", ";
+                }
+
+                $vsHtml .= "
                 <tr>
-                    <td>APELLIDOS Y NOMBRES: <br>"
-                        . ucwords($arrRegistro["nombre"] . " " . $arrRegistro["apellido"]) .
-                    "</td>
-                    <td>CEDULA: "
-                        . ucwords($arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"]) .
-                    "</td>
-                </tr>
-                <tr>
-                    <td colspan='2'> DEPENDENCIA DE ADSCRIPCION: $departamento</td>
-                </tr>
-                <tr>
-                    <td colspan='2'> JEFE DE DEPARTAMENTO: $supervisor</td>
-                </tr>
-                <tr>
-                    <td colspan='2'> MOTIVO DEL PERMISO: {$arrRegistro["motivo_permiso"]} </td>
-                </tr>
-                <tr>
-                    <td>CONDICION: $condicion</td>
-                    <td>COMPROBANTE: {$arrRegistro["justificativo"]}</td>
-                </tr>
-                <tr>
-                    <td colspan='2'>
-                        <table id='table' >
-                            <tr>
-                                <td style='width:215px;' align='center' > <h4>CLASE DE PERMISO </h4> </td>
-                                <td style='width:215px;' align='center'> <h4> DURACION </h4> </td>
-                                <td style='width:215px;' align='center'> <h4> TIEMPO </h4> </td>
-                            </tr>
-                            <tr>
-                                <td>  remunerado<input name='' id='' type='checkbox'> No remunerado<input name='' id='' type='checkbox'> </td>
-                                <td>"
-                                    . $objPermiso->faFechaFormato($arrRegistro["fecha_inicio"]) . " - "
-                                    . $objPermiso->faFechaFormato($arrRegistro["fecha_fin"]) .
-                                "</td>
-                                <td>"
-                                    . $cantidad_dias .
-                                " dia(s)</td>
-                            </tr>
-                            <tr>
-                                <td align='center'> <h4> SOLICITANTE </h4>  </td>
-                                <td align='center'> <h4> SUPERVISOR </h4> </td>
-                                <td align='center'> <h4> OFICINA R.R.H.H. </h4>  </td>
-                            </tr>
-                            <tr>
-                                <td style='height:60px;' >  </td>
-                                <td>  </td>
-                                <td>  </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+                    <td> {$arrConsulta["idpermiso"]} </td>
+                    <td> {$arrConsulta["nacionalidad"]} - {$arrConsulta["cedula"]} </td>
+                    <td> {$arrConsulta["nombre"]} {$arrConsulta["apellido"]} </td>
+                    <td> " . $objPermiso->faFechaFormato($arrConsulta["fecha_inicio"]) . "</td>
+                    <td> " . $objPermiso->faFechaFormato($arrConsulta["fecha_fin"]) . "</td>
+                    <td> {$arrConsulta["motivo_permiso"]} </td>
+
+                    <td> {$cantidad_dias} {$separador} {$cantidad_minutos} </td>
+                    <td> {$arrConsulta["condicion_permiso"]} </td>
+                    <td> {$arrConsulta["observacion"]} </td>
+                </tr>";
+            }
+        }
+        else {
+            $vsHtml .= "
+            <tr>
+                <td> SIN REGISTROS </td>
+            </tr>";
+        }
+
+$vsHtml .= "
             </table>
         </div>
-
     </div>
+";
+
+$mpdf->SetHTMLFooter('
     <hr>
-    <div class=''>
+    <div>
         Fondo de Desarrollo Agrario Socialista FONDAS
         Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
         Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
         Telefono: (0255-00000)
     </div>
-");
+    <div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>
+');
+
+$mpdf->WriteHTML($vsHtml);
 
 // Output a PDF file directly to the browser
 $mpdf->Output();
-?>

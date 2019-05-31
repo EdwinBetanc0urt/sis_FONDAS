@@ -3,40 +3,49 @@ lsVista = "Rep_Vacaciones";
 
 //al cargar el documento
 $(function() {
+    $("#ctxFechaInicio")
+        .attr('max', clientDateTime('d'))
+        .on('change', function() {
+            $("#ctxFechaFinal")
+                .val(null)
+                .attr('min', this.value);
+        });
+
+    $("#ctxFechaFinal").attr('max', clientDateTime('d'));
     //funcion en jsc_Reporte que genera los option en los select de la A a la Z
     //para los rangos de reporte desde letra inicial hasta letra incial
     fjComboGeneral("Trabajador");
 
     fjSinRango();
- 
+
     //todos los registros
-    $("#radRangoTipoT").click(function () {  
+    $("#radRangoTipoT").click(function () {
         fjSinRango();
     });
     //rango fuera o dentro
-    $("#radRangoTipoD, #radRangoTipoF ").click(function () {    
+    $("#radRangoTipoD, #radRangoTipoF ").click(function () {
         fjConRango();
     });
- 
-    $("#radRangoTrabajador").click(function () {     
+
+    $("#radRangoTrabajador").click(function () {
         fjRangoTrabajador();
     });
 
-    $("#radRangoEstatus").click(function () {    
+    $("#radRangoEstatus").click(function () {
         fjRangoEstatus();
     });
 
-    $("#radRangoFecha").click(function () {    
+    $("#radRangoFecha").click(function () {
         fjRangoFecha();
     });
- 
+
     //se retrasa el desabilitado mientras carga de la base de datos
     setTimeout(
         function () {
             $("#cmbTrabajador").attr('disabled', true);
         },
         1000
-  );
+    );
 });
 
 
@@ -180,5 +189,3 @@ function fjRangoFecha() {
     $("#ctxFechaInicio").attr('disabled', false);
     $("#ctxFechaFinal").attr('disabled', false);
 }
-
-

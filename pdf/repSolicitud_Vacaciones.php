@@ -49,13 +49,13 @@ $vsHtml = "
             border: 1px solid black;
         }
     </style>
- 
+
     <div class=''>
         <img src='../public/img/logofondas.png' style='width:100%'>
     </div>
     <div class='opciones'>
         <div class='width:100%; text-align: center;'>
-            <h2>Solicitud de Vacacion ----  fecha: $solicitado </h2>  
+            <h2>Solicitud de Vacacion ----  fecha: $solicitado </h2>
         </div>
         <div class='opcion1'>
             <table id='table'>
@@ -85,12 +85,12 @@ $vsHtml = "
                                 <td align='center'> {$arrConsulta["cargo"]}  </td>
                                 <td align='center'> {$arrConsulta["fecha_ingreso"]} </td>
                                 <td align='center'>  {$antiguedad} año(s) </td>
-                            </tr>                 
+                            </tr>
                         </table>
-                    </td>      
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan='3'> 
+                    <td colspan='3'>
                         <table id='table' >
                             <tr>
                                 <td  style='width:352px;' align='center'> <h4> Periodo </h4>  </td>
@@ -126,12 +126,12 @@ $vsHtml = "
                                 <td style='width:211px;' align='center'> {$arrConsulta["fecha_inicio"]}  </td>
                                 <td style='width:211px;' align='center'> {$arrConsulta["fecha_fin"]} </td>
                                 <td style='width:211px;' align='center'> </td>
-                            </tr>                        
+                            </tr>
                             <tr>
                                 <td colspan='5' align='center'>
                                 <h3><br> Aprobacion de Solicitud  </h3>
                                 </td>
-                            </tr>                            
+                            </tr>
                             <tr>
                                 <td style='width:211px;' align='center' > <h4>Solicitud Procesado Por </h4> </td>
                                 <td style='width:211px;' align='center'> <h4> Cargo </h4> </td>
@@ -166,16 +166,19 @@ $vsHtml = "
                 </tr>
             </table>
         </div>
-         
-    </div>
-    <hr>
-    <div class=''>
-        Fondo de Desarrollo Agrario Socialista FONDAS
-        Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
-        Municipio Paez  Edo. Portuguesa,Republica Bolivariana de Venezuela.
-        Telefono: (0255-00000) 
     </div>
 ";
+
+$mpdf->SetHTMLFooter('
+    <hr>
+    <div>
+        Fondo de Desarrollo Agrario Socialista FONDAS
+        Av. Circunvalacion Esquina Semaforo Carretera Nacional Via Payara. Al Lado De AgroPatria Acarigua.
+        Municipio Paez  Edo. Portuguesa,República Bolivariana de Venezuela.
+        Telefono: (0255-00000)
+    </div>
+    <div style="text-align: right;">Pagína {PAGENO}/{nbpg}</div>
+');
 
 $mpdf->WriteHTML( $vsHtml);
 

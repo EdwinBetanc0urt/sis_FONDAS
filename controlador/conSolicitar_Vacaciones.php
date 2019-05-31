@@ -167,16 +167,16 @@ function Combo()
     if ($rstRecordSet) {
         $arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
         do {
-            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId])) 
+            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId]))
                 $lsSeleccionado = "selected='selected'";
             else
                 $lsSeleccionado = "";
             ?>
-            <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> > 
-                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?> 
+            <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> >
+                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?>
             </option>
             <?php
-        } 
+        }
         while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet));
     }
     //si no existe una consulta
@@ -252,7 +252,7 @@ function ListaSolicitar_Vacaciones()
 					</tr>
 				</thead>
 				<tbody>
-		<?php 
+		<?php
 		while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 			?>
 					<tr  data-toggle='tooltip'
@@ -270,7 +270,7 @@ function ListaSolicitar_Vacaciones()
 							<?= $arrRegistro["periodo_usado"]; ?>
 						</td>
 						<td onclick='fjSeleccionarRegistro(this.parentNode);'>
-								<?= $arrRegistro["cant_dias_periodo"]; ?>
+							<?= $arrRegistro["cant_dias_periodo"]; ?>
 						</td>
 						<td onclick='fjSeleccionarRegistro(this.parentNode);'>
 							<?= $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma"); ?>
@@ -291,7 +291,7 @@ function ListaSolicitar_Vacaciones()
 		}
 		?>
 				</tbody>
-			</table> 
+			</table>
 		</div>
 		<nav aria-label="Page navigation">
 			<ul class="pagination">
@@ -329,7 +329,7 @@ function ListaSolicitar_Vacaciones()
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}

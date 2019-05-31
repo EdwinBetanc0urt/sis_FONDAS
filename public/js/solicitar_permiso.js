@@ -17,10 +17,10 @@ $(function () {
 function fjFechaFinal(psFechaInicio = "", piMotivo = "") {
 	//abre el archivo controlador y envia por POST
 	vsRuta = "controlador/conSolicitar_Permiso.php";
-	$.post(vsRuta, { 
+	$.post(vsRuta, {
 			operacion: "FechaFin",
 			cmbMotivo: parseInt(piMotivo),
-			ctxFechaInicio: psFechaInicio.toString() 
+			ctxFechaInicio: psFechaInicio.toString()
 		},
 		function(resultado) {
 			if (!resultado) {
@@ -57,7 +57,7 @@ function enviar(pvValor) {
 	}
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
-	if (vbComprobar) {				
+	if (vbComprobar) {
 		$("#form" + lsVista + " #operacion").val(pvValor);
 		arrFormulario.submit(); //Envía el formulario
 	}
@@ -102,7 +102,7 @@ function fjEditarRegistro() {
 	}
 }
 
-function fjSeleccionarRegistro(pvDOM) {    
+function fjSeleccionarRegistro(pvDOM) {
     if (jQuery.isFunction(pvDOM.attr))
         arrFilas = pvDOM.attr('datos_registro').split('|'); //debe ser con jquery porque es recibido como tal con jquery
 
@@ -119,7 +119,7 @@ function fjSeleccionarRegistro(pvDOM) {
 
 	$("#form" + lsVista + " #hidMotivo_Permiso").val(arrFilas[6].trim());
 	fjComboGeneral("Motivo_Permiso");
-	
+
 	$("#form" + lsVista + " #ctxObservacion").val(arrFilas[7].trim());
 	$("#form" + lsVista + " #ctxFechaInicio").val(arrFilas[8].trim());
 	$("#form" + lsVista + " #ctxFechaFin").val(arrFilas[9].trim());
@@ -166,7 +166,7 @@ function fjCargarDias(piJornada = ""){
 
     $.post("controlador/conJornada.php", {
             operacion: "ListaDias",
-            numId: $("#numId").val() 
+            numId: $("#numId").val()
         },
         function(resultado) {
             if (resultado == false)
@@ -180,7 +180,7 @@ function fjCargarDias(piJornada = ""){
 }
 
 function verReporte(idRegistro, piAncho = 700, piAlto = 800) {
-	var vjUrl="pdf/repPermiso.php?id=" + idRegistro; //Maestra seleccionada
+	var vjUrl="pdf/repComprobante_Permiso.php?id=" + idRegistro; //Maestra seleccionada
 	var posicion_x=(screen.width/2)-(piAncho/2); //posicion horizontal en la pantalla
 	var posicion_y=(screen.height/2)-(piAlto/2); //posicion vertical en la pantalla
 	//document.getElementById("vvOpcion").value = pvValor; //valor.vista.Opcion del hidden

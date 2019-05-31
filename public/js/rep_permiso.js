@@ -8,41 +8,35 @@ $(function() {
     fjComboGeneral("Trabajador");
 
     fjSinRango();
- 
+
     //todos los registros
-    $("#radRangoTipoT").click(function () {  
+    $("#radRangoTipoT").click(function () {
         fjSinRango();
     });
     //rango fuera o dentro
-    $("#radRangoTipoD, #radRangoTipoF ").click(function () {    
+    $("#radRangoTipoD, #radRangoTipoF ").click(function () {
         fjConRango();
     });
- 
-    $("#radRangoTrabajador").click(function () {     
+
+    $("#radRangoTrabajador").click(function () {
         fjRangoTrabajador();
     });
 
-    $("#radRangoEstatus").click(function () {    
+    $("#radRangoEstatus").click(function () {
         fjRangoEstatus();
     });
 
-    $("#radRangoFecha").click(function () {    
-        fjRangoFecha();
-    });
- 
     //se retrasa el desabilitado mientras carga de la base de datos
     setTimeout(
         function () {
             $("#cmbTrabajador").attr('disabled', true);
         },
         1000
-  );
+    );
 });
 
 
-
-
-function enviar(ps = "") {
+function enviar(pvValor = "") {
     // alert("sdasdasdas");
     let arrFormulario = $("#form" + lsVista);
     var vsEstatus = document.getElementById("cmbCondicion");
@@ -66,7 +60,6 @@ function enviar(ps = "") {
         }
     }
 
-
     if(document.getElementById("radRangoTrabajador").checked == true) {
         if(viTrabajador.value.trim() == "") {
             vbComprobar = false;
@@ -83,53 +76,45 @@ function enviar(ps = "") {
         }
     }
 
-    if(document.getElementById("radRangoFecha").checked == true) {
-        if(vsFechaI.value.trim() == "") {
-            vbComprobar = false;
-            swal({
-                title: '¡Atención!',
-                html: "Selecciono rango de fechas <br /> Y la fecha inicial no puede estar vacia para <b>" + pvValor.toUpperCase() + "</b>",
-                type: 'error',
-                confirmButtonText: 'Ok',
-                showCloseButton: true
-            }).then((result) => {
-                vsFechaI.focus(); //enfoca el cursor en el campo que falta del formulario
-            });
-            return;
-        }
-        if(vsFechaF.value.trim() == "") {
-            vbComprobar = false;
-            swal({
-                title: '¡Atención!',
-                html: "Selecciono rango de fechas <br /> Y la fecha final no puede estar vacia para <b>" + pvValor.toUpperCase() + "</b>",
-                type: 'error',
-                confirmButtonText: 'Ok',
-                showCloseButton: true
-            }).then((result) => {
-                vsFechaF.focus(); //enfoca el cursor en el campo que falta del formulario
-            });
-            return;
-        }
+    if(vsFechaI.value.trim() == "") {
+        vbComprobar = false;
+        swal({
+            title: '¡Atención!',
+            html: "La fecha inicial no puede estar vacia para <b>" + pvValor.toUpperCase() + "</b>",
+            type: 'error',
+            confirmButtonText: 'Ok',
+            showCloseButton: true
+        }).then((result) => {
+            vsFechaI.focus(); //enfoca el cursor en el campo que falta del formulario
+        });
+        return;
+    }
+    if(vsFechaF.value.trim() == "") {
+        vbComprobar = false;
+        swal({
+            title: '¡Atención!',
+            html: "La fecha final no puede estar vacia para <b>" + pvValor.toUpperCase() + "</b>",
+            type: 'error',
+            confirmButtonText: 'Ok',
+            showCloseButton: true
+        }).then((result) => {
+            vsFechaF.focus(); //enfoca el cursor en el campo que falta del formulario
+        });
+        return;
     }
 
+	document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
     arrFormulario.submit(); //Envía el formulario
     // alert(vsModulo);
     // alert(lsVista);
 }
 
-
-
 //FUNCIONES PARA LAS VISTAS QUE TIENEN SOLO ID, NONBRE, ESTATUS
-
 function fjSinRango() {
     //$('input:radio[name=radRangoTipo]:checked').val();
 
     $("#radRangoEstatus").attr('disabled', true);
     $("#cmbCondicion").attr('disabled', true);
-
-    $("#radRangoFecha").attr('disabled', true);
-    $("#ctxFechaInicio").attr('disabled', true);
-    $("#ctxFechaFinal").attr('disabled', true);
 
     $("#radRangoTrabajador").attr('disabled', true);
     $("#cmbTrabajador").attr('disabled', true);
@@ -142,7 +127,6 @@ function fjConRango() {
     //$('#radRangoEstatus').prop("checked", true);
     $("#radRangoTrabajador").attr('disabled', false);
     $("#radRangoEstatus").attr('disabled', false);
-    $("#radRangoFecha").attr('disabled', false);
     fjRangoEstatus();
 }
 
@@ -152,9 +136,6 @@ function fjRangoTrabajador() {
     $("#cmbTrabajador").attr('disabled', false);
 
     $("#cmbCondicion").attr('disabled', true);
-
-    $("#ctxFechaInicio").attr('disabled', true);
-    $("#ctxFechaFinal").attr('disabled', true);
 }
 
 function fjRangoEstatus() {
@@ -162,23 +143,5 @@ function fjRangoEstatus() {
     $("#cmbTrabajador").attr('disabled', true);
 
     $("#radRangoEstatus").prop('checked', true);
-    $("#cmbCondicion").attr('disabled', false)
-    ;
-    $("#ctxFechaInicio").attr('disabled', true);
-    $("#ctxFechaFinal").attr('disabled', true);
+    $("#cmbCondicion").attr('disabled', false);
 }
-
-
-function fjRangoFecha() {
-    //$('input:radio[name=radRango]:checked').val();
-    // $("#radRangoEstatus").prop('checked', true);
-    $("#cmbTrabajador").attr('disabled', true);
-
-    $("#cmbCondicion").attr('disabled', true);
-
-    $("#radRangoFecha").prop('checked', true);
-    $("#ctxFechaInicio").attr('disabled', false);
-    $("#ctxFechaFinal").attr('disabled', false);
-}
-
-

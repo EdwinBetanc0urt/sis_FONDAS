@@ -6,32 +6,19 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	$liVista = "33";
 ?>
 
-<script type="text/javascript">
-    $(function () {
-
-	    $(".calendario").datepicker({
-			//viewMode: 'months',
-			//format: 'DD/MM', 
-			format: 'dd-mm-yyyy', 
-			//disabledHours: false,
-			language: "es"
-	    });
-    });
-</script>
-
 <div class="panel-heading">
-	<h3 class="panel-title"> 	
+	<h3 class="panel-title">
 		Reporte de Vacaciones
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestReporte">Reporte</a></li>
 	</ul>
 	<br>
 
-	<div class="tab-content">	
+	<div class="tab-content">
 
 		<div id="pestReporte" class="tab-pane fade in active">
 
@@ -43,7 +30,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 					</div>
 					<div class="panel-body">
 						<div class="row">
-								
+
 							<div class="form-group" >
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<label for="cmbOrden">Ordenar Por</label>
@@ -83,7 +70,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 					<div class="panel-heading">
 						<h3 class="panel-title">Rangos a Mostrar</h3>
 					</div>
-					<div class="panel-body">			
+					<div class="panel-body">
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -112,9 +99,8 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				    			</div><!-- /input-group -->
 				  			</div><!-- /.col-lg-6 -->
 						</div>
-
 						<br><br>
-						
+
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -140,9 +126,8 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				    			</div><!-- /input-group -->
 				  			</div><!-- /.col-lg-6 -->
 						</div>
-
 						<br><br>
-						
+
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -157,7 +142,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				    			<div class="input-group">
 				      				<label for="ctxFechaInicio" class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2"> Desde </label>
 				      				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-				      					<input type="text" id="ctxFechaInicio" name="ctxFechaInicio" maxlength="10" required class="form-control calendario">
+				      					<input type="date" id="ctxFechaInicio" name="ctxFechaInicio" maxlength="10" required class="form-control">
 				      				</div>
 				    			</div><!-- /input-group -->
 				  			</div><!-- /.col-lg-6 -->
@@ -166,14 +151,14 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				    			<div class="input-group">
 				      				<label for="ctxFechaFinal" class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2">Hasta</label>
 				      				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-				      					<input type="text" id="ctxFechaFinal" name="ctxFechaFinal" maxlength="10" required class="form-control calendario">
+				      					<input type="date" id="ctxFechaFinal" name="ctxFechaFinal" maxlength="10" required class="form-control">
 				      				</div>
 				    			</div><!-- /input-group -->
 				  			</div><!-- /.col-lg-6 -->
 						</div>
 
 						<br><br>
-						
+
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -201,7 +186,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 					</div>
 				</div>
 
-				<center>		
+				<center>
 					<?php
 						include_once("_botones.php");
 					?>
@@ -211,10 +196,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</div>
 </div>
 
-
 <?php
-
-
 
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
