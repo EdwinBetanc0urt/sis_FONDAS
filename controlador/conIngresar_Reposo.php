@@ -250,7 +250,7 @@ function ListaIngresar_Reposo() {
 						$Activo = "";
 					?>
 					<li class="<?= $Activo; ?> ">
-						<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+						<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
 							<?= $i; ?>
 						</a>
 					</li>

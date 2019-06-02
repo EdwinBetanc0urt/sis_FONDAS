@@ -88,7 +88,6 @@ function ListaRevisar_Reposos()
 
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 	$rstRecordSet = $objeto->fmListarIndex(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
-
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
 		?>
@@ -115,7 +114,9 @@ function ListaRevisar_Reposos()
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-
+							<th>
+								Operación
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -141,7 +142,7 @@ function ListaRevisar_Reposos()
 								<td> <?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_reposo"]; ?> </td>
 								<td><!--
 									<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idreposo"] ?>)">
 										Ver
@@ -160,40 +161,38 @@ function ListaRevisar_Reposos()
 					</tbody>
 				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
-
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					}
+					?>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
@@ -221,7 +220,6 @@ function ListaRepososRevisados()
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -236,12 +234,10 @@ function ListaRepososRevisados()
 	}
 
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
-
 	$rstRecordSet = $objeto->fmListarIndexRevisado(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
-		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
@@ -266,7 +262,9 @@ function ListaRepososRevisados()
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-
+							<th>
+								Operación
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -284,9 +282,7 @@ function ListaRepososRevisados()
 								|<?= $arrRegistro[$objeto->atrId]; ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
 								|<?= ucwords($arrRegistro["idmotivo_reposo"]); ?>
-								|<?= ucwords($arrRegistro["motivo_reposo"]); ?>
-								|<?= ucwords($arrRegistro["idtipo_ausencia"]); ?>
-								|<?= ucwords($arrRegistro["Tipo_Reposo"]); ?>' >
+								|<?= ucwords($arrRegistro["motivo_reposo"]); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
@@ -294,7 +290,7 @@ function ListaRepososRevisados()
 								<td> <?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_reposo"]; ?> </td>
 							</tr>
 							<?php
 						}
@@ -302,40 +298,38 @@ function ListaRepososRevisados()
 					</tbody>
 				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
-
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					}
+					?>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
@@ -363,7 +357,6 @@ function ListaRepososEnCurso()
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -378,9 +371,7 @@ function ListaRepososEnCurso()
 	}
 
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
-
 	$rstRecordSet = $objeto->fmListarIndexRechazado(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
-
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
 		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
@@ -408,7 +399,9 @@ function ListaRepososEnCurso()
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-
+							<th>
+								Operación
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -434,7 +427,7 @@ function ListaRepososEnCurso()
 								<td> <?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_reposo"]; ?> </td>
 							</tr>
 							<?php
 						}
@@ -516,7 +509,6 @@ function ListaRepososCulminado()
 
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
 	$rstRecordSet = $objeto->fmListarIndexRechazado(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
-
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
 		?>
@@ -543,6 +535,9 @@ function ListaRepososCulminado()
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
+							<th>
+								Operación
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -568,7 +563,7 @@ function ListaRepososCulminado()
 								<td> <?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_reposo"]; ?> </td>
 							</tr>
 							<?php
 						}
@@ -636,7 +631,6 @@ function ListaRepososRechazados()
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -651,9 +645,7 @@ function ListaRepososRechazados()
 	}
 
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
-
 	$rstRecordSet = $objeto->fmListarIndexRechazado(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
-
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
 		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
@@ -681,7 +673,9 @@ function ListaRepososRechazados()
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-
+							<th>
+								Operación
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -707,7 +701,7 @@ function ListaRepososRechazados()
 								<td> <?= $arrRegistro["idmotivo_reposo"] . " - " . $arrRegistro["motivo_reposo"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_reposo"]; ?> </td>
 							</tr>
 							<?php
 						}
@@ -715,36 +709,36 @@ function ListaRepososRechazados()
 					</tbody>
 				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
