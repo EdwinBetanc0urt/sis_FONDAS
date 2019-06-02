@@ -7,39 +7,14 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 ?>
 
 <div class="panel-heading">
-	<h3 class="panel-title"> 
-		Supervision de Asistencias del Departamento 
+	<h3 class="panel-title">
+		Supervision de Asistencias del Departamento
 	</h3>
 	<br>
 
-	<div class="row">
-		<div class="form-group">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<label for="ctxDescripcion">Trabajador</label>
-				<input type="text" id="ctxDescripcion" name="ctxDescripcion"
-					class="valida_alfabetico form-control" maxlength="45" required
-					value="<?php
-					if(isset($_GET['getDescripcion']))
-						echo $_GET['getDescripcion'];
-					?>" placeholder="Ingrese la Descripción" />
-			</div>
-			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-				<label for="ctxFechaInicio">Desde</label>
-				<input id="ctxFechaInicio" class="valida_alfabetico form-control"
-					maxlength="45" name="ctxFechaInicio" type="date" required
-					placeholder="Ingrese la Descripción" />
-			</div>
-			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-				<label for="ctxFechaFin">Hasta</label>
-				<input id="ctxFechaFin" class="valida_alfabetico form-control"
-					maxlength="45" name="ctxFechaFin" type="date" required
-					placeholder="Ingrese la Descripción" />
-			</div>
-		</div>
-	</div>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active">
 			<a data-toggle="tab" href="#pestAsistencia">Asistencia</a>
@@ -60,23 +35,23 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-search"></span>
 								</span>
-								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
+								<input type="search" id="ctxBusqueda" name="ctxBusqueda"
 								oninput="fjMostrarLista('<?= $vsVista ?>');"
-								onkeyup="fjMostrarLista('<?= $vsVista ?>');" 
-								class="valida_buscar form-control" 
+								onkeyup="fjMostrarLista('<?= $vsVista ?>');"
+								class="valida_buscar form-control"
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
-							</div>	
+							</div>
 						</div>
-	
+
 						<div class="col-xs-2">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</span>
-								<input type="number" id="numItems" name="numItems" maxlength="4" 
+								<input type="number" id="numItems" name="numItems" maxlength="4"
 								value="10" onkeyup="fjMostrarLista('<?= $vsVista ?>');" required
 								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
-							</div>	
+							</div>
 						</div>
 					</div>
 				</div>
@@ -89,7 +64,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
 				<input type='hidden' name='subPagina' id='subPagina' />
-								
+
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>
@@ -103,12 +78,12 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-search"></span>
 								</span>
-								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
+								<input type="search" id="ctxBusqueda" name="ctxBusqueda"
 								oninput="fjMostrarLista('formListaInasistencia', '', '', '', 'listaInasistente');"
-								onkeyup="fjMostrarLista('formListaInasistencia', '', '', '', 'listaInasistente');" 
-								class="valida_buscar form-control" 
+								onkeyup="fjMostrarLista('formListaInasistencia', '', '', '', 'listaInasistente');"
+								class="valida_buscar form-control"
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
-							</div>	
+							</div>
 						</div>
 
 						<div class="col-xs-2">
@@ -116,10 +91,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</span>
-								<input type="number" id="numItems" name="numItems" maxlength="4" 
+								<input type="number" id="numItems" name="numItems" maxlength="4"
 								value="10" onkeyup="fjMostrarLista('formListaInasistencia', '', '', '', 'listaInasistente');" required
 								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
-							</div>	
+							</div>
 						</div>
 					</div>
 				</div>
@@ -153,9 +128,9 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
 							<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9">
-								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
-									if(isset($_GET["getId"])) 
-										echo $_GET["getId"]; ?>" />	
+								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php
+									if(isset($_GET["getId"]))
+										echo $_GET["getId"]; ?>" />
 								<label for="ctxNombre">* Nombre</label>
 								<input id="ctxNombre" class="valida_alfabetico form-control" maxlength="45" name="ctxNombre" type="text" size="20" required value="<?php
 									if(isset($_GET['getNombre']))

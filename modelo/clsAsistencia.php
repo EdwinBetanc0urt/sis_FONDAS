@@ -85,14 +85,11 @@ class Asistencia extends clsConexion {
     {
         $fecha = parent::faFechaFormato($psBuscar);
         $sql = "SELECT
-                A.*, S.observacion_general, P.*
+                A.*, P.*
             FROM $this->atrTabla  AS A
 
             INNER JOIN vpersona AS P
                 ON P.idtrabajador = A.idtrabajador
-
-            LEFT JOIN tajuste_asistencia AS S
-                ON A.idmarcaje_asistencia = S.idmarcaje_asistencia
 
             WHERE
                 P.idtrabajador = '{$_SESSION["idtrabajador"]}' "; //selecciona todo de la tabla

@@ -82,7 +82,7 @@ function ListaAsistencia() {
 
 	//si existe el elemento oculto hidOrden le indica al modelo por cual atributo listara
 	if (isset($_POST["setOrden"])) {
-		$objeto->atrOrden =  htmlentities(trim (strtolower($_POST["setOrden"])));
+		$objeto->atrOrden = htmlentities(trim(strtolower($_POST["setOrden"])));
 		//tambien idica de la forma en que listara ASC o DESC
 		$objeto->atrTipoOrden = isset($_POST['setTipoOrden']) ? $_POST['setTipoOrden'] : "ASC";
 	}
@@ -132,7 +132,7 @@ function ListaAsistencia() {
 						<td> <?= $arrRegistro["salida1"]; ?> </td>
 						<td> <?= $arrRegistro["entrada2"]; ?> </td>
 						<td> <?= $arrRegistro["salida2"]; ?> </td>
-						<td> <?= $arrRegistro["observacion_general"]; ?> </td>
+						<td> <?= $arrRegistro["observacion"]; ?> </td>
 					</tr>
 					<?php
 				}

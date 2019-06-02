@@ -32,33 +32,4 @@ function fjSeleccionarRegistro(pvDOM) {
     // fjComboGeneral("Estado");
 
     // $("#operacion").val(arrFilas[0].trim());
-
-    if(arrFilas[1].trim() === "activo") {
-		if($("#Registrar"))
-			$("#Registrar").css("display", "none");
-
-		if($("#Modificar"))
-			$("#Modificar").css("display", "");
-
-		if($("#Borrar"))
-			$("#Borrar").css("display", "");
-
-		if($("#Restaurar"))
-			$("#Restaurar").css("display", "none");
-    }
-    //anulado o cerrado
-    else {
-		if($("#Registrar"))
-			$("#Registrar").css("display", "none");
-
-		if($("#Modificar"))
-			$("#Modificar").css("display", "none");
-
-		if($("#Borrar"))
-			$("#Borrar").css("display", "none");
-
-		if($("#Restaurar"))
-			$("#Restaurar").css("display", "");
-    }
-    // $("#VentanaModal").modal('show'); //para boostrap v3.3.7
 }
