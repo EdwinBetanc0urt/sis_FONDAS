@@ -1,7 +1,7 @@
 <?php
+require_once("../modelo/clsConexion.php");
    require_once("fpdf.php");
    require_once("Query.php");
-  require_once("../modelo/clsConexion.php");
 
   class clsFpdf extends FPDF {
 	   var $widths;

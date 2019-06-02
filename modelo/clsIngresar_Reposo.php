@@ -121,8 +121,7 @@ class Ingresar_Reposo extends clsConexion {
 	 */
 	function fmListarIndex($psBuscar)
 	{
-		$sql = "
-			SELECT Perm.*, P.*, M.nombre AS motivo_reposo
+		$sql = "SELECT Perm.*, P.*, M.nombre AS motivo_reposo
 			FROM $this->atrTabla AS Perm
 
 			INNER JOIN vpersona AS P
@@ -133,7 +132,8 @@ class Ingresar_Reposo extends clsConexion {
 
 			WHERE
 				Perm.estatus = 'activo' AND
-				(Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
+				(Perm.{$this->atrId} LIKE '%{$psBuscar}%')
+				AND Perm.idtrabajador = '{$_SESSION["idtrabajador"]}'"; //selecciona todo de la tabla
 
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";

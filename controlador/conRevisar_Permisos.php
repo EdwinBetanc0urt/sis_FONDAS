@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $gsClase = "Revisar_Permisos";
 
@@ -18,51 +18,47 @@ switch($_POST['operacion']) {
 	case "RechazarPermisos":
 		fcRechazar();
 		break;
-
 	case "ListaView":
 		ListaRevisar_Permisos();
 		break;
-
 	case "ListaViewRevisado":
 		ListapPermisosRevisados();
 		break;
-
 	case "ListaViewEnCurso":
 		ListaPermisosEnCurso();
 		break;
 	case "ListaViewCulminado":
-		ListaVacacionesCulminado();
+		ListaPermisosCulminado();
 		break;
 	case "ListaViewRechazado":
 		ListaPermisosRechazados();
 		break;
 }
 
-
-function fcAprobar() {
+function fcAprobar()
+{
 	global $gsClase;
-	$objVacaciones = new Revisar_Permisos();
-	$objVacaciones->setFormulario($_POST);
-	//var_dump($objVacaciones->Aprobar());/*
-	if ($objVacaciones->Aprobar()) //si el fmInsertar es verdadero, realiza las sentencias
+	$objPermisos = new Revisar_Permisos();
+	$objPermisos->setFormulario($_POST);
+	if ($objPermisos->Aprobar()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}&msjAlerta=aprobado"); //envía a la vista, con mensaje de la consulta
 	else
 		header("Location: ../?form={$gsClase}&msjAlerta=noaprobado"); //envía a la vista, con */
 }
 
-function fcRechazar() {
+function fcRechazar()
+{
 	global $gsClase;
-	$objVacaciones = new Revisar_Permisos();
-	$objVacaciones->setFormulario($_POST);
-	if ($objVacaciones->Rechazar()) //si el fmInsertar es verdadero, realiza las sentencias
+	$objPermisos = new Revisar_Permisos();
+	$objPermisos->setFormulario($_POST);
+	if ($objPermisos->Rechazar()) //si el fmInsertar es verdadero, realiza las sentencias
 		header("Location: ../?form={$gsClase}&msjAlerta=rechazado"); //envía a la vista, con mensaje de la consulta
 	else
-		header("Location: ../?form={$gsClase}&msjAlerta=norechazado"); //envía a la vista, con 
+		header("Location: ../?form={$gsClase}&msjAlerta=norechazado"); //envía a la vista, con
 }
 
-
-
-function ListaRevisar_Permisos() {
+function ListaRevisar_Permisos()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Revisar_Permisos; //instancia la clase
 
@@ -77,7 +73,7 @@ function ListaRevisar_Permisos() {
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-	
+
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -122,11 +118,11 @@ function ListaRevisar_Permisos() {
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php
 						while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 							$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
 							$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
@@ -139,11 +135,8 @@ function ListaRevisar_Permisos() {
 								|<?= $arrRegistro[$objeto->atrEstatus]; ?>
 								|<?= $arrRegistro[$objeto->atrId]; ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-								|<?= ucwords($arrRegistro["descripcion"]); ?>
-								|<?= ucwords($arrRegistro["idmotivo"]); ?>
-								|<?= ucwords($arrRegistro["Motivo"]); ?>
-								|<?= ucwords($arrRegistro["idtipo_ausencia"]); ?>
-								|<?= ucwords($arrRegistro["Tipo_Permiso"]); ?>' >
+								|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
+								|<?= ucwords($arrRegistro["motivo_permiso"]); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
@@ -151,8 +144,9 @@ function ListaRevisar_Permisos() {
 								<td> <?= $arrRegistro["idmotivo_permiso"] . " - " . $arrRegistro["motivo_permiso"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
-								<td><!--
+								<td> <?= $arrRegistro["condicion_permiso"]; ?> </td>
+								<td>
+									<!--
 									<button type="button" class="btn" onclick="fjVerVacacion(<?= $arrRegistro["idpermiso"] ?>)">
 										Ver
 									</button>-->
@@ -168,46 +162,45 @@ function ListaRevisar_Permisos() {
 						}
 						?>
 					</tbody>
-				</table> 
+				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}
@@ -215,9 +208,8 @@ function ListaRevisar_Permisos() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
-function ListapPermisosRevisados() {
+function ListapPermisosRevisados()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Revisar_Permisos; //instancia la clase
 
@@ -232,7 +224,6 @@ function ListapPermisosRevisados() {
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-	
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -252,7 +243,6 @@ function ListapPermisosRevisados() {
 
 	header("Content-Type: text/html; charset=utf-8");
 	if ($rstRecordSet) {
-		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
@@ -277,11 +267,11 @@ function ListapPermisosRevisados() {
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php
 						while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 							$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
 							$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
@@ -294,11 +284,8 @@ function ListapPermisosRevisados() {
 								|<?= $arrRegistro[$objeto->atrEstatus]; ?>
 								|<?= $arrRegistro[$objeto->atrId]; ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-								|<?= ucwords($arrRegistro["descripcion"]); ?>
-								|<?= ucwords($arrRegistro["idmotivo"]); ?>
-								|<?= ucwords($arrRegistro["Motivo"]); ?>
-								|<?= ucwords($arrRegistro["idtipo_ausencia"]); ?>
-								|<?= ucwords($arrRegistro["Tipo_Permiso"]); ?>' >
+								|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
+								|<?= ucwords($arrRegistro["motivo_permiso"]); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
@@ -306,52 +293,51 @@ function ListapPermisosRevisados() {
 								<td> <?= $arrRegistro["idmotivo_permiso"] . " - " . $arrRegistro["motivo_permiso"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_permiso"]; ?> </td>
 							</tr>
 							<?php
 						}
 						?>
 					</tbody>
-				</table> 
+				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}
@@ -359,9 +345,8 @@ function ListapPermisosRevisados() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
-function ListaPermisosEnCurso() {
+function ListaPermisosEnCurso()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Revisar_Permisos; //instancia la clase
 
@@ -376,7 +361,7 @@ function ListaPermisosEnCurso() {
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-	
+
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -421,11 +406,11 @@ function ListaPermisosEnCurso() {
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php
 						while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 							$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
 							$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_fin"], "amd", "dma");
@@ -438,11 +423,8 @@ function ListaPermisosEnCurso() {
 								|<?= $arrRegistro[$objeto->atrEstatus]; ?>
 								|<?= $arrRegistro[$objeto->atrId]; ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-								|<?= ucwords($arrRegistro["descripcion"]); ?>
-								|<?= ucwords($arrRegistro["idmotivo"]); ?>
-								|<?= ucwords($arrRegistro["Motivo"]); ?>
-								|<?= ucwords($arrRegistro["idtipo_ausencia"]); ?>
-								|<?= ucwords($arrRegistro["Tipo_Permiso"]); ?>' >
+								|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
+								|<?= ucwords($arrRegistro["motivo_permiso"]); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
@@ -450,52 +432,51 @@ function ListaPermisosEnCurso() {
 								<td> <?= $arrRegistro["idmotivo_permiso"] . " - " . $arrRegistro["motivo_permiso"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_permiso"]; ?> </td>
 							</tr>
 							<?php
 						}
 						?>
 					</tbody>
-				</table> 
+				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}
@@ -503,9 +484,8 @@ function ListaPermisosEnCurso() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
-function ListaVacacionesCulminado() {
+function ListaPermisosCulminado()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Revisar_Permisos; //instancia la clase
 
@@ -520,7 +500,7 @@ function ListaVacacionesCulminado() {
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-	
+
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -565,11 +545,11 @@ function ListaVacacionesCulminado() {
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php
 						while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 							$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
 							$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
@@ -582,11 +562,8 @@ function ListaVacacionesCulminado() {
 								|<?= $arrRegistro[$objeto->atrEstatus]; ?>
 								|<?= $arrRegistro[$objeto->atrId]; ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-								|<?= ucwords($arrRegistro["descripcion"]); ?>
-								|<?= ucwords($arrRegistro["idmotivo"]); ?>
-								|<?= ucwords($arrRegistro["Motivo"]); ?>
-								|<?= ucwords($arrRegistro["idtipo_ausencia"]); ?>
-								|<?= ucwords($arrRegistro["Tipo_Permiso"]); ?>' >
+								|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
+								|<?= ucwords($arrRegistro["motivo_permiso"]); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
@@ -594,52 +571,51 @@ function ListaVacacionesCulminado() {
 								<td> <?= $arrRegistro["idmotivo_permiso"] . " - " . $arrRegistro["motivo_permiso"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_permiso"]; ?> </td>
 							</tr>
 							<?php
 						}
 						?>
 					</tbody>
-				</table> 
+				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}
@@ -647,9 +623,8 @@ function ListaVacacionesCulminado() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
-function ListaPermisosRechazados() {
+function ListaPermisosRechazados()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Revisar_Permisos; //instancia la clase
 
@@ -664,7 +639,7 @@ function ListaPermisosRechazados() {
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-	
+
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -709,11 +684,11 @@ function ListaPermisosRechazados() {
 							<th datos_orden_metodo="asc" datos_orden="<?= $objeto->atrEstatus; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", "<?= $vpPaginaActual; ?>", "<?= $objeto->atrEstatus; ?>")' >
 								Estatus  <span class='glyphicon glyphicon-sort'></span>
 							</th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php
 						while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 							$vsHoraI = date("h:i:s A", strtotime($arrRegistro["fecha_inicio"]));
 							$vsFechaI = $objeto->faFechaFormato($arrRegistro["fecha_inicio"], "amd", "dma");
@@ -726,11 +701,8 @@ function ListaPermisosRechazados() {
 								|<?= $arrRegistro[$objeto->atrEstatus]; ?>
 								|<?= $arrRegistro[$objeto->atrId]; ?>
 								|<?= ucwords($arrRegistro[$objeto->atrNombre]); ?>
-								|<?= ucwords($arrRegistro["descripcion"]); ?>
-								|<?= ucwords($arrRegistro["idmotivo"]); ?>
-								|<?= ucwords($arrRegistro["Motivo"]); ?>
-								|<?= ucwords($arrRegistro["idtipo_ausencia"]); ?>
-								|<?= ucwords($arrRegistro["Tipo_Permiso"]); ?>' >
+								|<?= ucwords($arrRegistro["idmotivo_permiso"]); ?>
+								|<?= ucwords($arrRegistro["motivo_permiso"]); ?>' >
 									<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
 
 								<td> <?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] . ", " . $arrRegistro["nombre"] . " " . $arrRegistro["apellido"]; ?> </td>
@@ -738,60 +710,56 @@ function ListaPermisosRechazados() {
 								<td> <?= $arrRegistro["idmotivo_permiso"] . " - " . $arrRegistro["motivo_permiso"]; ?> </td>
 								<td> <?= $vsFechaI . " " . $vsHoraI; ?> </td>
 								<td> <?= $vsFechaF . " " . $vsHoraF; ?> </td>
-								<td> <?= $arrRegistro["condicion"]; ?> </td>
+								<td> <?= $arrRegistro["condicion_permiso"]; ?> </td>
 							</tr>
 							<?php
 						}
 						?>
 					</tbody>
-				</table> 
+				</table>
 			</div>
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<li>
-							<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&laquo;</span>
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					<li>
+						<a aria-label="Previous" rel="1" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<?php
+					for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
+						if ($i == $vpPaginaActual)
+							$Activo = "active";
+						else
+							$Activo = "";
+						?>
+						<li class="<?= $Activo; ?> ">
+							<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+								<?= $i; ?>
 							</a>
 						</li>
 						<?php
-						for ($i = 1; $i <= $objeto->atrPaginaFinal; $i++)  {
-							if ($i == $vpPaginaActual)
-								$Activo = "active";
-							else
-								$Activo = "";
-							?>
-							<li class="<?= $Activo; ?> ">
-								<a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-									<?= $i; ?>
-								</a>
-							</li>
-							<?php
-						}
-						?>
+					}
+					?>
 
-						<li>
-							<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+					<li>
+						<a aria-label="Next" rel="<?= ($objeto->atrPaginaFinal); ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
 } //cierre de la función
-
-
 
 ?>
-

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $gsClase = "Jornada";
 
@@ -24,7 +24,7 @@ switch($_POST['operacion']) {
 	case "Modificar":
 		cambiar();
 		break;
-		
+
 	case "Borrar":
 		borrar();
 		break;
@@ -111,16 +111,16 @@ function Combo() {
     if ($rstRecordSet) {
         $arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet);
         do {
-            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId])) 
+            if(intval($pvCodigo) == intval($arrRegistro[$objeto->atrId]))
                 $lsSeleccionado = "selected='selected'";
             else
                 $lsSeleccionado = "";
             ?>
-            <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> > 
-                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?> 
+            <option value="<?=$arrRegistro[$objeto->atrId] ?>" <?= $lsSeleccionado; ?> >
+                <?=$arrRegistro[$objeto->atrId]; ?> - <?= ucwords($arrRegistro["nombre"]); ?>
             </option>
             <?php
-        } 
+        }
         while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet));
     }
     //si no existe una consulta
@@ -143,10 +143,10 @@ function ListaDias(){
 	if (isset($_POST["numId"]) AND $_POST["numId"]) {
 		$rstDiaSemana = $objJornada->ListarDiasLaborados($_POST["numId"]);
 		if ($rstDiaSemana) {
-			$i = 0;	
+			$i = 0;
 			while ($arrDiaSemana = $objJornada->getConsultaAsociativo($rstDiaSemana)) {
 				$arrDiasLaborados[$i] = $arrDiaSemana["iddia_semana"];
-				$i++; 			
+				$i++;
 			}
 			$objJornada->faLiberarConsulta($rstDiaSemana);
 			unset($arrDiaSemana);
@@ -174,9 +174,8 @@ function ListaDias(){
 	}
 }
 
-
-
-function ListaJornada() {
+function ListaJornada()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Jornada; //instancia la clase
 
@@ -191,7 +190,6 @@ function ListaJornada() {
 	$objeto->atrItems = $vpItems; //se le asigna al objeto cuantos items tomara
 
 	//por defecto muesta la primera pagina del resultado
-	
 	if (isset($_POST['subPagina']) AND $_POST['subPagina'] > 1) {
 		$vpPaginaActual = htmlentities(trim(intval($_POST['subPagina']))) ;
 	}
@@ -206,13 +204,10 @@ function ListaJornada() {
 	}
 
 	$objeto->atrPaginaInicio = ($vpPaginaActual -1) * $objeto->atrItems;
-
 	$rstRecordSet = $objeto->fmListarIndex(htmlentities(addslashes(trim(strtolower($_POST['setBusqueda'])))));
 
-	//header("Content-Type: text/html; charset=utf-8");
 	header("Content-Type: text/html; charset=UTF-8");
 	if ($rstRecordSet) {
-		//$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
 		?>
 			<div class='table-responsive'>
 				<br><br>
@@ -232,7 +227,7 @@ function ListaJornada() {
 						</tr>
 					</thead>
 					<tbody>
-					<?php 
+					<?php
 					while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)) {
 						?>
 						<tr onclick='fjSeleccionarRegistro(this);' data-toggle='tooltip' data-placement='top' title='Doble clic para detallar los datos y realizar alguna operación'
@@ -255,7 +250,7 @@ function ListaJornada() {
 					}
 					?>
 					</tbody>
-				</table> 
+				</table>
 			</div>
 				<nav aria-label="Page navigation">
 					<ul class="pagination">
@@ -290,11 +285,10 @@ function ListaJornada() {
 		<?php
 		$objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 	}
-
 	else {
 		?>
 		<br />
-		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b> 
+		<b>¡ No se ha encontrado ningún elemento, <a onclick="fjNuevoRegistro();" data-toggle='tooltip' data-placement='top' title="Click aqui para hacer un nuevo registro" >por favor haga un nuevo registro!</a></b>
 		<br /><br />
 		<?php
 	}
@@ -302,7 +296,4 @@ function ListaJornada() {
 	unset($objeto); //destruye el objeto
 } //cierre de la función
 
-
-
 ?>
-
