@@ -53,8 +53,8 @@ function enviar(pvValor = "") {
     var vsFechaI = document.getElementById("ctxFechaInicio");
     var vsFechaF = document.getElementById("ctxFechaFinal");
 
-    if(document.getElementById("radRangoEstatus").checked == true) {
-        if(vsEstatus.value.trim() == "") {
+    if (document.getElementById("radRangoEstatus").checked == true) {
+        if (vsEstatus.value.trim() == "") {
             vbComprobar = false;
             swal({
                 title: '¡Atención!',
@@ -69,8 +69,8 @@ function enviar(pvValor = "") {
         }
     }
 
-    if(document.getElementById("radRangoTrabajador").checked == true) {
-        if(viTrabajador.value.trim() == "") {
+    if (document.getElementById("radRangoTrabajador").checked == true) {
+        if (viTrabajador.value.trim() == "") {
             vbComprobar = false;
             swal({
                 title: '¡Atención!',
@@ -85,7 +85,7 @@ function enviar(pvValor = "") {
         }
     }
 
-    if(vsFechaI.value.trim() == "") {
+    if (vsFechaI.value.trim() == "") {
         vbComprobar = false;
         swal({
             title: '¡Atención!',
@@ -98,7 +98,7 @@ function enviar(pvValor = "") {
         });
         return;
     }
-    if(vsFechaF.value.trim() == "") {
+    if (vsFechaF.value.trim() == "") {
         vbComprobar = false;
         swal({
             title: '¡Atención!',
@@ -112,10 +112,8 @@ function enviar(pvValor = "") {
         return;
     }
 
-	document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
+    document.getElementById("operacion").value = pvValor; //valor.vista.Opcion del hidden
     arrFormulario.submit(); //Envía el formulario
-    // alert(vsModulo);
-    // alert(lsVista);
 }
 
 //FUNCIONES PARA LAS VISTAS QUE TIENEN SOLO ID, NONBRE, ESTATUS

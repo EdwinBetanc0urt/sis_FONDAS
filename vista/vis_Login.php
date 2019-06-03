@@ -44,7 +44,7 @@
 
 		<!--centro-->
 		<div class="row">
-			<div	class="col-3 right	">
+			<div class="col-3 right	">
 				<div class="row content">
 					<div class="w3-container" style="background:url('public/img/hhh.jpg');">
 						<div class="w3-card-4" >

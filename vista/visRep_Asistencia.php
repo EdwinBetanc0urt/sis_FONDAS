@@ -8,7 +8,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 <div class="panel-heading">
 	<h3 class="panel-title">
-		Reporte de Vacaciones
+		Reporte de Permiso
 	</h3>
 </div>
 
@@ -20,7 +20,8 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 	<div class="tab-content">
 		<div id="pestReporte" class="tab-pane fade in active">
-			<form name="form<?= $vsVista; ?>" id="form<?= $vsVista; ?>" action="pdf/RepVacaciones.php" role="form" method="POST" target="_blank" >
+			<form name="form<?= $vsVista; ?>" id="form<?= $vsVista; ?>" method="POST"
+				action="pdf/repAsistencia.php" role="form" target="_blank" >
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">Metodo de Ordenado</h3>
@@ -68,6 +69,35 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 						<h3 class="panel-title">Rangos a Mostrar</h3>
 					</div>
 					<div class="panel-body">
+
+						<div class="form-group">
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				    			<div class="input-group">
+									<label for="ctxFechaInicio" class="control-label">
+										Fechas a Seleccionar
+									</label>
+				    			</div><!-- /input-group -->
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				    			<div class="input-group">
+				      				<label for="ctxFechaInicio" class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2"> Desde </label>
+				      				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+				      					<input type="date" id="ctxFechaInicio" name="ctxFechaInicio" maxlength="10" required class="form-control">
+				      				</div>
+				    			</div><!-- /input-group -->
+				  			</div><!-- /.col-lg-6 -->
+
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				    			<div class="input-group">
+				      				<label for="ctxFechaFinal" class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2">Hasta</label>
+				      				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+				      					<input type="date" id="ctxFechaFinal" name="ctxFechaFinal" maxlength="10" required class="form-control">
+				      				</div>
+				    			</div><!-- /input-group -->
+				  			</div><!-- /.col-lg-6 -->
+						</div>
+						<br><br>
+
 						<div class="form-group">
 							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				    			<div class="input-group">
@@ -96,65 +126,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				    			</div><!-- /input-group -->
 				  			</div><!-- /.col-lg-6 -->
 						</div>
-
-						<br><br>
-
-						<div class="form-group">
-							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				    			<div class="input-group">
-				      				<span class="input-group-addon">
-				        				<input type="radio" name="radRango" id="radRangoEstatus" value="condicion">
-				      				</span>
-				      				<input type="text" class="form-control" value="Rango por Estatus" readonly="readonly">
-				    			</div><!-- /input-group -->
-				  			</div><!-- /.col-lg-6 -->
-
-							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-								<div class="input-group">
-				    				<div class="col-xs-4">
-										<label for="cmbCondicion" class="control-label">Desde</label>
-									</div>
-									<div class="col-xs-8">
-										<select name='cmbCondicion' id='cmbCondicion' class="form-control" style="width: 100%">
-											<option value="aprobado" selected="selected"> Aprobado </option>
-											<option value="rechazado"> Rechazado </option>
-										</select>
-				    				</div>
-				    			</div><!-- /input-group -->
-				  			</div><!-- /.col-lg-6 -->
-						</div>
-
-						<br><br>
-
-						<div class="form-group">
-							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				    			<div class="input-group">
-				      				<span class="input-group-addon">
-				        				<input type="radio" name="radRango" id="radRangoFecha" value="fecha">
-				      				</span>
-				      				<input type="text" class="form-control" value="Rango por Fechas" readonly="readonly">
-				    			</div><!-- /input-group -->
-				  			</div><!-- /.col-lg-6 -->
-
-							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				    			<div class="input-group">
-				      				<label for="ctxFechaInicio" class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2"> Desde </label>
-				      				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-				      					<input type="text" id="ctxFechaInicio" name="ctxFechaInicio" maxlength="10" required class="form-control calendario">
-				      				</div>
-				    			</div><!-- /input-group -->
-				  			</div><!-- /.col-lg-6 -->
-
-							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				    			<div class="input-group">
-				      				<label for="ctxFechaFinal" class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2">Hasta</label>
-				      				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-				      					<input type="text" id="ctxFechaFinal" name="ctxFechaFinal" maxlength="10" required class="form-control calendario">
-				      				</div>
-				    			</div><!-- /input-group -->
-				  			</div><!-- /.col-lg-6 -->
-						</div>
-
 						<br><br>
 
 						<div class="form-group">
@@ -195,11 +166,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</div>
 </div>
 
-
 <?php
-
-
-
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
 
 //no esta logueado y trata de entrar sin autenticar

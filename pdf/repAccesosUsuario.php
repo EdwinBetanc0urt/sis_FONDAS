@@ -74,7 +74,7 @@ unset($objeto); //destruye el objeto
 
 
 // Write some HTML code:
-$mpdf->WriteHTML( $htmlBody );
+$mpdf->WriteHTML($htmlBody);
 
 // Output a PDF file directly to the browser
 $mpdf->Output();
