@@ -91,8 +91,7 @@ class CambiarClave extends clsConexion {
 			parent::faLiberarConsulta($tupla);
 			return $arrConsulta["respuesta"]; //envía el arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
 
@@ -108,9 +107,7 @@ class CambiarClave extends clsConexion {
 			$this->ConsultarRespuestas($idUsuario, $this->atrFormulario["hidPregunta2"])) {
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 
@@ -145,8 +142,8 @@ class CambiarClave extends clsConexion {
 		if (isset($_SESSION["id_usuario"])) {
 			$usuario = $_SESSION["id_usuario"];
 		}
-		elseif (isset($this->atrFormulario["idu"])) {
-			$usuario = $this->atrFormulario["idu"];
+		elseif (isset($_SESSION["id_usuario"])) {
+			$usuario = $_SESSION["id_usuario"];
 		}
 		elseif (isset($this->atrFormulario["ctxUsuario"])) {
 			$usuario = $this->getIdUsuario($this->atrFormulario["ctxUsuario"]);
@@ -203,7 +200,7 @@ class CambiarClave extends clsConexion {
 				ON P.idpregunta = R.idpregunta
 
 			WHERE
-				U.id_usuario = '{$this->atrFormulario["idu"]}'
+				U.id_usuario = '{$_SESSION["id_usuario"]}'
 
 			ORDER BY
 				P.idpregunta

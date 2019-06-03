@@ -63,7 +63,7 @@ function enviar(pvValor) {
 
 	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)
 	if (vbComprobar) {
-		$("#formCambiarClave #operacion").val("CambiarClave"); //valor.vista.Opcion del hidden
+		$("#operacion").val("CambiarClave"); //valor.vista.Opcion del hidden
 		//Envía el formulario
 		$(arrFormulario).submit(); //Envía el formulario
 	}
