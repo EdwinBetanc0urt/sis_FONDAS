@@ -10,6 +10,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 	$vsVista = "Cambiar_Clave";
 	$liVista = "27";
 ?>
+<link rel="stylesheet" type="text/css" href="public/css/clave_items.css">
 
 <div class="panel-heading">
 	<h3 class="panel-title">
@@ -31,13 +32,9 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 
 					<div class="form-group ui-front">
 						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-							<label for="cmbPregunta1">* Pregunta 1</label>
-							<select id='cmbPregunta1' name='cmbPregunta1' data-toggle="tooltip"
-								class="dinamico form-control select2" data-placement="right"
-								title="" size="1" style="width: 100%;">
-								<option value="">Selecciona Uno...</option>
-							</select>
-							<input id="hidPregunta1" type="hidden" />
+							<label for="textPregunta1">* Pregunta 1</label>
+							<div id="textPregunta1"></div>
+							<input id="hidPregunta1" name="hidPregunta1" type="text" />
 						</div>
 
 						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -49,13 +46,9 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 						</div>
 
 						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-							<label for="cmbPregunta2">* Pregunta 2</label>
-							<select id='cmbPregunta2' name='cmbPregunta2' data-toggle="tooltip"
-								class="dinamico form-control select2" data-placement="right"
-								title="" size="1" style="width: 100%;">
-								<option value="">Selecciona Uno...</option>
-							</select>
-							<input id="hidPregunta2" type="hidden" />
+							<label for="textPregunta2">* Pregunta 2</label>
+							<div id="textPregunta2"></div>
+							<input id="hidPregunta2" name="hidPregunta2" type="text" />
 						</div>
 
 						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -68,22 +61,40 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 
 						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<label for="pswClave">* Ingresar Clave Nueva</label>
-							<input type="password" id="pswClave" name="pswClave" required
-								class="form-control" maxlength="45" placeholder="Ingrese la Clave"
-								data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+							<input id="pswClave" name="pswClave" type="password" required
+								maxlength="45" class="form-control valida_clave new-password"
+								placeholder="Ingrese la Clave" data-toggle="tooltip"
+								data-placement="right" title="Campo Obligatorio" />
+							<div class="divItemsClave">
+								<p id="claveMinuscula" class="invalido">
+									Al menos <strong>1 letra en minúscula (a-z)</strong>
+								</p>
+								<p id="claveMayuscula" class="invalido">
+									Al menos <strong>1 letra en MAYUSCULA(A-Z)</strong>
+								</p>
+								<p id="claveNumero" class="invalido">
+									Al menos <strong>1 numero (0-9)</strong>
+								</p>
+								<p id="claveEspecial" class="invalido">
+									Al menos <strong>1 carácter especial (_.-+*$)</strong>
+								</p>
+								<p id="claveLongitud" class="invalido">
+									Longitud min. de <strong>8 caracteres</strong>
+								</p>
+							</div>
 						</div>
 
 						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<label for="pswClave2">* Confirmar Clave Nueva</label>
-							<input type="password"id="pswClave2" name="pswClave2" required
-								class="form-control" maxlength="45" placeholder="Confirme la clave"
-								data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
+							<input id="pswClave2" type="password" required
+								maxlength="45"  class="form-control confirm-password"
+								placeholder="Confirme la clave" data-placement="right"
+								data-toggle="tooltip" title="Campo Obligatorio" />
 						</div>
-
 
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<br />
-							<input type="hidden" name="operacion" id="operacion" />
+							<input type="hidden" name="operacion" id="operacion" value="CambiarClave" />
 						</div>
 
 						<div class="col-xs-6 col-sm-8 col-md-6 col-lg-9">
@@ -102,6 +113,7 @@ if (isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema" AND
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="public/js/clave_items.js"></script>
 
 <?php
 } //cierra el condicional de sesión
