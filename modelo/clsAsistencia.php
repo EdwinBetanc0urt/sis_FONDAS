@@ -23,6 +23,7 @@ class Asistencia extends clsConexion {
         if ($tipo == "salida") {
             return $this->actualizar();
         }
+        // puede ser una segunda entrada
         if ($this->consultar()){
             return $this->actualizar();
         }
@@ -105,6 +106,49 @@ class Asistencia extends clsConexion {
         $tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
         return $tupla;
     }
+
+    //función.modelo.Listar Reporte
+    //devuelve la consulta con los parametros de rango y ordenado que se le indiquen
+    function listarReporte()
+    {
+        $arrFormulario = $this->atrFormulario;
+
+        $sql = "SELECT
+                A.*, P.*
+            FROM tmarcaje_asistencia AS A
+
+            INNER JOIN vpersona AS P
+                ON A.idtrabajador = P.idtrabajador
+
+            WHERE
+                (fecha_marcaje >= '{$arrFormulario["ctxFechaInicio"]}' AND
+                fecha_marcaje <=  '{$arrFormulario["ctxFechaFinal"]}') "; //selecciona todo de la tabla
+
+        $sqlTipoRango = " "; //selecciona solo lo que esta dentro del rango
+        if (array_key_exists("radRangoTipo", $arrFormulario)) {
+            if ($arrFormulario['radRangoTipo'] == "fuera")
+                $sqlTipoRango = " NOT "; //selecciona solo lo que esta fuera del rango
+        }
+
+        //define el rango a mostrar
+        if (array_key_exists("radRango", $arrFormulario)) {
+            switch ($arrFormulario['radRango']) {
+                case 'trabajador': //no esta imprimiendo el final
+                    $sql .= " AND {$sqlTipoRango}
+                        A.idtrabajador = '{$arrFormulario["cmbTrabajador"]}' ";
+                    #dentro SELECT * FROM cedula WHERE (id_rol >= '3' AND id_rol <= '5')
+                    #fuera SELECT * FROM cedula WHERE NOT (id_rol >= '3' AND id_rol <= '5')
+                    break;
+            }
+        }
+        //define el atributo en que se ordena y de que forma
+        if (array_key_exists("cmbOrden", $arrFormulario))
+            $sql .= " ORDER BY {$arrFormulario['cmbOrden']} {$arrFormulario['radOrden']} ";
+
+        $tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+        return $tupla;
+    } //cierre de la funcion
+
 }
 
 ?>

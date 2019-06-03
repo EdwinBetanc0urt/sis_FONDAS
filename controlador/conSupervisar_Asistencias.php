@@ -12,18 +12,23 @@ else{
 }
 
 switch($_POST['operacion']) {
-	case "Registrar":
-		registrar();
-		break;
-	case "Modificar":
+	case "ajustar":
 		cambiar();
-		break;
-	case "Borrar":
-		borrar();
 		break;
 	case "ListaView":
 		listaVista();
 		break;
+}
+
+
+function cambiar() {
+	global $gsClase;
+	$objeto = new Supervisar_Asistencia();
+	$objeto->setFormulario($_POST);
+	if ($objeto->modificar()) //si el fmInsertar es verdadero, realiza las sentencias
+		header("Location: ../?form={$gsClase}&msjAlerta=cambio"); //envía a la vista, con mensaje de la consulta
+	else
+		header("Location: ../?form={$gsClase}&msjAlerta=nocambio"); //envía a la vista, con */
 }
 
 function listaVista() {
@@ -105,13 +110,18 @@ function listaVista() {
 					<tr onclick='fjSeleccionarRegistro(this);' data-toggle='tooltip' data-placement='top'
 						title='Doble clic para detallar los datos y realizar alguna operación'
 						datos_registro='Seleccion
-						|<?= $arrRegistro["idtrabajador"] ?>
+						|<?= $arrRegistro["idmarcaje_asistencia"] ?>
 						|<?= $arrRegistro["nacionalidad"] . "-" . $arrRegistro["cedula"] ?>
 						|<?= $arrRegistro["nombre"] . " " . $arrRegistro["apellido"] ?>
 						|<?= $arrRegistro["entrada1"] ?>
 						|<?= $arrRegistro["salida1"] ?>
 						|<?= $arrRegistro["entrada2"] ?>
 						|<?= $arrRegistro["salida2"] ?>
+						|<?= $arrRegistro["nota1"] ?>
+						|<?= $arrRegistro["nota2"] ?>
+						|<?= $arrRegistro["nota3"] ?>
+						|<?= $arrRegistro["nota4"] ?>
+						|<?= $arrRegistro["observacion"] ?>
 						'>
 						<td>
 							<?=  $objeto->faFechaFormato($arrRegistro["fecha_marcaje"], "amd", "dma") ?>
