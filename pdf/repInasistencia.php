@@ -1,8 +1,8 @@
 <?php
 
+include_once("../modelo/clsAcceso.php");
 include_once("../public/mpdf/mpdf.php");
 //include_once("../modelo/clsInasistencia.php");
-include_once("../modelo/clsAcceso.php");
 
 
 $objeto = new Acceso();
@@ -42,11 +42,11 @@ if ($rstRecordSet) {
     //$arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet); //convierte el RecordSet en un arreglo
     $htmlBody .= "
         <div class='width:100%; text-align: center;'>
-            <h2>Perfil de Acceso </h2>  
+            <h2>Perfil de Acceso </h2>
         </div>
         ";
-    
-        while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)){    
+
+        while ($arrRegistro = $objeto->getConsultaAsociativo($rstRecordSet)){
             $htmlBody .= "
                 <h4> Modulo: {$arrRegistro['idmodulo']} - {$arrRegistro["modulo"]} </h4>
                 <hr>
@@ -62,27 +62,27 @@ if ($rstRecordSet) {
                                 </td>
                             </tr>
                         </thead>
-                        <tbody>    
+                        <tbody>
             ";
-    
+
 
             $rstRecordSetVista = $objeto->ListarAccesoVistasUsuario($_GET["usuario"] , $arrRegistro["idmodulo"]);
-            while ($arrRegistroVista = $objeto->getConsultaAsociativo($rstRecordSetVista)){    
+            while ($arrRegistroVista = $objeto->getConsultaAsociativo($rstRecordSetVista)){
                 $htmlBody .= "
                             <tr>
                                 <td> {$arrRegistroVista["vista"]}
                             </tr>
                  ";
-            } 
-            $htmlBody .= " 
+            }
+            $htmlBody .= "
                         </tbody>
                     </table>
                 </div>
-                <br /><br /> 
+                <br /><br />
             ";
 
         }
-    
+
     $objeto->faLiberarConsulta($rstRecordSet); //libera de la memoria el resultado asociado a la consulta
 }
 

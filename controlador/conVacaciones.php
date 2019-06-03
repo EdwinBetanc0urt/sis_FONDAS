@@ -1,10 +1,5 @@
 <?php
 
-// inicio de sesión
-if (strlen(session_id()) < 1) {
-	session_start();
-}
-
 $gsClase = "Vacaciones";
 
 $ruta = "";

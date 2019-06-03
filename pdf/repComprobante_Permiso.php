@@ -1,7 +1,7 @@
 <?php
 
-include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsPermiso.php");
+include_once( "../public/mpdf/mpdf.php");
 
 $objPermiso = new Permiso();
 $arrRegistro = $objPermiso->listarReporteUnitario($_GET["id"]);

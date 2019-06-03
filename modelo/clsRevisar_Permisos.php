@@ -9,7 +9,7 @@ class Revisar_Permisos extends clsConexion {
 	function __construct()
 	{
 		parent::__construct(); //instancia al constructor padre
-		
+
 		$this->atrTabla = "tpermiso";
 		$this->atrId = "idpermiso";
         $this->atrNombre = "justificativo";
@@ -18,7 +18,7 @@ class Revisar_Permisos extends clsConexion {
 		$this->atrCantidad_Dias = "";
 
 		$this->atrEstatus = "estatus";
-		
+
 		$this->atrFormulario = array();
 	}
 
@@ -33,12 +33,8 @@ class Revisar_Permisos extends clsConexion {
 				fecha_revision = CURRENT_TIMESTAMP
 			where
 				{$this->atrId} = '{$this->atrFormulario["idpermiso"]}'";
-		//echo "$sql";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
 	function Rechazar()
@@ -54,10 +50,7 @@ class Revisar_Permisos extends clsConexion {
 				{$this->atrId} = '{$this->atrFormulario["idpermiso"]}'";
 
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
-		if (parent::faVerificar()) //verifica si se ejecuto bien
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
 	//funcion.nivel.Listar
@@ -76,15 +69,14 @@ class Revisar_Permisos extends clsConexion {
 			parent::faLiberarConsulta($tupla);
 			return $arrConsulta; //envia el arreglo
 		}
-		else
-			return false;
+		return false;
 	}
 
 	//funcion.nivel.Listar
 	function Listar($psBuscar = "")
 	{
 		$sql = "
-			SELECT * 
+			SELECT *
 			FROM  {$this->atrTabla} "; //selecciona todo el contenido de la tabla
 
 		if ($psBuscar != "") {
@@ -94,21 +86,18 @@ class Revisar_Permisos extends clsConexion {
 					{$this->atrId} LIKE '%{$psBuscar}%' ;";
 		}
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla)) //verifica si se ejecuto bien
-			return $tupla; //envia el arreglo
-		else
-			return false;
+		return $tupla; //envia el arreglo
 	}
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
 	function fmListarIndex($psBuscar)
-	{		
-		$sql = "
-			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
+	{
+		$sql = "SELECT
+			Perm.*, Perm.condicion AS condicion_permiso, P.*, M.nombre AS motivo_permiso
 			FROM $this->atrTabla AS Perm
 
 			INNER JOIN vpersona AS P
@@ -118,35 +107,32 @@ class Revisar_Permisos extends clsConexion {
 				ON M.idmotivo_permiso = Perm.idmotivo_permiso
 
 			WHERE
-				Perm.estatus = 'activo' 
+				Perm.estatus = 'activo'
 				AND Perm.condicion = 'solicitado'
 				AND (Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
 	function fmListarIndexRevisado($psBuscar)
-	{		
-		$sql = "
-			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
+	{
+		$sql = "SELECT
+			Perm.*, Perm.condicion AS condicion_permiso, P.*, M.nombre AS motivo_permiso
 			FROM $this->atrTabla AS Perm
 
 			INNER JOIN vpersona AS P
@@ -156,35 +142,32 @@ class Revisar_Permisos extends clsConexion {
 				ON M.idmotivo_permiso = Perm.idmotivo_permiso
 
 			WHERE
-				Perm.estatus = 'activo' 
+				Perm.estatus = 'activo'
 				AND Perm.condicion = 'revisado'
 				AND (Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
-  	/** 
+  	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
 	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
 	 */
 	function fmListarIndexRechazado($psBuscar)
-	{		
-		$sql = "
-			SELECT Perm.*, P.*, M.nombre AS motivo_permiso
+	{
+		$sql = "SELECT
+			Perm.*, Perm.condicion AS condicion_permiso, P.*, M.nombre AS motivo_permiso
 			FROM $this->atrTabla AS Perm
 
 			INNER JOIN vpersona AS P
@@ -194,24 +177,21 @@ class Revisar_Permisos extends clsConexion {
 				ON M.idmotivo_permiso = Perm.idmotivo_permiso
 
 			WHERE
-				Perm.estatus = 'activo' 
+				Perm.estatus = 'activo'
 				AND Perm.condicion = 'rechazado'
 				AND (Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
-		
+
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
-		
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
-		if (parent::faVerificar($tupla))
-			return $tupla;
-		else
-			return false;
+		return $tupla;
 	}
 
 }

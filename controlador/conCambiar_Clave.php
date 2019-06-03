@@ -1,10 +1,5 @@
 <?php
 
-// inicio de sesión
-if (strlen(session_id()) < 1) {
-	session_start();
-}
-
 $gsClase = "Cambiar_Clave";
 
 $ruta = "";
@@ -26,9 +21,8 @@ switch($_POST['operacion']) {
 		break;
 }
 
-
-function changeClave() {
-	global $gsClase;
+function changeClave()
+{
 	$objeto = new CambiarClave();
 	$objeto->setFormulario($_POST);
 	$mensaje = $objeto->cambiarClave();
@@ -39,7 +33,8 @@ function changeClave() {
 }
 
 
-function obtenerPreguntas() {
+function obtenerPreguntas()
+{
 	$objeto = new CambiarClave();
 	$objeto->setFormulario($_POST);
 	$arrConsulta = $objeto->getPreguntas();
@@ -74,7 +69,5 @@ function obtenerPreguntas() {
 	$objeto->faDesconectar(); //cierra la conexión
 	unset($objeto); //destruye el objeto
 } //cierre de la función
-
-
 
 ?>

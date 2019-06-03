@@ -25,7 +25,7 @@ class Permiso extends clsConexion {
 			UPDATE {$this->atrTabla}
 			set
 				condicion = 'aprobado',
-				observacion_aprobacion = '{$this->atrFormulario["idpermiso"]}',
+				observacion_aprobacion = '{$this->atrFormulario["observacion"]}',
 				idtrabajador_rrhh = '{$_SESSION["idtrabajador"]}',
 				fecha_aprobacion = CURRENT_TIMESTAMP
 			where
@@ -43,7 +43,7 @@ class Permiso extends clsConexion {
 			UPDATE {$this->atrTabla}
 			set
 				condicion='rechazado'
-				observacion_aprobacion = '{$this->atrFormulario["idpermiso"]}',
+				observacion_aprobacion = '{$this->atrFormulario["observacion"]}',
 				idtrabajador_rrhh = '{$_SESSION["idtrabajador"]}',
 				fecha_aprobacion = CURRENT_TIMESTAMP
 			where

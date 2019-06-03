@@ -1,10 +1,5 @@
 <?php
 
-// inicio de sesión
-if (strlen(session_id()) < 1) {
-	session_start();
-}
-
 $ruta = "";
 if(is_file("modelo/clsLogin.php")){
 	require_once("modelo/clsLogin.php");

@@ -37,7 +37,7 @@
 		define("ERRORES", E_ALL | E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	}
 	// OCULTA todos los errores, para entorno de PRODUCCION
-	if (ENTORNO == "produccion" || ENTORNO == true) {
+	if (ENTORNO == "produccion") {
 		error_reporting(0); // Desactivar toda notificación y advertencia de error
 		ini_set("display_errors", "off");
 		ini_set("display_startup_errors", "off");
@@ -73,7 +73,7 @@
 
 	//por defecto PHP/5.6.30 o su versión
 	header("Server: " . ENTORNO);
-	header("X-Powered-By: EdwinBetanc0urt <EdwinBetanc0urt@outlook.com>, entorno " . ENTORNO); 
+	header("X-Powered-By: EdwinBetanc0urt <EdwinBetanc0urt@outlook.com>, entorno " . ENTORNO);
 
 	// inicio de sesión
 	if (strlen(session_id()) < 1) {
