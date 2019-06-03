@@ -7,29 +7,114 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 ?>
 
 <div class="panel-heading">
-	<h3 class="panel-title"> 	
-		<button id="btnNuevo" class="btn btn-primary" onclick="fjNuevoRegistro();">
-			<span class="glyphicon glyphicon-plus"></span>
-			Nuevo
-		</button>
-		Asistencia 
+	<h3 class="panel-title">
+		Asistencia
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
-		<li class="active" id="liListado">
-			<a data-toggle="tab" href="#pestListado">Listado</a>
+		<li class="active" id="liActual">
+			<a data-toggle="tab" href="#pestMarcaje">Marcaje del Dia</a>
 		</li>
-		<li id="liDetalle">
-			<a data-toggle="tab" href="#pestDetalle">Detalle</a>
+		<li id="liListado">
+			<a data-toggle="tab" href="#pestListado">Listado</a>
 		</li>
 	</ul>
 	<br>
 
-	<div class="tab-content">	
-		<div id="pestListado" class="tab-pane fade in active">
+	<div class="tab-content">
+		<div id="pestMarcaje" class="tab-pane fade in active">
+			<form name="form<?= $vsVista; ?>" id="form<?= $vsVista; ?>" method="POST"
+				action="controlador/con<?=$vsVista;?>.php" role="form">
+				<div class="row">
 
+					<div class="form-group">
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							<label for="ctxTrabajador">* Trabajador</label>
+							<br>
+							<?php
+								echo $_SESSION["nacionalidad"] . "-" . $_SESSION["cedula"] .
+									", " . $_SESSION["nombre"] . " " . $_SESSION["apellido"];
+							?>
+							<input type="hidden" id="numTrabajador" name="numTrabajador"
+								value="<?= $_SESSION["idtrabajador"] ?>" />
+						</div>
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							<label for="ctxFecha">* Fecha Actual de Marcaje</label>
+							<input type="text" id="ctxFecha" readonly maxlength="45"
+								class="form-control" value="<?= date("d/m/Y") ?>" />
+						</div>
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							<label for="ctxTiempoMarcaje">* Hora Actual de Marcaje</label>
+							<input type="text" id="ctxTiempoMarcaje" name="ctxTiempoMarcaje"
+								class="form-control" readonly maxlength="45" />
+							<input type="hidden" id="hidHora">
+							<input type="hidden" id="hidMinuto">
+							<!-- <div id="divReloj" style="text-align:center;" ></div> -->
+						</div>
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							<button type="button" id="btnMarcar" class="btn btn-primary"
+								onclick="enviar();" value="marcar">
+								<span class="glyphicon glyphicon-plus"></span>
+								Marcar Asistencia
+							</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<br><br>
+					</div>
+
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3S">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+									<input type="checkbox" id="chkEntrada1" name="chkEntrada1"
+									disabled aria-label="aria-label" class="chkDia">
+                                </span>
+                                <input type="text" class="form-control" value="Entrada 1" readonly />
+                            </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3S">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+									<input type="checkbox" id="chkSalida1" name="chkSalida1"
+									disabled aria-label="aria-label" class="chkDia">
+                                </span>
+                                <input type="text" class="form-control" value="Salida 1" readonly />
+                            </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3S">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+									<input type="checkbox" id="chkEntrada2" name="chkEntrada2"
+									disabled aria-label="aria-label" class="chkDia">
+                                </span>
+                                <input type="text" class="form-control" value="Entrada 2" readonly />
+                            </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3S">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+									<input type="checkbox" id="chkSalida2" name="chkSalida2"
+									disabled aria-label="aria-label" class="chkDia">
+                                </span>
+                                <input type="text" class="form-control" value="Salida 2" readonly />
+                            </div>
+                        </div>
+					</div>
+				</div>
+
+				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
+				<input type='hidden' name='subPagina' id='subPagina' />
+				<input type='hidden' name='operacion' id='operacion' />
+				<input type='hidden' name='campo' id='campo' />
+
+			</form>
+        </div>
+
+		<div id="pestListado" class="tab-pane fade">
 			<form action="" name="formLista<?= $vsVista; ?>" id="formLista<?= $vsVista; ?>" role="form">
 				<div class="row">
 					<div class="form-group" >
@@ -38,23 +123,23 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-search"></span>
 								</span>
-								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
+								<input type="search" id="ctxBusqueda" name="ctxBusqueda"
 								oninput="fjMostrarLista('<?= $vsVista; ?>');"
-								onkeyup="fjMostrarLista('<?= $vsVista; ?>');" 
-								class="valida_buscar form-control" 
+								onkeyup="fjMostrarLista('<?= $vsVista; ?>');"
+								class="valida_buscar form-control"
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
-							</div>	
+							</div>
 						</div>
-	
+
 						<div class="col-xs-2">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</span>
-								<input type="number" id="numItems" name="numItems" maxlength="4" 
+								<input type="number" id="numItems" name="numItems" maxlength="4"
 								value="10" onkeyup="fjMostrarLista('<?= $vsVista; ?>');" required
 								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
-							</div>	
+							</div>
 						</div>
 					</div>
 				</div>
@@ -67,203 +152,12 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
 				<input type='hidden' name='subPagina' id='subPagina' />
-								
+
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>
-
-		<div id="pestDetalle" class="tab-pane ">
-
-			<form method="POST" action="controlador/conAsistencia.php" name="form<?= $vsVista; ?>" id="form<?= $vsVista; ?>" role="form">
-
-				<div class="panel panel-primary">
-
-					<div class="panel-heading">
-						<h3 class="panel-title"> Datos de Cabecera 
-						</h3>
-					</div>
-
-					<div class="panel-body">
-						
-						<input type="hidden" name="numId" id="numId" value="222" />
-
-						<div class="form-group">
-							<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-								<label for="fecElaboracion" >Fecha Elaboración</label>
-								<input id="fecElaboracion" name="fecElaboracion" type="text" class="form-control" data-toggle="tooltip" data-placement="right" title="Campo Opcional" value="<?php echo date('d-m-Y'); ?>" readonly />
-								<input id="fecModifica" name="fecModifica" type="hidden" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly />
-							</div>
-
-							<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-								<label for="horElaboracion" >Hora Elaboración</label>
-								<input id="horElaboracion" name="horElaboracion" type="hi" class="form-control" data-toggle="tooltip" data-placement="right" title="Campo Opcional" value="<?php echo date('h:n:s'); ?>" readonly />
-								<input id="horModifica" name="horModifica" type="hidden" class="form-control" value="<?php echo date('h:n:s'); ?>" readonly />
-							</div>
-
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<label for="ctxUsuario"> *Responsable </label>
-								<input id="ctxUsuario" type="text" class="form-control" data-toggle="tooltip" data-placement="right" value="<?= $_SESSION["usuario"] . ", " . $_SESSION["nombre"] . " " . $_SESSION["apellido"]; ?>" readonly />
-								<input type="hidden" id="numUsuario" name="numUsuario" value="<?= $_SESSION["id_usuario"] ?>" />
-							</div>
-
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<label for="txaObservacion" >Observacion General</label>
-								<textarea id="txaObservacion" name="txaObservacion" class="form-control" data-toggle="tooltip" data-placement="top" title="Observcion general como datos adicionales, es opcional"  ></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="txt" style="text-align:center;" ></div>
-				<input id="ctxReloj" type="hidden" />
-
-				<div class="panel panel-primary">
-
-					<div class="panel-heading">
-						<h3 class="panel-title"> Renglones </h3>
-					</div>
-
-					<div class="panel-body">
-					
-						<!-- aca se guardan separado por comas los articulos ya agregados para evitar que se repitan -->
-						<input type="hidden" id="ctxCodigos" class="form-control" />
-
-						<div class='table-responsive'>
-							<table id="tabDetalle" border='0' valign='center' class='table table-striped text-center table-hover'>
-								<thead>
-									<tr class='info'>
-										<th class="text-left" > 
-											Trabajador
-										</th>
-										<th >
-											Hora Entrada
-										</th>
-										<th > 
-											Acciones
-										</th>
-									</tr>
-									<tr align="center" id="trAgregarDetalle">
-										<td >
-											<input type="hidden" id="numIdTrabajador" maxlength='7' class="valida_num_entero"  />
-
-											<input type="text" id="ctxNombreTrabajador" maxlength='7' class="form-control" placeholder="Ingrese el Trabajador" />
-										</td>
-										<td >
-											<input type="text" id="ctxHoraEntrada" maxlength='7' class="form-control tiempo"  placeholder="Ingrese la hora de entrada" readonly />
-										</td>
-										<td>
-											<button type="button" onclick="agregarDetalle()" class="btn btn-primary" value="add" name="addService">
-												<span class="glyphicon glyphicon-plus"></span>
-											</button>
-											<button type="button" onclick="fjDesplegarCatalogo()" class="btn btn-primary" >
-												<span class="glyphicon glyphicon-search"></span>
-											</button>
-											<!-- abre la ventana modal con campos vacios recargando la vista -->
-										</td>
-									</tr>
-								</thead>
-								<tbody id="tabBodyDetalle" >
-								</tbody>
-							</table>
-						</div>
-
-					</div>
-				</div>
-
-				<center>
-					<div class="col-xs-12">
-						
-						<button type="button" class="btn btn-info right" onclick="enviar(this.value);" value="incluir" >
-							Guardar
-						</button>
-						<!--
-						<div id="divBotonesC" class="col-xs-4">
-							<button type='button' value='Reporte' id="btnReporte" 
-								name="btnReporte" class="btn btn-info right"
-								onClick='fjGenerar();' >
-								<i class="fa fa-print"></i> 
-								Generar PDF
-							</button>
-						</div>
-						-->
-						<div class="col-xs-4"> 
-							<a id="btnCancelar"
-							 class="btn btn-danger" name="btnCancelar" onClick='fjCancelar();'>
-								<i class="fa fa-cancel"></i> Cancelar
-							</a>
-						</div>
-					</div>
-				</center>
-				<input type="hidden" id="operacion" name="operacion" value="incluir">
-				<input type="hidden" id="hidCondicion" name="hidCondicion">
-
-			</form>
-		</div>
-
 	</div>
 </div>
-
-
-
-<div id="VentanaModal" class="modal fade modal-primary">
-	<form id="formListaTrabajador" name="formListaTrabajador" role="form" class="form-horizontal" >
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> X </button>
-					<h2 class="modal-title"> Trabajadores </h2>
-				</div>
-
-				<div class="modal-body">
-
-					<div class="row">
-						<div class="form-group" >
-							<div class="col-xs-7 col-sm-9 col-md-9 col-lg-9">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-search"></span>
-									</span>
-									<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
-									 oninput='fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", ["", $("#ctxCodigos").val()]);'
-							 		 onkeyup='fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", ["", $("#ctxCodigos").val()]);' 
-							 		 class="valida_buscar form-control" 
-									 placeholder="Filtro de Busqueda" />
-								</div>	
-							</div>
-
-							<div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-list-alt"></span>
-									</span>
-									<input type="text" id="numIntems" name="numIntems" maxlength="4" 
-									 value="10" onkeyup='fjMostrarLista("Trabajador", "", "", "", "ListaCatalogo", ["", $("#ctxCodigos").val()]);' required 
-									 class="valida_num_entero form-control" placeholder="Items" />
-								</div>	
-							</div>
-						</div>
-					</div> <!-- cierre de div class row -->
-
-					<!-- guarda el valor del atributo por donde va a ordenar -->
-					<input type='hidden' name='hidOrden' id='hidOrden' />
-
-					<!-- guarda el valor en la forma de ordenado si ASCendente o DESCendente -->
-					<input type="hidden" id="hidTipoOrden" name="hidTipoOrden" />
-
-					<!-- guarda el valor en la subpagina de a mostrar en la division de paginacion -->
-					<input type='hidden' name='subPagina' id='subPagina' />
-					
-					<!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
-					<div id="divListado" class="divListado"></div> 
-	
-				</div>
-			</div>
-		</div>
-		<input type="hidden" name="hidEstatus" id="hidEstatus" />
-		<input type="hidden" name="vvOpcion" id="vvOpcion" />
-	</form>
-</div> <!-- Cierre de div VentanaModal -->
-
 
 <?php
 } //cierra el condicional de sesión rol (isset($_SESSION['rol']))
