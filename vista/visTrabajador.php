@@ -7,7 +7,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 ?>
 
 <div class="panel-heading">
-	<h3 class="panel-title"> 	
+	<h3 class="panel-title">
 		<button id="btnNuevo" class="btn btn-primary" data-toggle="modal" data-target="#VentanaModal" onclick="fjNuevoRegistro();">
 			<span class="glyphicon glyphicon-plus"></span>
 			Nuevo
@@ -16,7 +16,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 	</h3>
 </div>
 
-<div class="panel-body">			
+<div class="panel-body">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#pestListado">Listado</a></li>
 	</ul>
@@ -32,23 +32,23 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-search"></span>
 								</span>
-								<input type="search" id="ctxBusqueda" name="ctxBusqueda" 
+								<input type="search" id="ctxBusqueda" name="ctxBusqueda"
 								oninput="fjMostrarLista('<?= $vsVista; ?>');"
-								onkeyup="fjMostrarLista('<?= $vsVista; ?>');" 
-								class="valida_buscar form-control" 
+								onkeyup="fjMostrarLista('<?= $vsVista; ?>');"
+								class="valida_buscar form-control"
 								placeholder="Filtro de Busqueda" data-toggle="tooltip" data-placement="top" title="Terminos para buscar coincidencias en los registros" />
-							</div>	
+							</div>
 						</div>
-	
+
 						<div class="col-xs-2">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</span>
-								<input type="number" id="numItems" name="numItems" maxlength="4" 
+								<input type="number" id="numItems" name="numItems" maxlength="4"
 								value="10" onkeyup="fjMostrarLista('<?= $vsVista; ?>');" required
 								class="valida_num_entero form-control" placeholder="Items" data-toggle="tooltip" data-placement="top" title="Cantidad de items a mostrar en el listado" />
-							</div>	
+							</div>
 						</div>
 					</div>
 				</div>
@@ -61,14 +61,13 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 
 				<!-- guarda el valor en la sub-pagina de a mostrar en la división de paginación -->
 				<input type='hidden' name='subPagina' id='subPagina' />
-								
+
 				<div id="divListado" class="divListado"></div> <!-- Dentro se mostrara la tabla con el listado que genera el controlador -->
 			</form>
 		</div>
 
 	</div>
 </div>
-
 
 <div id="VentanaModal" class="modal fade modal-primary">
 	<form id="form<?=$vsVista;?>" name="form<?=$vsVista;?>" method="POST" action="controlador/con<?=$vsVista;?>.php" role="form" class="form-horizontal" >
@@ -82,10 +81,10 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group ui-front">
-							
+
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php 
-									if(isset($_GET["getId"])) 
+								<input name="numId" id="numId" type="hidden" class="form-control" readonly onkeypress="return false" data-toggle="tooltip" data-placement="right" title="Código asignado automáticamente" value="<?php
+									if(isset($_GET["getId"]))
 										echo $_GET["getId"]; ?>" />
 								<label for="cmbNacionalidad">* Nacionalidad</label>
 								<select id='cmbNacionalidad' name='cmbNacionalidad' class="dinamico form-control select2" required data-toggle="tooltip" data-placement="right" title="Estado al cual pertenece el municipio" size="1" style="width: 100%;">
@@ -113,7 +112,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getNombre'];
 								?>" placeholder="Ingrese el Nombre" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-							
+
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 								<label for="ctxApellido">* Apellido</label>
 								<input id="ctxApellido" class="valida_alfabetico form-control" maxlength="45" name="ctxApellido" type="text" size="20" required value="<?php
@@ -121,7 +120,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getApellido'];
 								?>" placeholder="Ingrese el Apellido" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-				
+
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 								<label for="ctxCorreo"> Correo</label>
 								<input id="ctxCorreo" class="valida_correo form-control" maxlength="255" name="ctxCorreo" type="email" size="20" value="<?php
@@ -137,7 +136,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getTelefono'];
 								?>" placeholder="Ingrese el Telefono Movil" data-toggle="tooltip" data-placement="right" title="Campo Obligatorio" />
 							</div>
-							
+
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="cmbTipo_Usuario">* Tipo de Usuario</label>
 								<select id='cmbTipo_Usuario' name='cmbTipo_Usuario' class="dinamico form-control select2" required data-toggle="tooltip" data-placement="right" title="Tipo de usuario para el sisitema" size="1" style="width: 100%;">
@@ -148,7 +147,6 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 										echo $_GET['getTipo_Usuario']; ?>" />
 							</div>
 
-							
 							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4" id="divIngreso">
 								<label for="datFechaIngreso">* Fecha de Ingreso</label>
 								<input type="date" id="datFechaIngreso" class="valida_alfabetico form-control" maxlength="45" name="datFechaIngreso"  size="20" value="<?php
@@ -186,13 +184,11 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
 									if(isset($_GET['getCargo']))
 										echo $_GET['getCargo']; ?>" />
 							</div>
-							
 						</div>
 
-								
 					</div>
 				</div>
-				
+
 				<div class="modal-footer">
 					<?php
 						include_once("_botones.php");
