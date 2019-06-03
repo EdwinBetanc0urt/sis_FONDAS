@@ -71,7 +71,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
                             <div class="input-group">
                                 <span class="input-group-addon">
 									<input type="checkbox" id="chkEntrada1" name="chkEntrada1"
-									 aria-label="aria-label" class="chkDia">
+									disabled aria-label="aria-label" class="chkDia">
                                 </span>
                                 <input type="text" class="form-control" value="Entrada 1" readonly />
                             </div>
@@ -80,7 +80,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
                             <div class="input-group">
                                 <span class="input-group-addon">
 									<input type="checkbox" id="chkSalida1" name="chkSalida1"
-									 aria-label="aria-label" class="chkDia">
+									disabled aria-label="aria-label" class="chkDia">
                                 </span>
                                 <input type="text" class="form-control" value="Salida 1" readonly />
                             </div>
@@ -89,7 +89,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
                             <div class="input-group">
                                 <span class="input-group-addon">
 									<input type="checkbox" id="chkEntrada2" name="chkEntrada2"
-									 aria-label="aria-label" class="chkDia">
+									disabled aria-label="aria-label" class="chkDia">
                                 </span>
                                 <input type="text" class="form-control" value="Entrada 2" readonly />
                             </div>
@@ -98,7 +98,7 @@ if(isset($_SESSION["sesion"]) AND $_SESSION["sesion"] == "sistema") {
                             <div class="input-group">
                                 <span class="input-group-addon">
 									<input type="checkbox" id="chkSalida2" name="chkSalida2"
-									 aria-label="aria-label" class="chkDia">
+									disabled aria-label="aria-label" class="chkDia">
                                 </span>
                                 <input type="text" class="form-control" value="Salida 2" readonly />
                             </div>

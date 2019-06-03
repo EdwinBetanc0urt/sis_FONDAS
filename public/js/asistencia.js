@@ -10,6 +10,7 @@ var horario = {
 $(function () {
 	startTime();
 	consultaMarcaje();
+	fjMostrarLista(lsVista);
 });
 
 function startTime() {

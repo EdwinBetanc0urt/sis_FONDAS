@@ -74,6 +74,40 @@ class Asistencia extends clsConexion {
         }
         return $tupla;
     }
+
+    /**
+     * función modelo Listar Parámetros, consulta en la base de datos según el
+     * termino de búsqueda, paginación y orden
+     * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
+     * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
+     */
+    function fmListarIndex($psBuscar)
+    {
+        $fecha = parent::faFechaFormato($psBuscar);
+        $sql = "SELECT
+                A.*, S.observacion_general, P.*
+            FROM $this->atrTabla  AS A
+
+            INNER JOIN vpersona AS P
+                ON P.idtrabajador = A.idtrabajador
+
+            LEFT JOIN tajuste_asistencia AS S
+                ON A.idmarcaje_asistencia = S.idmarcaje_asistencia
+
+            WHERE
+                P.idtrabajador = '{$_SESSION["idtrabajador"]}' "; //selecciona todo de la tabla
+
+        if ($this->atrOrden != "")
+            $sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
+
+        $this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
+        $this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
+
+        //concatena estableciendo los limites o rango del resultado, interpolando las variables
+        $sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+        $tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+        return $tupla;
+    }
 }
 
 ?>
