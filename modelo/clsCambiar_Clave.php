@@ -1,10 +1,5 @@
 <?php
 
-// inicio de sesión
-if (strlen(session_id()) < 1) {
-	session_start();
-}
-
 include_once('clsConexion.php');
 
 class CambiarClave extends clsConexion {
@@ -102,7 +97,7 @@ class CambiarClave extends clsConexion {
 
 
 	function verificarRespuestas($idUsuario) {
-		if ($this->atrFormulario["ctxRespuesta1"] == 
+		if ($this->atrFormulario["ctxRespuesta1"] ==
 			$this->ConsultarRespuestas($idUsuario, $this->atrFormulario["hidPregunta1"])) {
 			return true;
 		}

@@ -19,6 +19,157 @@ class Reposo extends clsConexion {
 		$this->atrFormulario = array();
 	}
 
+	function Aprobar()
+	{
+		$sql = "
+			UPDATE {$this->atrTabla}
+			set
+				condicion = 'aprobado',
+				observacion_aprobacion = '{$this->atrFormulario["observacion"]}',
+				idtrabajador_rrhh = '{$_SESSION["idtrabajador"]}',
+				fecha_aprobacion = CURRENT_TIMESTAMP
+			where
+				{$this->atrId} = '{$this->atrFormulario["idreposo"]}'";
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
+		if (parent::faVerificar()) //verifica si se ejecuto bien
+			return $tupla;
+		else
+			return false;
+	}
+
+	function Rechazar()
+	{
+		$sql = "
+			UPDATE {$this->atrTabla}
+			set
+				condicion='rechazado'
+				observacion_aprobacion = '{$this->atrFormulario["observacion"]}',
+				idtrabajador_rrhh = '{$_SESSION["idtrabajador"]}',
+				fecha_aprobacion = CURRENT_TIMESTAMP
+			where
+				{$this->atrId} = '{$this->atrFormulario["idreposo"]}'";
+
+		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
+		if (parent::faVerificar()) //verifica si se ejecuto bien
+			return $tupla;
+		else
+			return false;
+	}
+
+	/**
+	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
+	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
+	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
+	 */
+	function fmListarIndex($psBuscar)
+	{
+		$sql = "SELECT
+			Perm.*, Perm.condicion AS condicion_reposo, P.*, M.nombre AS motivo_reposo
+			FROM $this->atrTabla AS Perm
+
+			INNER JOIN vpersona AS P
+				ON Perm.idtrabajador = P.idtrabajador
+
+			INNER JOIN tmotivo_reposo AS M
+				ON M.idmotivo_reposo = Perm.idmotivo_reposo
+
+			WHERE
+				Perm.estatus = 'activo'
+				AND Perm.condicion = 'revisado'
+				AND (Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
+
+		if ($this->atrOrden != "")
+			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
+
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
+		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
+
+		//concatena estableciendo los limites o rango del resultado, interpolando las variables
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
+			return $tupla;
+		else
+			return false;
+	}
+
+	/**
+	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
+	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
+	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
+	 */
+	function fmListarIndexRevisado($psBuscar)
+	{
+		$sql = "SELECT
+			Perm.*, Perm.condicion AS condicion_reposo, P.*, M.nombre AS motivo_reposo
+			FROM $this->atrTabla AS Perm
+
+			INNER JOIN vpersona AS P
+				ON Perm.idtrabajador = P.idtrabajador
+
+			INNER JOIN tmotivo_reposo AS M
+				ON M.idmotivo_reposo = Perm.idmotivo_reposo
+
+			WHERE
+				Perm.estatus = 'activo'
+				AND Perm.condicion = 'revisado'
+				AND (Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
+
+		if ($this->atrOrden != "")
+			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
+
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
+		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
+
+		//concatena estableciendo los limites o rango del resultado, interpolando las variables
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
+			return $tupla;
+		else
+			return false;
+	}
+
+	/**
+	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
+	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda
+	 * @return object $tupla, resultado de consulta SQL o en caso contrario un FALSE.
+	 */
+	function fmListarIndexRechazado($psBuscar)
+	{
+		$sql = "SELECT
+			Perm.*, Perm.condicion AS condicion_reposo, P.*, M.nombre AS motivo_reposo
+			FROM $this->atrTabla AS Perm
+
+			INNER JOIN vpersona AS P
+				ON Perm.idtrabajador = P.idtrabajador
+
+			INNER JOIN tmotivo_reposo AS M
+				ON M.idmotivo_reposo = Perm.idmotivo_reposo
+
+			WHERE
+				Perm.estatus = 'activo'
+				AND Perm.condicion = 'rechazado'
+				AND (Perm.{$this->atrId} LIKE '%{$psBuscar}%') "; //selecciona todo de la tabla
+
+		if ($this->atrOrden != "")
+			$sql .= " ORDER BY {$this->atrOrden} {$this->atrTipoOrden} ";
+
+		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
+		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
+
+		//concatena estableciendo los limites o rango del resultado, interpolando las variables
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
+
+		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
+		if (parent::faVerificar($tupla))
+			return $tupla;
+		else
+			return false;
+	}
+
 	/**
 	 * función modelo Listar Parámetros, consulta en la base de datos según el termino de búsqueda, paginación y orden
 	 * @param string parametro control Busqueda $psBuscar, trae todo lo escrito en el ctxBusqueda

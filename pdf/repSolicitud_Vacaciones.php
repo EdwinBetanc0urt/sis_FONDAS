@@ -1,7 +1,7 @@
 <?php
 
-include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsVacaciones.php");
+include_once( "../public/mpdf/mpdf.php");
 include_once( "../public/lib_Vacaciones.php");
 
 $objVacaciones = new Vacaciones();

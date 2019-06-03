@@ -1,7 +1,7 @@
 <?php
 
-include_once( "../public/mpdf/mpdf.php");
 include_once("../modelo/clsReposo.php");
+include_once( "../public/mpdf/mpdf.php");
 
 $objReposo = new Reposo();
 $objReposo->setFormulario($_POST);

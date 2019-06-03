@@ -13,11 +13,6 @@
 	//constantes y configuraciones del sistema
 	require_once("_core" . DS . "config.php");
 
-	// inicio de sesión
-	if (strlen(session_id()) < 1) {
-		session_start();
-	}
-
 	$miurl = "index";
 	if(isset($_GET["accion"]) AND trim($_GET["accion"]) != ""){
 		$miurl = $_GET["accion"];

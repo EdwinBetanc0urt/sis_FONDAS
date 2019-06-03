@@ -1,5 +1,5 @@
 
-var lsVista = "Revisar_Reposos";
+var lsVista = "Reposo";
 
 $(function () {
 	fjActualizarListas();
@@ -14,7 +14,7 @@ $(function () {
 
 function fjAprobar(piReposo = "") {
 	//abre el archivo controlador y envia por POST
-	vsRuta = "controlador/conRevisar_Reposos.php";
+	vsRuta = "controlador/conReposo.php";
 
 	swal({
 		html: "¿Está seguro de dar visto bueno a este reposo?",
@@ -48,7 +48,7 @@ function fjAprobar(piReposo = "") {
 
 function fjRechazar(piReposo = "") {
 	//abre el archivo controlador y envia por POST
-	vsRuta = "controlador/conRevisar_Reposos.php";
+	vsRuta = "controlador/conReposo.php";
 
 	swal({
 		html: "¿Está seguro que no dara visto bueno a este reposo?",
@@ -82,7 +82,6 @@ function fjRechazar(piReposo = "") {
 
 function fjActualizarListas() {
 	fjMostrarLista(lsVista);
-	fjMostrarLista(lsVista, "", "", lsVista + "Revisados", "ListaViewRevisado");
 	fjMostrarLista(lsVista, "", "", lsVista + "EnCurso", "ListaViewEnCurso");
 	fjMostrarLista(lsVista, "", "", lsVista + "Culminado", "ListaViewCulminado");
 	fjMostrarLista(lsVista, "", "", lsVista + "Rechazado", "ListaViewRechazado");

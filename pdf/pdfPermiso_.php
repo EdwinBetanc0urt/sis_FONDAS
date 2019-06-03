@@ -1,68 +1,68 @@
 <?php
+  require_once("../modelo/clsConexion.php");
    require_once("fpdf.php");
    require_once("Query.php");
-  require_once("../modelo/clsConexion.php");
-   	
+
   class clsFpdf extends FPDF {
 	   var $widths;
         var $aligns;
 	        // $id="02";
-	 //Cabecera de página
+	 //Cabecera de pï¿½gina
 		public function Header()
 		{
-	     
+
 			    //Logo
             //$this->Image("../public/img/banner.jpg" , 8 ,8, 180 , 22, "JPG" ,"");
-          //$this->Image("../public/img/sello.png" , 8 ,14, 40 , 20, "PNG" ,""); 
-          $this->Image("../public/img/logopdf.jpg" , 6 ,14, 198 , 22, "JPG" ,""); 
+          //$this->Image("../public/img/sello.png" , 8 ,14, 40 , 20, "PNG" ,"");
+          $this->Image("../public/img/logopdf.jpg" , 6 ,14, 198 , 22, "JPG" ,"");
 				   $this->SetFont('Arial','B',9);
-		
+
             //Movernos a la derecha
             $this->Cell(10);
-            //Título
-        		$this->Cell(190,1,"FECHA: ".date("d/m/Y"),0,1,"C");    //Salto de línea
+            //Tï¿½tulo
+        		$this->Cell(190,1,"FECHA: ".date("d/m/Y"),0,1,"C");    //Salto de lï¿½nea
             $this->Ln(7);
         		$this->Cell(100,7,"",0,1,"C");
-            $this->Ln(10);	
-           	
-           
+            $this->Ln(10);
+
+
 		}
 
-		//Pie de página
+		//Pie de pï¿½gina
 		public function Footer()
 		{
-    			//Posición: a 2 cm del final
+    			//Posiciï¿½n: a 2 cm del final
     			$this->SetY(-25);
     			//Arial italic 8
     			$this->SetFont("Arial","I",5);
     		$this->SetFont('Arial','',13);
             $this->SetFillColor(240,240,240);
-            $this->SetTextColor(200, 200, 200);			
+            $this->SetTextColor(200, 200, 200);
             $this->Cell(0,5,utf8_decode("___________________________________________________________________________"),0,1,"C",false);
            $this->SetFont('Arial','',9);
-            $this->SetTextColor(0,0,0);			
+            $this->SetTextColor(0,0,0);
             $this->Cell(170);
-        //Número de página
-    			$this->Cell(25,8,'Página '.$this->PageNo()."/{nb}",0,1,'C',true);
-           
+        //Nï¿½mero de pï¿½gina
+    			$this->Cell(25,8,'Pï¿½gina '.$this->PageNo()."/{nb}",0,1,'C',true);
+
             //setlocale(LC_ALL,"es_VE.UTF8");
             $this->Ln(-7);
             $this->SetFont("Arial","I",7);
             $avanzar=5;
-            $this->Cell($avanzar);	
-            $uni="Fondo de Desarrollo Agrario Socialista “FONDAS”";
-            $dir="Av. Circunvalación Esquina Semáforo Carretera Nacional Vía Payara. Al Lado De AgroPatría Acarigua. Municipio Páez  Edo. Portuguesa,República Bolivariana de Venezuela.";
-            $tel="Teléfono: (0255-00000)";
+            $this->Cell($avanzar);
+            $uni="Fondo de Desarrollo Agrario Socialista ï¿½FONDASï¿½";
+            $dir="Av. Circunvalaciï¿½n Esquina Semï¿½foro Carretera Nacional Vï¿½a Payara. Al Lado De AgroPatrï¿½a Acarigua. Municipio Pï¿½ez  Edo. Portuguesa,Repï¿½blica Bolivariana de Venezuela.";
+            $tel="Telï¿½fono: (0255-00000)";
             $this->Cell(600,4,$uni,0,1,"L");
-            $this->Cell($avanzar);	
+            $this->Cell($avanzar);
             $this->Cell(70,4,$dir,0,1,"L");
-            $this->Cell($avanzar);	
+            $this->Cell($avanzar);
             $this->Cell(70,4,$tel,0,1,"L");
     			//Fecha
     			$lcFecha=date("d/m/Y  h:m a");
     			$this->Cell(0,3,$lcFecha,0,0,"C");
 		}
-		
+
 		function SetWidths($w){
             //Set the array of column widths
             $this->widths=$w;
@@ -92,9 +92,9 @@
                 $this->Rect($x,$y,$w,$h);
                 /*
                 //Print the text
-                if((count($data)-1)==$i && (strtolower($data[count($data)-1])=='desactivado'))        
+                if((count($data)-1)==$i && (strtolower($data[count($data)-1])=='desactivado'))
                 $this->SetTextColor(255, 0, 0);
-                else 
+                else
                 $this->SetTextColor(0, 0, 0);
                 */
                 $this->MultiCell($w,5,$data[$i],0,$a);
@@ -163,7 +163,7 @@
         {
 
                 $wide = $baseline;
-                $narrow = $baseline / 3 ; 
+                $narrow = $baseline / 3 ;
                 $gap = $narrow;
 
                 $barChar['0'] = 'nnnwwnwnn';
@@ -190,7 +190,7 @@
                 $barChar['L'] = 'nnwnnnnww';
                 $barChar['M'] = 'wnwnnnnwn';
                 $barChar['N'] = 'nnnnwnnww';
-                $barChar['O'] = 'wnnnwnnwn'; 
+                $barChar['O'] = 'wnnnwnnwn';
                 $barChar['P'] = 'nnwnwnnwn';
                 $barChar['Q'] = 'nnnnnnwww';
                 $barChar['R'] = 'wnnnnnwwn';
@@ -238,60 +238,60 @@
         }
 
 }
-		
-	
+
+
 setlocale(LC_ALL,"es_VE.UTF8");
    $Pdf=new clsFpdf();
     $DB=new clsConexion();
    $Pdf->AliasNbPages();
    //$Pdf->AddPage('P',array(330,183));
     $Pdf->AddPage('P');
-  
+
    $Pdf->SetFont('Arial','B',10);
     $Pdf->Ln(5);
     $Pdf->SetTextColor(000);
-    $Pdf->SetFillColor(222,216,199); 
- 
+    $Pdf->SetFillColor(222,216,199);
+
  //$M=$Pdf->fListar();
-    
+
    include_once("Query.php");
    $idpermiso=$_GET['idpermiso'];
       $data=$DB->Getone(Query(1,array($idpermiso)));
-	  
-	
+
+
 	  $contenido = 'Yo '.ucfirst($data['nombre']).' '.ucfirst($data['apellido']).', en mi funcion de "'.ucfirst($data['cargo']).'" me dirijo a usted, para agradecerle me conceda permiso por :  ';
-    $contenido .=$data['motivo_permiso']. "  , el cual ".utf8_encode('tendrá')." como fecha de inicio desde el dia ".date('d-m-Y',strtotime($data['fecha_ini']));
-    $contenido .=",  con una duraci".utf8_encode('ó')."n de  ".$data['duracion']." d".utf8_encode('í')."as. Fu".utf8_encode('é')." Revisado por: ".$data['nombres']." Jefe del departamento: ".$data['departamento']." el d".utf8_encode('í')."a ".$data['fecha_revision']." Y fu".utf8_encode('é')." ".$ver." el d".utf8_encode('í')."a  ".$data['fecha_aprobacion']." por: ".$data['nombre1']." Jefe de RECURSO HUMANO."; 
-      $obs="Observaci".utf8_encode('ó')."n: ";
+    $contenido .=$data['motivo_permiso']. "  , el cual ".utf8_encode('tendrï¿½')." como fecha de inicio desde el dia ".date('d-m-Y',strtotime($data['fecha_ini']));
+    $contenido .=",  con una duraci".utf8_encode('ï¿½')."n de  ".$data['duracion']." d".utf8_encode('ï¿½')."as. Fu".utf8_encode('ï¿½')." Revisado por: ".$data['nombres']." Jefe del departamento: ".$data['departamento']." el d".utf8_encode('ï¿½')."a ".$data['fecha_revision']." Y fu".utf8_encode('ï¿½')." ".$ver." el d".utf8_encode('ï¿½')."a  ".$data['fecha_aprobacion']." por: ".$data['nombre1']." Jefe de RECURSO HUMANO.";
+      $obs="Observaci".utf8_encode('ï¿½')."n: ";
    $Pdf->AliasNbPages();
     $Pdf->SetMargins(12, 10, 10);
     $Pdf->Ln(5);
-    
+
     $Pdf->SetfillColor(219,223,230);
     $Pdf->SetFont('Arial','B',12);
     $Pdf->SetXY($Pdf->Getx()+25,$Pdf->Gety()-17);
     $Pdf->SetDrawColor(130,69,19);
      $Pdf->Line(6,40,203,40);
 	    $Pdf->SetDrawColor(130,69,19);
-   
+
 	 $Pdf->Line(203,40,203,203);
     $Pdf->Ln(20);
 	$Pdf->SetTextColor(000);
-   $Pdf->SetFillColor(900,240,440); 
+   $Pdf->SetFillColor(900,240,440);
    $Pdf->SetDrawColor(0,0,0);
     $Pdf->SetFont('Arial', 'B',12);
     $Pdf->SetTextColor(55,55,55);
     $Pdf->Cell(180, 8, utf8_decode('DATOS DEL TRABAJADOR '), 0, 1, 'C');
 	$Pdf->Line(6,55,203,55);
 	 $Pdf->SetFont('Arial', '',10);
-   
+
 	$Pdf->Cell(120, 6, utf8_decode('APELLIDOS Y NOMBRES: '.$data['nombres5']), 0, 0, 'L');
-	$Pdf->Cell(160, 6, 'CÉDULA: '.$data['cedula'], 0, 1, 'L');
+	$Pdf->Cell(160, 6, 'Cï¿½DULA: '.$data['cedula'], 0, 1, 'L');
 	$Pdf->Line(6,65,203,65);
 		 $Pdf->Line(120,65,120,55);
 		   $Pdf->Ln(4);
-	
-$Pdf->Cell(120, 6, 'DEPENDENCIA DE ADSCRIPCIÓN: '.$data['adscripcion'], 0, 1, 'L');
+
+$Pdf->Cell(120, 6, 'DEPENDENCIA DE ADSCRIPCIï¿½N: '.$data['adscripcion'], 0, 1, 'L');
   $Pdf->Ln(4);
 	$Pdf->Cell(120, 6, 'SUPERSISOR: '.$data['supervisor'], 0, 1, 'L');
 	$Pdf->Line(6,75,203,75);
@@ -301,7 +301,7 @@ $Pdf->Cell(120, 6, 'DEPENDENCIA DE ADSCRIPCIÓN: '.$data['adscripcion'], 0, 1, 'L
 	$Pdf->Line(6,85,203,85);
 	$Pdf->Line(6,95,203,95);
 	$Pdf->Line(6,105,203,105);
-	$Pdf->Cell(120, 6, 'CONDICIÓN: '.$data['estado'], 0, 0, 'L');
+	$Pdf->Cell(120, 6, 'CONDICIï¿½N: '.$data['estado'], 0, 0, 'L');
 	$Pdf->Cell(160, 6, 'COMPROBANTE A PRESENTAR: ', 0, 1, 'L');
 	 $Pdf->Line(100,105,100,95);
 		$Pdf->Ln(4);
@@ -309,22 +309,22 @@ $Pdf->Cell(120, 6, 'DEPENDENCIA DE ADSCRIPCIÓN: '.$data['adscripcion'], 0, 1, 'L
 	  $Pdf->Line(70,115,70,105);
 	  $Pdf->Line(120,115,120,105);
 	$Pdf->SetFont('Arial', 'B',10);
-   
+
 		$Pdf->Cell(60, 6, 'CLASE DE PERMISO', 0, 0, 'C');
-	    $Pdf->Cell(60, 6, 'DURACIÓN', 0, 0, 'C');
+	    $Pdf->Cell(60, 6, 'DURACIï¿½N', 0, 0, 'C');
 	    $Pdf->Cell(60, 6, 'TIEMPO', 0, 1, 'C');
 		 $Pdf->Line(70,125,70,105);
 	  $Pdf->Line(120,125,120,105);
 	$Pdf->Ln(4);
 	$Pdf->SetFont('Arial', '',10);
-   
+
 	$Pdf->Cell(60, 6, '', 0, 0, 'C');
 	    $Pdf->Cell(60, 6, ''.$data['fecha_ini'].' / '.$data['fecha_fin'], 0, 0, 'L');
 	    $Pdf->Cell(60, 6, ''.$data['duracion'], 0, 1, 'C');
 		$Pdf->Line(70,135,70,105);
 	  $Pdf->Line(120,135,120,105);
 	  $Pdf->Line(6,145,203,145);
-	
+
 	$Pdf->Ln(4);
 	 $Pdf->SetFont('Arial', 'B',10);
    $Pdf->Cell(60, 6, 'SOLICITANTE', 0, 0, 'C');
@@ -334,29 +334,29 @@ $Pdf->Cell(120, 6, 'DEPENDENCIA DE ADSCRIPCIÓN: '.$data['adscripcion'], 0, 1, 'L
 	$Pdf->Line(6,135,203,135);
 $Pdf->Line(70,145,70,105);
 	  $Pdf->Line(120,145,120,105);
-	
+
 
   if ($data['estado']=='APROBADO'){
 		   $Pdf->SetTextColor(107,142,35);
 		     $ver=$data['estado'];
-		
+
 	  }else{
 		  $Pdf->SetTextColor(220,20,60);
 		    $ver=$data['estado'];
-	  }	
-    //$Pdf->Cell(180, 6, utf8_decode(ucfirst($ver)), 0,'L'); 
+	  }
+    //$Pdf->Cell(180, 6, utf8_decode(ucfirst($ver)), 0,'L');
 	 $Pdf->Ln(20);
     $Pdf->SetFont('Arial', '',14);
     $Pdf->SetTextColor(55,55,55);
     $Pdf->Ln(10);
      $Pdf->Line(6,40,6,203);
   	$Pdf->Line(6,203,203,203);
-	
+
 	$Pdf->SetXY($Pdf->Getx()+165,$Pdf->Gety()+5);
 
   $Pdf->Cell(40, 5, $Pdf->code39($Pdf->getx(),$Pdf->gety(),'0000'.$data['idpermiso']), 0, 1,'C');
-   
-  
+
+
 $Pdf->Output();
-  
+
   ?>
