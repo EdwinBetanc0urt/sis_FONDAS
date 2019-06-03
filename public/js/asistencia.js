@@ -53,7 +53,7 @@ function enviar() {
             campo = "entrada1";
         }
         else if (!entrada1 && tiempo > '07:30' && tiempo < '12:00') {
-            comprobar = false
+            comprobar = false;
             swal({
                 title: '¡Atención!:',
                 html: 'Ha perdidido la entrada para el turno de la mañana.',
@@ -61,14 +61,14 @@ function enviar() {
                 type: 'warning',
                 showCloseButton: true,
                 confirmButtonText: 'Ok'
-            })
+            });
             return comprobar;
         }
         else if (entrada1 && !salida1 && tiempo >= '06:45' && tiempo <= '12:30') {
             campo = "salida1";
         }
         else if (entrada1 && salida1 && tiempo > '06:45' && tiempo < '12:30') {
-            comprobar = false
+            comprobar = false;
             swal({
                 title: '¡Atención!:',
                 html: 'Ya tiene marcada una entrada y una salida en este turno.',
@@ -76,7 +76,7 @@ function enviar() {
                 type: 'warning',
                 showCloseButton: true,
                 confirmButtonText: 'Ok'
-            })
+            });
             return comprobar;
         }
     }
@@ -86,7 +86,7 @@ function enviar() {
             campo = "entrada2";
         }
         else if (!entrada2 && tiempo > '13:30' && tiempo < '17:30') {
-            comprobar = false
+            comprobar = false;
             swal({
                 title: '¡Atención!:',
                 html: 'Ha perdidido la entrada para el turno de la tarde.',
@@ -94,14 +94,14 @@ function enviar() {
                 type: 'warning',
                 showCloseButton: true,
                 confirmButtonText: 'Ok'
-            })
+            });
             return comprobar;
         }
         else if (entrada2 && !salida2 && tiempo >= '12:45' && tiempo <= '17:30') {
             campo = "salida2";
         }
         else if (entrada2 && salida2 && tiempo >= '12:45' && tiempo <= '17:30') {
-            comprobar = false
+            comprobar = false;
             swal({
                 title: '¡Atención!:',
                 html: 'Ya tiene marcada una entrada y una salida en este turno.',
@@ -109,13 +109,13 @@ function enviar() {
                 type: 'warning',
                 showCloseButton: true,
                 confirmButtonText: 'Ok'
-            })
+            });
             return comprobar;
         }
     }
     // horario fuera de jornada
     else {
-        comprobar = false
+        comprobar = false;
         swal({
             title: '¡Atención!:',
             html: 'No esta en su rango de jornada laboral.',
@@ -123,7 +123,7 @@ function enviar() {
             type: 'warning',
             showCloseButton: true,
             confirmButtonText: 'Ok'
-        })
+        });
         return comprobar;
     }
     	// Si la variable Comprobar es verdadero (paso exitosamente las demás condiciones)

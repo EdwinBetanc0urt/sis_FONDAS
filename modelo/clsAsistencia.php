@@ -23,6 +23,7 @@ class Asistencia extends clsConexion {
         if ($tipo == "salida") {
             return $this->actualizar();
         }
+        // puede ser una segunda entrada
         if ($this->consultar()){
             return $this->actualizar();
         }
