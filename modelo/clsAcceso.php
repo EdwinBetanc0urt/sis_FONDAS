@@ -17,7 +17,7 @@ class Acceso extends clsConexion {
 		parent::__construct($piPrivilegio); //instancia al constructor padre
 		$this->atrTabla = "tacceso";
 		$this->atrId = "idacceso";
-		
+
 		$this->atrFormulario = array();
 		$this->atrBotones = array();
 
@@ -45,15 +45,15 @@ class Acceso extends clsConexion {
 	{
 		$sql = "
 			SELECT M.nombre as modulo, M.idmodulo, M.icono
-			FROM tmodulos AS M 
-			INNER JOIN tvistas AS V 
-				ON V.idmodulo = M.idmodulo 
+			FROM tmodulos AS M
+			INNER JOIN tvistas AS V
+				ON V.idmodulo = M.idmodulo
 			INNER JOIN tacceso AS A
 				ON A.idvista = V.idvista
-   
+
         	WHERE
        			A.idtipo_usuario = '{$this->atrIdTipoUsuario}'
-			GROUP BY M.idmodulo 
+			GROUP BY M.idmodulo
 			ORDER BY M.posicion ASC;";
 
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -62,14 +62,13 @@ class Acceso extends clsConexion {
 		else
 			return false;
 	}
- 
+
 
 	//función.modelo.Listar Parámetros
 	//parámetro.control Termino de búsqueda
 	function ListarVista($piModulo = "")
 	{
-		$sql = "
-			SELECT V.idvista, V.nombre AS vista, V.url
+		$sql = "SELECT V.idvista, V.nombre AS vista, V.url
 			FROM tvistas	 AS V
 
 			INNER JOIN tacceso AS A
@@ -77,7 +76,8 @@ class Acceso extends clsConexion {
 
 			WHERE
 				A.idtipo_usuario = '{$this->atrIdTipoUsuario}' AND
-				idmodulo = '$piModulo' 
+				idmodulo = '$piModulo'
+				AND estatus = 'activo'
 				GROUP BY idvista
 				ORDER BY orden; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -86,7 +86,7 @@ class Acceso extends clsConexion {
 		else
 			return false;
 	}
- 
+
 
 	//función.modelo.Listar Parámetros
 	//parámetro.control Termino de búsqueda
@@ -103,7 +103,7 @@ class Acceso extends clsConexion {
 
 			WHERE
 				A.idtipo_usuario = '{$this->atrIdTipoUsuario}' AND
-				V.idvista = '$piVista' 
+				V.idvista = '$piVista'
 				ORDER BY B.orden;";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
@@ -121,9 +121,9 @@ class Acceso extends clsConexion {
 		foreach ($this->atrBotones as $lkey => $lvalor ) {
 			foreach ($lvalor as $key => $value) {
 				$sql = "
-					INSERT INTO {$this->atrTabla}	
-						(idtipo_usuario, idboton, idvista ) 
-					VALUES 
+					INSERT INTO {$this->atrTabla}
+						(idtipo_usuario, idboton, idvista )
+					VALUES
 						('{$this->atrFormulario["cmbTipo_Usuario"]}', '{$value}', '{$lkey}') ; ";
 				$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 				if (!parent::faVerificar($tupla)) //verifica si se ejecuto bien
@@ -171,9 +171,9 @@ class Acceso extends clsConexion {
 	{
 		$sql = "
 			DELETE FROM tacceso
-			
+
 			WHERE
-				idvista = '{$this->atrFormulario["setVista"]}' AND 
+				idvista = '{$this->atrFormulario["setVista"]}' AND
 				idtipo_usuario = '{$this->atrFormulario["setTipoUsuario"]}' ";
 		$tupla = parent::faEjecutar($sql, false); //Ejecuta la sentencia sql
 		echo $sql;
@@ -189,21 +189,21 @@ class Acceso extends clsConexion {
 	function ListarConAcceso($pcBusqueda = "")
 	{
 		$sql = "
-			SELECT * 
+			SELECT *
 			FROM vacceso
 			WHERE
-				idtipo_usuario = '{$this->atrId_Tipo_U}' 
-				AND	vista LIKE '%{$pcBusqueda}%' 
+				idtipo_usuario = '{$this->atrId_Tipo_U}'
+				AND	vista LIKE '%{$pcBusqueda}%'
 			GROUP BY idvista";
 
 		if ($this->atrOrden != "")
 			$sql .= " ORDER BY $this->atrOrden $this->atrTipoOrden ";
-		
+
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
 			return $tupla;
@@ -216,12 +216,12 @@ class Acceso extends clsConexion {
 	//parámetro.control Termino de búsqueda
 	function ListarAcceso($pcBusqueda = "")
 	{
-		$sql = "SELECT * 
+		$sql = "SELECT *
 				FROM vacceso
 				WHERE
 					idtipo_usuario = '{$this->atrId_Tipo_U}' AND
-					idmodulo = '{$this->atrId_Modulo}' 
-					AND	vista LIKE '%{$pcBusqueda}%' 
+					idmodulo = '{$this->atrId_Modulo}'
+					AND	vista LIKE '%{$pcBusqueda}%'
 				GROUP BY idvista";
 
 		if ($this->atrOrden != "")
@@ -245,7 +245,7 @@ class Acceso extends clsConexion {
 			INNER JOIN tmodulos AS M
 				ON M.idmodulo = V.idmodulo
 			WHERE
-				V.idmodulo = '{$this->atrId_Modulo}' 
+				V.idmodulo = '{$this->atrId_Modulo}'
 				AND	V.nombre LIKE '%{$pcBusqueda}%' ";
 
 		if ($this->atrOrden != "")
@@ -284,13 +284,13 @@ class Acceso extends clsConexion {
 	function ListarAccesoVistasUsuario($piUsuario = "", $piModulo = "")
 	{
 		$sql = "
-			SELECT V.* 
+			SELECT V.*
 			FROM vacceso AS V
 			INNER JOIN tusuario AS U
 				ON V.idtipo_usuario = U.idtipo_usuario
 			WHERE
 				U.id_usuario = '{$piUsuario}' AND
-				V.idmodulo = '{$piModulo}' 
+				V.idmodulo = '{$piModulo}'
 			GROUP BY V.idvista";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
@@ -305,7 +305,7 @@ class Acceso extends clsConexion {
 	function ListarAccesoBotonessUsuario($piUsuario = "", $piVista ="")
 	{
 		$sql = "
-			SELECT V.* 
+			SELECT V.*
 			FROM vacceso AS V
 			INNER JOIN tusuario AS U
 				ON V.idtipo_usuario = U.idtipo_usuario
@@ -325,14 +325,14 @@ class Acceso extends clsConexion {
 	function ListarSinAcceso($pcBusqueda = "")
 	{
 		$sql = "
-			SELECT 
+			SELECT
 				V.idvista, V.nombre AS vista, M.idmodulo, M.nombre AS modulo
 			FROM tvistas AS V, tmodulos AS M
-			WHERE 
+			WHERE
 				V.idvista NOT IN (
 					SELECT A.idvista
 					FROM vacceso AS A
-					WHERE 
+					WHERE
 						idtipo_usuario = '{$this->atrId_Tipo_U}'
 				)  AND
 				(V.nombre LIKE '%{$pcBusqueda}%' OR
@@ -344,9 +344,9 @@ class Acceso extends clsConexion {
 
 		$this->atrTotalRegistros = parent::getNumeroFilas(parent::faEjecutar($sql));
 		$this->atrPaginaFinal = ceil($this->atrTotalRegistros / $this->atrItems);
-		
+
 		//concatena estableciendo los limites o rango del resultado, interpolando las variables
-		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; "; 
+		$sql .= " LIMIT {$this->atrPaginaInicio}, {$this->atrItems} ; ";
 		//echo "$sql";
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
@@ -363,7 +363,7 @@ class Acceso extends clsConexion {
 		$sql = "
 			SELECT *
 			FROM vacceso
-			WHERE 
+			WHERE
 				idtipo_usuario = '{$this->atrId_Tipo_U}' AND
 				idvista = '{$this->atrVista}' " ;
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -379,7 +379,7 @@ class Acceso extends clsConexion {
 	function ListarBotonNo($pcBusqueda = "")
 	{
 		$sql = "
-			SELECT idboton, nombre AS boton 
+			SELECT idboton, nombre AS boton
 			FROM tboton " ;
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
 		if (parent::faVerificar($tupla))
@@ -395,10 +395,10 @@ class Acceso extends clsConexion {
 	 */
 	function fmConsultaCodigoVista($psVista)
 	{
-		$sql = "SELECT id_vista 
-				FROM tconf_VISTA_m 
-				WHERE 
-					url_vista = '{$psVista}' 
+		$sql = "SELECT id_vista
+				FROM tconf_VISTA_m
+				WHERE
+					url_vista = '{$psVista}'
 				LIMIT 1 ";
 				//selecciona el contenido de la tabla
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -406,7 +406,7 @@ class Acceso extends clsConexion {
 		if (parent::faVerificar($tupla)) {
 			$arrVista = parent::getConsultaArreglo($tupla);
 			parent::faLiberarConsulta($tupla); //libera de la memoria la consulta obtenida
-			return $arrVista["id_vista"]; 
+			return $arrVista["id_vista"];
 		}
 		else
 			return false;
@@ -421,10 +421,10 @@ class Acceso extends clsConexion {
 	function  fmConsultaAccesoVista($piRol, $piVista)
 	{
 		$sql = "
-		SELECT id_vista 
-			FROM vacceso 
-			WHERE 
-				idtipo_usuario = '{$piRol}' AND 
+		SELECT id_vista
+			FROM vacceso
+			WHERE
+				idtipo_usuario = '{$piRol}' AND
 				id_vista = '{$piVista}'
 			LIMIT 1 ";
 		//selecciona el contenido de la tabla
@@ -432,7 +432,7 @@ class Acceso extends clsConexion {
 		//verifica si se ejecuto exitosamente la sentencia
 		if (parent::faVerificar($tupla)) {
 			parent::faLiberarConsulta($tupla); //libera de la memoria la consulta obtenida
-			return true; 
+			return true;
 		}
 		else
 			return false;
@@ -447,10 +447,10 @@ class Acceso extends clsConexion {
 	 */
 	function  fmConsultaAccesoBoton($piRol, $piVista, $piBoton)
 	{
-		$sql = "SELECT id_vista 
-				FROM vacceso 
-				WHERE 
-					idtipo_usuario = '{$piRol}' AND 
+		$sql = "SELECT id_vista
+				FROM vacceso
+				WHERE
+					idtipo_usuario = '{$piRol}' AND
 					id_vista = '{$piVista}' AND
 					id_boton = '{$piBoton}'
 				LIMIT 1 ";
@@ -459,7 +459,7 @@ class Acceso extends clsConexion {
 		//verifica si se ejecuto exitosamente la sentencia
 		if (parent::faVerificar($tupla)) {
 			parent::faLiberarConsulta($tupla); //libera de la memoria la consulta obtenida
-			return true; 
+			return true;
 		}
 		else
 			return false;
@@ -469,9 +469,9 @@ class Acceso extends clsConexion {
 	function fmVistaBotonRol($piRol)
 	{
 		$sql = "
-			SELECT id_vista 
-			FROM vacceso 
-			WHERE idtipo_usuario='$piRol' 
+			SELECT id_vista
+			FROM vacceso
+			WHERE idtipo_usuario='$piRol'
 			GROUP by id_vista ; ";
 		//selecciona el contenido de la tabla
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -501,8 +501,8 @@ class Acceso extends clsConexion {
 	{
 		$sql = "
 			SELECT id_vista, vista
-			FROM vacceso 
-			WHERE idtipo_usuario='$piRol' 
+			FROM vacceso
+			WHERE idtipo_usuario='$piRol'
 			GROUP by id_vista ; ";
 		//selecciona el contenido de la tabla
 		$tupla = parent::faEjecutar($sql); //Ejecuta la sentencia sql
@@ -532,7 +532,7 @@ class Acceso extends clsConexion {
 	{
 		$sql = "
 			SELECT id_boton, boton
-			FROM vacceso 
+			FROM vacceso
 			WHERE
 				idtipo_usuario='$piRol'
 				AND id_vista = '$piVista' ; ";
