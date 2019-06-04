@@ -34,7 +34,8 @@ function marcar()
 		header("Location: ../?form={$gsClase}&msjAlerta=noregistro"); //envía a la vista, con
 }
 
-function consultaAsistencia() {
+function consultaAsistencia()
+{
     $objBoton = new Asistencia();
     $objBoton->setFormulario($_POST);
     $arrCosulta = $objBoton->consultar();
@@ -59,7 +60,8 @@ function consultaAsistencia() {
 }
 
 
-function ListaAsistencia() {
+function ListaAsistencia()
+{
 	global $gsClase; //variable que contiene la cadena con el nombre de la Clase u Objeto
 	$objeto = new Asistencia; //instancia la clase
 
@@ -125,7 +127,6 @@ function ListaAsistencia() {
                     <tr data-toggle='tooltip' data-placement='top'
                         title='Doble clic para detallar los datos y realizar alguna operación'>
 							<!-- FINAL DE LA APERTURA DEL TR DE LA FILA -->
-
 						<td>
                             <?=  $objeto->faFechaFormato($arrRegistro["fecha_marcaje"], "amd", "dma") ?> </td>
 						<td> <?= $arrRegistro["entrada1"]; ?> </td>
@@ -155,7 +156,7 @@ function ListaAsistencia() {
                         $Activo = "";
                     ?>
                     <li class="<?= $Activo; ?> ">
-                        <a rel="<?= $i; ?>" onclick='console.log(this.rel); fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
+                        <a rel="<?= $i; ?>" onclick='fjMostrarLista("<?= $gsClase; ?>", this.rel);' >
                             <?= $i; ?>
                         </a>
                     </li>
